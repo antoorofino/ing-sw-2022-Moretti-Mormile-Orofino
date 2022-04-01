@@ -23,20 +23,26 @@ public class Board {
         return this.studentsEntrance;
     }
 
+    //TODO implement method removeFromEntrance
+    public void removeFromEntrance(Piece student){
+        // generate exception
+        studentsEntrance.remove(student);
+    }
+
     public int getNumOfStudentsRoom(Piece student){
-        return 0;
+        return studentsRoom.get(student);
     }
 
     //TODO implement method addToEntrance
     public void addToEntrance(ArrayList<Piece> students){}
 
     //TODO implement method addStudentToDiningRoom
-    public void addStudentToDiningRoom(Piece student){}
-
-    //TODO implement method getNumOfStudentDiningRoom
-    public int getNumOfStudentDiningRoom(){ return 0;}
-
-
+    public void addStudentToRoom(Piece student){
+        // can throw an exception
+        // move automatically student from Entrance
+        removeFromEntrance(student);
+        studentsRoom.put(student,studentsRoom.get(student)+1);
+    }
 
 
 }

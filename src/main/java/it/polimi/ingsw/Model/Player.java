@@ -1,80 +1,98 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.Action;
+import it.polimi.ingsw.Controller.RoundActions;
+
 import java.util.ArrayList;
 
 public class Player {
-    private String nickname;
-    //private PlayerColor playerColor;
-    private Board playerBoard;
-    private ArrayList<AssistenceCard> cards;
-    private AssistenceCard lastCardUsed;
-    private int numOfTower;
-    private int playerCoin;
-    private Character activeCharacter;
-    //private Action roundAction;
+	private String nickname;
+	private PlayerColor playerColor;
+	private Board playerBoard;
+	private ArrayList<AssistenceCard> cards;
+	private AssistenceCard lastCardUsed;
+	private int numOfTower;
+	private int playerCoin;
+	private Character activeCharacter;
+	private RoundActions roundActions;
 
 
-    public String getNickname() {
-        return nickname;
-    }
+	public String getNickname() {
+		return nickname;
+	}
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-    /*
-    public void setPlayerColor(PlayerColor color){this.colorPlayer = color;}
+	public void setPlayerColor(PlayerColor color) {
+		this.playerColor = color;
+	}
 
-    public PlayerColor getPlayerColor(){return this.colorPlayer;}
-     */
+	public PlayerColor getPlayerColor() {
+		return this.playerColor;
+	}
 
-    public Board getPlayerBoard() {
-        return playerBoard;
-    }
+	public Board getPlayerBoard() {
+		return playerBoard;
+	}
 
-    //TODO implement method addCrds
-    public void addCards(ArrayList<AssistenceCard> cards){}
+	public void addCards(ArrayList<AssistenceCard> cards) {
+		this.cards = cards;
+	}
 
-    public boolean noMoreCards(){return cards.isEmpty();}
+	public boolean noMoreCards() {
+		return cards.isEmpty();
+	}
 
-    public AssistenceCard getLastCardUsed() {
-        return lastCardUsed;
-    }
+	public AssistenceCard getLastCardUsed() {
+		return lastCardUsed;
+	}
 
-    public void setLastCardUsed(AssistenceCard lastCardUsed) {
-        this.lastCardUsed = lastCardUsed;
-    }
+	public void setLastCardUsed(AssistenceCard lastCardUsed) {
+		this.lastCardUsed = lastCardUsed;
+	}
 
-    public void setNumOfTower(int num) {
-        this.numOfTower = num;
-    }
+	public void setNumOfTower(int num) {
+		this.numOfTower = num;
+	}
 
-    //TODO implement method addTower
-    public void addTower(){}
+	public void addTower() {
+		this.numOfTower++;
+	}
 
-    //TODO implement method removeTower
-    public void removeTower(){}
+	public void removeTower(int towerToremove) {
+		this.numOfTower-=towerToremove;
+	}
 
-    public void setCoin(int numCoins) {
-        this.playerCoin = numCoins;
-    }
+	public void setCoin(int numCoins) {
+		this.playerCoin = numCoins;
+	}
 
-    public void removeCoin(int numCoinsToRemove){this.playerCoin-=numCoinsToRemove;}
+	public void removeCoin(int numCoinsToRemove) {
+		this.playerCoin -= numCoinsToRemove;
+	}
 
-    //TODO implement method addCoin
-    public void addCoin(){}
+	public void addCoin() {
+		this.playerCoin++;
+	}
 
-    public Character getActiveCharacter() {
-        return activeCharacter;
-    }
+	public Character getActiveCharacter() {
+		return activeCharacter;
+	}
 
-    public void setActiveCharacter(Character activeCharacter) {
-        this.activeCharacter = activeCharacter;
-    }
+	public void setActiveCharacter(Character activeCharacter) {
+		this.activeCharacter = activeCharacter;
+	}
 
-    /*
-    public void setRoundActions(RoundActions roundActions){this.roundActions=roundActions;}
-    public RoundActions getRoundActions(){return this.roundActions;}
-    public void registerAction(Action action){}
-     */
+	public void setRoundActions(RoundActions roundActions) {
+		this.roundActions = roundActions;
+	}
+
+	public RoundActions getRoundActions() {
+		return this.roundActions;
+	}
+
+	public void registerAction(Action action) {
+	}
 }

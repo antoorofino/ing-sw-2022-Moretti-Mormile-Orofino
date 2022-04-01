@@ -11,8 +11,9 @@ public class GameModel {
     private int coins;
     private ArrayList<Character> characters;
 
-    //GameModel(GameMode mode){}
-
+    GameModel(GameMode mode){
+        //TODO implement the creation and setting of classes
+    }
 
     public PlayersHandler getPlayerHandler() {
         return playerHandler;

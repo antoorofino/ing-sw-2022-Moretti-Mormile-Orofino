@@ -34,8 +34,6 @@ public enum Piece {
         return values()[random.nextInt(values().length)];
     }
 
-    public ArrayList<String> allNameToString(){return null;}
-
     @Override
     public String toString() {
         return "Piece{" +

@@ -14,17 +14,30 @@ public class Island {
         return islandOwner.equals(null);
     }
 
-    public int getNumStudents(Piece s){ return 0;}
+    public int getNumStudents(Piece s){
+        return studentsOnIsland.get(s);
+    }
 
-    //TODO implement method addStudent
-    public void addStudent(Piece s){}
+    //TODO check the implementation
+    public void addStudent(Piece s){
+        studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
+    }
 
-    public Player getIslandOwner(){return islandOwner;}
+    public Player getIslandOwner(){
+        return islandOwner;
+    }
 
-    public int getSize(){return size;}
+    public int getSize(){
+        return size;
+    }
 
     //TODO implement method calculateInfluence
-    public int calculateInfluence(TeachersHandler teacher, boolean towerCount, Color invalidColor){return 0;}
+    public int calculateInfluence(TeachersHandler teacher, boolean towerCount, Color invalidColor){return 0;
+    // Good luck
+    }
 
+    public int getID(){
+        return this.ID;
+    }
 
 }

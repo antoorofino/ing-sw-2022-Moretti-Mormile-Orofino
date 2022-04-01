@@ -1,12 +1,14 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.Rules.Rules;
+
 import java.util.ArrayList;
 
 public class Character {
     private String name;
     private String description;
     private int ID;
-    //private Rules rules;
+    private Rules rules;
     private ArrayList<Piece> studentsOnCard;
     private int islandFlag;
     private int cost;
@@ -16,7 +18,7 @@ public class Character {
         this.description = description;
         this.cost=cost;
         this.ID=ID;
-        //this.rules = rules;
+        this.rules = rules;
     }
 
     public String getName() {
@@ -31,9 +33,9 @@ public class Character {
         return ID;
     }
 
-    /*public Rules getRules() {
+    public Rules getRules() {
         return rules;
-    }*/
+    }
 
     public ArrayList<Piece> getStudents() {
         return studentsOnCard;
