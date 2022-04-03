@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Exception.CharacterException;
+import it.polimi.ingsw.Exception.CloudException;
+
 import java.util.ArrayList;
 
 public class GameModel {
@@ -13,6 +16,16 @@ public class GameModel {
 
     GameModel(GameMode mode){
         //TODO implement the creation and setting of classes
+        this.playerHandler = new PlayersHandler();
+        this.characters = new ArrayList<Character>();
+        if(mode.equals(GameMode.EXPERT))
+            this.coins = 1;
+        else
+            this.coins = 0;
+        this.clouds = new ArrayList<Cloud>();
+        this.islandHandler = new IslandsHandler();
+        this.teacherHandler = new TeachersHandler();
+        this.studentsBag = new Bag();
     }
 
     public PlayersHandler getPlayerHandler() {
@@ -31,12 +44,18 @@ public class GameModel {
         return clouds;
     }
 
-    //TODO implement method addCloud
-    public void addCloud(Cloud newCloud){}
+    public void addCloud(Cloud newCloud)throws CloudException {
+        if(this.playerHandler.getPlayers().size()==this.clouds.size()) throw new CloudException("Cannot add cloud");
+        this.clouds.add(newCloud);
 
-    //TODO implement method getCloudByID
-    public Cloud getCloudByID(int islandID){
-        return null;
+    }
+
+    public Cloud getCloudByID(int islandID) throws CloudException {
+        for(Cloud cloud : this.clouds){
+            if(cloud.getCloudID() == islandID)
+                return  cloud;
+        }
+        throw new CloudException("Cannot found island with this id");
     }
 
     public IslandsHandler getIslandHandler() {
@@ -55,8 +74,11 @@ public class GameModel {
 
     public void addCharacter(Character c){this.characters.add(c);}
 
-    //TODO implement method getCharacterFromID
-    public Character getCharacterFromID(int id){
-        return null;
+    public Character getCharacterFromID(int id) throws CharacterException {
+        for(Character c : this.characters){
+            if(c.getID() == id)
+                return c;
+        }
+        throw new CharacterException("Cannot find character with this ID");
     }
 }

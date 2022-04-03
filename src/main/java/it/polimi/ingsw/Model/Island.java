@@ -10,6 +10,14 @@ public class Island {
     private Player islandOwner;
     private boolean flagNoInfluence;
 
+    public Island(int islandID){
+        //this.studentsOnIsland = new Map<Piece, Integer>();
+        this.ID=islandID;
+        this.islandOwner = new Player();
+        this.size = 1;
+        this.flagNoInfluence = false;
+    }
+
     public boolean towerIsAlreadyBuild(){
         return islandOwner.equals(null);
     }
@@ -32,8 +40,12 @@ public class Island {
     }
 
     //TODO implement method calculateInfluence
-    public int calculateInfluence(TeachersHandler teacher, boolean towerCount, Color invalidColor){return 0;
+    public Player calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor){
     // Good luck
+        //teacher handler per vedere chi possiede il prof
+        //tower count mi dice se devo contare le torri
+        //invalid color al limite un colore che non mi serve
+        return null;
     }
 
     public int getID(){

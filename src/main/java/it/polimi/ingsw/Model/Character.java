@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exception.StudentException;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public class Character {
     private int islandFlag;
     private int cost;
 
-    public Character(String name, String description, int cost, int ID/*,Rules rules*/){
+    public Character(String name, String description, int cost, int ID,Rules rules){
         this.name = name;
         this.description = description;
         this.cost=cost;
@@ -49,9 +50,12 @@ public class Character {
         this.islandFlag=num;
     }
 
-    //TODO implement method delStudent
-    public void delStudent(Piece student){}
+    public void delStudent(Piece student)throws StudentException {
+        if(studentsOnCard.isEmpty()) throw new StudentException("There aren't students on this cards");
+        this.studentsOnCard.remove(student);
+    }
 
-    //TODO implement method increaseCost
-    public void increaseCost(){}
+    public void increaseCost(){
+        this.cost++;
+    }
 }

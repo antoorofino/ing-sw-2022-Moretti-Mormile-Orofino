@@ -4,7 +4,9 @@ package it.polimi.ingsw.Controller.Rules;
 import it.polimi.ingsw.Controller.Action;
 import it.polimi.ingsw.Controller.ActionType;
 import it.polimi.ingsw.Controller.RoundActions;
+import it.polimi.ingsw.Exception.CloudException;
 import it.polimi.ingsw.Exception.InvalidInput;
+import it.polimi.ingsw.Exception.StudentException;
 import it.polimi.ingsw.Model.*;
 
 public class Rules {
@@ -55,14 +57,27 @@ public class Rules {
 	}
 
 	public void doMoveDiningRoom(Action action, GameModel game) {
-		// TODO insert try/catch for exception
-		currentplayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+		// TODO check try/catch for exception
+		try {
+			currentplayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+		} catch (StudentException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doMoveIsland(Action action, GameModel game) {
-		// TODO insert try/catch for exception
-		currentplayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
-		game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
+		// TODO check try/catch for exception
+		try {
+			currentplayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
+		} catch (StudentException e) {
+			e.printStackTrace();
+		}
+		// TODO check try/catch
+		try {
+			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
+		} catch (CloudException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doMoveMother(Action action, GameModel game) throws InvalidInput {
@@ -79,14 +94,25 @@ public class Rules {
 
 
 	public void doChooseCloud(Action action, GameModel game) {
-		Cloud cloud = game.getCloudByID(action.getID());
+		Cloud cloud = null;
+		try {
+			cloud = game.getCloudByID(action.getID());
+		} catch (CloudException e) {
+			e.printStackTrace();
+		}
 		currentplayer.getPlayerBoard().addToEntrance(cloud.getStudents());
 	}
 
 
 	protected void calculateInfluence(GameModel game) {
 		int currentMother = game.getIslandHandler().getMotherNature();
-		Island currentIsland = game.getIslandHandler().getIslandByID(currentMother);
+		// TODO check try/catch
+		Island currentIsland = null;
+		try {
+			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
+		} catch (CloudException e) {
+			e.printStackTrace();
+		}
 		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null);
 	}
 

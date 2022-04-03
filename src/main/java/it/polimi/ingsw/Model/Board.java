@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.App;
+import it.polimi.ingsw.Exception.StudentException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +23,10 @@ public class Board {
         return this.studentsEntrance;
     }
 
-    //TODO implement method removeFromEntrance
-    public void removeFromEntrance(Piece student){
+
+    public void removeFromEntrance(Piece student) throws StudentException {
         // generate exception
+        if(this.studentsEntrance.isEmpty()) throw new StudentException("There aren't students in the entrance");
         studentsEntrance.remove(student);
     }
 
@@ -33,16 +34,20 @@ public class Board {
         return studentsRoom.get(student);
     }
 
-    //TODO implement method addToEntrance
-    public void addToEntrance(ArrayList<Piece> students){}
+    public void addToEntrance(ArrayList<Piece> students){
+        this.studentsEntrance.addAll(students);
+    }
 
-    //TODO implement method addStudentToDiningRoom
-    public void addStudentToRoom(Piece student){
+
+    public void addStudentToRoom(Piece student) throws StudentException {
         // can throw an exception
         // move automatically student from Entrance
+        if(this.studentsEntrance.isEmpty()) throw new StudentException("There aren't students in the entrance");
         removeFromEntrance(student);
         studentsRoom.put(student,studentsRoom.get(student)+1);
     }
+
+    public Map<Piece, Integer> getStudentsRoom(){return this.studentsRoom;}
 
 
 }

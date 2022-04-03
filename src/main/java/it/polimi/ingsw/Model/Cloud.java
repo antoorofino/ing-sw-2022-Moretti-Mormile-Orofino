@@ -6,6 +6,11 @@ public class Cloud {
     private ArrayList<Piece> studentsClouds;
     private int cloudID;
 
+    public Cloud(int ID){
+        this.studentsClouds = new ArrayList<Piece>();
+        this.cloudID=ID;
+    }
+
     public ArrayList<Piece> getStudents() {
         return studentsClouds;
     }
@@ -14,6 +19,9 @@ public class Cloud {
         return cloudID;
     }
 
-    //TODO implement method addStudent
-    public void addStudents(ArrayList<Piece> students){}
+
+    public void addStudents(ArrayList<Piece> students){
+        if(students.isEmpty())
+            students.addAll(students);
+    }
 }
