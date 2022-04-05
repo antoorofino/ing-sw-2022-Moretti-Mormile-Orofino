@@ -6,6 +6,7 @@ import it.polimi.ingsw.Controller.ActionType;
 import it.polimi.ingsw.Controller.RoundActions;
 import it.polimi.ingsw.Exception.CloudException;
 import it.polimi.ingsw.Exception.InvalidInput;
+import it.polimi.ingsw.Exception.IslandException;
 import it.polimi.ingsw.Exception.StudentException;
 import it.polimi.ingsw.Model.*;
 
@@ -57,7 +58,6 @@ public class Rules {
 	}
 
 	public void doMoveDiningRoom(Action action, GameModel game) {
-		// TODO check try/catch for exception
 		try {
 			currentplayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
 		} catch (StudentException e) {
@@ -66,23 +66,22 @@ public class Rules {
 	}
 
 	public void doMoveIsland(Action action, GameModel game) {
-		// TODO check try/catch for exception
 		try {
 			currentplayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
 		} catch (StudentException e) {
 			e.printStackTrace();
 		}
-		// TODO check try/catch
+
 		try {
 			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
-		} catch (CloudException e) {
+		} catch (IslandException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void doMoveMother(Action action, GameModel game) throws InvalidInput {
 		if (!CanMooveMother(action, game)) throw new InvalidInput("Movimenti madre natura non consentiti");
-		game.getIslandHandler().setMotherNature(action.getID());
+		game.getIslandHandler().moveMotherNature(action.getID());
 	}
 
 	protected boolean CanMooveMother(Action action, GameModel game) {
@@ -106,11 +105,10 @@ public class Rules {
 
 	protected void calculateInfluence(GameModel game) {
 		int currentMother = game.getIslandHandler().getMotherNature();
-		// TODO check try/catch
 		Island currentIsland = null;
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-		} catch (CloudException e) {
+		} catch (IslandException e) {
 			e.printStackTrace();
 		}
 		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null);

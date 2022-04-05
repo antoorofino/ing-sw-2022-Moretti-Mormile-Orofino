@@ -20,7 +20,7 @@ public class Board {
     }
 
     public ArrayList<Piece> getStudentsEntrance(){
-        return this.studentsEntrance;
+        return new ArrayList<>(studentsEntrance);
     }
 
 
@@ -42,12 +42,11 @@ public class Board {
     public void addStudentToRoom(Piece student) throws StudentException {
         // can throw an exception
         // move automatically student from Entrance
-        if(this.studentsEntrance.isEmpty()) throw new StudentException("There aren't students in the entrance");
         removeFromEntrance(student);
         studentsRoom.put(student,studentsRoom.get(student)+1);
     }
 
-    public Map<Piece, Integer> getStudentsRoom(){return this.studentsRoom;}
+    public Map<Piece, Integer> getStudentsRoom(){return new HashMap<>(studentsRoom);}
 
 
 }

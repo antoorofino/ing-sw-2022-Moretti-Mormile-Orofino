@@ -12,7 +12,9 @@ public class Cloud {
     }
 
     public ArrayList<Piece> getStudents() {
-        return studentsClouds;
+        ArrayList<Piece> temp = new ArrayList<>(studentsClouds);
+        studentsClouds = new ArrayList<Piece>();
+        return temp;
     }
 
     public int getCloudID() {

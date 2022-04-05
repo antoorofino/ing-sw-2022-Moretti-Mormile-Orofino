@@ -17,7 +17,7 @@ public class Character {
     public Character(String name, String description, int cost, int ID,Rules rules){
         this.name = name;
         this.description = description;
-        this.cost=cost;
+        this.cost = cost;
         this.ID=ID;
         this.rules = rules;
     }
@@ -38,10 +38,6 @@ public class Character {
         return rules;
     }
 
-    public ArrayList<Piece> getStudents() {
-        return studentsOnCard;
-    }
-
     public int getIslandFlag() {
         return islandFlag;
     }
@@ -50,9 +46,17 @@ public class Character {
         this.islandFlag=num;
     }
 
+    public void addStudents(ArrayList<Piece> students){
+        this.studentsOnCard.addAll(students);
+    }
+
+    public ArrayList<Piece> getStudents() {
+        return new ArrayList<>(studentsOnCard);
+    }
+
     public void delStudent(Piece student)throws StudentException {
         if(studentsOnCard.isEmpty()) throw new StudentException("There aren't students on this cards");
-        this.studentsOnCard.remove(student);
+        if(!studentsOnCard.remove(student))  throw new StudentException("There isn't the specific student on this cards");
     }
 
     public void increaseCost(){

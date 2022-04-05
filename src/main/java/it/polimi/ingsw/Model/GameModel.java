@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Exception.CharacterException;
 import it.polimi.ingsw.Exception.CloudException;
+import it.polimi.ingsw.Exception.CoinException;
 
 import java.util.ArrayList;
 
@@ -15,13 +16,9 @@ public class GameModel {
     private ArrayList<Character> characters;
 
     GameModel(GameMode mode){
-        //TODO implement the creation and setting of classes
         this.playerHandler = new PlayersHandler();
         this.characters = new ArrayList<Character>();
-        if(mode.equals(GameMode.EXPERT))
-            this.coins = 1;
-        else
-            this.coins = 0;
+        this.coins = 20;
         this.clouds = new ArrayList<Cloud>();
         this.islandHandler = new IslandsHandler();
         this.teacherHandler = new TeachersHandler();
@@ -41,13 +38,12 @@ public class GameModel {
     }
 
     public ArrayList<Cloud> getClouds() {
-        return clouds;
+        return new ArrayList<>(clouds);
     }
 
     public void addCloud(Cloud newCloud)throws CloudException {
         if(this.playerHandler.getPlayers().size()==this.clouds.size()) throw new CloudException("Cannot add cloud");
         this.clouds.add(newCloud);
-
     }
 
     public Cloud getCloudByID(int islandID) throws CloudException {
@@ -62,14 +58,13 @@ public class GameModel {
         return islandHandler;
     }
 
-    public int getCoins() {
-        return coins;
+    public void getCoin() throws CoinException {
+        if(coins==0) throw new CoinException("Not coins available");
+        coins--;
     }
 
-    public void setCoins(int numCoins){this.coins=numCoins;}
-
     public ArrayList<Character> getCharacters() {
-        return characters;
+        return new ArrayList<>(characters);
     }
 
     public void addCharacter(Character c){this.characters.add(c);}

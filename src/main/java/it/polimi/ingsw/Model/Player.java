@@ -2,7 +2,9 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.Action;
 import it.polimi.ingsw.Controller.RoundActions;
+import it.polimi.ingsw.Exception.CoinException;
 
+import javax.smartcardio.CardException;
 import java.util.ArrayList;
 
 public class Player {
@@ -16,13 +18,21 @@ public class Player {
 	private Character activeCharacter;
 	private RoundActions roundActions;
 
-
-	public String getNickname() {
-		return nickname;
+	public Player(){
+		this.playerBoard = new Board();
+		this.lastCardUsed= null;
+		this.cards = new ArrayList<AssistenceCard>();
+		this.playerCoin = 1;
+		this.activeCharacter = null;
+		this. roundActions = null;
 	}
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getNickname() {
+		return nickname;
 	}
 
 	public void setPlayerColor(PlayerColor color) {
@@ -41,6 +51,13 @@ public class Player {
 		this.cards = cards;
 	}
 
+	public void setLastCardUsed(AssistenceCard lastCardUsed) throws CardException {
+		if(!cards.contains(lastCardUsed))
+			throw new CardException("Player doesn't have the specific card");
+		cards.remove(lastCardUsed);
+		this.lastCardUsed = lastCardUsed;
+	}
+
 	public boolean noMoreCards() {
 		return cards.isEmpty();
 	}
@@ -49,27 +66,31 @@ public class Player {
 		return lastCardUsed;
 	}
 
-	public void setLastCardUsed(AssistenceCard lastCardUsed) {
-		this.lastCardUsed = lastCardUsed;
-	}
-
 	public void setNumOfTower(int num) {
 		this.numOfTower = num;
 	}
 
-	public void addTower() {
-		this.numOfTower++;
+	public void addTower(int numTower) {
+		this.numOfTower+=numTower;
 	}
 
 	public void removeTower(int towerToremove) {
 		this.numOfTower-=towerToremove;
 	}
 
+	public boolean TowerIsEmpty(){
+		if(numOfTower<=0)
+			return true;
+		return false;
+	}
+
 	public void setCoin(int numCoins) {
 		this.playerCoin = numCoins;
 	}
 
-	public void removeCoin(int numCoinsToRemove) {
+	public void removeCoin(int numCoinsToRemove) throws CoinException {
+		if(numCoinsToRemove>playerCoin)
+			throw new CoinException("Not enough coins");
 		this.playerCoin -= numCoinsToRemove;
 	}
 
@@ -94,5 +115,10 @@ public class Player {
 	}
 
 	public void registerAction(Action action) {
+		this.roundActions.add(action);
+	}
+
+	public void resetRoundAction() {
+		this.roundActions = new RoundActions();
 	}
 }

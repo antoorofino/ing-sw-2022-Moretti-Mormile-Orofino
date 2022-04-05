@@ -9,27 +9,31 @@ public class PlayersHandler {
     private ArrayList<Player> players;
     private Player currentPlayer;
 
+    public PlayersHandler(){
+        this.players = new ArrayList<>();
+        this.numPlayer = 0;
+        this.currentPlayer = null;
+    }
 
-    //TODO implement method AddPlayer
     public void addPlayer(Player player){
         this.players.add(player);
+        this.numPlayer++;
     }
 
     public ArrayList<Player> getPlayers() {
-        return players;
+        return new ArrayList<>(players);
     }
 
-    //TODO implement method getPlayersNickName
     public ArrayList<String> getPlayersNickName(){
-        ArrayList<String> niknames = new ArrayList<String>();
+        ArrayList<String> nicknames = new ArrayList<String>();
 
         for(Player p : this.players){
-            niknames.add(p.getNickname());
+            nicknames.add(p.getNickname());
         }
-        return niknames;
+        return nicknames;
     }
 
-    //TODO implement method getPlayersByNickName
+
     public Player getPlayersByNickName(String nickname) throws PlayerException {
 
         for(Player p : this.players){
@@ -44,24 +48,50 @@ public class PlayersHandler {
         return currentPlayer;
     }
 
-    //TODO implement method initialiseCurrentPlayer
+    // TODO Check the following methods after the controller implementation
     public void initialiseCurrentPlayer(){
 
+        this.currentPlayer = players.get(0);
+        for(int i = 1 ; i < this.players.size() ; i++){
+            if(players.get(i).getLastCardUsed().getCardValue() < currentPlayer.getLastCardUsed().getCardValue())
+                this.currentPlayer = players.get(i);
+        }
+
     }
 
-    //TODO implement method nextPlayerByOrder
     public Player nextPlayerByOrder(){
-        return null;
+        return players.get((players.indexOf(currentPlayer)+1)%players.size());
     }
 
-    //TODO implement method nextPlayerByAssistance
+
     public Player nextPlayerByAssistance(){
-        return null;
+        Player nextPlayerByAssitance;
+        int i = 0;
+        while(this.players.get(i).equals(this.currentPlayer)){
+            i++;
+        }
+        nextPlayerByAssitance = this.players.get(i);
+        for(Player p : this.players){
+            if(!p.equals(this.currentPlayer) && !p.equals(this.nextPlayerByAssistance())){
+                if(p.getLastCardUsed().getCardValue() < nextPlayerByAssitance.getLastCardUsed().getCardValue())
+                    nextPlayerByAssitance = p;
+                else if(p.getLastCardUsed().getCardValue() == nextPlayerByAssitance.getLastCardUsed().getCardValue()){
+                    if(this.players.indexOf(p) < this.players.indexOf(nextPlayerByAssitance))
+                        nextPlayerByAssitance = p;
+                }
+            }
+
+        }
+       return nextPlayerByAssitance;
     }
 
-    //TODO implement method playerWithNoMoreCards
+
     public boolean playerWithNoMoreCards(){
-        return true;
+        for(Player p : players){
+            if(p.noMoreCards())
+                return true;
+        }
+        return false;
     }
 
 

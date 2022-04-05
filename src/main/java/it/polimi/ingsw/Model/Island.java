@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Island {
@@ -11,9 +12,9 @@ public class Island {
     private boolean flagNoInfluence;
 
     public Island(int islandID){
-        //this.studentsOnIsland = new Map<Piece, Integer>();
+        this.studentsOnIsland = new HashMap<Piece, Integer>();
         this.ID=islandID;
-        this.islandOwner = new Player();
+        this.islandOwner = null;
         this.size = 1;
         this.flagNoInfluence = false;
     }
@@ -26,7 +27,6 @@ public class Island {
         return studentsOnIsland.get(s);
     }
 
-    //TODO check the implementation
     public void addStudent(Piece s){
         studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
     }
@@ -39,17 +39,54 @@ public class Island {
         return size;
     }
 
-    //TODO implement method calculateInfluence
-    public Player calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor){
-    // Good luck
-        //teacher handler per vedere chi possiede il prof
-        //tower count mi dice se devo contare le torri
-        //invalid color al limite un colore che non mi serve
-        return null;
+    public void calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor){
+        int count;
+        Player player;
+        HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
+        for (Piece piece: Piece.values()) { // assegno punteggio per pedine colori
+            if(!piece.getColor().equals(invalidColor)){ // se è valido
+                player = teacher.getTeacherOwner(piece);
+                count = getCount(player,scores);
+                scores.put(player, count + getNumStudents(piece));
+            }
+        }
+        // count the tower
+        if(towerCount){
+            player = getIslandOwner();
+            count = getCount(player,scores);
+            scores.put(player, count + getSize());
+        }
+
+        // find the new owner
+        player = getIslandOwner();
+        for (Player p : scores.keySet()) {
+            if(!p.equals(player) && scores.get(p)>scores.get(player))
+                player = p;
+        }
+
+        if(!getIslandOwner().equals(player)){
+            getIslandOwner().addTower(getSize());
+            player.removeTower(getSize());
+            islandOwner = player;
+        }
+    }
+
+    public int getCount(Player player,HashMap<Player, Integer> map){
+        if (!map.containsKey(player))
+            map.put(player, 0);
+        return map.get(player);
     }
 
     public int getID(){
         return this.ID;
+    }
+
+    public void setFlagNoInfluence(){
+        this.flagNoInfluence = true;
+    }
+
+    public void removeFlagNoInfluence(){
+        this.flagNoInfluence = false;
     }
 
 }
