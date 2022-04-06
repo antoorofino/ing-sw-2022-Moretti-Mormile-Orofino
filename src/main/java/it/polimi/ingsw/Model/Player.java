@@ -2,9 +2,10 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.Action;
 import it.polimi.ingsw.Controller.RoundActions;
+import it.polimi.ingsw.Exception.CardException;
 import it.polimi.ingsw.Exception.CoinException;
 
-import javax.smartcardio.CardException;
+
 import java.util.ArrayList;
 
 public class Player {

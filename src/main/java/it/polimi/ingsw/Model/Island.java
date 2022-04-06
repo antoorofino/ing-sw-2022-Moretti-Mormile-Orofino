@@ -28,7 +28,10 @@ public class Island {
     }
 
     public void addStudent(Piece s){
-        studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
+        if (studentsOnIsland.get(s)!=null)
+            studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
+        else
+            studentsOnIsland.put(s,1);
     }
 
     public Player getIslandOwner(){
