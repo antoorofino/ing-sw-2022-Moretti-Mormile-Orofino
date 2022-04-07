@@ -4,10 +4,7 @@ package it.polimi.ingsw.Controller.Rules;
 import it.polimi.ingsw.Controller.Action;
 import it.polimi.ingsw.Controller.ActionType;
 import it.polimi.ingsw.Controller.RoundActions;
-import it.polimi.ingsw.Exception.CloudException;
-import it.polimi.ingsw.Exception.InvalidInput;
-import it.polimi.ingsw.Exception.IslandException;
-import it.polimi.ingsw.Exception.StudentException;
+import it.polimi.ingsw.Exception.*;
 import it.polimi.ingsw.Model.*;
 
 public class Rules {
@@ -60,7 +57,7 @@ public class Rules {
 	public void doMoveDiningRoom(Action action, GameModel game) {
 		try {
 			currentplayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
-		} catch (StudentException e) {
+		} catch (SpecificStudentNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -68,13 +65,13 @@ public class Rules {
 	public void doMoveIsland(Action action, GameModel game) {
 		try {
 			currentplayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
-		} catch (StudentException e) {
+		} catch (SpecificStudentNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		try {
 			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
-		} catch (IslandException e) {
+		} catch (SpecificIslandNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -96,7 +93,7 @@ public class Rules {
 		Cloud cloud = null;
 		try {
 			cloud = game.getCloudByID(action.getID());
-		} catch (CloudException e) {
+		} catch (SpecificCloudNotFoundException e) {
 			e.printStackTrace();
 		}
 		currentplayer.getPlayerBoard().addToEntrance(cloud.getStudents());
@@ -108,7 +105,7 @@ public class Rules {
 		Island currentIsland = null;
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-		} catch (IslandException e) {
+		} catch (SpecificIslandNotFoundException e) {
 			e.printStackTrace();
 		}
 		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null);

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Exception.StudentException;
+import it.polimi.ingsw.Exception.SpecificStudentNotFoundException;
+import it.polimi.ingsw.Exception.StudentNotPresentException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +25,10 @@ public class Board {
     }
 
 
-    public void removeFromEntrance(Piece student) throws StudentException {
-        // generate exception
-        if(this.studentsEntrance.isEmpty()) throw new StudentException("There aren't students in the entrance");
-        studentsEntrance.remove(student);
+    public void removeFromEntrance(Piece student) throws SpecificStudentNotFoundException {
+        if(this.studentsEntrance.contains(student))
+            studentsEntrance.remove(student);
+        else throw new SpecificStudentNotFoundException("Specific student isn't present");
     }
 
     public int getNumOfStudentsRoom(Piece student){
@@ -39,7 +40,7 @@ public class Board {
     }
 
 
-    public void addStudentToRoom(Piece student) throws StudentException {
+    public void addStudentToRoom(Piece student) throws SpecificStudentNotFoundException {
         // can throw an exception
         // move automatically student from Entrance
         removeFromEntrance(student);

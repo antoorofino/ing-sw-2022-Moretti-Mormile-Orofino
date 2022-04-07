@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Exception.CloudException;
-import it.polimi.ingsw.Exception.IslandException;
+import it.polimi.ingsw.Exception.SpecificCloudNotFoundException;
+import it.polimi.ingsw.Exception.SpecificIslandNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class IslandHandlerTest {
 	}
 
 	@Test
-	public void setIslandsTest() throws CloudException, IslandException {
+	public void setIslandsTest() throws SpecificCloudNotFoundException, SpecificIslandNotFoundException {
 		ArrayList<Island> islands = new ArrayList<Island>();
 		Island island1 = new Island(0);
 		Island island2 = new Island(1);
@@ -41,7 +41,7 @@ public class IslandHandlerTest {
 	}
 
 	/*@Test
-	public void setMotherTest() throws CloudException {
+	public void setMotherTest() throws SpecificCloudNotFoundException {
 		int mother = 0;
 		islandHandler.setMotherNature(mother);
 		mother++;

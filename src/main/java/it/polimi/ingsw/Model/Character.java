@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Exception.StudentException;
+import it.polimi.ingsw.Exception.SpecificStudentNotFoundException;
+import it.polimi.ingsw.Exception.StudentNotPresentException;
 
 import java.util.ArrayList;
 
@@ -54,9 +55,9 @@ public class Character {
         return new ArrayList<>(studentsOnCard);
     }
 
-    public void delStudent(Piece student)throws StudentException {
-        if(studentsOnCard.isEmpty()) throw new StudentException("There aren't students on this cards");
-        if(!studentsOnCard.remove(student))  throw new StudentException("There isn't the specific student on this cards");
+    public void delStudent(Piece student) throws StudentNotPresentException, SpecificStudentNotFoundException {
+        if(studentsOnCard.isEmpty()) throw new StudentNotPresentException("There aren't students on this cards");
+        if(!studentsOnCard.remove(student))  throw new SpecificStudentNotFoundException("There isn't the specific student on this cards");
     }
 
     public void increaseCost(){

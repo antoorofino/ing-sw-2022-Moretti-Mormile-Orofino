@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Exception.CharacterException;
-import it.polimi.ingsw.Exception.CloudException;
-import it.polimi.ingsw.Exception.CoinException;
+import it.polimi.ingsw.Exception.SpecificCharacterNotFoundException;
+import it.polimi.ingsw.Exception.SpecificCloudNotFoundException;
 
 import java.util.ArrayList;
 
@@ -41,26 +40,33 @@ public class GameModel {
         return new ArrayList<>(clouds);
     }
 
-    public void addCloud(Cloud newCloud)throws CloudException {
-        if(this.playerHandler.getPlayers().size()==this.clouds.size()) throw new CloudException("Cannot add cloud");
+    public void addCloud(Cloud newCloud)throws SpecificCloudNotFoundException {
+        if(this.playerHandler.getPlayers().size()==this.clouds.size()) throw new SpecificCloudNotFoundException("Cannot add cloud");
         this.clouds.add(newCloud);
     }
 
-    public Cloud getCloudByID(int islandID) throws CloudException {
+    public Cloud getCloudByID(int islandID) throws SpecificCloudNotFoundException {
         for(Cloud cloud : this.clouds){
             if(cloud.getCloudID() == islandID)
                 return  cloud;
         }
-        throw new CloudException("Cannot found island with this id");
+        throw new SpecificCloudNotFoundException("Cannot found island with this id");
     }
 
     public IslandsHandler getIslandHandler() {
         return islandHandler;
     }
 
-    public void getCoin() throws CoinException {
-        if(coins==0) throw new CoinException("Not coins available");
-        coins--;
+    public boolean coinsAreEnough(){
+        if(this.coins>0)
+            return true;
+        return false;
+    }
+
+    public void getCoin(){
+        //TODO controlla se va bene togliere eccezione qui
+        if(coinsAreEnough())
+            coins--;
     }
 
     public ArrayList<Character> getCharacters() {
@@ -69,11 +75,11 @@ public class GameModel {
 
     public void addCharacter(Character c){this.characters.add(c);}
 
-    public Character getCharacterFromID(int id) throws CharacterException {
+    public Character getCharacterFromID(int id) throws SpecificCharacterNotFoundException {
         for(Character c : this.characters){
             if(c.getID() == id)
                 return c;
         }
-        throw new CharacterException("Cannot find character with this ID");
+        throw new SpecificCharacterNotFoundException("Cannot find character with this ID");
     }
 }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Exception.CloudException;
-import it.polimi.ingsw.Exception.IslandException;
+import it.polimi.ingsw.Exception.SpecificIslandNotFoundException;
 
 import java.util.ArrayList;
 
@@ -17,12 +16,12 @@ public class IslandsHandler {
 		return new ArrayList<>(islands);
 	}
 
-	public Island getIslandByID(int ID) throws IslandException {
+	public Island getIslandByID(int ID) throws SpecificIslandNotFoundException {
 		for (Island island : islands) {
 			if (island.getID() == ID)
 				return island;
 		}
-		throw new IslandException("Cannot found cloud with this ID");
+		throw new SpecificIslandNotFoundException("Cannot found cloud with this ID");
 	}
 
 	public int getMotherNature() {

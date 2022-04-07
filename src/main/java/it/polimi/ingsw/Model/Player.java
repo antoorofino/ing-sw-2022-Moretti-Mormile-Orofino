@@ -3,7 +3,6 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Controller.Action;
 import it.polimi.ingsw.Controller.RoundActions;
 import it.polimi.ingsw.Exception.CardException;
-import it.polimi.ingsw.Exception.CoinException;
 
 
 import java.util.ArrayList;
@@ -89,10 +88,15 @@ public class Player {
 		this.playerCoin = numCoins;
 	}
 
-	public void removeCoin(int numCoinsToRemove) throws CoinException {
-		if(numCoinsToRemove>playerCoin)
-			throw new CoinException("Not enough coins");
-		this.playerCoin -= numCoinsToRemove;
+	public boolean coinsAreEnough(int necessaryCoins){
+		if(this.playerCoin>necessaryCoins)
+			return true;
+		return false;
+	}
+
+	public void removeCoin(int numCoinsToRemove){
+		if(coinsAreEnough(numCoinsToRemove))
+			this.playerCoin -= numCoinsToRemove;
 	}
 
 	public void addCoin() {
