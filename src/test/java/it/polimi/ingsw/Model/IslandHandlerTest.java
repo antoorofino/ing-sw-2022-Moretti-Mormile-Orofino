@@ -40,12 +40,31 @@ public class IslandHandlerTest {
 
 	}
 
-	/*@Test
-	public void setMotherTest() throws SpecificCloudNotFoundException {
+	@Test
+	public void moveMotherTest() throws SpecificCloudNotFoundException {
+		ArrayList<Island> islands = new ArrayList<Island>();
+		Island island1 = new Island(0);
+		Island island2 = new Island(1);
+		islands.add(island1);
+		islands.add(island2);
+		islandHandler.setIslands(islands);
+		int mother = (islandHandler.getIslands().size())+1;
+		islandHandler.moveMotherNature(mother);
+		assertEquals(1,islandHandler.getMotherNature());
+	}
+	@Test
+	public void moveMotherTest2(){
 		int mother = 0;
-		islandHandler.setMotherNature(mother);
+		ArrayList<Island> islands = new ArrayList<Island>();
+		Island island1 = new Island(0);
+		Island island2 = new Island(1);
+		islands.add(island1);
+		islands.add(island2);
+		islandHandler.setIslands(islands);
+		islandHandler.moveMotherNature(mother);
 		mother++;
-		islandHandler.setMotherNature(mother);
+		islandHandler.moveMotherNature(mother);
 		assertEquals(mother,islandHandler.getMotherNature());
-	}*/
+	}
+
 }

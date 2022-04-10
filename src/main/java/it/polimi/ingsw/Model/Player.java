@@ -89,7 +89,7 @@ public class Player {
 	}
 
 	public boolean coinsAreEnough(int necessaryCoins){
-		if(this.playerCoin>necessaryCoins)
+		if(this.playerCoin>=necessaryCoins)
 			return true;
 		return false;
 	}
@@ -100,7 +100,7 @@ public class Player {
 	}
 
 	public void addCoin() {
-		this.playerCoin++;
+		this.playerCoin+=1;
 	}
 
 	public Character getActiveCharacter() {

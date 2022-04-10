@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.Action;
 import it.polimi.ingsw.Controller.ActionType;
 import it.polimi.ingsw.Controller.RoundActions;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exception.CardException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	void registerActionTest(){
+	void roundActionTest(){
 		Action action1 = new Action(ActionType.MOVE_STUDENT_TO_ISLAND);
 		Action action2 = new Action(ActionType.MOVE_STUDENT_TO_DININGROOM);
 		RoundActions roundActions = new RoundActions();
@@ -57,16 +58,52 @@ public class PlayerTest {
 		player.setNumOfTower(towers);
 		player.removeTower(1);
 		player.addTower(1);
+		assertEquals(false,player.TowerIsEmpty());
 		player.removeTower(1);
 		assertEquals(true,player.TowerIsEmpty());
 	}
 
 	@Test
-	void CharactertUseTest(){
+	void CharacterUseTest(){
 		Character character = new Character("Test","Test description",1,1,new Rules());
 		player.setActiveCharacter(character);
 		assertEquals(character,player.getActiveCharacter());
 	}
+
+	@Test
+	void lastCardUsedTest(){
+		AssistenceCard assistenceCard = new AssistenceCard(1,1,0);
+		ArrayList<AssistenceCard> cards = new ArrayList<AssistenceCard>();
+		cards.add(assistenceCard);
+		player.addCards(cards);
+		assertEquals(false,player.noMoreCards());
+		try {
+			player.setLastCardUsed(assistenceCard);
+		} catch (CardException e) {
+			e.printStackTrace();
+		}
+		assertEquals(assistenceCard,player.getLastCardUsed());
+		assertEquals(true,player.noMoreCards());
+		try {
+			player.setLastCardUsed(assistenceCard);
+		} catch (CardException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void coinsTest(){
+		player.setCoin(0);
+		player.addCoin();
+		assertEquals(true,player.coinsAreEnough(1));
+		player.removeCoin(1);
+		assertEquals(false,player.coinsAreEnough(1));
+		player.removeCoin(1);
+	}
+
+	//TODO resetRoundAction e getPlayerBoard
+
 
 
 }

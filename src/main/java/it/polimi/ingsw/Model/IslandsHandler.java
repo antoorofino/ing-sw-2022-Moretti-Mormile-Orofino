@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class IslandsHandler {
 	private ArrayList<Island> islands;
-	int motherNature;
+	private int motherNature;
 
 	public IslandsHandler(){
 		this.islands = new ArrayList<Island>();
@@ -33,6 +33,7 @@ public class IslandsHandler {
 	}
 
 	public void moveMotherNature(int newPos) {
-		motherNature = (motherNature+newPos)% islands.size();
+		if(islands.size()>0)
+			this.motherNature = (this.motherNature + newPos)%(islands.size());
 	}
 }

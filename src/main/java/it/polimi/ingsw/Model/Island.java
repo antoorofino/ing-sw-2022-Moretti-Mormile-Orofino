@@ -13,6 +13,9 @@ public class Island {
 
     public Island(int islandID){
         this.studentsOnIsland = new HashMap<Piece, Integer>();
+        for(Piece piece : Piece.values()){
+            studentsOnIsland.put(piece,0);
+        }
         this.ID=islandID;
         this.islandOwner = null;
         this.size = 1;
@@ -20,11 +23,14 @@ public class Island {
     }
 
     public boolean towerIsAlreadyBuild(){
-        return islandOwner.equals(null);
+        if(islandOwner == null)
+            return false;
+        else
+            return true;
     }
 
     public int getNumStudents(Piece s){
-        return studentsOnIsland.get(s);
+        return studentsOnIsland.get(s).intValue();
     }
 
     public void addStudent(Piece s){
@@ -90,6 +96,10 @@ public class Island {
 
     public void removeFlagNoInfluence(){
         this.flagNoInfluence = false;
+    }
+
+    public boolean getFlagNoInfluence(){
+        return this.flagNoInfluence;
     }
 
 }
