@@ -88,5 +88,10 @@ public class IslandTest {
 		assertEquals(false, island.getFlagNoInfluence());
 	}
 
+	@Test
+	public void calculateInfluenceTest(){
+
+	}
+
 
 }

@@ -18,6 +18,9 @@ public class Board {
     public Board(){
         this.studentsEntrance = new ArrayList<Piece>();
         this.studentsRoom = new HashMap<Piece,Integer>();
+        for(Piece p : Piece.values()){
+            this.studentsRoom.put(p,0);
+        }
     }
 
     public ArrayList<Piece> getStudentsEntrance(){
@@ -44,7 +47,7 @@ public class Board {
         // can throw an exception
         // move automatically student from Entrance
         removeFromEntrance(student);
-        studentsRoom.put(student,studentsRoom.get(student)+1);
+        studentsRoom.put(student,(studentsRoom.get(student)).intValue()+1);
     }
 
     public Map<Piece, Integer> getStudentsRoom(){return new HashMap<>(studentsRoom);}

@@ -21,6 +21,7 @@ public class Character {
         this.cost = cost;
         this.ID=ID;
         this.rules = rules;
+        this.studentsOnCard = new ArrayList<Piece>();
     }
 
     public String getName() {
@@ -63,4 +64,5 @@ public class Character {
     public void increaseCost(){
         this.cost++;
     }
+    public int getCost(){return this.cost;}
 }

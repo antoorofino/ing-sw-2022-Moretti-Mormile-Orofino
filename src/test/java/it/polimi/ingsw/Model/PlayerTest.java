@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 	Player player;
@@ -80,14 +80,14 @@ public class PlayerTest {
 		try {
 			player.setLastCardUsed(assistenceCard);
 		} catch (CardException e) {
-			e.printStackTrace();
+			//fail();
 		}
 		assertEquals(assistenceCard,player.getLastCardUsed());
 		assertEquals(true,player.noMoreCards());
 		try {
 			player.setLastCardUsed(assistenceCard);
 		} catch (CardException e) {
-			e.printStackTrace();
+			//fail();
 		}
 
 	}

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PlayersHandlerTest {
@@ -48,7 +48,6 @@ public class PlayersHandlerTest {
         try {
             playerHandler.getPlayersByNickName("Ciccio");
         } catch (PlayerException e) {
-            e.printStackTrace();
         }
 
         ArrayList<String>nicknames2;

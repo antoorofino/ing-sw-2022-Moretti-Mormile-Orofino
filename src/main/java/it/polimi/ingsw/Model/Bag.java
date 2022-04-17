@@ -46,7 +46,7 @@ public class Bag {
     /**
      * Draw students randomly
      * @param
-     * @return true if bag is empty else false
+     * @return an arrayList that contains drawed student
      */
     ArrayList<Piece> popStudents(int size){
         ArrayList<Piece> studentsArray = new ArrayList<Piece>();

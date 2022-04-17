@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IslandHandlerTest {
@@ -34,9 +35,11 @@ public class IslandHandlerTest {
 		islandHandler.setIslands(islands);
 		assertEquals(island1,islandHandler.getIslandByID(0));
 		assertEquals(islands,islandHandler.getIslands());
-		try{
+		/*try{
 			islandHandler.getIslandByID(2);
-		}catch (Exception e){}
+		}catch (Exception e){
+			//fail();
+		}*/
 
 	}
 
