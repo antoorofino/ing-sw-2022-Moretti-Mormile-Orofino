@@ -1,8 +1,11 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Exception.SpecificStudentNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -66,14 +69,6 @@ public class IslandTest {
 		//TODO quando si fa merge
 	}
 
-	//TODO getCountTest calculateInfluenceTest
-	/*@Test
-	public void getCountTest(){
-	}
-	@Test
-	public void calculateInfluenceTest(){
-	}
-	*/
 	@Test
 	public void getIdTest(){
 		assertEquals(0,island.getID());
@@ -88,8 +83,18 @@ public class IslandTest {
 		assertEquals(false, island.getFlagNoInfluence());
 	}
 
+	//TODO: calculate influence
 	@Test
 	public void calculateInfluenceTest(){
+
+		ArrayList<Piece> students = new ArrayList<Piece>();
+		students.add(Piece.DRAGON);
+		students.add(Piece.DRAGON);
+		students.add(Piece.DRAGON);
+		students.add(Piece.FROG);
+		students.add(Piece.FROG);
+		students.add(Piece.FAIRY);
+
 
 	}
 

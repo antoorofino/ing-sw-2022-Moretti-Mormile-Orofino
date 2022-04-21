@@ -14,7 +14,7 @@ public class GameModel {
     private int coins;
     private ArrayList<Character> characters;
 
-    GameModel(GameMode mode){
+    GameModel(/*GameMode mode*/){
         this.playerHandler = new PlayersHandler();
         this.characters = new ArrayList<Character>();
         this.coins = 20;
