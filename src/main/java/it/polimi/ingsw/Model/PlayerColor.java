@@ -15,7 +15,7 @@ public enum PlayerColor {
         this.color = color;
     }
 
-    public PlayerColor getPlayerColorByName(String color) {
+    public static PlayerColor getPlayerColorByName(String color) {
         return PlayerColor.valueOf(color.toUpperCase());
     }
 

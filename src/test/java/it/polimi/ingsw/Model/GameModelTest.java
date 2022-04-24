@@ -29,13 +29,13 @@ public class GameModelTest {
         assertEquals(true,gameModel.getPlayerHandler() instanceof PlayersHandler);
     }
 
-    //TODO: getBagTest
+
     @Test
     public void getBagTest(){
         assertEquals(true,gameModel.getStudentsBag() instanceof Bag);
     }
 
-    //TODO: getTeacherHandlerTest
+
     @Test
     public void getTeacherHandlerTest(){
         assertEquals(true,gameModel.getTeacherHandler() instanceof TeachersHandler);

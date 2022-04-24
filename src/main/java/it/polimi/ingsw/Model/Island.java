@@ -34,10 +34,7 @@ public class Island {
     }
 
     public void addStudent(Piece s){
-        if (studentsOnIsland.get(s)!=null)
-            studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
-        else
-            studentsOnIsland.put(s,1);
+        studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
     }
 
     public Player getIslandOwner(){
@@ -48,33 +45,39 @@ public class Island {
         return size;
     }
 
-    public void calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor){
+    public void calculateInfluence(/*PlayersHandler playersHandler,*/ TeachersHandler teacher, boolean towerCount, Piece invalidColor){
         int count;
         Player player;
         HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
+
         for (Piece piece: Piece.values()) { // assegno punteggio per pedine colori
-            if(!piece.getColor().equals(invalidColor)){ // se è valido
+            if(!piece.equals(invalidColor)){ // se è valido
                 player = teacher.getTeacherOwner(piece);
-                count = getCount(player,scores);
-                scores.put(player, count + getNumStudents(piece));
+                if(player!=null){
+                    count = getCount(player,scores);
+                    scores.put(player, count + getNumStudents(piece));
+                }
             }
         }
-        // count the tower
+
         if(towerCount){
             player = getIslandOwner();
-            count = getCount(player,scores);
-            scores.put(player, count + getSize());
+            if(player!=null) {
+                count = getCount(player,scores);
+                scores.put(player, count + getSize());
+            }
         }
 
         // find the new owner
         player = getIslandOwner();
         for (Player p : scores.keySet()) {
-            if(!p.equals(player) && scores.get(p)>scores.get(player))
+            if((player== null) || (!p.equals(player) && scores.get(p)>scores.get(player)))
                 player = p;
         }
 
-        if(!getIslandOwner().equals(player)){
-            getIslandOwner().addTower(getSize());
+        if(getIslandOwner()==null || !getIslandOwner().equals(player) ){
+            if(getIslandOwner()!=null)
+                getIslandOwner().addTower(getSize());
             player.removeTower(getSize());
             islandOwner = player;
         }

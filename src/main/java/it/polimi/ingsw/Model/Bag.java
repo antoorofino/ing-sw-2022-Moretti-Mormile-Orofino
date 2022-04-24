@@ -17,7 +17,7 @@ public class Bag {
     public Bag(){
         students = new HashMap<Piece,Integer>();
         for(Piece piece : Piece.values() ){
-                students.put(piece,26);
+                students.put(piece,24);
         }
 
     }
@@ -53,7 +53,7 @@ public class Bag {
         int i=0;
         int oldValue;
         Piece randomPiece;
-        while((i<size)||(!isEmpty())){
+        while((i<size) && (!isEmpty())){
             randomPiece = Piece.randomPiece();
             if((students.get(randomPiece))>0){
                 studentsArray.add(randomPiece);

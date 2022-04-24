@@ -83,18 +83,201 @@ public class IslandTest {
 		assertEquals(false, island.getFlagNoInfluence());
 	}
 
-	//TODO: calculate influence
+
 	@Test
 	public void calculateInfluenceTest(){
 
-		ArrayList<Piece> students = new ArrayList<Piece>();
-		students.add(Piece.DRAGON);
-		students.add(Piece.DRAGON);
-		students.add(Piece.DRAGON);
-		students.add(Piece.FROG);
-		students.add(Piece.FROG);
-		students.add(Piece.FAIRY);
+		ArrayList<Piece> studentsp1 = new ArrayList<Piece>();
+		studentsp1.add(Piece.DRAGON);
+		studentsp1.add(Piece.DRAGON);
+		studentsp1.add(Piece.DRAGON);
+		studentsp1.add(Piece.FROG);
+		studentsp1.add(Piece.FROG);
+		studentsp1.add(Piece.FAIRY);
 
+		ArrayList<Piece> studentsp2 = new ArrayList<Piece>();
+		studentsp2.add(Piece.FROG);
+		studentsp2.add(Piece.FROG);
+		studentsp2.add(Piece.FROG);
+		studentsp2.add(Piece.UNICORN);
+		studentsp2.add(Piece.UNICORN);
+		studentsp2.add(Piece.GNOME);
+
+		ArrayList<Piece> studentsp3 = new ArrayList<Piece>();
+		studentsp3.add(Piece.UNICORN);
+		studentsp3.add(Piece.FAIRY);
+		studentsp3.add(Piece.UNICORN);
+		studentsp3.add(Piece.UNICORN);
+		studentsp3.add(Piece.UNICORN);
+		studentsp3.add(Piece.FAIRY);
+
+		/*
+		P1 3 dragon 2 frog 1 fairy
+		P2 3 frog 2 unicorn 1 gnome
+		P3 4 unicorn 2 fairy
+		 */
+
+		ArrayList<Player> playersExample = new ArrayList<Player>();
+		Player p1 = new Player();
+		p1.setNickname("p1");
+		Player p2 = new Player();
+		p2.setNickname("p2");
+		Player p3 = new Player();
+		p3.setNickname("p3");
+
+		p1.getPlayerBoard().addToEntrance(studentsp1);
+		p2.getPlayerBoard().addToEntrance(studentsp2);
+		p3.getPlayerBoard().addToEntrance(studentsp3);
+
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.FROG);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.FROG);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+
+		try {
+			p2.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p2.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p2.getPlayerBoard().addStudentToRoom(Piece.GNOME);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+
+
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException e) {
+
+		}
+
+
+
+		PlayersHandler playersHandler = new PlayersHandler();
+		playersHandler.addPlayer(p1);
+		playersHandler.addPlayer(p2);
+		playersHandler.addPlayer(p3);
+
+		TeachersHandler teachersHandler = new TeachersHandler();
+		teachersHandler.calculateTeacher(playersHandler.getPlayers(),false);
+		/*
+		P1 DRAGON : 6
+		P2 FROG GNOME: 4 + 3 = 7
+		P3 UNICORN FAIRY: 4 +2
+		 */
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+
+		island.addStudent(Piece.FROG);
+		island.addStudent(Piece.FROG);
+		island.addStudent(Piece.FROG);
+		island.addStudent(Piece.FROG);
+
+		island.addStudent(Piece.FAIRY);
+		island.addStudent(Piece.FAIRY);
+
+		island.addStudent(Piece.GNOME);
+		island.addStudent(Piece.GNOME);
+		island.addStudent(Piece.GNOME);
+
+		island.addStudent(Piece.UNICORN);
+		island.addStudent(Piece.UNICORN);
+		island.addStudent(Piece.UNICORN);
+		island.addStudent(Piece.UNICORN);
+
+
+		island.calculateInfluence(teachersHandler,true,null);
+		assertEquals(p2,island.getIslandOwner());
+
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+		island.addStudent(Piece.DRAGON);
+		/*
+		P1 DRAGON : 6 + 3
+		P2 FROG GNOME: 4 + 3 = 7
+		P3 UNICORN FAIRY: 4 +2
+		 */
+		island.calculateInfluence(teachersHandler,true,null);
+		assertEquals(p1,island.getIslandOwner());
+
+		island.calculateInfluence(teachersHandler,true,Piece.DRAGON);
+		assertEquals(p2,island.getIslandOwner());
 
 	}
 
