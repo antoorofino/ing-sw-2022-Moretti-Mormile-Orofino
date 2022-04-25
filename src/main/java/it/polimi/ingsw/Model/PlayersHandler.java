@@ -1,23 +1,30 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Exception.PlayerException;
-
 import java.util.ArrayList;
 
 public class PlayersHandler {
-    private int numPlayer;
-    private ArrayList<Player> players;
+    //TODO: see if it has to be removed
+    private int numPlayers;
+    private final ArrayList<Player> players;
     private Player currentPlayer;
 
     public PlayersHandler(){
         this.players = new ArrayList<>();
-        this.numPlayer = 0;
+        this.numPlayers = 0;
         this.currentPlayer = null;
     }
 
     public void addPlayer(Player player){
         this.players.add(player);
-        this.numPlayer++;
+    }
+
+    public void setNumPlayers(int numPlayers){
+        this.numPlayers = numPlayers;
+    }
+
+    public int getNumPlayers(){
+        return this.numPlayers;
     }
 
     public ArrayList<Player> getPlayers() {

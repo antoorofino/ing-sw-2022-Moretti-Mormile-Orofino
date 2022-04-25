@@ -1,14 +1,23 @@
 package it.polimi.ingsw.Model;
 
+import java.util.ArrayList;
+
 /**
  * Stores information about an assistence card of the game
  */
 
 public class AssistenceCard {
-    private int cardValue;
-    private int movements;
-    private int cardID;
+    private final int cardValue;
+    private final int movements;
+    private final int cardID;
 
+    public static ArrayList<AssistenceCard> createDeck(int offset){
+        ArrayList<AssistenceCard> deck = new ArrayList<>();
+        for(int i = 1; i <= 10; i++){
+            deck.add(new AssistenceCard(i, (i+1)/2,i+(offset*10)));
+        }
+        return deck;
+    }
     /**
      * Constructor: build the Card
      *

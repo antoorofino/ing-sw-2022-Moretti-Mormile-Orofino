@@ -8,6 +8,7 @@ import it.polimi.ingsw.Exception.CardException;
 import java.util.ArrayList;
 
 public class Player {
+	private String id;
 	private String nickname;
 	private PlayerColor playerColor;
 	private Board playerBoard;
@@ -18,13 +19,16 @@ public class Player {
 	private Character activeCharacter;
 	private RoundActions roundActions;
 
-	public Player(){
+	public Player(String id){
+		this.id = id;
+		this.nickname = "- NOT CHOSEN -";
 		this.playerBoard = new Board();
 		this.lastCardUsed= null;
-		this.cards = new ArrayList<AssistenceCard>();
-		this.playerCoin = 1;
+		this.cards = new ArrayList<>();
+		this.numOfTower = 0;
+		this.playerCoin = 0;
 		this.activeCharacter = null;
-		this. roundActions = null;
+		this.roundActions = null;
 	}
 
 	public void setNickname(String nickname) {

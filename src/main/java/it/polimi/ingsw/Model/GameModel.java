@@ -4,24 +4,61 @@ import it.polimi.ingsw.Exception.SpecificCharacterNotFoundException;
 import it.polimi.ingsw.Exception.SpecificCloudNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameModel {
-    private PlayersHandler playerHandler;
-    private Bag studentsBag;
-    private TeachersHandler teacherHandler;
-    private ArrayList<Cloud> clouds;
-    private IslandsHandler islandHandler;
+    private final PlayersHandler playerHandler;
+    private final Bag studentsBag;
+    private final TeachersHandler teacherHandler;
+    private final ArrayList<Cloud> clouds;
+    private final IslandsHandler islandHandler;
     private int coins;
-    private ArrayList<Character> characters;
+    private final ArrayList<Character> characters;
 
-    GameModel(/*GameMode mode*/){
+    public GameModel(){
         this.playerHandler = new PlayersHandler();
-        this.characters = new ArrayList<Character>();
+        this.characters = new ArrayList<>();
         this.coins = 20;
-        this.clouds = new ArrayList<Cloud>();
+        this.clouds = new ArrayList<>();
         this.islandHandler = new IslandsHandler();
         this.teacherHandler = new TeachersHandler();
         this.studentsBag = new Bag();
+    }
+
+    public void setupGame(GameMode mode){
+        Random rand = new Random();
+        int numPlayers = this.playerHandler.getNumPlayers();
+        int numTowers, numEntranceStudents;
+        ArrayList<PlayerColor> colors = new ArrayList<>();
+        colors.add(PlayerColor.BLACK);
+        colors.add(PlayerColor.WHITE);
+        this.islandHandler.setupIslands();
+        if(numPlayers == 2){
+            numTowers = 8;
+            numEntranceStudents = 6;
+        } else if(numPlayers == 3){
+            numTowers = 6;
+            numEntranceStudents = 9;
+            colors.add(PlayerColor.GRAY);
+        } else {
+            throw new IllegalStateException("Unexpected value numPlayers: " + numPlayers);
+        }
+        int index = 0, randomIndex;
+        for(Player player: this.getPlayerHandler().getPlayers()){
+            player.setNumOfTower(numTowers);
+            player.addCards(AssistenceCard.createDeck(index++));
+            randomIndex = rand.nextInt(colors.size());
+            player.setPlayerColor(colors.get(randomIndex));
+            colors.remove(randomIndex);
+            player.getPlayerBoard().addToEntrance(this.studentsBag.popStudents(numEntranceStudents));
+        }
+        if(mode == GameMode.EXPERT){
+            for(Player player: this.getPlayerHandler().getPlayers()){
+                player.setCoin(1);
+                this.coins--;
+            }
+            //TODO: add three characters cards
+        }
     }
 
     public PlayersHandler getPlayerHandler() {
@@ -41,7 +78,7 @@ public class GameModel {
     }
 
     public void addCloud(Cloud newCloud)throws SpecificCloudNotFoundException {
-        if(this.playerHandler.getPlayers().size()==this.clouds.size()) throw new SpecificCloudNotFoundException("Cannot add cloud");
+        if(this.playerHandler.getPlayers().size() ==this.clouds.size()) throw new SpecificCloudNotFoundException("Cannot add cloud");
         this.clouds.add(newCloud);
     }
 
@@ -58,9 +95,7 @@ public class GameModel {
     }
 
     public boolean coinsAreEnough(){
-        if(this.coins>0)
-            return true;
-        return false;
+        return this.coins > 0;
     }
 
     public void getCoin(){
@@ -73,7 +108,9 @@ public class GameModel {
         return new ArrayList<>(characters);
     }
 
-    public void addCharacter(Character c){this.characters.add(c);}
+    public void addCharacter(Character c){
+        this.characters.add(c);
+    }
 
     public Character getCharacterFromID(int id) throws SpecificCharacterNotFoundException {
         for(Character c : this.characters){

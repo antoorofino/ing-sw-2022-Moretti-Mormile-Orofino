@@ -11,6 +11,7 @@ public class Rules {
 
 	protected Player currentplayer;
 
+	//TODO: add constructor with GameModel as parameter
 	/**
 	 * Calculate the next possible action of the current player
 	 *
