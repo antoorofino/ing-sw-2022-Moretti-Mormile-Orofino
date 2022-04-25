@@ -53,7 +53,7 @@ public class Bag {
         int i=0;
         int oldValue;
         Piece randomPiece;
-        while((i<size)&&(!isEmpty())){
+        while((i<size) && (!isEmpty())){
             randomPiece = Piece.randomPiece();
             if((students.get(randomPiece))>0){
                 studentsArray.add(randomPiece);

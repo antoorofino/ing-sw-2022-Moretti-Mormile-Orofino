@@ -102,7 +102,17 @@ public class PlayerTest {
 		player.removeCoin(1);
 	}
 
-	//TODO resetRoundAction e getPlayerBoard
+	//TODO check resetRoundActionTest
+
+	@Test
+	public void resetRoundActionTest(){
+		RoundActions r = new RoundActions();
+		player.setRoundActions(r);
+		assertEquals(r,player.getRoundActions());
+		player.resetRoundAction();
+		assertEquals(true,player.getRoundActions() instanceof RoundActions);
+		assertEquals(false, player.getRoundActions().equals(r));
+	}
 
 
 
