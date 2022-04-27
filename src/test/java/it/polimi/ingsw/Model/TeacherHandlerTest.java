@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TeacherHandlerTest {
@@ -26,9 +25,9 @@ public class TeacherHandlerTest {
 
     @Test
     public void calculateInfluenceTest(){
-        Player p1 = new Player();
-        Player p2 = new Player();
-        Player p3 = new Player();
+        Player p1 = new Player("id_p1");
+        Player p2 = new Player("id_p2");
+        Player p3 = new Player("id_p3");
         p1.setNickname("1");
         p2.setNickname("2");
         p3.setNickname("3");
@@ -38,7 +37,7 @@ public class TeacherHandlerTest {
         P1 has 1gnome 1frog e 1fairy 1dragon, 1frog e 1fairy in the room
         ----------------------------------------------------------------
          */
-        ArrayList<Piece> students = new ArrayList<Piece>();
+        ArrayList<Piece> students = new ArrayList<>();
         students.add(Piece.GNOME);
         students.add(Piece.FROG);
         students.add(Piece.FAIRY);
@@ -87,7 +86,7 @@ public class TeacherHandlerTest {
         }
 
         //Analyze player 1 and 2
-        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<Player> players = new ArrayList<>();
         players.add(p1);
         players.add(p2);
 
@@ -128,7 +127,7 @@ public class TeacherHandlerTest {
         try {
             p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
             p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
-        } catch (SpecificStudentNotFoundException e) {
+        } catch (SpecificStudentNotFoundException ignored) {
 
         }
         /*
@@ -145,7 +144,7 @@ public class TeacherHandlerTest {
          */
 
 
-        players=new ArrayList<Player>();
+        players=new ArrayList<>();
         players.add(p1);
         players.add(p2);
         players.add(p3);

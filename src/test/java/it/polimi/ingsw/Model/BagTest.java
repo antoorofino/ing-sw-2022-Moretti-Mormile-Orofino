@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Exception.SpecificStudentNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -28,13 +26,12 @@ public class BagTest {
 
     @Test
     public void bagTest(){
-        Map<Piece,Integer> studentsTest = new HashMap<Piece,Integer>();
+        Map<Piece,Integer> studentsTest = new HashMap<>();
         for(Piece p : Piece.values())
             studentsTest.put(p,0);
 
-        ArrayList<Piece> studentsRandom = new ArrayList<Piece>();
+        ArrayList<Piece> studentsRandom;
         int oldValue;
-        int cnt=0;
         assertEquals(false,bag.isEmpty());
         while(!bag.isEmpty()){
             studentsRandom=bag.popStudents(1);
@@ -49,7 +46,7 @@ public class BagTest {
             assertEquals(24,studentsTest.get(p).intValue());
 
         bag.addStudent(Piece.FROG,1);
-        studentsRandom=new ArrayList<Piece>();
+        studentsRandom=new ArrayList<>();
         while(!bag.isEmpty())
             studentsRandom.addAll(bag.popStudents(1));
 

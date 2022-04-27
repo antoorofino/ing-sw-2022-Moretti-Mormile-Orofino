@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,7 +24,7 @@ public class CloudTest {
 	public void MoveStudentTest(){
 		int ID = 0;
 		cloud = new Cloud(ID);
-		ArrayList<Piece> students = new ArrayList<Piece>();
+		ArrayList<Piece> students = new ArrayList<>();
 		students.add(Piece.GNOME);
 		students.add(Piece.FROG);
 		cloud.addStudents(students);

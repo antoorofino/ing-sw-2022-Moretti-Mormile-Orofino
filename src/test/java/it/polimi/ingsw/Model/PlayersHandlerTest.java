@@ -26,12 +26,12 @@ public class PlayersHandlerTest {
 
     @Test
     public void playerTest(){
-        Player p1 = new Player();
-        ArrayList<String>nicknames = new ArrayList<String>();
+        Player p1 = new Player("id_p1");
+        ArrayList<String>nicknames = new ArrayList<>();
         p1.setNickname("Moretti");
-        Player p2 = new Player();
+        Player p2 = new Player("is_p2");
         p2.setNickname("Mormile");
-        Player p3 = new Player();
+        Player p3 = new Player("id_p3");
         p3.setNickname("Orofino");
         playerHandler.addPlayer(p1);
         playerHandler.addPlayer(p2);
@@ -47,7 +47,7 @@ public class PlayersHandlerTest {
 
         try {
             playerHandler.getPlayersByNickName("Ciccio");
-        } catch (PlayerException e) {
+        } catch (PlayerException ignored) {
         }
 
         ArrayList<String>nicknames2;

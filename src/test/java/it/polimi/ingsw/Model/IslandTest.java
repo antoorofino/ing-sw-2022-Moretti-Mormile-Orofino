@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IslandTest {
 	Island island;
@@ -34,7 +34,7 @@ public class IslandTest {
 
 	@Test
 	public void towerIsAlreadyBuildTest(){
-		assertEquals(false,island.towerIsAlreadyBuild());
+		assertEquals(false, island.towerIsAlreadyBuild());
 	}
 
 	@Test
@@ -60,13 +60,13 @@ public class IslandTest {
 
 	 @Test
 	public void getIslandOwnerTest(){
-		assertEquals(null,island.getIslandOwner());
+		 assertNull(island.getIslandOwner());
 	}
 
 	@Test
 	public void getSizeTest(){
 		assertEquals(1,island.getSize());
-		//TODO quando si fa merge
+		//TODO: size > 1 after a merge
 	}
 
 	@Test
@@ -76,40 +76,44 @@ public class IslandTest {
 
 	@Test
 	public void getFlagNoInfluenceTest(){
-		assertEquals(false,island.getFlagNoInfluence());
-		island.setFlagNoInfluence();
-		assertEquals(true, island.getFlagNoInfluence());
+		assertEquals(0,island.getFlagNoInfluence());
+		island.addFlagNoInfluence();
+		assertEquals(1, island.getFlagNoInfluence());
+		island.addFlagNoInfluence();
+		assertEquals(2, island.getFlagNoInfluence());
 		island.removeFlagNoInfluence();
-		assertEquals(false, island.getFlagNoInfluence());
+		assertEquals(1, island.getFlagNoInfluence());
+		island.removeFlagNoInfluence();
+		assertEquals(0, island.getFlagNoInfluence());
 	}
 
 
 	@Test
 	public void calculateInfluenceTest(){
 
-		ArrayList<Piece> studentsp1 = new ArrayList<Piece>();
-		studentsp1.add(Piece.DRAGON);
-		studentsp1.add(Piece.DRAGON);
-		studentsp1.add(Piece.DRAGON);
-		studentsp1.add(Piece.FROG);
-		studentsp1.add(Piece.FROG);
-		studentsp1.add(Piece.FAIRY);
+		ArrayList<Piece> studentsP1 = new ArrayList<>();
+		studentsP1.add(Piece.DRAGON);
+		studentsP1.add(Piece.DRAGON);
+		studentsP1.add(Piece.DRAGON);
+		studentsP1.add(Piece.FROG);
+		studentsP1.add(Piece.FROG);
+		studentsP1.add(Piece.FAIRY);
 
-		ArrayList<Piece> studentsp2 = new ArrayList<Piece>();
-		studentsp2.add(Piece.FROG);
-		studentsp2.add(Piece.FROG);
-		studentsp2.add(Piece.FROG);
-		studentsp2.add(Piece.UNICORN);
-		studentsp2.add(Piece.UNICORN);
-		studentsp2.add(Piece.GNOME);
+		ArrayList<Piece> studentsP2 = new ArrayList<>();
+		studentsP2.add(Piece.FROG);
+		studentsP2.add(Piece.FROG);
+		studentsP2.add(Piece.FROG);
+		studentsP2.add(Piece.UNICORN);
+		studentsP2.add(Piece.UNICORN);
+		studentsP2.add(Piece.GNOME);
 
-		ArrayList<Piece> studentsp3 = new ArrayList<Piece>();
-		studentsp3.add(Piece.UNICORN);
-		studentsp3.add(Piece.FAIRY);
-		studentsp3.add(Piece.UNICORN);
-		studentsp3.add(Piece.UNICORN);
-		studentsp3.add(Piece.UNICORN);
-		studentsp3.add(Piece.FAIRY);
+		ArrayList<Piece> studentsP3 = new ArrayList<>();
+		studentsP3.add(Piece.UNICORN);
+		studentsP3.add(Piece.FAIRY);
+		studentsP3.add(Piece.UNICORN);
+		studentsP3.add(Piece.UNICORN);
+		studentsP3.add(Piece.UNICORN);
+		studentsP3.add(Piece.FAIRY);
 
 		/*
 		P1 3 dragon 2 frog 1 fairy
@@ -117,109 +121,108 @@ public class IslandTest {
 		P3 4 unicorn 2 fairy
 		 */
 
-		ArrayList<Player> playersExample = new ArrayList<Player>();
-		Player p1 = new Player();
+		Player p1 = new Player("id_p1");
 		p1.setNickname("p1");
-		Player p2 = new Player();
+		Player p2 = new Player("id_p2");
 		p2.setNickname("p2");
-		Player p3 = new Player();
+		Player p3 = new Player("id_p3");
 		p3.setNickname("p3");
 
-		p1.getPlayerBoard().addToEntrance(studentsp1);
-		p2.getPlayerBoard().addToEntrance(studentsp2);
-		p3.getPlayerBoard().addToEntrance(studentsp3);
+		p1.getPlayerBoard().addToEntrance(studentsP1);
+		p2.getPlayerBoard().addToEntrance(studentsP2);
+		p3.getPlayerBoard().addToEntrance(studentsP3);
 
 		try {
 			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
-		} catch (SpecificStudentNotFoundException e) {
-
-		}
-		try {
-			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+		try {
+			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p1.getPlayerBoard().addStudentToRoom(Piece.FROG);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p1.getPlayerBoard().addStudentToRoom(Piece.FROG);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p1.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.FROG);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.GNOME);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 
 
 		try {
 			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 		try {
 			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException e) {
+		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
 

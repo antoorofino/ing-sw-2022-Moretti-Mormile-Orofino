@@ -28,7 +28,7 @@ public class BoardTest {
     public void getStudentsEntranceTest(){
         board = new Board();
 
-        ArrayList<Piece> students = new ArrayList<Piece>();
+        ArrayList<Piece> students = new ArrayList<>();
         students.add(Piece.GNOME);
         students.add(Piece.FROG);
         students.add(Piece.FAIRY);
@@ -39,7 +39,7 @@ public class BoardTest {
 
         try {
             board.removeFromEntrance(Piece.GNOME);
-        } catch (SpecificStudentNotFoundException e) {
+        } catch (SpecificStudentNotFoundException ignored) {
 
         }
         students.remove(Piece.GNOME);
@@ -47,13 +47,13 @@ public class BoardTest {
 
         try {
             board.addStudentToRoom(Piece.FROG);
-        } catch (SpecificStudentNotFoundException e) {
+        } catch (SpecificStudentNotFoundException ignored) {
 
         }
         students.remove(Piece.FROG);
         assertEquals(students,board.getStudentsEntrance());
 
-        Map<Piece,Integer> studentsRoom = new HashMap<Piece,Integer>();
+        Map<Piece,Integer> studentsRoom = new HashMap<>();
         for(Piece p : Piece.values()){
             if(p.equals(Piece.FROG))
                 studentsRoom.put(Piece.FROG,1);
@@ -63,7 +63,7 @@ public class BoardTest {
         assertEquals(studentsRoom,board.getStudentsRoom());
         try {
             board.addStudentToRoom(Piece.UNICORN);
-        } catch (SpecificStudentNotFoundException e) {
+        } catch (SpecificStudentNotFoundException ignored) {
 
         }
     }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +8,7 @@ public class Island {
     private int ID;
     private int size;
     private Player islandOwner;
-    private boolean flagNoInfluence;
+    private int flagNoInfluence;
 
     public Island(int islandID){
         this.studentsOnIsland = new HashMap<Piece, Integer>();
@@ -19,7 +18,7 @@ public class Island {
         this.ID=islandID;
         this.islandOwner = null;
         this.size = 1;
-        this.flagNoInfluence = false;
+        this.flagNoInfluence = 0;
     }
 
     public boolean towerIsAlreadyBuild(){
@@ -93,15 +92,15 @@ public class Island {
         return this.ID;
     }
 
-    public void setFlagNoInfluence(){
-        this.flagNoInfluence = true;
+    public void addFlagNoInfluence(){
+        this.flagNoInfluence++;
     }
 
     public void removeFlagNoInfluence(){
-        this.flagNoInfluence = false;
+        this.flagNoInfluence--;
     }
 
-    public boolean getFlagNoInfluence(){
+    public int getFlagNoInfluence(){
         return this.flagNoInfluence;
     }
 

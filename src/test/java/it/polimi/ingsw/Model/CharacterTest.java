@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Exception.SpecificCloudNotFoundException;
-import it.polimi.ingsw.Exception.SpecificIslandNotFoundException;
 import it.polimi.ingsw.Exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.Exception.StudentNotPresentException;
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -65,7 +62,7 @@ public class CharacterTest {
     public void StudentsTest(){
         Rules r = new Rules();
         character = new Character("name1","description1",1,0,r);
-        ArrayList<Piece> students = new ArrayList<Piece>();
+        ArrayList<Piece> students = new ArrayList<>();
         assertEquals(students,character.getStudents());
         students.add(Piece.FROG);
         students.add(Piece.FAIRY);
@@ -75,7 +72,7 @@ public class CharacterTest {
             character.delStudent(Piece.FROG);
         } catch (StudentNotPresentException e) {
             e.printStackTrace();
-        } catch (SpecificStudentNotFoundException e) {
+        } catch (SpecificStudentNotFoundException ignored) {
         }
         students.remove(Piece.FROG);
         assertEquals(students,character.getStudents());
@@ -84,7 +81,7 @@ public class CharacterTest {
             character.delStudent(Piece.UNICORN);
         } catch (StudentNotPresentException e) {
             e.printStackTrace();
-        } catch (SpecificStudentNotFoundException e) {
+        } catch (SpecificStudentNotFoundException ignored) {
         }
     }
 

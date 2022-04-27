@@ -18,7 +18,7 @@ public class PlayerTest {
 
 	@BeforeEach
 	public void setUp() {
-		player = new Player();
+		player = new Player("test");
 	}
 
 	@AfterEach
@@ -28,7 +28,7 @@ public class PlayerTest {
 
 	@Test
 	void setNicknameTest() {
-		String nickname = new String("TestNickname");
+		String nickname = "TestNickname";
 		player.setNickname(nickname);
 		assertEquals(nickname, player.getNickname());
 	}
@@ -73,7 +73,7 @@ public class PlayerTest {
 	@Test
 	void lastCardUsedTest(){
 		AssistenceCard assistenceCard = new AssistenceCard(1,1,0);
-		ArrayList<AssistenceCard> cards = new ArrayList<AssistenceCard>();
+		ArrayList<AssistenceCard> cards = new ArrayList<>();
 		cards.add(assistenceCard);
 		player.addCards(cards);
 		assertEquals(false,player.noMoreCards());

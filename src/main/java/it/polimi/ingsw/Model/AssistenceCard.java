@@ -59,4 +59,8 @@ public class AssistenceCard {
     public int getMovements(){
         return this.movements;
     }
+
+    public boolean isSameValue(AssistenceCard card){
+        return cardValue == card.cardValue;
+    }
 }

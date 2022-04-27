@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Exception.SpecificCloudNotFoundException;
 import it.polimi.ingsw.Exception.SpecificIslandNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IslandHandlerTest {
@@ -26,8 +24,8 @@ public class IslandHandlerTest {
 	}
 
 	@Test
-	public void setIslandsTest() throws SpecificCloudNotFoundException, SpecificIslandNotFoundException {
-		ArrayList<Island> islands = new ArrayList<Island>();
+	public void setIslandsTest() throws SpecificIslandNotFoundException {
+		ArrayList<Island> islands = new ArrayList<>();
 		Island island1 = new Island(0);
 		Island island2 = new Island(1);
 		islands.add(island1);
@@ -44,8 +42,8 @@ public class IslandHandlerTest {
 	}
 
 	@Test
-	public void moveMotherTest() throws SpecificCloudNotFoundException {
-		ArrayList<Island> islands = new ArrayList<Island>();
+	public void moveMotherTest() {
+		ArrayList<Island> islands = new ArrayList<>();
 		Island island1 = new Island(0);
 		Island island2 = new Island(1);
 		islands.add(island1);
@@ -58,7 +56,7 @@ public class IslandHandlerTest {
 	@Test
 	public void moveMotherTest2(){
 		int mother = 0;
-		ArrayList<Island> islands = new ArrayList<Island>();
+		ArrayList<Island> islands = new ArrayList<>();
 		Island island1 = new Island(0);
 		Island island2 = new Island(1);
 		islands.add(island1);
