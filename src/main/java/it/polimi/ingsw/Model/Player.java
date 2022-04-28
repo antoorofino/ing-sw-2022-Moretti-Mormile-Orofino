@@ -8,10 +8,10 @@ import it.polimi.ingsw.Exception.CardException;
 import java.util.ArrayList;
 
 public class Player {
-	private String id;
+	private final String id;
 	private String nickname;
 	private PlayerColor playerColor;
-	private Board playerBoard;
+	private final Board playerBoard;
 	private ArrayList<AssistenceCard> cards;
 	private AssistenceCard lastCardUsed;
 	private int numOfTower;
@@ -39,6 +39,10 @@ public class Player {
 		return nickname;
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	public void setPlayerColor(PlayerColor color) {
 		this.playerColor = color;
 	}
@@ -49,6 +53,10 @@ public class Player {
 
 	public Board getPlayerBoard() {
 		return playerBoard;
+	}
+
+	public ArrayList<AssistenceCard> getDeck(){
+		return new ArrayList<>(cards);
 	}
 
 	public void addCards(ArrayList<AssistenceCard> cards) {
@@ -78,14 +86,12 @@ public class Player {
 		this.numOfTower+=numTower;
 	}
 
-	public void removeTower(int towerToremove) {
-		this.numOfTower-=towerToremove;
+	public void removeTower(int towerToRemove) {
+		this.numOfTower-=towerToRemove;
 	}
 
 	public boolean TowerIsEmpty(){
-		if(numOfTower<=0)
-			return true;
-		return false;
+		return numOfTower <= 0;
 	}
 
 	public void setCoin(int numCoins) {
@@ -93,9 +99,7 @@ public class Player {
 	}
 
 	public boolean coinsAreEnough(int necessaryCoins){
-		if(this.playerCoin>=necessaryCoins)
-			return true;
-		return false;
+		return this.playerCoin >= necessaryCoins;
 	}
 
 	public void removeCoin(int numCoinsToRemove){

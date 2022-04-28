@@ -19,6 +19,7 @@ public class PlayerTest {
 	@BeforeEach
 	public void setUp() {
 		player = new Player("test");
+		assertEquals("test", player.getId());
 	}
 
 	@AfterEach

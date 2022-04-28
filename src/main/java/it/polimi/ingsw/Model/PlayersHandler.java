@@ -1,18 +1,23 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Exception.PlayerException;
-import java.util.ArrayList;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayersHandler {
-    //TODO: see if it has to be removed
     private int numPlayers;
     private final ArrayList<Player> players;
     private Player currentPlayer;
+    private Player firstPlayer;
+    private ArrayList<Player> alreadyPlayed;
 
     public PlayersHandler(){
         this.players = new ArrayList<>();
         this.numPlayers = 0;
         this.currentPlayer = null;
+        this.firstPlayer = null;
+        this.alreadyPlayed = new ArrayList<>();
     }
 
     public void addPlayer(Player player){
@@ -32,17 +37,14 @@ public class PlayersHandler {
     }
 
     public ArrayList<String> getPlayersNickName(){
-        ArrayList<String> nicknames = new ArrayList<String>();
-
+        ArrayList<String> nicknames = new ArrayList<>();
         for(Player p : this.players){
             nicknames.add(p.getNickname());
         }
         return nicknames;
     }
 
-
     public Player getPlayersByNickName(String nickname) throws PlayerException {
-
         for(Player p : this.players){
             if(p.getNickname().equals(nickname))
                 return p;
@@ -50,48 +52,57 @@ public class PlayersHandler {
         throw new PlayerException("Cannot found player with this nickname");
     }
 
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    // TODO Check the following methods after the controller implementation
-    public void initialiseCurrentPlayer(){
-
-        this.currentPlayer = players.get(0);
-        for(int i = 1 ; i < this.players.size() ; i++){
-            if(players.get(i).getLastCardUsed().getCardValue() < currentPlayer.getLastCardUsed().getCardValue())
-                this.currentPlayer = players.get(i);
+    public void initialiseCurrentPlayerPlanningPhase(){
+        if(currentPlayer == null) {
+            firstPlayer = players.get(new Random().nextInt(players.size()));
+        }else{
+            firstPlayer = sortByAssistance(firstPlayer, players).get(0);
         }
-
+        currentPlayer = firstPlayer;
     }
 
-    public Player nextPlayerByOrder(){
-        return players.get((players.indexOf(currentPlayer)+1)%players.size());
+    public void initialiseCurrentPlayerActionPhase(){
+        alreadyPlayed = sortByAssistance(firstPlayer, players);
+        firstPlayer = alreadyPlayed.get(0);
+        currentPlayer = firstPlayer;
     }
 
+    public void nextPlayerByOrder(){
+        alreadyPlayed.add(currentPlayer);
+        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+    }
 
-    public Player nextPlayerByAssistance(){
-        Player nextPlayerByAssitance;
-        int i = 0;
-        while(this.players.get(i).equals(this.currentPlayer)){
-            i++;
+    public void nextPlayerByAssistance(){
+        alreadyPlayed.remove(0);
+        try {
+            currentPlayer = alreadyPlayed.get(0);
+        } catch (IndexOutOfBoundsException ignored){
         }
-        nextPlayerByAssitance = this.players.get(i);
-        for(Player p : this.players){
-            if(!p.equals(this.currentPlayer) && !p.equals(this.nextPlayerByAssistance())){
-                if(p.getLastCardUsed().getCardValue() < nextPlayerByAssitance.getLastCardUsed().getCardValue())
-                    nextPlayerByAssitance = p;
-                else if(p.getLastCardUsed().getCardValue() == nextPlayerByAssitance.getLastCardUsed().getCardValue()){
-                    if(this.players.indexOf(p) < this.players.indexOf(nextPlayerByAssitance))
-                        nextPlayerByAssitance = p;
+    }
+
+    private ArrayList<Player> sortByAssistance(Player first, ArrayList<Player> toSort){
+        ArrayList<Player> sorted = new ArrayList<>();
+        for(int i = toSort.indexOf(first); i < toSort.indexOf(first) + toSort.size(); i++)
+            sorted.add(toSort.get(i % toSort.size()));
+        for(int j = 0; j < toSort.size(); j++){
+            for(int i = 0; i < sorted.size()-1; i++)
+                if(sorted.get(i).getLastCardUsed().getCardValue() > sorted.get(i+1).getLastCardUsed().getCardValue()) {
+                    Player temp;
+                    temp = sorted.get(i);
+                    sorted.set(i, sorted.get(i+1));
+                    sorted.set(i+1, temp);
                 }
-            }
-
         }
-       return nextPlayerByAssitance;
+        return sorted;
     }
 
+    public List<AssistenceCard> cardsAlreadyPlayed(){
+        return alreadyPlayed.stream().map(Player::getLastCardUsed).collect(Collectors.toList());
+    }
 
     public boolean playerWithNoMoreCards(){
         for(Player p : players){
@@ -100,6 +111,4 @@ public class PlayersHandler {
         }
         return false;
     }
-
-
 }
