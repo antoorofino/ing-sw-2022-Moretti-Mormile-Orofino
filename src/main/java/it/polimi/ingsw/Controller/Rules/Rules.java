@@ -9,7 +9,7 @@ import it.polimi.ingsw.Model.*;
 
 public class Rules {
 
-	protected Player currentplayer;
+	protected Player currentPlayer;
 
 	//TODO: add constructor with GameModel as parameter
 	/**
@@ -20,7 +20,7 @@ public class Rules {
 	 */
 	public RoundActions nextPossibleActions(GameModel game) {
 		getCurrentPlayer(game);
-		RoundActions roundActions = currentplayer.getRoundActions();
+		RoundActions roundActions = currentPlayer.getRoundActions();
 		RoundActions nextPossibleActions = new RoundActions();
 
 		if (roundActions.hasMovedStudents() < 3) {
@@ -52,12 +52,12 @@ public class Rules {
 			case CHOOSE_CLOUD:
 				doChooseCloud(action, game);
 		}
-		currentplayer.registerAction(action);
+		currentPlayer.registerAction(action);
 	}
 
 	public void doMoveDiningRoom(Action action, GameModel game) {
 		try {
-			currentplayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+			currentPlayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -65,7 +65,7 @@ public class Rules {
 
 	public void doMoveIsland(Action action, GameModel game) {
 		try {
-			currentplayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
+			currentPlayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public class Rules {
 	}
 
 	protected boolean CanMooveMother(Action action, GameModel game) {
-		if (currentplayer.getLastCardUsed().getMovements() > action.getID())
+		if (currentPlayer.getLastCardUsed().getMovements() > action.getID())
 			return false;
 		else
 			return true;
@@ -97,7 +97,7 @@ public class Rules {
 		} catch (SpecificCloudNotFoundException e) {
 			e.printStackTrace();
 		}
-		currentplayer.getPlayerBoard().addToEntrance(cloud.getStudents());
+		currentPlayer.getPlayerBoard().addToEntrance(cloud.getStudents());
 	}
 
 
@@ -117,7 +117,7 @@ public class Rules {
 	}
 
 	protected void getCurrentPlayer(GameModel game) {
-		currentplayer = game.getPlayerHandler().getCurrentPlayer();
+		currentPlayer = game.getPlayerHandler().getCurrentPlayer();
 	}
 
 }

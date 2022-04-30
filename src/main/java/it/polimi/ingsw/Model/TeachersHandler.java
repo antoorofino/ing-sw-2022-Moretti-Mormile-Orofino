@@ -76,6 +76,10 @@ public class TeachersHandler {
         return true;
     }
 
+    public int teachersControlled(Player player){
+        return (int) teachers.values().stream().filter(p -> p.equals(player)).count();
+    }
+
     public Player getTeacherOwner(Piece teacher){
         return this.teachers.get(teacher);
     }

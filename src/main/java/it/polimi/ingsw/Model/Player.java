@@ -28,7 +28,7 @@ public class Player {
 		this.numOfTower = 0;
 		this.playerCoin = 0;
 		this.activeCharacter = null;
-		this.roundActions = null;
+		this.roundActions = new RoundActions();
 	}
 
 	public void setNickname(String nickname) {
@@ -80,6 +80,10 @@ public class Player {
 
 	public void setNumOfTower(int num) {
 		this.numOfTower = num;
+	}
+
+	public int getNumOfTower(){
+		return numOfTower;
 	}
 
 	public void addTower(int numTower) {
