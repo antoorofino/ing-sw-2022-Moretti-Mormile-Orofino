@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.server.Rules.Rules;
+import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.util.exception.StudentNotPresentException;
 
@@ -15,7 +15,7 @@ public class Character {
     private int islandFlag;
     private int cost;
 
-    public Character(String name, String description, int cost, int ID,Rules rules){
+    public Character(String name, String description, int cost, int ID, Rules rules){
         this.name = name;
         this.description = description;
         this.cost = cost;

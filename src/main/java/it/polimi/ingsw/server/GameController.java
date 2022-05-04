@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.Rules.Rules;
+import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.CardException;
 import it.polimi.ingsw.util.exception.PlayerException;
 import it.polimi.ingsw.model.AssistantCard;

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.server.Rules.Rules;
+import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.util.exception.StudentNotPresentException;
 import org.junit.jupiter.api.AfterEach;

@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
-import it.polimi.ingsw.server.Rules.Rules;
+import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.CardException;
 import it.polimi.ingsw.util.TowerColor;
 import org.junit.jupiter.api.AfterEach;
