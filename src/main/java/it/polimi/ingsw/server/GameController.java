@@ -98,6 +98,7 @@ public class GameController {
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
                 if(game.getPlayerHandler().getCurrentPlayer().getRoundActions().hasEnded()){
                     game.getPlayerHandler().getCurrentPlayer().resetRoundAction();
+                    game.getPlayerHandler().getCurrentPlayer().setActiveCharacter(null);
                     game.getPlayerHandler().nextPlayerByAssistance();
                     i++;
                 } else {
