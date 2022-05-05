@@ -48,6 +48,10 @@ public class Character {
         this.islandFlag=num;
     }
 
+    public void removeIslandFlag() {this.islandFlag--;}
+
+    public void addIslandFlag() {this.islandFlag++;}
+
     public void addStudents(ArrayList<Piece> students){
         this.studentsOnCard.addAll(students);
     }

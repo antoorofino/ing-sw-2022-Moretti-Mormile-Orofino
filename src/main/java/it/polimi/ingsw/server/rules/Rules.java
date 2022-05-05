@@ -7,31 +7,35 @@ import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.*;
 import it.polimi.ingsw.model.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Rules {
 
-	protected Player currentPlayer;
+	protected GameModel game;
 
-	//TODO: add constructor with GameModel as parameter
+	public Rules(GameModel game){
+		this.game = game;
+	}
+
 	/**
 	 * Calculate the next possible action of the current player
 	 *
-	 * @param game
 	 * @return ArrayList of Action that current player can do
 	 */
-	public RoundActions nextPossibleActions(GameModel game) {
-		getCurrentPlayer(game);
-		RoundActions roundActions = currentPlayer.getRoundActions();
+	public RoundActions nextPossibleActions() {
+		RoundActions roundActions = getCurrentPlayer().getRoundActions();
 		RoundActions nextPossibleActions = new RoundActions();
 
 		if (roundActions.hasMovedStudents() < 3) {
-			controlTeacher(game);
+			controlTeacher();
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_ISLAND));
 		} else
 			nextPossibleActions.add(new Action(ActionType.MOVE_MOTHER_NATURE));
 
 		if (roundActions.hasMovedMother())
-			calculateInfluence(game);
+			calculateInfluence();
 			nextPossibleActions.add(new Action(ActionType.CHOOSE_CLOUD));
 
 		if (roundActions.hasChooseCloud())
@@ -40,68 +44,72 @@ public class Rules {
 		return nextPossibleActions;
 	}
 
-	public void doAction(Action action, GameModel game) throws InvalidInput {
-		getCurrentPlayer(game);
+	public boolean doAction(Action action){
+		boolean returnValue = false;
 		switch (action.getActionType()) {
 			case MOVE_STUDENT_TO_DININGROOM:
-				doMoveDiningRoom(action, game);
+				returnValue = doMoveDiningRoom(action);
 			case MOVE_STUDENT_TO_ISLAND:
-				doMoveIsland(action, game);
+				returnValue = doMoveIsland(action);
 			case MOVE_MOTHER_NATURE:
-				doMoveMother(action, game);
+				returnValue = doMoveMother(action);
 			case CHOOSE_CLOUD:
-				doChooseCloud(action, game);
+				returnValue = doChooseCloud(action);
 		}
-		currentPlayer.registerAction(action);
+		if(returnValue)
+			getCurrentPlayer().registerAction(action);
+		return returnValue;
 	}
 
-	public void doMoveDiningRoom(Action action, GameModel game) {
+	protected boolean doMoveDiningRoom(Action action) {
 		try {
-			currentPlayer.getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+			// remove from entrance
+			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
-			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
-	public void doMoveIsland(Action action, GameModel game) {
+	protected boolean doMoveIsland(Action action) {
 		try {
-			currentPlayer.getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
+			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
-			e.printStackTrace();
+			return false;
 		}
 
 		try {
 			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
 		} catch (SpecificIslandNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void doMoveMother(Action action, GameModel game) throws InvalidInput {
-		if (!CanMooveMother(action, game)) throw new InvalidInput("Movimenti madre natura non consentiti");
-		game.getIslandHandler().moveMotherNature(action.getID());
-	}
-
-	protected boolean CanMooveMother(Action action, GameModel game) {
-		if (currentPlayer.getLastCardUsed().getMovements() > action.getID())
+			// roolback function
+			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
 			return false;
-		else
+		}
+		return true;
+	}
+
+	protected boolean doMoveMother(Action action){
+		if (getCurrentPlayer().getLastCardUsed().getMovements() > action.getID()){
+			game.getIslandHandler().moveMotherNature(action.getID());
 			return true;
+		}
+		return false;
 	}
 
 
-	public void doChooseCloud(Action action, GameModel game) {
+	protected boolean doChooseCloud(Action action) {
 		Cloud cloud = null;
 		try {
 			cloud = game.getCloudByID(action.getID());
 		} catch (SpecificCloudNotFoundException e) {
-			e.printStackTrace();
+			return false;
 		}
-		currentPlayer.getPlayerBoard().addToEntrance(cloud.getStudents());
+		getCurrentPlayer().getPlayerBoard().addToEntrance(cloud.getStudents());
+		return true;
 	}
 
 
-	protected void calculateInfluence(GameModel game) {
+	protected void calculateInfluence() {
 		int currentMother = game.getIslandHandler().getMotherNature();
 		Island currentIsland = null;
 		try {
@@ -109,15 +117,15 @@ public class Rules {
 		} catch (SpecificIslandNotFoundException e) {
 			e.printStackTrace();
 		}
-		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null);
+		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
 	}
 
-	protected void controlTeacher(GameModel game) {
+	protected void controlTeacher() {
 		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 	}
 
-	protected void getCurrentPlayer(GameModel game) {
-		currentPlayer = game.getPlayerHandler().getCurrentPlayer();
+	protected Player getCurrentPlayer() {
+		return game.getPlayerHandler().getCurrentPlayer();
 	}
 
 }

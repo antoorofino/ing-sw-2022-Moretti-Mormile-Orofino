@@ -1,21 +1,29 @@
 package it.polimi.ingsw.util;
 
 public enum ActionType {
-    MOVE_STUDENT_TO_ISLAND("Basic"),
-    MOVE_STUDENT_TO_DININGROOM("Basic"),
-    MOVE_MOTHER_NATURE("Basic"),
-    CHOOSE_CLOUD("Basic"),
-    END("Basic"),
-    //LOSE("Basic"),
-    USE_CHARACTER("Expert");
+    MOVE_STUDENT_TO_ISLAND(GameMode.BASIC),
+    MOVE_STUDENT_TO_DININGROOM(GameMode.BASIC),
+    MOVE_MOTHER_NATURE(GameMode.BASIC),
+    CHOOSE_CLOUD(GameMode.BASIC),
+    END(GameMode.BASIC),
 
-    private final String mode;
+    CHOOSE_CHARACTER(GameMode.EXPERT),
+    ACTIVATED_CHARACTER(GameMode.EXPERT),
 
-    ActionType(String mode) {
+    STUDENT_FROM_CARD_TO_ISLAND(GameMode.EXPERT),// 1 character
+    CHOOSE_ISLAND(GameMode.EXPERT), // 3,5 character
+    STUDENT_FROM_CARD_TO_ENTRANCE(GameMode.EXPERT), // 7 character
+    CHOOSE_COLOR(GameMode.EXPERT), // 9,12 character
+    STUDENT_FROM_ENTRANCE_TO_DINING(GameMode.EXPERT), // 10 character
+    STUDENT_FROM_CARD_TO_DINING(GameMode.EXPERT); // 11 character
+
+    private final GameMode mode;
+
+    ActionType(GameMode mode) {
         this.mode = mode;
     }
 
-    public String getMode() {
+    public GameMode getMode() {
         return this.mode;
     }
 }

@@ -35,7 +35,11 @@ public class RoundActions  implements Serializable {
     }
 
     public boolean hasChooseCharacter(){
-        return actionList.contains(ActionType.USE_CHARACTER);
+        return actionList.contains(ActionType.CHOOSE_CHARACTER);
+    }
+
+    public boolean hasActivatedCharacter(){
+        return actionList.contains(ActionType.ACTIVATED_CHARACTER);
     }
 
     public boolean hasEnded() {
