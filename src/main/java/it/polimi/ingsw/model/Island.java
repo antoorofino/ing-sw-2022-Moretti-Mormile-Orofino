@@ -3,6 +3,9 @@ package it.polimi.ingsw.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores information about island
+ */
 public class Island {
     private Map<Piece, Integer> studentsOnIsland;
     private int ID;
@@ -10,6 +13,10 @@ public class Island {
     private Player islandOwner;
     private int flagNoInfluence;
 
+    /**
+     * Constructor: build Island
+     * @param islandID identifier of island
+     */
     public Island(int islandID){
         this.studentsOnIsland = new HashMap<Piece, Integer>();
         for(Piece piece : Piece.values()){
@@ -21,6 +28,10 @@ public class Island {
         this.flagNoInfluence = 0;
     }
 
+    /**
+     * Checks if tower is already build, so if the island has an owner
+     * @return true if island has an owner
+     */
     public boolean towerIsAlreadyBuild(){
         if(islandOwner == null)
             return false;
@@ -28,21 +39,45 @@ public class Island {
             return true;
     }
 
+    /**
+     * Gets number of students on island
+     * @param s type of student
+     * @return number of students on island
+     */
     public int getNumStudents(Piece s){
         return studentsOnIsland.get(s).intValue();
     }
 
+    /**
+     * Adds student on island
+     * @param s student to add
+     */
     public void addStudent(Piece s){
         studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
     }
 
+    /**
+     * Gets island owner
+     * @return island owner
+     */
     public Player getIslandOwner(){
         return islandOwner;
     }
 
+    /**
+     * Get size of island
+     * @return size of island
+     */
     public int getSize(){
         return size;
     }
+
+    /**
+     * Calculate the influence on teacher
+     * @param teacher to have the influence
+     * @param towerCount true if towers are important to calculate influence
+     * @param invalidColor color that isn't influent
+     */
 
     public void calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
         int count;

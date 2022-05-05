@@ -32,7 +32,7 @@ public class Bag {
     }
 
     /**
-     * Check if bag is empty or not
+     * Checks if bag is empty or not
      * @return true if bag is empty else false
      */
     public boolean isEmpty(){
