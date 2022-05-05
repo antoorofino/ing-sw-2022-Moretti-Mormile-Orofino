@@ -48,7 +48,7 @@ public class Bag {
      * @param
      * @return an arrayList that contains drawed student
      */
-    ArrayList<Piece> popStudents(int size){
+    public ArrayList<Piece> popStudents(int size){
         ArrayList<Piece> studentsArray = new ArrayList<Piece>();
         int i=0;
         int oldValue;

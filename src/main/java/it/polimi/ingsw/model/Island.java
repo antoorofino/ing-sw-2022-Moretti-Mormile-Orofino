@@ -44,11 +44,18 @@ public class Island {
         return size;
     }
 
-    public void calculateInfluence(/*PlayersHandler playersHandler,*/ TeachersHandler teacher, boolean towerCount, Piece invalidColor){
+    public void calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
         int count;
         Player player;
         HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
-
+        if(this.flagNoInfluence>0){
+            removeFlagNoInfluence();
+            return;
+        }
+        // punteggio extra
+        if(extraPoints!=null){
+            scores.put(extraPoints,2);
+        }
         for (Piece piece: Piece.values()) { // assegno punteggio per pedine colori
             if(!piece.equals(invalidColor)){ // se è valido
                 player = teacher.getTeacherOwner(piece);

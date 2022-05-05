@@ -24,6 +24,15 @@ public enum Piece {
         return Piece.valueOf(name.toUpperCase());
     }
 
+    public static Piece getPieceByColor(String color) {
+        for (Piece p : Piece.values()) {
+            if (p.colorString.equalsIgnoreCase(color)) {
+                 return p;
+            }
+        }
+        return null;
+    }
+
     public Color getColor(){
         return this.color;
     }

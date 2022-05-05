@@ -26,13 +26,6 @@ public class Board {
         return new ArrayList<>(studentsEntrance);
     }
 
-
-    public void removeFromEntrance(Piece student) throws SpecificStudentNotFoundException {
-        if(this.studentsEntrance.contains(student))
-            studentsEntrance.remove(student);
-        else throw new SpecificStudentNotFoundException("Specific student isn't present");
-    }
-
     public int getNumOfStudentsRoom(Piece student){
         return studentsRoom.get(student);
     }
@@ -41,12 +34,21 @@ public class Board {
         this.studentsEntrance.addAll(students);
     }
 
+    public void removeFromEntrance(Piece student) throws SpecificStudentNotFoundException {
+        if(this.studentsEntrance.contains(student))
+            studentsEntrance.remove(student);
+        else throw new SpecificStudentNotFoundException("Specific student isn't present");
+    }
 
+    // TODO: fix test methods calls after remove the automatically remove from entrance
     public void addStudentToRoom(Piece student) throws SpecificStudentNotFoundException {
-        // can throw an exception
-        // move automatically student from Entrance
-        removeFromEntrance(student);
         studentsRoom.put(student,(studentsRoom.get(student)).intValue()+1);
+    }
+
+    public void removeFromRoom(Piece student) throws SpecificStudentNotFoundException {
+        if(this.studentsRoom.get(student).intValue() > 0 )
+            studentsRoom.put(student,(studentsRoom.get(student)).intValue()-1);
+        else throw new SpecificStudentNotFoundException("Specific student isn't present");
     }
 
     public Map<Piece, Integer> getStudentsRoom(){return new HashMap<>(studentsRoom);}
