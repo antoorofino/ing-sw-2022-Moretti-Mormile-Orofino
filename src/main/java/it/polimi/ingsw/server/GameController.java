@@ -38,7 +38,7 @@ public class GameController {
     public void setGameMode(GameMode mode){
         this.mode = mode;
         if(mode == GameMode.BASIC){
-            this.rules = new Rules();
+            this.rules = new Rules(game);
         } else {
             //TODO: add advanced rules
         }
