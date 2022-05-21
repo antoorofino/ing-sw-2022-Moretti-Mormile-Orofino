@@ -2,6 +2,7 @@ package it.polimi.ingsw.Util;
 
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.Character;
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
@@ -70,7 +71,7 @@ public class PlayerTest {
 
 	@Test
 	void CharacterUseTest(){
-		Character character = new Character("Test","Test description",1,1,new Rules());
+		Character character = new Character("Test","Test description",1,1,new Rules(new GameModel()));
 		player.setActiveCharacter(character);
 		assertEquals(character,player.getActiveCharacter());
 	}

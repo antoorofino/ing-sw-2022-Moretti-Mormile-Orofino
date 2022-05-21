@@ -265,7 +265,7 @@ public class IslandTest {
 		island.addStudent(Piece.UNICORN);
 
 
-		island.calculateInfluence(teachersHandler,true,null);
+		island.calculateInfluence(teachersHandler,true,null, new Player("id"));
 		assertEquals(p2,island.getIslandOwner());
 
 		island.addStudent(Piece.DRAGON);
@@ -276,10 +276,10 @@ public class IslandTest {
 		P2 FROG GNOME: 4 + 3 = 7
 		P3 UNICORN FAIRY: 4 +2
 		 */
-		island.calculateInfluence(teachersHandler,true,null);
+		island.calculateInfluence(teachersHandler,true,null, new Player("id"));
 		assertEquals(p1,island.getIslandOwner());
 
-		island.calculateInfluence(teachersHandler,true,Piece.DRAGON);
+		island.calculateInfluence(teachersHandler,true,Piece.DRAGON, new Player("id"));
 		assertEquals(p2,island.getIslandOwner());
 
 	}

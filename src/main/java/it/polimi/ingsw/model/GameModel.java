@@ -12,6 +12,7 @@ import java.util.Random;
  * Stores information of Game model
  */
 public class GameModel {
+    private boolean isActive;
     private final PlayersHandler playerHandler;
     private final Bag studentsBag;
     private final TeachersHandler teacherHandler;
@@ -24,6 +25,7 @@ public class GameModel {
      * Constructor : build game model
      */
     public GameModel(){
+        this.isActive = true;
         this.playerHandler = new PlayersHandler();
         this.characters = new ArrayList<>();
         this.coins = 20;
@@ -182,5 +184,18 @@ public class GameModel {
                 return c;
         }
         throw new SpecificCharacterNotFoundException("Cannot find character with this ID");
+    }
+
+    public boolean gameAcceptPlayers(){
+        // TODO: add gameMode != NotChosen
+        return playerHandler.getNumPlayers() != 0;
+    }
+
+    public boolean isActive(){
+        return isActive;
+    }
+
+    public void setAsInactive(){
+        this.isActive = false;
     }
 }

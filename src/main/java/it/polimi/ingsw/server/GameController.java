@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.messages.ShowDisconnectionMessage;
+import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.CardException;
+import it.polimi.ingsw.util.exception.DisconnectionException;
 import it.polimi.ingsw.util.exception.PlayerException;
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.util.Action;
@@ -11,6 +14,8 @@ import it.polimi.ingsw.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GameController {
@@ -19,8 +24,7 @@ public class GameController {
     private boolean isCardChosen;
     private boolean endImmediately;
     private Rules rules;
-    //TODO: virtualView
-    //private VirtualView vView;
+    private VirtualView virtualView;
 
     public GameController(GameModel game) {
         mode = GameMode.NOT_CHOSEN;
@@ -29,18 +33,20 @@ public class GameController {
         this.endImmediately = false;
     }
 
-    /* TODO: virtualView
-    public void setVirtualView(VirtualView v){
-        this.vView = v;
+    public GameModel getGame(){
+        return game;
     }
-    */
+
+    public void setVirtualView(VirtualView v){
+        this.virtualView = v;
+    }
 
     public void setGameMode(GameMode mode){
         this.mode = mode;
         if(mode == GameMode.BASIC){
             this.rules = new Rules(game);
         } else {
-            //TODO: add advanced rules
+            this.rules = new ExpertRules(game);
         }
         wakeUpController();
     }
@@ -69,9 +75,9 @@ public class GameController {
         return false;
     }
 
-    public void gameRunner() throws InterruptedException {
+    public void gameRunner() throws InterruptedException, DisconnectionException {
         synchronized(this){
-            while(!gameCanStart())
+            while(!gameCanStart() && isRunning())
                 this.wait();
         }
 
@@ -163,21 +169,18 @@ public class GameController {
         if(!checkIfIsCurrentPlayer(nickname))
             return false;
         Player thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
+        boolean legalAction;
         if(thePlayer.getActiveCharacter() == null){
-            try{
-                //FIXME: doAction is still void
-                // endImmediately = rules.doAction(action);
-            } catch (Exception ignored){
-                return false;
-            }
+            legalAction = rules.doAction(action);
         } else {
-            try{
-                //FIXME: doAction is still void
-                //endImmediately = thePlayer.getActiveCharacter().getRules().doAction(action);
-            } catch (Exception ignored){
-                return false;
-            }
+            legalAction = thePlayer.getActiveCharacter().getRules().doAction(action);
         }
+        if(!legalAction)
+            return false;
+        if(thePlayer.getNumOfTower() == 0)
+            endImmediately = true;
+        if(game.getIslandHandler().getIslands().size() <= 3)
+            endImmediately = true;
         wakeUpController();
         return true;
     }
@@ -220,6 +223,27 @@ public class GameController {
     private boolean gameCanStart(){
         return mode != GameMode.NOT_CHOSEN &&
                 game.getPlayerHandler().getPlayers().size() == game.getPlayerHandler().getNumPlayers();
+    }
+
+    private boolean isRunning() throws DisconnectionException {
+        if (!game.isActive()) {
+            throw new DisconnectionException();
+        }
+        return true;
+    }
+
+    public void setAsDisconnected(String playerId) {
+        String nickname = "";
+        try {
+            nickname = game.getPlayerHandler().getPlayers().stream()
+                    .filter(p -> Objects.equals(p.getId(), playerId))
+                    .findFirst()
+                    .get().getNickname();
+        } catch (NoSuchElementException ignored) {
+        }
+        virtualView.sendToEveryone(new ShowDisconnectionMessage(nickname));
+        virtualView.closeAll();
+        wakeUpController();
     }
 
     public void wakeUpController() {

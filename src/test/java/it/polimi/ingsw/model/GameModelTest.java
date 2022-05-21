@@ -125,7 +125,7 @@ public class GameModelTest {
 
     @Test
     public void characterTest(){
-        Character c = new Character("n1","des1",1,1,new Rules());
+        Character c = new Character("n1","des1",1,1,new Rules(new GameModel()));
         gameModel.addCharacter(c);
         try {
             assertEquals(c,gameModel.getCharacterFromID(1));
@@ -137,7 +137,7 @@ public class GameModelTest {
         } catch (SpecificCharacterNotFoundException ignored) {
 
         }
-        Character c2 = new Character("n2","des2",1,2,new Rules());
+        Character c2 = new Character("n2","des2",1,2,new Rules(new GameModel()));
         gameModel.addCharacter(c2);
         try {
             assertEquals(c2,gameModel.getCharacterFromID(2));
