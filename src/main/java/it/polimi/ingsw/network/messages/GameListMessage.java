@@ -14,7 +14,7 @@ public class GameListMessage implements Serializable, CVMessage {
 
     public GameListMessage(List<GameModel> gameList){
         this.gameList = gameList;
-        this.messageType = MessageType.SYS;
+        this.messageType = MessageType.CV;
     }
     @Override
     public MessageType getType() {
