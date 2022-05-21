@@ -52,6 +52,8 @@ public class ServerMain {
         while (true) {
             Socket socket = serverSocket.accept();
             ClientHandler clientHandler = new ClientHandler(this, socket);
+            Thread t = new Thread(clientHandler);
+            t.start();
             synchronized (clientHandlers) {
                 clientHandlers.add(clientHandler);
             }
@@ -59,6 +61,7 @@ public class ServerMain {
     }
 
     public void createNewGame(String playerId){
+        System.out.println(" A player choice to create a new game " + playerId);
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
         GameModel game = new GameModel();
         GameController controller = new GameController(game);

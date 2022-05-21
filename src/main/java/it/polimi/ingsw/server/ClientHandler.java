@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.VCMessage;
 import it.polimi.ingsw.network.heartbeat.HeartbeatSender;
 import it.polimi.ingsw.network.messages.NotifyPlayerIdMessage;
 import it.polimi.ingsw.util.Configurator;
+import it.polimi.ingsw.util.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -35,10 +36,11 @@ public class ClientHandler extends Thread implements NetworkHandler {
 
         this.isConnected = true;
         socket.setSoTimeout(Configurator.getSocketTimeout());
-        (new HeartbeatSender(this)).start();
+        (new HeartbeatSender(this, MessageType.CV)).start();
 
         this.playerId = UUID.randomUUID().toString();
         send(new NotifyPlayerIdMessage(playerId));
+
     }
 
     public void setVirtualView(VirtualView virtualView){
@@ -55,33 +57,36 @@ public class ClientHandler extends Thread implements NetworkHandler {
 
     @Override
     public void run() {
-        try {
-            Message clientMessage = (Message) input.readObject();
-            switch (clientMessage.getType()){
-                case SYS: {
-                    SYSMessage sysMessage = (SYSMessage) clientMessage;
-                    sysMessage.execute(serverMain);
-                    break;
+        // FIXME: dove viene chiamato sto metodo? e il while?? ho aggiunto la chiamata nel server main riga 55
+        while(isConnected) {
+            try {
+                Message clientMessage = (Message) input.readObject();
+                switch (clientMessage.getType()) {
+                    case SYS: {
+                        SYSMessage sysMessage = (SYSMessage) clientMessage;
+                        sysMessage.execute(serverMain);
+                        break;
+                    }
+                    case VC: {
+                        VCMessage vcMessage = (VCMessage) clientMessage;
+                        vcMessage.execute(virtualView);
+                    }
                 }
-                case VC: {
-                    VCMessage vcMessage = (VCMessage) clientMessage;
-                    vcMessage.execute(virtualView);
+            } catch (IOException | ClassNotFoundException e) {
+                if (virtualView != null) {
+                    if (isConnected) {
+                        // This player has disconnected
+                        System.out.println("Warning: player has disconnected during message receiving");
+                        isConnected = false;
+                        virtualView.setDisconnected(playerId);
+                    } else {
+                        // Another player has disconnected
+                        System.out.println("Status: player was forced to stop during message receiving");
+                    }
                 }
+                serverMain.setDisconnected(playerId);
+                close();
             }
-        } catch (IOException | ClassNotFoundException e) {
-            if(virtualView != null) {
-                if (isConnected) {
-                    // This player has disconnected
-                    System.out.println("Warning: player has disconnected during message receiving");
-                    isConnected = false;
-                    virtualView.setDisconnected(playerId);
-                } else {
-                    // Another player has disconnected
-                    System.out.println("Status: player was forced to stop during message receiving");
-                }
-            }
-            serverMain.setDisconnected(playerId);
-            close();
         }
     }
 

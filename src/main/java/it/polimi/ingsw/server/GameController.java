@@ -65,6 +65,7 @@ public class GameController {
     }
 
     public boolean setPlayerInfo(String playerId, String nickname){
+        System.out.println(playerId + " has set is nickname: " + nickname);
         if (checkNickname(nickname)) {
             Player player = new Player(playerId);
             player.setNickname(nickname);

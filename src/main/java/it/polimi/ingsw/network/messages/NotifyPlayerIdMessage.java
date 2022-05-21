@@ -17,7 +17,7 @@ public class NotifyPlayerIdMessage implements Serializable, CVMessage {
 
     @Override
     public void execute(View view) {
-        //TODO: set view method
+        view.setPlayerId(playerId);
     }
 
     @Override
