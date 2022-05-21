@@ -69,10 +69,11 @@ public class ClientHandler extends Thread implements NetworkHandler {
                     }
                     case VC: {
                         VCMessage vcMessage = (VCMessage) clientMessage;
-                        vcMessage.execute(virtualView);
+                        vcMessage.execute(virtualView.getController());
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
+                System.out.println(e.getMessage());
                 if (virtualView != null) {
                     if (isConnected) {
                         // This player has disconnected

@@ -1,8 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.AssistantCard;
-import it.polimi.ingsw.network.Message;
-import it.polimi.ingsw.network.messages.NewGameMessage;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
 import java.util.ArrayList;
@@ -11,12 +10,33 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CLIView implements View{
 	private final Scanner scanner;
+	// TODO: se qualcuno scrive mentre non è il tuo turno si riempe buffer, chiedi a pale
 	private Thread inputOutOfTurn;
 	private boolean isYourTurn;
 	private AtomicBoolean myTurn = new AtomicBoolean(false);
 	private ServerHandler serverHandler;
 	private String playerId;
 	private String nickname;
+
+	/* cose da chiedere ad anto ( che se ha voglia puo aggiungere le chiamate dei messaggi CV al server )
+	in caso di setnickname (e settowercolor) aspetto ack (che non mi convince.. perchè non posso essere a posto e al limite mi rimandi un'altra ask?)
+	ack deve essere un messaggio di tipo CV, al contrario di quanto scritto sul pdf SYS
+	showDisconnection è stato trasformato in CV, al contrario del pdf
+	va serializzato game model in game info e in un elenco per la game list
+	manca settower color nel controller
+	il messaggio vc per come hai scritto il server ha il metodo execute con il controller e non virtualview -> gia cambiati i messaggi (e il parametro in clienthandler) ma ora mi genera eccezione perchè non esiste il controller
+	dopo che sono entrato nel gioco e ti ho dato nick, invece dell'ack esplicito potresti invocare con un messaggio il mio metodo:
+
+	**
+	 * Shows a message to say to the user that is connected to
+	 * the server and are waiting other user
+	 *
+	void showQueuedMessage();
+
+	oppure rispondermi con il messaggio gamestart se sono l'ultimo a entrare
+
+	in setAssistantCard ti passo il playerid coma da pdf ma te mi cerchi per nickname, ti passo quello (ho sia il mio id che il mio nickname in view)
+	 */
 
 	public CLIView() {
 		this.scanner = new Scanner(System.in);
@@ -61,40 +81,55 @@ public class CLIView implements View{
 		System.out.println(" Your player identifier is: " +  playerId);
 		this.playerId = playerId;
 		askLobbyorNew();
-
 	}
 
 	protected void askLobbyorNew(){
-		System.out.println(" Do do you want to create a new game or join an existing one?");
-		// TODO implements choice
-		serverHandler.send(new NewGameMessage(playerId));
+		boolean correct = false;
+		while(!correct){
+			correct = true;
+			System.out.println(" Do do you want to create a new game or join an existing one? [n/e]");
+			String preferredMode = scanner.nextLine();
+			if ((preferredMode.equalsIgnoreCase("n")))
+				serverHandler.send(new NewGameMessage(playerId));
+			else if ((preferredMode.equalsIgnoreCase("e")))
+				serverHandler.send(new AskGameListMessage(playerId));
+			else{
+				System.out.println(" Please insert a correct value");
+				correct = false;
+			}
+		}
 	}
 
 	@Override
-	public void askGameSettings(boolean newGame) { // new Game return also
+	public void askGameSettings() {
 		boolean correct = false;
 		int numPlayers = 0;
-		String nickname = askNickname();
-		if(!newGame) {
-			//serverHandler.send(new PlayerNickname(playerId,nickname));
-			return;
-		}
+		GameMode gameMode = GameMode.BASIC;
 		while(!correct){
 			System.out.print("> Enter number of player: ");
 			numPlayers = Integer.parseInt(scanner.nextLine());
-			//InputValidator
+			// TODO: InputValidator.isBetween
 			if((numPlayers>1)&&(numPlayers<4))
 				correct = true;
 			if (!correct) {
 				System.out.println(" > Invalid number. Try again.");
 			}
 		}
-		//serverHandler.send(new GameSettings(playerId,nickname,numPlayers,gameMode));
+		correct = false;
+		while(!correct){
+			System.out.print("> Basic mode? [y/n]: ");
+			String preferredMode = scanner.nextLine();
+			if ((preferredMode.equalsIgnoreCase("y")))
+				gameMode = GameMode.BASIC;
+			else
+				gameMode = GameMode.EXPERT;
+		}
+		serverHandler.send(new SetGameSettings(playerId,gameMode,numPlayers));
 	}
 
-	private String askNickname() {
+	@Override
+	public void askNickname() {
 		boolean correct;
-		String nickname;
 		do {
 			System.out.print(" > Enter your nickname: ");
 			nickname = scanner.nextLine();
@@ -103,16 +138,11 @@ public class CLIView implements View{
 				System.out.println(" > Invalid nickname. Try again.");
 			}
 		} while (!correct);
-		return nickname;
+		serverHandler.send(new SetNickname(playerId,nickname));
 	}
 
 	@Override
-	public void askNewNickname() {
-		// invalid nickname
-	}
-
-	@Override
-	public void askPlayerColor(ArrayList<String> possibleColor) {
+	public void askTowerColor(ArrayList<String> possibleColor) {
 		String chosenColor;
 		//There's only one color?
 		if (possibleColor.size() == 1) {
@@ -121,21 +151,21 @@ public class CLIView implements View{
 		} else {
 			boolean correct;
 			do {
-				System.out.print(" > Choose your color between: ");
+				System.out.print(" > Choose your tower color between: ");
 				for (int i = 0; i < possibleColor.size(); i++) {
 					String color = possibleColor.get(i);
 					System.out.print(color);
 				}
 				System.out.println();
 				System.out.print("  ↳: ");
-				chosenColor = scanner.next();
+				chosenColor = scanner.next().toLowerCase();
 				correct = InputValidator.isColorBetween(chosenColor,possibleColor);
 				if (!correct) {
 					System.out.println(" > Invalid choice. Try again.");
 				}
 			} while (!correct);
 		}
-		//serverHandler.send(new PlayerColor(chosenColor));
+		serverHandler.send(new SetTowerColor(playerId,chosenColor));
 	}
 
 	@Override
@@ -155,57 +185,48 @@ public class CLIView implements View{
 				System.out.print("  ↳: ");
 				chosenID = Integer.parseInt(scanner.next());
 				// TODO implement input validator
-				//correct= inputValidator.isIDbetween(chosenID,possibleCards);
+				//correct = inputValidator.isIDbetween(chosenID,possibleCards);
 				if (!correct) {
 					System.out.println(" > Invalid choice. Try again.");
 				}
 			} while (!correct);
 		}
-		//serverHandler.send(new AssistantCardMessage(chosenID));
+		// FIXME: get AssistantCard by ID
+		serverHandler.send(new SetAssistantCard(playerId,cards.get(0)));
 	}
 
 	@Override
-	public void askNewAssistantCard(ArrayList<AssistantCard> cards) {
-
+	public void askAction(RoundActions roundActions) {
+		//TODO: create the action menu
 	}
 
 	@Override
-	public void askAction(RoundActions roundActions, GameInfo gameInfo) {
-
-	}
-
-	@Override
-	public void showPossibleActions(RoundActions roundActions) {
-
-	}
-
-	@Override
-	public void showGame(GameInfo gameInfo, boolean newScreen) {
-
+	public void showGame(GameInfo gameInfo) {
+		// TODO: print the game info
 	}
 
 	@Override
 	public void showTurn(String currentNickname) {
-
+		System.out.println(" It is " + currentNickname +"'s turn");
 	}
 
 	@Override
-	public void showMessage(String message, boolean newScreen) {
+	public void showMessage(String message) {
 		System.out.println(message);
 	}
 
 	@Override
 	public void showQueuedMessage() {
-
+		System.out.println("Waiting other players...");
 	}
 
 	@Override
-	public void showGameEndMessage(String winnerNickname, boolean youWin) {
-
+	public void showGameEndMessage(String winnerNickname) {
+		System.out.println("Il vincitore è: " + winnerNickname);
 	}
 
 	@Override
-	public void showErrorMessage(String errorMessage, boolean newScreen) {
-
+	public void showErrorMessage(String errorMessage) {
+		System.out.println(" > ERROR: "+ errorMessage);
 	}
 }

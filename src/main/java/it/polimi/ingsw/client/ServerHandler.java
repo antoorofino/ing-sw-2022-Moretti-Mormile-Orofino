@@ -3,10 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.network.CVMessage;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.NetworkHandler;
-import it.polimi.ingsw.network.SYSMessage;
 import it.polimi.ingsw.network.heartbeat.HeartbeatSender;
-import it.polimi.ingsw.network.messages.NotifyPlayerIdMessage;
-import it.polimi.ingsw.server.ServerMain;
 import it.polimi.ingsw.util.Configurator;
 import it.polimi.ingsw.util.MessageType;
 
@@ -15,7 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.UUID;
 
 public class ServerHandler implements NetworkHandler {
 	private ObjectInputStream input;
@@ -44,9 +40,9 @@ public class ServerHandler implements NetworkHandler {
 			isConnected = true;
 
 			socket.setSoTimeout(Configurator.getSocketTimeout());
-			(new HeartbeatSender(this, MessageType.VC)).start();
+			(new HeartbeatSender(this, MessageType.SYS)).start();
 		} catch (IOException e) {
-			view.showMessage("> Server unreachable", true);
+			view.showErrorMessage("Server unreachable");
 		}
 		startListening();
 	}
@@ -66,8 +62,9 @@ public class ServerHandler implements NetworkHandler {
 						break;
 				}
 			} catch (IOException | ClassNotFoundException e) {
+				System.out.println(e.getMessage());
 				if (isConnected) {
-					view.showMessage(" > Server unreachable", false);
+					view.showErrorMessage("Server unreachable");
 				}
 				isConnected = false;
 			}
@@ -95,7 +92,7 @@ public class ServerHandler implements NetworkHandler {
 				output.flush();
 				output.reset();
 			} catch (IOException e) {
-				view.showErrorMessage("> Server unreachable", true);
+				view.showErrorMessage("> Server unreachable");
 				close();
 			}
 		}
@@ -109,7 +106,7 @@ public class ServerHandler implements NetworkHandler {
 			socket.close();
 			isConnected = false;
 		} catch (IOException e) {
-			view.showErrorMessage("> An error occurred when closing the connection", true);
+			view.showErrorMessage("> An error occurred when closing the connection");
 			e.printStackTrace();
 		}
 	}

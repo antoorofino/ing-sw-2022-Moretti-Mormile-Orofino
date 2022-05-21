@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.util.GameInfo;
 import it.polimi.ingsw.util.RoundActions;
+import it.polimi.ingsw.util.TowerColor;
 
 import java.util.ArrayList;
 
@@ -23,24 +24,25 @@ public interface View {
 	void setPlayerId(String playerId);
 
 	/**
-	 * Asks a new nickname to the user and notify the choice to the serverHandler
+	 * Asks the number of players and the game mode
+	 *
 	 */
-	void askNewNickname();
+	void askGameSettings();
+
 
 	/**
-	 * Asks nickname and if it's a new game the number of players
-	 * for the game and notify the information to the serverHandler
+	 * Asks the player's nickname
 	 *
-	 * @param newGame True if the it is a new game, otherwise false
 	 */
-	void askGameSettings(boolean newGame);
+	void askNickname();
+
 
 	/**
 	 * Asks the player color
 	 *
 	 * @param possibleColor All the possible Color
 	 */
-	void askPlayerColor(ArrayList<String> possibleColor);
+	void askTowerColor(ArrayList<String> possibleColor);
 
 	/**
 	 * Asks the player card assistance
@@ -50,34 +52,18 @@ public interface View {
 	void askAssistantCard(ArrayList<AssistantCard> cards);
 
 	/**
-	 * Asks the player a new card assistance
-	 *
-	 * @param cards All the possible cards
-	 */
-	void askNewAssistantCard(ArrayList<AssistantCard> cards);
-
-	/**
 	 * Asks the action the player wants to perform
 	 *
 	 * @param roundActions  All the possible actions
-	 * @param gameInfo       The game info
 	 */
-	void askAction(RoundActions roundActions, GameInfo gameInfo);
-
-	/**
-	 * Shows the possible action that the player can do
-	 * @param roundActions The possible actions
-	 */
-
-	void showPossibleActions(RoundActions roundActions);
+	void askAction(RoundActions roundActions);
 
 	/**
 	 * Shows the board of the game
 	 *
 	 * @param gameInfo   The game info
-	 * @param newScreen True if it's necessary to clean the interface
 	 */
-	void showGame(GameInfo gameInfo, boolean newScreen);
+	void showGame(GameInfo gameInfo);
 
 	/**
 	 * Shows the user who is taking his turn
@@ -90,9 +76,8 @@ public interface View {
 	 * Shows a specified message to the user
 	 *
 	 * @param message   The message to be shown
-	 * @param newScreen True if it's necessary to clean the interface
 	 */
-	void showMessage(String message, boolean newScreen);
+	void showMessage(String message);
 
 	/**
 	 * Shows a message to say to the user that is connected to
@@ -104,16 +89,16 @@ public interface View {
 	 * Notify the players that the game has ended and notify the winner
 	 *
 	 * @param winnerNickname The nickname of the winner
-	 * @param youWin         True if the player has win
 	 */
-	void showGameEndMessage(String winnerNickname, boolean youWin);
+	void showGameEndMessage(String winnerNickname);
 
+	// TODO: add the termination
 	/**
-	 * Shows an error message to the user
+	 *
+	 * Shows an error message to the user and terminate the client
 	 *
 	 * @param errorMessage The message to be shown
-	 * @param newScreen    True if it's necessary to clean the interface
 	 */
-	void showErrorMessage(String errorMessage, boolean newScreen);
+	void showErrorMessage(String errorMessage);
 
 }

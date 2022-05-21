@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.server.GameController;
 import it.polimi.ingsw.server.VirtualView;
 
 /**
@@ -10,7 +11,7 @@ public interface VCMessage extends Message {
     /**
      * Execute the request server-side
      *
-     * @param virtualView The recipient component
+     * @param controller The recipient component
      */
-    void execute(VirtualView virtualView);
+    void execute(GameController controller);
 }
