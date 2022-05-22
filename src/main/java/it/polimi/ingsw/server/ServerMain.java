@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.network.Message;
+import it.polimi.ingsw.network.messages.AskGameSettings;
 import it.polimi.ingsw.network.messages.GameListMessage;
 import it.polimi.ingsw.util.Configurator;
+import it.polimi.ingsw.util.GamesListInfo;
 import it.polimi.ingsw.util.exception.DisconnectionException;
 
 import java.io.IOException;
@@ -61,8 +62,9 @@ public class ServerMain {
     }
 
     public void createNewGame(String playerId){
-        System.out.println(" A player choice to create a new game " + playerId);
+        System.out.println(" A player want to create a new game " + playerId);
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
+        clientHandler.send(new AskGameSettings()); // ADDED askGameSetting to the creator
         GameModel game = new GameModel();
         GameController controller = new GameController(game);
         VirtualView virtualView = new VirtualView(controller);
@@ -109,7 +111,7 @@ public class ServerMain {
         List<GameModel> gameList = gameModelList().stream()
                 .filter(GameModel::gameAcceptPlayers)
                 .collect(Collectors.toList());
-        getClientHandlerByPlayerId(playerId).send(new GameListMessage(gameList));
+        getClientHandlerByPlayerId(playerId).send(new GameListMessage(new GamesListInfo(gameList)));
     }
 
     public void setDisconnected(String playerId){

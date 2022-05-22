@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.util.GameInfo;
+import it.polimi.ingsw.util.GamesListInfo;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.TowerColor;
 
@@ -57,6 +58,8 @@ public interface View {
 	 * @param roundActions  All the possible actions
 	 */
 	void askAction(RoundActions roundActions);
+
+	void showGamesList(GamesListInfo gamesList);
 
 	/**
 	 * Shows the board of the game

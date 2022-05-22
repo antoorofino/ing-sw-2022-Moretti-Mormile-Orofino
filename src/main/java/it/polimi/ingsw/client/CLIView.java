@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.AssistantCard;
+import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
@@ -20,11 +21,9 @@ public class CLIView implements View{
 
 	/* cose da chiedere ad anto ( che se ha voglia puo aggiungere le chiamate dei messaggi CV al server )
 	in caso di setnickname (e settowercolor) aspetto ack (che non mi convince.. perchè non posso essere a posto e al limite mi rimandi un'altra ask?)
-	ack deve essere un messaggio di tipo CV, al contrario di quanto scritto sul pdf SYS
-	showDisconnection è stato trasformato in CV, al contrario del pdf
-	va serializzato game model in game info e in un elenco per la game list
+	ack deve essere un messaggio di tipo CV (non l'ho creato), al contrario di quanto scritto sul pdf SYS
+	va serializzato game model in game info
 	manca settower color nel controller
-	il messaggio vc per come hai scritto il server ha il metodo execute con il controller e non virtualview -> gia cambiati i messaggi (e il parametro in clienthandler) ma ora mi genera eccezione perchè non esiste il controller
 	dopo che sono entrato nel gioco e ti ho dato nick, invece dell'ack esplicito potresti invocare con un messaggio il mio metodo:
 
 	**
@@ -34,8 +33,6 @@ public class CLIView implements View{
 	void showQueuedMessage();
 
 	oppure rispondermi con il messaggio gamestart se sono l'ultimo a entrare
-
-	in setAssistantCard ti passo il playerid coma da pdf ma te mi cerchi per nickname, ti passo quello (ho sia il mio id che il mio nickname in view)
 	 */
 
 	public CLIView() {
@@ -108,8 +105,7 @@ public class CLIView implements View{
 		while(!correct){
 			System.out.print("> Enter number of player: ");
 			numPlayers = Integer.parseInt(scanner.nextLine());
-			// TODO: InputValidator.isBetween
-			if((numPlayers>1)&&(numPlayers<4))
+			if(InputValidator.isNumberBetween(numPlayers,1,4))
 				correct = true;
 			if (!correct) {
 				System.out.println(" > Invalid number. Try again.");
@@ -171,34 +167,93 @@ public class CLIView implements View{
 	@Override
 	public void askAssistantCard(ArrayList<AssistantCard> cards) {
 		int chosenID;
+		AssistantCard chosenCard;
 		if (cards.size() == 1) {
-			chosenID = cards.get(0).getCardID();
-			System.out.print(" > Your card will be " + chosenID);
+			chosenCard = cards.get(0);
+			System.out.print(" > Your card will be " + chosenCard.getCardID());
 		} else {
 			boolean correct = false;
 			do {
 				System.out.print(" > Choose your card ID between: ");
 				for (int i = 0; i < cards.size(); i++) {
-					System.out.println(cards.get(i) + " / ");
+					System.out.print(cards.get(i) + " / ");
 				}
 				System.out.println();
 				System.out.print("  ↳: ");
 				chosenID = Integer.parseInt(scanner.next());
-				// TODO implement input validator
-				//correct = inputValidator.isIDbetween(chosenID,possibleCards);
-				if (!correct) {
+				chosenCard = InputValidator.isIDBetween(chosenID,cards);
+				if (chosenCard!=null)
+					correct = true;
+				else
 					System.out.println(" > Invalid choice. Try again.");
-				}
 			} while (!correct);
 		}
-		// FIXME: get AssistantCard by ID
-		serverHandler.send(new SetAssistantCard(playerId,cards.get(0)));
+		serverHandler.send(new SetAssistantCard(nickname,chosenCard));
 	}
 
 	@Override
 	public void askAction(RoundActions roundActions) {
-		//TODO: create the action menu
+		String action;
+		Piece chosenPiece;
+		int chosenId;
+		Action chosenAction = null;
+		boolean correct;
+
+		do {
+			correct = false;
+			showPossibleActions(roundActions);
+			System.out.print("Insert your action type: [MOVE_STUDENT_ISLAND <msi> / MOVE_STUDENT_ROOM <msr> / MOVE_MOTHER <mm> / CHOOSE_CLOUD <cc>]:");
+			action = scanner.next();
+			if (action.equalsIgnoreCase("msi")) {
+				System.out.print("Insert the student's color [red / blue / green / yellow / pink]: ");
+				chosenPiece = Piece.getPieceByColor(scanner.next());
+				if(chosenPiece!=null){
+					System.out.print("Insert the island ID: ");
+					chosenId = Integer.parseInt(scanner.next());
+					chosenAction = new Action(ActionType.MOVE_STUDENT_TO_ISLAND, chosenPiece,null,chosenId);
+				}else
+					System.out.println(" Please insert a valid value for color");
+			}
+			if (action.equalsIgnoreCase("msr")) {
+				System.out.print("Insert the student's color [red / blue / green / yellow / pink]: ");
+				chosenPiece = Piece.getPieceByColor(scanner.next());
+				if(chosenPiece!=null){
+					chosenAction = new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, chosenPiece,null,0);
+				}else
+					System.out.println(" Please insert a valid value for color");
+			}
+			if (action.equalsIgnoreCase("mm")){
+				System.out.print(" Insert the number of mother nature steps: ");
+				chosenId = Integer.parseInt(scanner.next());
+				chosenAction = new Action(ActionType.MOVE_MOTHER_NATURE,null,null,chosenId);
+			}
+			if (action.equalsIgnoreCase("cc")){
+				System.out.print("Insert the cloud ID: ");
+				chosenId = Integer.parseInt(scanner.next());
+				chosenAction = new Action(ActionType.CHOOSE_CLOUD,null,null,chosenId);
+			}
+			if ((chosenAction == null)||(!roundActions.getActionsList().contains(chosenAction.getActionType()))) {
+				System.out.println(" > Invalid action. Try again.");
+			}else
+				correct = true;
+		} while (!correct);
+		serverHandler.send(new SetAction(nickname,chosenAction));
 	}
+
+	@Override
+	public void showGamesList(GamesListInfo gamesList) {
+		for (String game:gamesList.getGamesInfo()) {
+			System.out.println(game);
+		}
+	}
+
+	public void showPossibleActions(RoundActions roundActions) {
+		System.out.println("Your possible actions are: ");
+		for (Action action:roundActions.getActionsList()) {
+			System.out.println(action.getActionType().toString() + " / ");
+		}
+	}
+
 
 	@Override
 	public void showGame(GameInfo gameInfo) {

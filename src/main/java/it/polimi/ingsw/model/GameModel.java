@@ -20,6 +20,7 @@ public class GameModel {
     private final IslandsHandler islandHandler;
     private int coins;
     private final ArrayList<Character> characters;
+    private GameMode gameMode;
 
     /**
      * Constructor : build game model
@@ -33,6 +34,7 @@ public class GameModel {
         this.islandHandler = new IslandsHandler();
         this.teacherHandler = new TeachersHandler();
         this.studentsBag = new Bag();
+        this.gameMode = null;
     }
 
     /**
@@ -40,6 +42,7 @@ public class GameModel {
      * @param mode game mode
      */
     public void setupGame(GameMode mode){
+        this.gameMode = mode;
         Random rand = new Random();
         int numPlayers = this.playerHandler.getNumPlayers();
         int numTowers, numEntranceStudents;
@@ -189,6 +192,14 @@ public class GameModel {
     public boolean gameAcceptPlayers(){
         // TODO: add gameMode != NotChosen
         return playerHandler.getNumPlayers() != 0;
+    }
+
+    /**
+     * Gets game mode
+     * @return gameMode
+     */
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
     public boolean isActive(){

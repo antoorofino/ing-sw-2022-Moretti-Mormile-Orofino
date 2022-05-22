@@ -1,6 +1,8 @@
 package it.polimi.ingsw.util;
 
 
+import it.polimi.ingsw.model.AssistantCard;
+
 import java.util.ArrayList;
 
 public class InputValidator {
@@ -36,6 +38,14 @@ public class InputValidator {
 		return !(nickname.equals("") || nickname.contains(" "));
 	}
 
-	public static boolean isNumberBetwenn(int num, int a, int b){ return true;}
+	public static boolean isNumberBetween(int num, int a, int b){ return (a < num)&&(num < b);}
+
+	public static AssistantCard isIDBetween(int id, ArrayList<AssistantCard> cards){
+		for (AssistantCard card:cards) {
+			if(card.getCardID() == id)
+				return card;
+		}
+		return null;
+	}
 }
 
