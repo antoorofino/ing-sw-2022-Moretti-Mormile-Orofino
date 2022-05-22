@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.network.messages.AskGameSettings;
+import it.polimi.ingsw.network.messages.AskNewGameName;
+import it.polimi.ingsw.network.messages.AskNickname;
 import it.polimi.ingsw.network.messages.GameListMessage;
 import it.polimi.ingsw.util.Configurator;
 import it.polimi.ingsw.util.GamesListInfo;
-import it.polimi.ingsw.util.exception.DisconnectionException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -29,8 +29,8 @@ public class ServerMain {
 
     private List<GameModel> gameModelList(){
         return virtualViewList.stream()
-                .map(v -> v.getController())
-                .map( c -> c.getGame())
+                .map(VirtualView::getController)
+                .map(GameController::getGame)
                 .collect(Collectors.toList());
     }
 
@@ -53,35 +53,35 @@ public class ServerMain {
         while (true) {
             Socket socket = serverSocket.accept();
             ClientHandler clientHandler = new ClientHandler(this, socket);
-            Thread t = new Thread(clientHandler);
-            t.start();
             synchronized (clientHandlers) {
                 clientHandlers.add(clientHandler);
             }
+            clientHandler.start();
         }
     }
 
-    public void createNewGame(String playerId){
-        System.out.println(" A player want to create a new game " + playerId);
+    public void createNewGame(String playerId, String gameName){
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
-        clientHandler.send(new AskGameSettings()); // ADDED askGameSetting to the creator
-        GameModel game = new GameModel();
-        GameController controller = new GameController(game);
-        VirtualView virtualView = new VirtualView(controller);
-        virtualView.addClientHandler(clientHandler);
-        controller.setVirtualView(virtualView);
-        synchronized (virtualViewList) {
-            virtualViewList.add(virtualView);
-        }
-        synchronized (clientHandlers) {
-            clientHandlers.remove(clientHandler);
-        }
-        (new Thread(() -> {
-            try {
-                controller.gameRunner();
-            } catch (Exception ignored) {
+        if(checkName(gameName)) {
+            System.out.println(" A player wants to create a new game " + playerId);
+            GameModel game = new GameModel();
+            GameController controller = new GameController(game);
+            VirtualView virtualView = new VirtualView(controller);
+            virtualView.addClientHandler(clientHandler);
+            controller.setVirtualView(virtualView);
+            synchronized (virtualViewList) {
+                virtualViewList.add(virtualView);
             }
-        })).start();
+            (new Thread(() -> {
+                try {
+                    controller.gameRunner();
+                } catch (Exception ignored) {
+                }
+            })).start();
+            clientHandler.send(new AskNickname(true));
+        } else {
+            clientHandler.send(new AskNewGameName());
+        }
     }
 
     public void selectGame(String playerId, GameModel game){
@@ -94,6 +94,20 @@ public class ServerMain {
             synchronized (clientHandlers) {
                 clientHandlers.remove(clientHandler);
             }
+            removeAllPlayers(virtualView.get());
+        }
+        // TODO: add check whether the game is already full
+        clientHandler.send(new AskNickname(true));
+        // clientHandler.send(new AskNewGameChoice());
+    }
+
+    private void removeAllPlayers(VirtualView virtualView){
+        synchronized (virtualViewList) {
+            virtualViewList.remove(virtualView);
+        }
+        synchronized (clientHandlers) {
+            for(ClientHandler clientHandler : virtualView.getClientHandlers())
+                clientHandlers.remove(clientHandler);
         }
     }
 
@@ -130,5 +144,10 @@ public class ServerMain {
                 virtualViewList.remove(virtualView.get());
             }
         }
+    }
+
+    private boolean checkName(String gameName){
+        //TODO: check for already used names
+        return true;
     }
 }

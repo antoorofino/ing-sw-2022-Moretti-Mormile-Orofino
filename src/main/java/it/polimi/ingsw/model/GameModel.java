@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class GameModel {
     private boolean isActive;
+    private String name;
     private final PlayersHandler playerHandler;
     private final Bag studentsBag;
     private final TeachersHandler teacherHandler;
@@ -34,15 +35,14 @@ public class GameModel {
         this.islandHandler = new IslandsHandler();
         this.teacherHandler = new TeachersHandler();
         this.studentsBag = new Bag();
-        this.gameMode = null;
+        this.gameMode = GameMode.NOT_CHOSEN;
     }
 
     /**
      * Sets up the game
      * @param mode game mode
      */
-    public void setupGame(GameMode mode){
-        this.gameMode = mode;
+    public void setupGame(){
         Random rand = new Random();
         int numPlayers = this.playerHandler.getNumPlayers();
         int numTowers, numEntranceStudents;
@@ -69,7 +69,7 @@ public class GameModel {
             colors.remove(randomIndex);
             player.getPlayerBoard().addToEntrance(this.studentsBag.popStudents(numEntranceStudents));
         }
-        if(mode == GameMode.EXPERT){
+        if(gameMode == GameMode.EXPERT){
             for(Player player: this.getPlayerHandler().getPlayers()){
                 player.setCoin(1);
                 this.coins--;
@@ -200,6 +200,18 @@ public class GameModel {
      */
     public GameMode getGameMode() {
         return gameMode;
+    }
+
+    public void setGameMode(GameMode mode) {
+        this.gameMode = mode;
+    }
+
+    public String getGameName() {
+        return name;
+    }
+
+    public void setGameName(String name) {
+        this.name = name;
     }
 
     public boolean isActive(){

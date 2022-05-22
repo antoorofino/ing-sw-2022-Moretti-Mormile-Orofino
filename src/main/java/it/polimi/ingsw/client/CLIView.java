@@ -55,7 +55,7 @@ public class CLIView implements View{
 			serverIP = scanner.nextLine();
 			if (InputValidator.isEmptyIp(serverIP)) {
 				correct = true;
-				serverIP = "127.0.0.1";
+				serverIP = Configurator.getServerIp();
 			}else{
 				if (!InputValidator.isIp(serverIP))
 					System.out.println("  > Invalid IP. Try again.");
@@ -77,17 +77,18 @@ public class CLIView implements View{
 	public void setPlayerId(String playerId) {
 		System.out.println(" Your player identifier is: " +  playerId);
 		this.playerId = playerId;
-		askLobbyorNew();
+		askLobbyOrNew();
 	}
 
-	protected void askLobbyorNew(){
+	protected void askLobbyOrNew(){
 		boolean correct = false;
 		while(!correct){
 			correct = true;
 			System.out.println(" Do do you want to create a new game or join an existing one? [n/e]");
 			String preferredMode = scanner.nextLine();
 			if ((preferredMode.equalsIgnoreCase("n")))
-				serverHandler.send(new NewGameMessage(playerId));
+				//FIXME: ask for the game name
+				serverHandler.send(new NewGameMessage(playerId, "nome gioco"));
 			else if ((preferredMode.equalsIgnoreCase("e")))
 				serverHandler.send(new AskGameListMessage(playerId));
 			else{
@@ -120,7 +121,7 @@ public class CLIView implements View{
 			else
 				gameMode = GameMode.EXPERT;
 		}
-		serverHandler.send(new SetGameSettings(playerId,gameMode,numPlayers));
+		serverHandler.send(new SetGameSettings(gameMode,numPlayers));
 	}
 
 	@Override

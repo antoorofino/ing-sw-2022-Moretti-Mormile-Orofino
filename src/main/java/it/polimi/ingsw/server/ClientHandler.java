@@ -36,7 +36,7 @@ public class ClientHandler extends Thread implements NetworkHandler {
 
         this.isConnected = true;
         socket.setSoTimeout(Configurator.getSocketTimeout());
-        (new HeartbeatSender(this, MessageType.CV)).start();
+        (new HeartbeatSender(this, true)).start();
 
         this.playerId = UUID.randomUUID().toString();
         send(new NotifyPlayerIdMessage(playerId));
@@ -57,7 +57,6 @@ public class ClientHandler extends Thread implements NetworkHandler {
 
     @Override
     public void run() {
-        // FIXME: dove viene chiamato sto metodo? e il while?? ho aggiunto la chiamata nel server main riga 55
         while(isConnected) {
             try {
                 Message clientMessage = (Message) input.readObject();

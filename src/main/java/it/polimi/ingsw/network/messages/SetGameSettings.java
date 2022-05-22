@@ -10,13 +10,11 @@ import java.io.Serializable;
 
 public class SetGameSettings implements VCMessage, Serializable {
 	private final MessageType messageType;
-	private final String playerId;
 	private final GameMode gameMode;
 	private final int numPlayers;
 
-	public SetGameSettings(String playerId,GameMode gameMode,int numPlayers){
+	public SetGameSettings(GameMode gameMode,int numPlayers){
 		this.messageType = MessageType.VC;
-		this.playerId = playerId;
 		this.gameMode = gameMode;
 		this.numPlayers = numPlayers;
 	}

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.network.messages.AskGameSettings;
+import it.polimi.ingsw.network.messages.AskNickname;
 import it.polimi.ingsw.network.messages.ShowDisconnectionMessage;
 import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.server.rules.Rules;
@@ -20,14 +22,12 @@ import java.util.stream.Collectors;
 
 public class GameController {
     private final GameModel game;
-    private GameMode mode;
     private boolean isCardChosen;
     private boolean endImmediately;
     private Rules rules;
     private VirtualView virtualView;
 
     public GameController(GameModel game) {
-        mode = GameMode.NOT_CHOSEN;
         this.game = game;
         this.isCardChosen = false;
         this.endImmediately = false;
@@ -42,7 +42,7 @@ public class GameController {
     }
 
     public void setGameMode(GameMode mode){
-        this.mode = mode;
+        game.setGameMode(mode);
         if(mode == GameMode.BASIC){
             this.rules = new Rules(game);
         } else {
@@ -64,16 +64,19 @@ public class GameController {
         return true;
     }
 
-    public boolean setPlayerInfo(String playerId, String nickname){
+    public void setPlayerInfo(String playerId, String nickname){
         System.out.println(playerId + " has set is nickname: " + nickname);
         if (checkNickname(nickname)) {
             Player player = new Player(playerId);
             player.setNickname(nickname);
             game.getPlayerHandler().addPlayer(player);
             wakeUpController();
-            return true;
+            if (game.getGameMode() == GameMode.NOT_CHOSEN){
+                virtualView.getClientHandlerById(playerId).send(new AskGameSettings());
+            }
+        } else {
+            virtualView.getClientHandlerById(playerId).send(new AskNickname(false));
         }
-        return false;
     }
 
     public void gameRunner() throws InterruptedException, DisconnectionException {
@@ -83,7 +86,7 @@ public class GameController {
         }
 
         //Game setup
-        game.setupGame(mode);
+        game.setupGame();
 
         //Round handler
         while(!isGameEnd() && !endImmediately){
@@ -222,7 +225,7 @@ public class GameController {
     }
 
     private boolean gameCanStart(){
-        return mode != GameMode.NOT_CHOSEN &&
+        return game.getGameMode() != GameMode.NOT_CHOSEN &&
                 game.getPlayerHandler().getPlayers().size() == game.getPlayerHandler().getNumPlayers();
     }
 

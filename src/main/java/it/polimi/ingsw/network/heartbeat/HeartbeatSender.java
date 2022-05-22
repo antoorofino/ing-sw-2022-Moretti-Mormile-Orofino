@@ -6,10 +6,10 @@ import it.polimi.ingsw.util.MessageType;
 
 public class HeartbeatSender extends Thread{
     private final NetworkHandler networkHandler;
-    private final MessageType messageType;
+    private final boolean isServer;
 
-    public HeartbeatSender(NetworkHandler networkHandler,MessageType messageType) {
-        this.messageType = messageType;
+    public HeartbeatSender(NetworkHandler networkHandler, boolean isServer) {
+        this.isServer = isServer;
         this.networkHandler = networkHandler;
     }
 
@@ -17,7 +17,7 @@ public class HeartbeatSender extends Thread{
     public void run() {
         while(networkHandler.isConnected()){
             try {
-                networkHandler.send(new HeartbeatMessage(messageType));
+                networkHandler.send(new HeartbeatMessage(isServer));
                 Thread.sleep(Configurator.getHeartbeatInterval());
             } catch (InterruptedException ignored) {
             }

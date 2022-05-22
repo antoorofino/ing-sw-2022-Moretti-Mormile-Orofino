@@ -14,8 +14,11 @@ import java.io.Serializable;
 
 public class HeartbeatMessage implements CVMessage, SYSMessage, Serializable {
     private final MessageType messageType;
-    public HeartbeatMessage(MessageType messageType) {
-        this.messageType = messageType;
+    public HeartbeatMessage(boolean isServer) {
+        if (isServer)
+            this.messageType = MessageType.CV;
+        else
+            this.messageType = MessageType.SYS;
     }
 
     @Override

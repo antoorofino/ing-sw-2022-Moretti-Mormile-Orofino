@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 public class AskNickname implements CVMessage, Serializable {
 	private final MessageType messageType;
+	private final boolean isFirstRequest;
 
-	public AskNickname(){
+	public AskNickname(boolean isFirstRequest){
 		this.messageType = MessageType.CV;
+		this.isFirstRequest = isFirstRequest;
 	}
 	@Override
 	public MessageType getType() {

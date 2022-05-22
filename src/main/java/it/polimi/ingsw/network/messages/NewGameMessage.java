@@ -9,10 +9,12 @@ import java.io.Serializable;
 public class NewGameMessage implements Serializable, SYSMessage {
     private final MessageType messageType;
     private final String playerId;
+    private final String gameName;
 
-    public NewGameMessage(String playerId){
+    public NewGameMessage(String playerId, String gameName){
         this.messageType = MessageType.SYS;
         this.playerId = playerId;
+        this.gameName = gameName;
     }
     @Override
     public MessageType getType() {
@@ -21,6 +23,6 @@ public class NewGameMessage implements Serializable, SYSMessage {
 
     @Override
     public void execute(ServerMain serverMain) {
-        serverMain.createNewGame(playerId);
+        serverMain.createNewGame(playerId, gameName);
     }
 }

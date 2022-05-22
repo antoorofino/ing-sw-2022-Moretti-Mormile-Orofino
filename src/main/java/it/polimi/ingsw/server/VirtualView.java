@@ -75,4 +75,7 @@ public class VirtualView {
         }
     }
 
+    public List<ClientHandler> getClientHandlers(){
+        return clientHandlers;
+    }
 }

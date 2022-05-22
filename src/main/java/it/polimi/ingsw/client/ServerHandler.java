@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.network.CVMessage;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.NetworkHandler;
+import it.polimi.ingsw.network.VCMessage;
 import it.polimi.ingsw.network.heartbeat.HeartbeatSender;
 import it.polimi.ingsw.util.Configurator;
 import it.polimi.ingsw.util.MessageType;
@@ -54,13 +55,8 @@ public class ServerHandler implements NetworkHandler {
 	public void startListening() {
 		while (isConnected) {
 			try {
-				Message serverMessage = (Message) input.readObject();
-				switch(serverMessage.getType()){
-					case CV:
-						CVMessage cvMessage = (CVMessage) serverMessage;
-						cvMessage.execute(view);
-						break;
-				}
+				CVMessage serverMessage = (CVMessage) input.readObject();
+				serverMessage.execute(view);
 			} catch (IOException | ClassNotFoundException e) {
 				System.out.println(e.getMessage());
 				if (isConnected) {
@@ -85,15 +81,17 @@ public class ServerHandler implements NetworkHandler {
 	 *
 	 * @param message The message to be sent
 	 */
-	public synchronized void send(Message message) {
+	public void send(Message message) {
 		if (isConnected) {
-			try {
-				output.writeUnshared(message);
-				output.flush();
-				output.reset();
-			} catch (IOException e) {
-				view.showErrorMessage("> Server unreachable");
-				close();
+			synchronized (lock){
+				try {
+					output.writeUnshared(message);
+					output.flush();
+					output.reset();
+				} catch (IOException e) {
+					view.showErrorMessage("> Server unreachable");
+					close();
+				}
 			}
 		}
 	}
