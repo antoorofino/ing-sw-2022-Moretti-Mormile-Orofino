@@ -94,7 +94,8 @@ public class ServerMain {
             synchronized (clientHandlers) {
                 clientHandlers.remove(clientHandler);
             }
-            removeAllPlayers(virtualView.get());
+            if (game.getPlayerHandler().getPlayers().size() + 1  == game.getPlayerHandler().getNumPlayers())
+                removeAllPlayers(virtualView.get());
         }
         // TODO: add check whether the game is already full
         clientHandler.send(new AskNickname(true));
