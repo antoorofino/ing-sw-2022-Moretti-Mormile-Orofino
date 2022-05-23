@@ -109,25 +109,26 @@ public class CLIView implements View{
 
 	@Override
 	public void askTowerColor(List<TowerColor> possibleColor,boolean isFirstRequest) {
-		String chosenColor;
-		if(!isFirstRequest)
+		TowerColor chosenColor;
+		String inputColor;
+		if (!isFirstRequest)
 			System.out.println("> This color is already chosen. Please insert a new one");
-		//There's only one color?
+		// There's only one color?
 		if (possibleColor.size() == 1) {
-			chosenColor = possibleColor.get(0).toString();
-			System.out.print(" > Your color will be" + chosenColor);
+			chosenColor = possibleColor.get(0);
+			System.out.print(" > Your color will be" + chosenColor.toString());
 		} else {
 			boolean correct;
 			do {
 				System.out.print(" > Choose your tower color between: ");
 				for (int i = 0; i < possibleColor.size(); i++) {
-					TowerColor color = possibleColor.get(i);
-					System.out.print(color);
+					System.out.print(possibleColor.get(i).toString());
 				}
 				System.out.println();
 				System.out.print("  ↳: ");
-				chosenColor = scanner.next().toLowerCase();
-				correct = InputValidator.isColorBetween(chosenColor,possibleColor);
+				inputColor = scanner.next();
+				chosenColor = TowerColor.getPlayerColorByName(inputColor);
+				correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
 				if (!correct) {
 					System.out.println(" > Invalid choice. Try again.");
 				}

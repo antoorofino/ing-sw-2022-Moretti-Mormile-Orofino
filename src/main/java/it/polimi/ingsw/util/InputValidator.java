@@ -26,9 +26,9 @@ public class InputValidator {
 		return serverIP.equals("");
 	}
 
-	public static boolean isColorBetween(String choice, ArrayList<String> availableColors) {
-		for (String color : availableColors) {
-			if (choice.equalsIgnoreCase(color)) {
+	public static boolean isTowerColorBetween(TowerColor choice, List<TowerColor> availableColors) {
+		for (TowerColor color : availableColors) {
+			if (choice == color) {
 				return true;
 			}
 		}
