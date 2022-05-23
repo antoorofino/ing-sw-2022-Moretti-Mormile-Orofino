@@ -6,9 +6,10 @@ import it.polimi.ingsw.util.exception.CardException;
 import it.polimi.ingsw.util.TowerColor;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
 	private final String id;
 	private String nickname;
 	private TowerColor towerColor;
@@ -22,7 +23,7 @@ public class Player {
 
 	public Player(String id){
 		this.id = id;
-		this.nickname = "- NOT CHOSEN -";
+		this.nickname = null;
 		this.playerBoard = new Board();
 		this.lastCardUsed= null;
 		this.cards = new ArrayList<>();
@@ -30,6 +31,7 @@ public class Player {
 		this.playerCoin = 0;
 		this.activeCharacter = null;
 		this.roundActions = new RoundActions();
+		this.towerColor = null;
 	}
 
 	public void setNickname(String nickname) {
@@ -138,5 +140,9 @@ public class Player {
 
 	public void resetRoundAction() {
 		this.roundActions = new RoundActions();
+	}
+
+	public boolean isReadyToPlay(){
+		return nickname != null && towerColor != null;
 	}
 }

@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeachersHandler {
+public class TeachersHandler implements Serializable {
 
     private Map<Piece,Player> teachers;
 

@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Random;
 
-public enum Piece {
+public enum Piece implements Serializable {
     UNICORN("Blue",new Color(30,200,250),"Unicorn"),
     FAIRY("Purple", new Color(255,138,228),"Fairy"),
     GNOME("Yellow",new Color(245,223,111),"Gnome"),

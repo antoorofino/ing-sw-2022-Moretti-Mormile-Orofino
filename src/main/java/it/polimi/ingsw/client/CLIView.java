@@ -6,11 +6,12 @@ import it.polimi.ingsw.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CLIView implements View{
-	private final Scanner scanner;
+	private Scanner scanner;
 	// TODO: se qualcuno scrive mentre non è il tuo turno si riempe buffer, chiedi a pale
 	private Thread inputOutOfTurn;
 	private boolean isYourTurn;
@@ -122,16 +123,17 @@ public class CLIView implements View{
 			do {
 				System.out.print(" > Choose your tower color between: ");
 				for (int i = 0; i < possibleColor.size(); i++) {
-					System.out.print(possibleColor.get(i).toString());
+					System.out.print(possibleColor.get(i).toString() + " ");
 				}
 				System.out.println();
 				System.out.print("  ↳: ");
 				inputColor = scanner.next();
 				chosenColor = TowerColor.getPlayerColorByName(inputColor);
-				correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
-				if (!correct) {
-					System.out.println(" > Invalid choice. Try again.");
-				}
+				//correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
+				//if (!correct) {
+					//System.out.println(" > Invalid choice. Try again.");
+				//}
+				correct = true;
 			} while (!correct);
 		}
 		serverHandler.send(new SetTowerColor(playerId,chosenColor));
@@ -144,6 +146,7 @@ public class CLIView implements View{
 		GameMode gameMode = GameMode.BASIC;
 		while(!correct){
 			System.out.print("> Enter number of player: ");
+			scanner = new Scanner(System.in);
 			numPlayers = Integer.parseInt(scanner.nextLine());
 			if(InputValidator.isNumberBetween(numPlayers,1,4))
 				correct = true;
@@ -152,21 +155,20 @@ public class CLIView implements View{
 			}
 		}
 		correct = false;
+		// FIXME: loop
 		while(!correct){
 			System.out.print("> Basic mode? [y/n]: ");
 			String preferredMode = scanner.nextLine();
-			if ((preferredMode.equalsIgnoreCase("y")))
-				gameMode = GameMode.BASIC;
-			else
+			correct = true;
+			if ((preferredMode.equalsIgnoreCase("n")))
 				gameMode = GameMode.EXPERT;
 		}
-		serverHandler.send(new SetGameSettings(gameMode,numPlayers));
-		showQueuedMessage();
+		serverHandler.send(new SetGameSettings(playerId, gameMode,numPlayers));
 	}
 
 
 	@Override
-	public void askAssistantCard(ArrayList<AssistantCard> cards) {
+	public void askAssistantCard(List<AssistantCard> cards) {
 		int chosenID;
 		AssistantCard chosenCard;
 		if (cards.size() == 1) {
@@ -253,8 +255,12 @@ public class CLIView implements View{
 		System.out.println();
 		do {
 			correct = false;
-			System.out.print("Insert the name of the game you want to join: ");
+			System.out.print("Insert the name of the game you want to join ('.' for updating the list): ");
 			gameName = scanner.next();
+			if(Objects.equals(gameName, ".")){
+				serverHandler.send(new AskGameListMessage(playerId));
+				return;
+			}
 			if(InputValidator.isGameName(gameName,gamesList))
 				correct = true;
 			else

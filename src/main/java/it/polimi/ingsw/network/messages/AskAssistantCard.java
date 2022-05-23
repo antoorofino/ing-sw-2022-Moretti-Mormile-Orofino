@@ -6,13 +6,13 @@ import it.polimi.ingsw.network.CVMessage;
 import it.polimi.ingsw.util.MessageType;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 public class AskAssistantCard implements CVMessage, Serializable {
 	private final MessageType messageType;
-	private final ArrayList<AssistantCard> possibleCards;
+	private final List<AssistantCard> possibleCards;
 
-	public AskAssistantCard(ArrayList<AssistantCard> possibleCards){
+	public AskAssistantCard(List<AssistantCard> possibleCards){
 		this.messageType = MessageType.CV;
 		this.possibleCards = possibleCards;
 	}

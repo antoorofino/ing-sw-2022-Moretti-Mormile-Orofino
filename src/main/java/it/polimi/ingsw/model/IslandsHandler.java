@@ -2,10 +2,11 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class IslandsHandler {
+public class IslandsHandler implements Serializable {
 	private ArrayList<Island> islands;
 	private int motherNature;
 

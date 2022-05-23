@@ -13,23 +13,21 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ServerMain {
     private final ServerSocket serverSocket;
-    private final List<ClientHandler> clientHandlers;
-    private final List<VirtualView> virtualViewList;
+    private final List<ClientHandler> clientHandlerList;
+    private final List<GameController> gameControllerList;
 
     public ServerMain() throws IOException {
         serverSocket = new ServerSocket(Configurator.getServerPort());
-        clientHandlers = new ArrayList<>();
-        virtualViewList = new ArrayList<>();
+        clientHandlerList = new ArrayList<>();
+        gameControllerList = new ArrayList<>();
     }
 
     private List<GameModel> gameModelList(){
-        return virtualViewList.stream()
-                .map(VirtualView::getController)
+        return gameControllerList.stream()
                 .map(GameController::getGame)
                 .collect(Collectors.toList());
     }
@@ -43,6 +41,7 @@ public class ServerMain {
             return;
         }
         try {
+            System.out.println("Server listening on port " + Configurator.getServerPort());
             serverMain.launch();
         } catch (IOException e) {
             System.out.println("Fatal error: Could not connect the client");
@@ -53,8 +52,9 @@ public class ServerMain {
         while (true) {
             Socket socket = serverSocket.accept();
             ClientHandler clientHandler = new ClientHandler(this, socket);
-            synchronized (clientHandlers) {
-                clientHandlers.add(clientHandler);
+            System.out.println("Player connected with id " + clientHandler.getPlayerId());
+            synchronized (clientHandlerList) {
+                clientHandlerList.add(clientHandler);
             }
             clientHandler.start();
         }
@@ -62,88 +62,75 @@ public class ServerMain {
 
     public void createNewGame(String playerId, String gameName){
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
-        if(checkName(gameName)) {
-            System.out.println(" A player wants to create a new game " + playerId);
-            GameModel game = new GameModel();
-            GameController controller = new GameController(game);
-            VirtualView virtualView = new VirtualView(controller);
-            virtualView.addClientHandler(clientHandler);
-            controller.setVirtualView(virtualView);
-            synchronized (virtualViewList) {
-                virtualViewList.add(virtualView);
+        System.out.println("Creation of a game with name " + gameName + " by player " + playerId);
+        synchronized (gameControllerList) {
+            if(checkName(gameName)){
+                GameController controller = new GameController();
+                controller.getGame().setGameName(gameName);
+                controller.getVirtualView().addClientHandler(clientHandler);
+                controller.addPlayer(playerId);
+                gameControllerList.add(controller);
+                clientHandler.setController(controller);
+                (new Thread(() -> {
+                    try {
+                        controller.gameRunner();
+                    } catch (Exception ignored) {
+                    }
+                })).start();
+                System.out.println("Controller of game " + gameName + " started");
+                clientHandler.send(new AskNickname(true));
+            } else {
+                System.out.println(gameName + " is already used");
+                clientHandler.send(new AskNewGameName());
             }
-            (new Thread(() -> {
-                try {
-                    controller.gameRunner();
-                } catch (Exception ignored) {
-                }
-            })).start();
-            clientHandler.send(new AskNickname(true));
-        } else {
-            clientHandler.send(new AskNewGameName());
         }
     }
 
-    // TODO: change GameModel to String gameName
-    public void selectGame(String playerId, GameModel game){
+    public void selectGame(String playerId, String gameName){
+        System.out.println("Selection of a game with name " + gameName + " by player " + playerId);
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
-        Optional<VirtualView> virtualView = virtualViewList.stream()
-                .filter( vv -> vv.containsGame(game))
-                .findFirst();
-        if(virtualView.isPresent()){
-            virtualView.get().addClientHandler(clientHandler);
-            synchronized (clientHandlers) {
-                clientHandlers.remove(clientHandler);
+        synchronized (gameControllerList) {
+            GameController controller = gameControllerList.stream()
+                    .filter(c -> c.getGame().getGameName().equalsIgnoreCase(gameName))
+                    .findFirst().orElse(null);
+            if(controller == null || !controller.getGame().gameAcceptPlayers())
+                clientHandler.send(new AskNewGameName());
+            else {
+                controller.getVirtualView().addClientHandler(clientHandler);
+                controller.addPlayer(playerId);
+                clientHandler.setController(controller);
+                if (controller.getGame().getPlayerHandler().getPlayers().size() == controller.getGame().getPlayerHandler().getNumPlayers()){
+                    gameControllerList.remove(controller);
+                    System.out.println("game " + controller.getGame().getGameName() + " removed from gameControllerList");
+                }
+                clientHandler.send(new AskNickname(true));
             }
-            if (game.getPlayerHandler().getPlayers().size() + 1  == game.getPlayerHandler().getNumPlayers())
-                removeAllPlayers(virtualView.get());
-        }
-        // TODO: add check whether the game is already full
-        clientHandler.send(new AskNickname(true));
-        // clientHandler.send(new AskNewGameChoice());
-    }
-
-    private void removeAllPlayers(VirtualView virtualView){
-        synchronized (virtualViewList) {
-            virtualViewList.remove(virtualView);
-        }
-        synchronized (clientHandlers) {
-            for(ClientHandler clientHandler : virtualView.getClientHandlers())
-                clientHandlers.remove(clientHandler);
         }
     }
 
     private ClientHandler getClientHandlerByPlayerId(String playerId){
         ClientHandler clientHandler;
-        synchronized (clientHandlers){
-            clientHandler = clientHandlers.stream()
-                    .filter( p -> Objects.equals(p.getPlayerId(), playerId))
-                    .findFirst().orElse(null);
-        }
+        clientHandler = clientHandlerList.stream()
+                .filter( p -> Objects.equals(p.getPlayerId(), playerId))
+                .findFirst().orElse(null);
+        // TODO: should it launch an exception if null ?
         return clientHandler;
     }
 
     public void sendActiveGames(String playerId){
+        System.out.println("Sending list of active games to player " + playerId);
         List<GameModel> gameList = gameModelList().stream()
                 .filter(GameModel::gameAcceptPlayers)
                 .collect(Collectors.toList());
         getClientHandlerByPlayerId(playerId).send(new GameListMessage(GameListInfo.createGameInfoList(gameList)));
     }
 
-    public void setDisconnected(String playerId){
-        ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
-        synchronized (clientHandlers){
-            clientHandlers.remove(clientHandler);
-        }
-        Optional<VirtualView> virtualView = virtualViewList.stream()
-                .filter( vv -> vv.containsPlayerById(playerId))
-                .findFirst();
-        if(virtualView.isPresent()){
-            synchronized (virtualView.get().getController().getGame()) {
-                virtualView.get().getController().getGame().setAsInactive();
-            }
-            synchronized (virtualViewList) {
-                virtualViewList.remove(virtualView.get());
+    public void removeClientHandlerById(String playerId){
+        System.out.println("Disconnection of player " + playerId);
+        synchronized (clientHandlerList) {
+            try {
+                clientHandlerList.remove(getClientHandlerByPlayerId(playerId));
+            } catch (Exception ignored){
             }
         }
     }

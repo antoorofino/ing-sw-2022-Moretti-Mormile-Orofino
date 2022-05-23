@@ -26,6 +26,6 @@ public class SetTowerColor implements VCMessage, Serializable {
 
 	@Override
 	public void execute(GameController controller) {
-		// TODO: add call to controller method
+		controller.setPlayerTowerColor(playerId, color);
 	}
 }

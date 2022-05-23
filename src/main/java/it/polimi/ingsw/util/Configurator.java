@@ -1,7 +1,5 @@
 package it.polimi.ingsw.util;
 
-import com.sun.tools.classfile.ConstantPool;
-
 public class Configurator {
     private static final int socketTimeout = 2000;
     private static final int serverPort = 8090;

@@ -6,16 +6,16 @@ import it.polimi.ingsw.util.MessageType;
 
 import java.io.Serializable;
 
-public class AskNewGameName implements Serializable, CVMessage {
+public class AckTowerColor implements Serializable, CVMessage {
     private final MessageType messageType;
 
-    public AskNewGameName(){
+    public AckTowerColor(){
         this.messageType = MessageType.CV;
     }
 
     @Override
     public void execute(View view) {
-        view.askNewGameName();
+        view.showQueuedMessage();
     }
 
     @Override

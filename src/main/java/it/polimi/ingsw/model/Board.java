@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
  * Stores information about player's board
  */
 
-public class Board {
+public class Board implements Serializable {
     ArrayList<Piece> studentsEntrance;
     Map<Piece,Integer> studentsRoom;
 

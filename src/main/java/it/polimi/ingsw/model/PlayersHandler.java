@@ -2,10 +2,11 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.util.exception.PlayerException;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PlayersHandler {
+public class PlayersHandler implements Serializable {
     private int numPlayers;
     private final ArrayList<Player> players;
     private Player currentPlayer;
@@ -110,5 +111,9 @@ public class PlayersHandler {
                 return true;
         }
         return false;
+    }
+
+    public boolean everyPlayerIsReadyToPlay(){
+        return numPlayers != 0 && players.stream().filter(Player::isReadyToPlay).count() == numPlayers ;
     }
 }

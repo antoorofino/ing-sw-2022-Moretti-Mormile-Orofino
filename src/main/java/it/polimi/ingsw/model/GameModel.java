@@ -5,14 +5,14 @@ import it.polimi.ingsw.util.exception.SpecificCloudNotFoundException;
 import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.TowerColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Stores information of Game model
  */
-public class GameModel {
-    private boolean isActive;
+public class GameModel implements Serializable {
     private String name;
     private final PlayersHandler playerHandler;
     private final Bag studentsBag;
@@ -27,7 +27,7 @@ public class GameModel {
      * Constructor : build game model
      */
     public GameModel(){
-        this.isActive = true;
+        this.name = "";
         this.playerHandler = new PlayersHandler();
         this.characters = new ArrayList<>();
         this.coins = 20;
@@ -40,7 +40,6 @@ public class GameModel {
 
     /**
      * Sets up the game
-     * @param mode game mode
      */
     public void setupGame(){
         Random rand = new Random();
@@ -65,7 +64,7 @@ public class GameModel {
             player.setNumOfTower(numTowers);
             player.addCards(AssistantCard.createDeck(index++));
             randomIndex = rand.nextInt(colors.size());
-            player.setPlayerColor(colors.get(randomIndex));
+            player.setTowerColor(colors.get(randomIndex));
             colors.remove(randomIndex);
             player.getPlayerBoard().addToEntrance(this.studentsBag.popStudents(numEntranceStudents));
         }
@@ -190,8 +189,9 @@ public class GameModel {
     }
 
     public boolean gameAcceptPlayers(){
-        // TODO: add gameMode != NotChosen
-        return playerHandler.getNumPlayers() != 0;
+        return playerHandler.getNumPlayers() != 0 &&
+                gameMode != GameMode.NOT_CHOSEN &&
+                playerHandler.getPlayers().size() != playerHandler.getNumPlayers();
     }
 
     /**
@@ -212,13 +212,5 @@ public class GameModel {
 
     public void setGameName(String name) {
         this.name = name;
-    }
-
-    public boolean isActive(){
-        return isActive;
-    }
-
-    public void setAsInactive(){
-        this.isActive = false;
     }
 }

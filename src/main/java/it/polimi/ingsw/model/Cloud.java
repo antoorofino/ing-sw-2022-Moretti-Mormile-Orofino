@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Stores information about a cloud
  */
 
-public class Cloud {
+public class Cloud implements Serializable {
     private ArrayList<Piece> studentsClouds;
     private int cloudID;
 

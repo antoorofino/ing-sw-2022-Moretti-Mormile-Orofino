@@ -4,7 +4,9 @@ import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.CVMessage;
 import it.polimi.ingsw.util.MessageType;
 
-public class AskNewGameChoice implements CVMessage {
+import java.io.Serializable;
+
+public class AskNewGameChoice implements Serializable, CVMessage {
     private final MessageType messageType;
 
     public AskNewGameChoice(){

@@ -7,7 +7,6 @@ import it.polimi.ingsw.network.VCMessage;
 import it.polimi.ingsw.network.heartbeat.HeartbeatSender;
 import it.polimi.ingsw.network.messages.NotifyPlayerIdMessage;
 import it.polimi.ingsw.util.Configurator;
-import it.polimi.ingsw.util.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,19 +15,19 @@ import java.net.Socket;
 import java.util.UUID;
 
 public class ClientHandler extends Thread implements NetworkHandler {
+    private final String playerId;
     private final Socket socket;
     private final ServerMain serverMain;
-    private VirtualView virtualView;
+    private GameController controller;
     private final ObjectOutputStream output;
     private final ObjectInputStream input;
     private final Object lock;
-    private boolean isFirstPlayer;
-    private String playerId;
     private boolean isConnected;
 
     public ClientHandler(ServerMain serverMain, Socket socket) throws IOException {
         this.socket = socket;
         this.serverMain = serverMain;
+        this.controller = null;
 
         this.output = new ObjectOutputStream(socket.getOutputStream());
         this.input = new ObjectInputStream(socket.getInputStream());
@@ -40,21 +39,15 @@ public class ClientHandler extends Thread implements NetworkHandler {
 
         this.playerId = UUID.randomUUID().toString();
         send(new NotifyPlayerIdMessage(playerId));
-
-    }
-
-    public void setVirtualView(VirtualView virtualView){
-        this.virtualView = virtualView;
-    }
-
-    public void setFirstPlayer(boolean isFirstPlayer){
-        this.isFirstPlayer = isFirstPlayer;
     }
 
     public String getPlayerId() {
         return playerId;
     }
 
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
     @Override
     public void run() {
         while(isConnected) {
@@ -68,23 +61,23 @@ public class ClientHandler extends Thread implements NetworkHandler {
                     }
                     case VC: {
                         VCMessage vcMessage = (VCMessage) clientMessage;
-                        vcMessage.execute(virtualView.getController());
+                        vcMessage.execute(controller);
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println(e.getMessage());
-                if (virtualView != null) {
+                if (controller != null) {
                     if (isConnected) {
                         // This player has disconnected
                         System.out.println("Warning: player has disconnected during message receiving");
-                        isConnected = false;
-                        virtualView.setDisconnected(playerId);
+                        controller.setAsDisconnected(playerId);
                     } else {
                         // Another player has disconnected
                         System.out.println("Status: player was forced to stop during message receiving");
                     }
+                    controller.setAsInactive();
                 }
-                serverMain.setDisconnected(playerId);
+                isConnected = false;
+                serverMain.removeClientHandlerById(playerId);
                 close();
             }
         }
@@ -109,15 +102,19 @@ public class ClientHandler extends Thread implements NetworkHandler {
                     output.reset();
                 }
             } catch (IOException e) {
-                if (isConnected) {
-                    // This player has disconnected
-                    System.out.println("> Warning: player has disconnected during message sending");
-                    isConnected = false;
-                    virtualView.setDisconnected(playerId);
-                } else {
-                    // Another player has disconnected
-                    System.out.println("> Status: player was forced to stop during message sending");
+                if (controller != null) {
+                    if (isConnected) {
+                        // This player has disconnected
+                        System.out.println("Warning: player has disconnected during message sending");
+                        isConnected = false;
+                        controller.setAsDisconnected(playerId);
+                    } else {
+                        // Another player has disconnected
+                        System.out.println("Status: player was forced to stop during message sending");
+                    }
+                    controller.setAsInactive();
                 }
+                serverMain.removeClientHandlerById(playerId);
                 close();
             }
         }

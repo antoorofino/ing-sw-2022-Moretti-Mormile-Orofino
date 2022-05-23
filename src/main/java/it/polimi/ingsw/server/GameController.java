@@ -1,10 +1,9 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.network.messages.AskGameSettings;
-import it.polimi.ingsw.network.messages.AskNickname;
-import it.polimi.ingsw.network.messages.ShowDisconnectionMessage;
+import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.server.rules.Rules;
+import it.polimi.ingsw.util.TowerColor;
 import it.polimi.ingsw.util.exception.CardException;
 import it.polimi.ingsw.util.exception.DisconnectionException;
 import it.polimi.ingsw.util.exception.PlayerException;
@@ -14,21 +13,21 @@ import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameController {
     private final GameModel game;
+    private final VirtualView virtualView;
+    private boolean isActive;
     private boolean isCardChosen;
     private boolean endImmediately;
     private Rules rules;
-    private VirtualView virtualView;
 
-    public GameController(GameModel game) {
-        this.game = game;
+    public GameController() {
+        this.game = new GameModel();
+        this.virtualView = new VirtualView();
+        this.isActive = true;
         this.isCardChosen = false;
         this.endImmediately = false;
     }
@@ -37,45 +36,77 @@ public class GameController {
         return game;
     }
 
-    public void setVirtualView(VirtualView v){
-        this.virtualView = v;
+    public VirtualView getVirtualView() {
+        return virtualView;
     }
 
-    public void setGameMode(GameMode mode){
+    public void setGameSettings(String playerId, GameMode mode, int numPlayers){
+        System.out.println("game mode set on " + mode + " for game " + game.getGameName());
         game.setGameMode(mode);
         if(mode == GameMode.BASIC){
             this.rules = new Rules(game);
         } else {
             this.rules = new ExpertRules(game);
         }
-        wakeUpController();
-    }
-
-    public void setNumPlayers(int numPlayers) {
+        System.out.println("numPlayers set on " + numPlayers + " for game " + game.getGameName());
         game.getPlayerHandler().setNumPlayers(numPlayers);
+        virtualView.getClientHandlerById(playerId).send(new AskTowerColor(getAvailableTowerColors(), true));
     }
 
     private boolean checkNickname(String requestedUsername) {
         for (Player player : game.getPlayerHandler().getPlayers()) {
-            if (player.getNickname().equalsIgnoreCase(requestedUsername)) {
+            if (player.getNickname() != null && player.getNickname().equalsIgnoreCase(requestedUsername)) {
                 return false;
             }
         }
         return true;
     }
 
-    public void setPlayerInfo(String playerId, String nickname){
-        System.out.println(playerId + " has set is nickname: " + nickname);
+    public void addPlayer(String playerId){
+        game.getPlayerHandler().addPlayer(new Player(playerId));
+    }
+
+    public void setPlayerNickname(String playerId, String nickname){
+        System.out.println(playerId + " has set his nickname: " + nickname);
         if (checkNickname(nickname)) {
-            Player player = new Player(playerId);
-            player.setNickname(nickname);
-            game.getPlayerHandler().addPlayer(player);
-            wakeUpController();
+            Optional<Player> player = game.getPlayerHandler().getPlayers().stream()
+                    .filter( p -> Objects.equals(p.getId(), playerId))
+                    .findFirst();
+            player.ifPresent(p -> p.setNickname(nickname));
             if (game.getGameMode() == GameMode.NOT_CHOSEN){
                 virtualView.getClientHandlerById(playerId).send(new AskGameSettings());
+            } else {
+                virtualView.getClientHandlerById(playerId).send(new AskTowerColor(getAvailableTowerColors(), true));
             }
         } else {
             virtualView.getClientHandlerById(playerId).send(new AskNickname(false));
+        }
+    }
+
+    private List<TowerColor> getAvailableTowerColors(){
+        ArrayList<TowerColor> possibleColors = new ArrayList<>();
+        possibleColors.add(TowerColor.BLACK);
+        possibleColors.add(TowerColor.WHITE);
+        if (game.getPlayerHandler().getNumPlayers() == 3)
+            possibleColors.add(TowerColor.GRAY);
+        for (Player player : game.getPlayerHandler().getPlayers()){
+            if (player.getTowerColor() != null)
+                possibleColors.remove(player.getTowerColor());
+        }
+        return possibleColors;
+    }
+
+    public void setPlayerTowerColor(String playerId, TowerColor color){
+        System.out.println(playerId + " has set his color: " + color);
+        if (getAvailableTowerColors().contains(color)) {
+            Optional<Player> player = game.getPlayerHandler().getPlayers().stream()
+                    .filter( p -> Objects.equals(p.getId(), playerId))
+                    .findFirst();
+            player.ifPresent(p -> p.setTowerColor(color));
+            virtualView.getClientHandlerById(playerId).send(new AckTowerColor());
+            wakeUpController();
+        } else {
+            virtualView.getClientHandlerById(playerId).send(new AskTowerColor(getAvailableTowerColors(), false));
         }
     }
 
@@ -88,11 +119,22 @@ public class GameController {
         //Game setup
         game.setupGame();
 
+        boolean firstMessage = true;
+
         //Round handler
         while(!isGameEnd() && !endImmediately){
             //Planning phase
             game.getPlayerHandler().initialiseCurrentPlayerPlanningPhase();
+            if (firstMessage) {
+                virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));
+                firstMessage = false;
+            }
             for(int i = 0; i < game.getPlayerHandler().getNumPlayers(); i++){
+                virtualView.sendToEveryone(new UpdateCurrentPlayer(game.getPlayerHandler().getCurrentPlayer().getNickname()));
+                List<AssistantCard> possibleCards = game.getPlayerHandler().getCurrentPlayer().getDeck().stream()
+                        .filter(this::checkAssistantCard)
+                        .collect(Collectors.toList());
+                virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAssistantCard(possibleCards));
                 synchronized (this) {
                     while (!isCardChosen) {
                         this.wait();
@@ -106,6 +148,7 @@ public class GameController {
             game.getPlayerHandler().initialiseCurrentPlayerActionPhase();
             int i = 0;
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
+                virtualView.sendToEveryone(new UpdateCurrentPlayer(game.getPlayerHandler().getCurrentPlayer().getNickname()));
                 if(game.getPlayerHandler().getCurrentPlayer().getRoundActions().hasEnded()){
                     game.getPlayerHandler().getCurrentPlayer().resetRoundAction();
                     game.getPlayerHandler().getCurrentPlayer().setActiveCharacter(null);
@@ -225,12 +268,11 @@ public class GameController {
     }
 
     private boolean gameCanStart(){
-        return game.getGameMode() != GameMode.NOT_CHOSEN &&
-                game.getPlayerHandler().getPlayers().size() == game.getPlayerHandler().getNumPlayers();
+        return game.getPlayerHandler().everyPlayerIsReadyToPlay();
     }
 
     private boolean isRunning() throws DisconnectionException {
-        if (!game.isActive()) {
+        if (!isActive) {
             throw new DisconnectionException();
         }
         return true;
@@ -248,6 +290,10 @@ public class GameController {
         virtualView.sendToEveryone(new ShowDisconnectionMessage(nickname));
         virtualView.closeAll();
         wakeUpController();
+    }
+
+    public void setAsInactive(){
+        this.isActive = false;
     }
 
     public void wakeUpController() {

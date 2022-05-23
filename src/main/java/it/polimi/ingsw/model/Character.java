@@ -4,12 +4,13 @@ import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.util.exception.StudentNotPresentException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Stores information about a character game's card
  */
-public class Character {
+public class Character implements Serializable {
     private String name;
     private String description;
     private int ID;

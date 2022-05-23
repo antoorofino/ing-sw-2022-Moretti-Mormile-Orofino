@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
  * Stores information about the bag of the game that contains
  * students
  */
-public class Bag {
+public class Bag implements Serializable {
     private Map<Piece,Integer> students;
 
     /**

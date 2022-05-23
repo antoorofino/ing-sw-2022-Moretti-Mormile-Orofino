@@ -54,7 +54,7 @@ public interface View {
 	 *
 	 * @param cards All the possible cards
 	 */
-	void askAssistantCard(ArrayList<AssistantCard> cards);
+	void askAssistantCard(List<AssistantCard> cards);
 
 	/**
 	 * Asks the action the player wants to perform

@@ -41,7 +41,7 @@ public class InputValidator {
 
 	public static boolean isNumberBetween(int num, int a, int b){ return (a < num)&&(num < b);}
 
-	public static AssistantCard isIDBetween(int id, ArrayList<AssistantCard> cards){
+	public static AssistantCard isIDBetween(int id, List<AssistantCard> cards){
 		for (AssistantCard card:cards) {
 			if(card.getCardID() == id)
 				return card;

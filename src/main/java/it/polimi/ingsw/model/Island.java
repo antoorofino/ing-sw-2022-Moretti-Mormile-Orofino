@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Stores information about island
  */
-public class Island {
+public class Island implements Serializable {
     private Map<Piece, Integer> studentsOnIsland;
     private int ID;
     private int size;
