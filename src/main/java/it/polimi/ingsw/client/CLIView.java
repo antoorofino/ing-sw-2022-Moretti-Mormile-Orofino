@@ -108,20 +108,20 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void askTowerColor(ArrayList<String> possibleColor,boolean isFirstRequest) {
+	public void askTowerColor(List<TowerColor> possibleColor,boolean isFirstRequest) {
 		String chosenColor;
 		if(!isFirstRequest)
 			System.out.println("> This color is already chosen. Please insert a new one");
 		//There's only one color?
 		if (possibleColor.size() == 1) {
-			chosenColor = possibleColor.get(0);
+			chosenColor = possibleColor.get(0).toString();
 			System.out.print(" > Your color will be" + chosenColor);
 		} else {
 			boolean correct;
 			do {
 				System.out.print(" > Choose your tower color between: ");
 				for (int i = 0; i < possibleColor.size(); i++) {
-					String color = possibleColor.get(i);
+					TowerColor color = possibleColor.get(i);
 					System.out.print(color);
 				}
 				System.out.println();

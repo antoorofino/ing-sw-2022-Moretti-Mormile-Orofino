@@ -44,11 +44,11 @@ public class Player {
 		return id;
 	}
 
-	public void setPlayerColor(TowerColor color) {
+	public void setTowerColor(TowerColor color) {
 		this.towerColor = color;
 	}
 
-	public TowerColor getPlayerColor() {
+	public TowerColor getTowerColor() {
 		return this.towerColor;
 	}
 

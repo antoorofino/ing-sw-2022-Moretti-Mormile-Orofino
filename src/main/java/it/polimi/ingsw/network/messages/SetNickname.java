@@ -26,6 +26,6 @@ public class SetNickname implements VCMessage, Serializable {
 
 	@Override
 	public void execute(GameController controller) {
-		controller.setPlayerInfo(playerId,nickname);
+		controller.setPlayerNickname(playerId, nickname);
 	}
 }

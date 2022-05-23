@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.RoundActions;
+import it.polimi.ingsw.util.TowerColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public interface View {
 	 *
 	 * @param possibleColor All the possible Color
 	 */
-	void askTowerColor(ArrayList<String> possibleColor,boolean isFirstRequest);
+	void askTowerColor(List<TowerColor> possibleColor, boolean isFirstRequest);
 
 	/**
 	 * Asks the player card assistance
