@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.messages.AskNewGameName;
 import it.polimi.ingsw.network.messages.AskNickname;
 import it.polimi.ingsw.network.messages.GameListMessage;
 import it.polimi.ingsw.util.Configurator;
-import it.polimi.ingsw.util.GamesListInfo;
+import it.polimi.ingsw.util.GameListInfo;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -126,7 +126,7 @@ public class ServerMain {
         List<GameModel> gameList = gameModelList().stream()
                 .filter(GameModel::gameAcceptPlayers)
                 .collect(Collectors.toList());
-        getClientHandlerByPlayerId(playerId).send(new GameListMessage(new GamesListInfo(gameList)));
+        getClientHandlerByPlayerId(playerId).send(new GameListMessage(GameListInfo.createGameInfoList(gameList)));
     }
 
     public void setDisconnected(String playerId){
