@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Stores information about an assistence card of the game
  */
 
-public class AssistantCard {
+public class AssistantCard implements Serializable {
     private final int cardValue;
     private final int movements;
     private final int cardID;

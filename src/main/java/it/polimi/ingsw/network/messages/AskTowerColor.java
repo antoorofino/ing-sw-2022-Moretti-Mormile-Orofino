@@ -10,10 +10,12 @@ import java.util.ArrayList;
 public class AskTowerColor implements CVMessage, Serializable {
 	private final MessageType messageType;
 	private final ArrayList<String> possibleColors;
+	private final boolean isFirstRequest;
 
-	public AskTowerColor(ArrayList<String> possibleColors){
+	public AskTowerColor(ArrayList<String> possibleColors,boolean isFirstRequest){
 		this.messageType = MessageType.CV;
 		this.possibleColors = possibleColors;
+		this.isFirstRequest = isFirstRequest;
 	}
 
 	@Override
@@ -23,6 +25,6 @@ public class AskTowerColor implements CVMessage, Serializable {
 
 	@Override
 	public void execute(View view) {
-		view.askTowerColor(possibleColors);
+		view.askTowerColor(possibleColors,isFirstRequest);
 	}
 }

@@ -21,6 +21,6 @@ public class AskNickname implements CVMessage, Serializable {
 
 	@Override
 	public void execute(View view) {
-		view.askNickname();
+		view.askNickname(isFirstRequest);
 	}
 }

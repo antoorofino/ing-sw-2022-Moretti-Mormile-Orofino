@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.CVMessage;
-import it.polimi.ingsw.util.GameInfo;
 import it.polimi.ingsw.util.MessageType;
 
 import java.io.Serializable;

@@ -12,7 +12,7 @@ public class AskAssistantCard implements CVMessage, Serializable {
 	private final MessageType messageType;
 	private final ArrayList<AssistantCard> possibleCards;
 
-	public AskAssistantCard(ArrayList<AssistantCard> possibleCards){ // TODO: Assistant Card should be Serializable
+	public AskAssistantCard(ArrayList<AssistantCard> possibleCards){
 		this.messageType = MessageType.CV;
 		this.possibleCards = possibleCards;
 	}

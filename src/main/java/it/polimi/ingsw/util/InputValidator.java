@@ -4,6 +4,7 @@ package it.polimi.ingsw.util;
 import it.polimi.ingsw.model.AssistantCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InputValidator {
 	//TODO create methods input validator
@@ -46,6 +47,14 @@ public class InputValidator {
 				return card;
 		}
 		return null;
+	}
+
+	public static boolean isGameName(String gameName, List<GameListInfo> gamesList){
+		for (GameListInfo game:gamesList) {
+			if(game.getGameName().equalsIgnoreCase(gameName))
+				return true;
+		}
+		return false;
 	}
 }
 

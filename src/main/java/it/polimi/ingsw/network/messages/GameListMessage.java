@@ -23,7 +23,6 @@ public class GameListMessage implements Serializable, CVMessage {
 
     @Override
     public void execute(View view) {
-        // FIXME: correct view method
-        //view.showGamesList(gameList);
+        view.showGamesList(gameList);
     }
 }

@@ -1,19 +1,19 @@
 package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.network.CVMessage;
-import it.polimi.ingsw.util.GameInfo;
 import it.polimi.ingsw.util.MessageType;
 
 import java.io.Serializable;
 
 public class UpdateGameBoard implements CVMessage, Serializable {
 	private final MessageType messageType;
-	private final GameInfo gameInfo;
+	private final GameModel game;
 
-	public UpdateGameBoard(GameInfo gameInfo){
+	public UpdateGameBoard(GameModel game){
 		this.messageType = MessageType.CV;
-		this.gameInfo = gameInfo;
+		this.game = game;
 	}
 	@Override
 	public MessageType getType() {
@@ -22,6 +22,6 @@ public class UpdateGameBoard implements CVMessage, Serializable {
 
 	@Override
 	public void execute(View view) {
-		view.showGame(gameInfo);
+		view.showGame(game);
 	}
 }

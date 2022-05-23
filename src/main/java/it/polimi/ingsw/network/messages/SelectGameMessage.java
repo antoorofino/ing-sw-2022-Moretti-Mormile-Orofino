@@ -9,13 +9,13 @@ import java.io.Serializable;
 
 public class SelectGameMessage implements Serializable, SYSMessage {
     private final MessageType messageType;
-    private final GameModel game;
+    private final String gameName;
     private final String playerId;
 
-    public SelectGameMessage(String playerId, GameModel game){
+    public SelectGameMessage(String playerId, String gameName){
         this.messageType = MessageType.SYS;
         this.playerId = playerId;
-        this.game = game;
+        this.gameName = gameName;
     }
 
     @Override
@@ -25,6 +25,6 @@ public class SelectGameMessage implements Serializable, SYSMessage {
 
     @Override
     public void execute(ServerMain serverMain) {
-        serverMain.selectGame(playerId, game);
+        serverMain.selectGame(playerId, gameName);
     }
 }

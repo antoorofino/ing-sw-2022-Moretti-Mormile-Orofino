@@ -41,7 +41,7 @@ public class ServerHandler implements NetworkHandler {
 			isConnected = true;
 
 			socket.setSoTimeout(Configurator.getSocketTimeout());
-			(new HeartbeatSender(this, MessageType.SYS)).start();
+			(new HeartbeatSender(this, false)).start();
 		} catch (IOException e) {
 			view.showErrorMessage("Server unreachable");
 		}

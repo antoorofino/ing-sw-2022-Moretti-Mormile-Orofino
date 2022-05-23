@@ -13,7 +13,7 @@ public class AskNewGameChoice implements CVMessage {
 
     @Override
     public void execute(View view) {
-        //TODO: add call to view method
+        view.askNewGameChoice();
     }
 
     @Override

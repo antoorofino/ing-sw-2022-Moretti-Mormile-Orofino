@@ -1,15 +1,15 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.AssistantCard;
-import it.polimi.ingsw.util.GameInfo;
-import it.polimi.ingsw.util.GamesListInfo;
+import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.RoundActions;
-import it.polimi.ingsw.util.TowerColor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface View {
-    //TODO: check if some else needed
+
 	/**
 	 * Sets the serverHandler
 	 *
@@ -30,12 +30,15 @@ public interface View {
 	 */
 	void askGameSettings();
 
+	void askNewGameName();
+
+	void askNewGameChoice();
 
 	/**
 	 * Asks the player's nickname
 	 *
 	 */
-	void askNickname();
+	void askNickname(boolean isFirstRequest);
 
 
 	/**
@@ -43,7 +46,7 @@ public interface View {
 	 *
 	 * @param possibleColor All the possible Color
 	 */
-	void askTowerColor(ArrayList<String> possibleColor);
+	void askTowerColor(ArrayList<String> possibleColor,boolean isFirstRequest);
 
 	/**
 	 * Asks the player card assistance
@@ -57,16 +60,15 @@ public interface View {
 	 *
 	 * @param roundActions  All the possible actions
 	 */
-	void askAction(RoundActions roundActions);
+	void askAction(RoundActions roundActions,boolean isInvalidAction);
 
-	void showGamesList(GamesListInfo gamesList);
+	void showGamesList(List<GameListInfo> gamesList);
 
 	/**
 	 * Shows the board of the game
 	 *
-	 * @param gameInfo   The game info
 	 */
-	void showGame(GameInfo gameInfo);
+	void showGame(GameModel game);
 
 	/**
 	 * Shows the user who is taking his turn
@@ -94,8 +96,6 @@ public interface View {
 	 * @param winnerNickname The nickname of the winner
 	 */
 	void showGameEndMessage(String winnerNickname);
-
-	// TODO: add the termination
 	/**
 	 *
 	 * Shows an error message to the user and terminate the client

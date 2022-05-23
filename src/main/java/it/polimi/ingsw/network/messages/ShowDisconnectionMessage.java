@@ -17,7 +17,7 @@ public class ShowDisconnectionMessage implements Serializable, CVMessage {
 
     @Override
     public void execute(View view) {
-        //TODO: set view method
+        view.showErrorMessage("Il giocatore " + disconnectedNickname + "si è disconnesso");
     }
 
     @Override

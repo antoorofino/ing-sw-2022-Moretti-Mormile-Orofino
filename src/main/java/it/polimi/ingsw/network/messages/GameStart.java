@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
+import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.network.CVMessage;
-import it.polimi.ingsw.util.GameInfo;
 import it.polimi.ingsw.util.MessageType;
 
 import java.io.Serializable;
@@ -10,11 +10,11 @@ import java.io.Serializable;
 public class GameStart implements CVMessage, Serializable {
 	private final MessageType messageType;
 	private final String firstPlayer;
-	private final GameInfo gameInfo;
+	private final GameModel game;
 
-	public GameStart(GameInfo gameInfo, String firstPlayerNickname){
+	public GameStart(GameModel game, String firstPlayerNickname){
 		this.messageType = MessageType.CV;
-		this.gameInfo = gameInfo;
+		this.game = game;
 		this.firstPlayer = firstPlayerNickname;
 	}
 	@Override
@@ -24,7 +24,7 @@ public class GameStart implements CVMessage, Serializable {
 
 	@Override
 	public void execute(View view) {
-		view.showGame(gameInfo);
+		view.showGame(game);
 		view.showTurn(firstPlayer);
 	}
 }

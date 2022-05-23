@@ -25,6 +25,6 @@ public class SetTowerColor implements VCMessage, Serializable {
 
 	@Override
 	public void execute(GameController controller) {
-		// FIXME: controller non ha un metodo per il setting del colore
+		// TODO: add call to controller method
 	}
 }

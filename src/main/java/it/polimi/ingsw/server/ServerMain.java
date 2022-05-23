@@ -84,6 +84,7 @@ public class ServerMain {
         }
     }
 
+    // TODO: change GameModel to String gameName
     public void selectGame(String playerId, GameModel game){
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
         Optional<VirtualView> virtualView = virtualViewList.stream()

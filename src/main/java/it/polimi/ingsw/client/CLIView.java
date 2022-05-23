@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.model.AssistantCard;
-import it.polimi.ingsw.model.Piece;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -18,22 +18,6 @@ public class CLIView implements View{
 	private ServerHandler serverHandler;
 	private String playerId;
 	private String nickname;
-
-	/* cose da chiedere ad anto ( che se ha voglia puo aggiungere le chiamate dei messaggi CV al server )
-	in caso di setnickname (e settowercolor) aspetto ack (che non mi convince.. perchè non posso essere a posto e al limite mi rimandi un'altra ask?)
-	ack deve essere un messaggio di tipo CV (non l'ho creato), al contrario di quanto scritto sul pdf SYS
-	va serializzato game model in game info
-	manca settower color nel controller
-	dopo che sono entrato nel gioco e ti ho dato nick, invece dell'ack esplicito potresti invocare con un messaggio il mio metodo:
-
-	**
-	 * Shows a message to say to the user that is connected to
-	 * the server and are waiting other user
-	 *
-	void showQueuedMessage();
-
-	oppure rispondermi con il messaggio gamestart se sono l'ultimo a entrare
-	 */
 
 	public CLIView() {
 		this.scanner = new Scanner(System.in);
@@ -86,16 +70,70 @@ public class CLIView implements View{
 			correct = true;
 			System.out.println(" Do do you want to create a new game or join an existing one? [n/e]");
 			String preferredMode = scanner.nextLine();
-			if ((preferredMode.equalsIgnoreCase("n")))
-				//FIXME: ask for the game name
-				serverHandler.send(new NewGameMessage(playerId, "nome gioco"));
+			if ((preferredMode.equalsIgnoreCase("n"))){
+				System.out.println(" Please insert the game name: ");
+				String gameName = scanner.nextLine();
+				serverHandler.send(new NewGameMessage(playerId, gameName));
+			}
 			else if ((preferredMode.equalsIgnoreCase("e")))
 				serverHandler.send(new AskGameListMessage(playerId));
 			else{
-				System.out.println(" Please insert a correct value");
+				System.out.println(" Please insert a correct value ");
 				correct = false;
 			}
 		}
+	}
+
+	@Override
+	public void askNewGameName() {
+		System.out.println(" The game name is already chosen. Please insert a new one: ");
+		String gameName = scanner.nextLine();
+		serverHandler.send(new NewGameMessage(playerId, gameName));
+	}
+
+	@Override
+	public void askNickname(boolean isFirstRequest) {
+		if(!isFirstRequest)
+			System.out.println("> This nickname is already chosen. Please insert a new one");
+		boolean correct;
+		do {
+			System.out.print(" > Enter your nickname: ");
+			nickname = scanner.nextLine();
+			correct = InputValidator.isNickname(nickname);
+			if (!correct) {
+				System.out.println(" > Invalid nickname. Try again.");
+			}
+		} while (!correct);
+		serverHandler.send(new SetNickname(playerId,nickname));
+	}
+
+	@Override
+	public void askTowerColor(ArrayList<String> possibleColor,boolean isFirstRequest) {
+		String chosenColor;
+		if(!isFirstRequest)
+			System.out.println("> This color is already chosen. Please insert a new one");
+		//There's only one color?
+		if (possibleColor.size() == 1) {
+			chosenColor = possibleColor.get(0);
+			System.out.print(" > Your color will be" + chosenColor);
+		} else {
+			boolean correct;
+			do {
+				System.out.print(" > Choose your tower color between: ");
+				for (int i = 0; i < possibleColor.size(); i++) {
+					String color = possibleColor.get(i);
+					System.out.print(color);
+				}
+				System.out.println();
+				System.out.print("  ↳: ");
+				chosenColor = scanner.next().toLowerCase();
+				correct = InputValidator.isColorBetween(chosenColor,possibleColor);
+				if (!correct) {
+					System.out.println(" > Invalid choice. Try again.");
+				}
+			} while (!correct);
+		}
+		serverHandler.send(new SetTowerColor(playerId,chosenColor));
 	}
 
 	@Override
@@ -122,48 +160,9 @@ public class CLIView implements View{
 				gameMode = GameMode.EXPERT;
 		}
 		serverHandler.send(new SetGameSettings(gameMode,numPlayers));
+		showQueuedMessage();
 	}
 
-	@Override
-	public void askNickname() {
-		boolean correct;
-		do {
-			System.out.print(" > Enter your nickname: ");
-			nickname = scanner.nextLine();
-			correct = InputValidator.isNickname(nickname);
-			if (!correct) {
-				System.out.println(" > Invalid nickname. Try again.");
-			}
-		} while (!correct);
-		serverHandler.send(new SetNickname(playerId,nickname));
-	}
-
-	@Override
-	public void askTowerColor(ArrayList<String> possibleColor) {
-		String chosenColor;
-		//There's only one color?
-		if (possibleColor.size() == 1) {
-			chosenColor = possibleColor.get(0);
-			System.out.print(" > Your color will be" + chosenColor);
-		} else {
-			boolean correct;
-			do {
-				System.out.print(" > Choose your tower color between: ");
-				for (int i = 0; i < possibleColor.size(); i++) {
-					String color = possibleColor.get(i);
-					System.out.print(color);
-				}
-				System.out.println();
-				System.out.print("  ↳: ");
-				chosenColor = scanner.next().toLowerCase();
-				correct = InputValidator.isColorBetween(chosenColor,possibleColor);
-				if (!correct) {
-					System.out.println(" > Invalid choice. Try again.");
-				}
-			} while (!correct);
-		}
-		serverHandler.send(new SetTowerColor(playerId,chosenColor));
-	}
 
 	@Override
 	public void askAssistantCard(ArrayList<AssistantCard> cards) {
@@ -193,12 +192,14 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void askAction(RoundActions roundActions) {
+	public void askAction(RoundActions roundActions,boolean isInvalidAction) {
 		String action;
 		Piece chosenPiece;
 		int chosenId;
 		Action chosenAction = null;
 		boolean correct;
+		if(isInvalidAction)
+			System.out.println(" > Mossa non valida!");
 
 		do {
 			correct = false;
@@ -242,11 +243,31 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void showGamesList(GamesListInfo gamesList) {
-		for (String game:gamesList.getGamesInfo()) {
-			System.out.println(game);
+	public void showGamesList(List<GameListInfo> gamesList) {
+		boolean correct;
+		String gameName;
+		for (GameListInfo gameInfo:gamesList) {
+			System.out.println("Game: " + gameInfo.getGameName() + " #Players: " + gameInfo.getNumPlayers() +  " Mode: " + gameInfo.getGameMode());
 		}
+		System.out.println();
+		do {
+			correct = false;
+			System.out.print("Insert the name of the game you want to join: ");
+			gameName = scanner.next();
+			if(InputValidator.isGameName(gameName,gamesList))
+				correct = true;
+			else
+				System.out.println(" Please insert a valid value for game name");
+		} while (!correct);
+		serverHandler.send(new SelectGameMessage(playerId,gameName));
 	}
+
+	@Override
+	public void askNewGameChoice() {
+		System.out.println(" > Invalid choice, the game is full");
+		serverHandler.send(new AskGameListMessage(playerId));
+	}
+
 
 	public void showPossibleActions(RoundActions roundActions) {
 		System.out.println("Your possible actions are: ");
@@ -257,8 +278,34 @@ public class CLIView implements View{
 
 
 	@Override
-	public void showGame(GameInfo gameInfo) {
-		// TODO: print the game info
+	public void showGame(GameModel game) {
+		for (Player p : game.getPlayerHandler().getPlayers()) {
+			System.out.println(("<===================" + p.getNickname() + "===========================>"));
+			System.out.println(" Board ENTRANCE: ");
+			for (Piece piece:p.getPlayerBoard().getStudentsEntrance()) {
+				System.out.print(piece.getColor() + " ");
+			}
+			System.out.println();
+			System.out.println(" Board DINING ROOM: ");
+			for (Piece piece:Piece.values()) {
+				System.out.print(piece.getColor() + " x" +  p.getPlayerBoard().getNumOfStudentsRoom(piece));
+				if(game.getTeacherHandler().getTeacherOwner(piece).getNickname().equals(p.getNickname()))
+					System.out.print(" Teacher ");
+				System.out.println();
+			}
+			System.out.println(" #TOWER "+ p.getNumOfTower());
+		}
+
+		System.out.println(("<****************** ISLANDS *********************>"));
+		for (Island island : game.getIslandHandler().getIslands()) {
+			System.out.println("ID: " + island.getID() + " size: " + island.getSize());
+			System.out.println(" Students:  ");
+			for (Piece piece:Piece.values()) {
+				System.out.print(piece.getColor() + " x" +  island.getNumStudents(piece) + " / ");
+			}
+			if(island.towerIsAlreadyBuild())
+				System.out.println("Presente torre di: " + island.getIslandOwner().getNickname());
+		}
 	}
 
 	@Override
