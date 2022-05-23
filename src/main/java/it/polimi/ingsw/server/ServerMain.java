@@ -148,7 +148,10 @@ public class ServerMain {
     }
 
     private boolean checkName(String gameName){
-        //TODO: check for already used names
+        for (GameModel game : gameModelList()){
+            if (game.getGameName().equalsIgnoreCase(gameName))
+                return false;
+        }
         return true;
     }
 }
