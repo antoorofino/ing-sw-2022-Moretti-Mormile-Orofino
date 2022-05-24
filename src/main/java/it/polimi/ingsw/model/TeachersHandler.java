@@ -13,26 +13,31 @@ public class TeachersHandler implements Serializable {
         teachers = new HashMap<Piece,Player>();
     }
 
-    /*public void calculateTeacher(ArrayList<Player> players, boolean geq){
-        /*int countOwner;
+    public void calculateTeacher(ArrayList<Player> players, boolean geq){
+        int countOwner;
         int countPossibleOwner;
         Player currentOwner;
         for (Piece piece : Piece.values()) { // per ogni pedina
-            currentOwner = getTeacherOwner(piece);
             for (Player p : players) {
                 countPossibleOwner = p.getPlayerBoard().getNumOfStudentsRoom(piece);
-                if (!teacherIsAssigned(piece))
+                if (!teacherIsAssigned(piece)){
                     if(countPossibleOwner>0)
                         teachers.put(piece, p);
-                    else if (!currentOwner.equals(p)) {    // non è il proprietario attuale
+
+                }else{
+                    currentOwner = getTeacherOwner(piece); // current owner can be null
+                    if (!currentOwner.equals(p)) {    // non è il proprietario attuale
                         countOwner = currentOwner.getPlayerBoard().getNumOfStudentsRoom(piece);
                         if (countPossibleOwner > countOwner || ((countOwner == countPossibleOwner) && geq))
                             teachers.put(piece, p);
                     }
+                }
             }
-        }*/
-    //}
+        }
+    }
+    /*
     public void calculateTeacher(ArrayList<Player> players, boolean geq){
+        System.out.println("Chiamo calculate teacher");
         int countOwner;
         int countPossibleOwner;
         Player currentOwner, futureOwner;
@@ -49,6 +54,7 @@ public class TeachersHandler implements Serializable {
                 }
                 if(equals)
                     futureOwner=null;
+                //System.out.println("Aggiungo teacher " + piece.toString() +" al giocatore " + futureOwner.getNickname());
                 teachers.put(piece,futureOwner);
             }
         }
@@ -69,7 +75,7 @@ public class TeachersHandler implements Serializable {
                 }
             }
         }
-    }
+    }*/
 
     public boolean teacherIsAssigned(Piece teacher){
         if(this.teachers.get(teacher)==(null))

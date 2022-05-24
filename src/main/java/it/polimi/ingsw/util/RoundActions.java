@@ -27,23 +27,30 @@ public class RoundActions  implements Serializable {
     }
 
     public boolean hasMovedMother() {
-        return actionList.contains(ActionType.MOVE_MOTHER_NATURE);
+        return containsAction(ActionType.MOVE_MOTHER_NATURE);
     }
 
     public boolean hasChooseCloud() {
-        return actionList.contains(ActionType.CHOOSE_CLOUD);
+        return containsAction(ActionType.CHOOSE_CLOUD);
     }
 
     public boolean hasChooseCharacter(){
-        return actionList.contains(ActionType.CHOOSE_CHARACTER);
+        return containsAction(ActionType.CHOOSE_CHARACTER);
     }
 
     public boolean hasActivatedCharacter(){
-        return actionList.contains(ActionType.ACTIVATED_CHARACTER);
+        return containsAction(ActionType.ACTIVATED_CHARACTER);
     }
 
     public boolean hasEnded() {
-        return actionList.contains(ActionType.END);
+        return containsAction(ActionType.END);
+    }
+
+    private boolean containsAction(ActionType actionType){
+        for (Action action : actionList)
+            if (action.getActionType() == actionType)
+                return true;
+        return false;
     }
 
     public boolean isEmpty() {

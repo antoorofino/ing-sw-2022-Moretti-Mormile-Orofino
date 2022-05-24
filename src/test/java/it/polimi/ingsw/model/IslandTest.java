@@ -132,6 +132,15 @@ public class IslandTest {
 		p2.getPlayerBoard().addToEntrance(studentsP2);
 		p3.getPlayerBoard().addToEntrance(studentsP3);
 
+
+		PlayersHandler playersHandler = new PlayersHandler();
+		playersHandler.addPlayer(p1);
+		playersHandler.addPlayer(p2);
+		playersHandler.addPlayer(p3);
+
+		TeachersHandler teachersHandler = new TeachersHandler();
+
+
 		try {
 			p1.getPlayerBoard().addStudentToRoom(Piece.DRAGON);
 		} catch (SpecificStudentNotFoundException ignored) {
@@ -162,6 +171,8 @@ public class IslandTest {
 		} catch (SpecificStudentNotFoundException ignored) {
 
 		}
+
+		teachersHandler.calculateTeacher(playersHandler.getPlayers(),false);
 
 		try {
 			p2.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
@@ -194,51 +205,46 @@ public class IslandTest {
 
 		}
 
-
-		try {
-			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
-		} catch (SpecificStudentNotFoundException ignored) {
-
-		}
-		try {
-			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
-		} catch (SpecificStudentNotFoundException ignored) {
-
-		}
-		try {
-			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException ignored) {
-
-		}
-		try {
-			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException ignored) {
-
-		}
-		try {
-			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException ignored) {
-
-		}
-		try {
-			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
-		} catch (SpecificStudentNotFoundException ignored) {
-
-		}
-
-
-
-		PlayersHandler playersHandler = new PlayersHandler();
-		playersHandler.addPlayer(p1);
-		playersHandler.addPlayer(p2);
-		playersHandler.addPlayer(p3);
-
-		TeachersHandler teachersHandler = new TeachersHandler();
 		teachersHandler.calculateTeacher(playersHandler.getPlayers(),false);
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.FAIRY);
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+		try {
+			p3.getPlayerBoard().addStudentToRoom(Piece.UNICORN);
+		} catch (SpecificStudentNotFoundException ignored) {
+
+		}
+
+		teachersHandler.calculateTeacher(playersHandler.getPlayers(),false);
+
+
+
 		/*
 		P1 DRAGON : 6
 		P2 FROG GNOME: 4 + 3 = 7
-		P3 UNICORN FAIRY: 4 +2
+		P3 UNICORN FAIRY: 4 + 2
 		 */
 		island.addStudent(Piece.DRAGON);
 		island.addStudent(Piece.DRAGON);
@@ -265,7 +271,7 @@ public class IslandTest {
 		island.addStudent(Piece.UNICORN);
 
 
-		island.calculateInfluence(teachersHandler,true,null, new Player("id"));
+		island.calculateInfluence(teachersHandler,true,null, null);
 		assertEquals(p2,island.getIslandOwner());
 
 		island.addStudent(Piece.DRAGON);
@@ -276,10 +282,10 @@ public class IslandTest {
 		P2 FROG GNOME: 4 + 3 = 7
 		P3 UNICORN FAIRY: 4 +2
 		 */
-		island.calculateInfluence(teachersHandler,true,null, new Player("id"));
+		island.calculateInfluence(teachersHandler,true,null,null);
 		assertEquals(p1,island.getIslandOwner());
 
-		island.calculateInfluence(teachersHandler,true,Piece.DRAGON, new Player("id"));
+		island.calculateInfluence(teachersHandler,true,Piece.DRAGON, null);
 		assertEquals(p2,island.getIslandOwner());
 
 	}

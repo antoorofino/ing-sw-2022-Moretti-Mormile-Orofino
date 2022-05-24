@@ -204,37 +204,37 @@ public class CLIView implements View{
 		boolean correct;
 		if(isInvalidAction)
 			System.out.println(" > Mossa non valida!");
-
 		do {
 			correct = false;
 			showPossibleActions(roundActions);
-			System.out.print("Insert your action type: [MOVE_STUDENT_ISLAND <msi> / MOVE_STUDENT_ROOM <msr> / MOVE_MOTHER <mm> / CHOOSE_CLOUD <cc>]:");
+			System.out.println();
+			System.out.print("> Insert your action type: [MOVE_STUDENT_ISLAND <msi> / MOVE_STUDENT_ROOM <msr> / MOVE_MOTHER <mm> / CHOOSE_CLOUD <cc>]:");
 			action = scanner.nextLine();
 			if (action.equalsIgnoreCase("msi")) {
-				System.out.print("Insert the student's color [red / blue / green / yellow / pink]: ");
+				System.out.print("> Insert the student's color [red / blue / green / yellow / pink]: ");
 				chosenPiece = Piece.getPieceByColor(scanner.nextLine());
 				if(chosenPiece!=null){
-					System.out.print("Insert the island ID: ");
+					System.out.print("> Insert the island ID: ");
 					chosenId = Integer.parseInt(scanner.nextLine());
 					chosenAction = new Action(ActionType.MOVE_STUDENT_TO_ISLAND, chosenPiece,null,chosenId);
 				}else
-					System.out.println(" Please insert a valid value for color");
+					System.out.println("> Please insert a valid value for color");
 			}
 			if (action.equalsIgnoreCase("msr")) {
-				System.out.print("Insert the student's color [red / blue / green / yellow / pink]: ");
+				System.out.print("> Insert the student's color [red / blue / green / yellow / pink]: ");
 				chosenPiece = Piece.getPieceByColor(scanner.nextLine());
 				if(chosenPiece!=null){
 					chosenAction = new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, chosenPiece,null,0);
 				}else
-					System.out.println(" Please insert a valid value for color");
+					System.out.println("> Please insert a valid value for color");
 			}
 			if (action.equalsIgnoreCase("mm")){
-				System.out.print(" Insert the number of mother nature steps: ");
+				System.out.print("> Insert the number of mother nature steps: ");
 				chosenId = Integer.parseInt(scanner.nextLine());
 				chosenAction = new Action(ActionType.MOVE_MOTHER_NATURE,null,null,chosenId);
 			}
 			if (action.equalsIgnoreCase("cc")){
-				System.out.print("Insert the cloud ID: ");
+				System.out.print("> Insert the cloud ID: ");
 				chosenId = Integer.parseInt(scanner.nextLine());
 				chosenAction = new Action(ActionType.CHOOSE_CLOUD,null,null,chosenId);
 			}
@@ -280,7 +280,7 @@ public class CLIView implements View{
 	public void showPossibleActions(RoundActions roundActions) {
 		System.out.println("Your possible actions are: ");
 		for (Action action:roundActions.getActionsList()) {
-			System.out.println(action.getActionType().toString() + " / ");
+			System.out.print(action.getActionType().toString() + " ");
 		}
 	}
 
@@ -300,13 +300,14 @@ public class CLIView implements View{
 				Player owner = game.getTeacherHandler().getTeacherOwner(piece);
 				if(owner!= null)
 					if(owner.getNickname().equals(p.getNickname()))
-						System.out.print("Teacher ");
+						System.out.print(" Teacher");
 				System.out.println();
 			}
 			System.out.println("#TOWER "+ p.getNumOfTower());
 		}
 
 		System.out.println(("****************** ISLANDS *********************"));
+		int mother = game.getIslandHandler().getMotherNature();
 		for (Island island : game.getIslandHandler().getIslands()) {
 			System.out.println("ID: " + island.getID() + " size: " + island.getSize());
 			System.out.print("Students: ");
@@ -314,7 +315,9 @@ public class CLIView implements View{
 				System.out.print(piece.toString() + "x" +  island.getNumStudents(piece) + "		");
 			}
 			if(island.towerIsAlreadyBuild())
-				System.out.println("Presente torre di: " + island.getIslandOwner().getNickname());
+				System.out.print("Presente torre di: " + island.getIslandOwner().getNickname());
+			if(island.getID() == mother)
+				System.out.print(" Madre natura");
 			System.out.println();
 		}
 

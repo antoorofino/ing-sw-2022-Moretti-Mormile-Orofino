@@ -151,15 +151,27 @@ public class GameController {
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
                 virtualView.sendToEveryone(new UpdateCurrentPlayer(game.getPlayerHandler().getCurrentPlayer().getNickname()));
                 if(game.getPlayerHandler().getCurrentPlayer().getRoundActions().hasEnded()){
+                    System.out.println("Il player " + game.getPlayerHandler().getCurrentPlayer().getNickname() + " ha terminato il turno");
                     game.getPlayerHandler().getCurrentPlayer().resetRoundAction();
                     game.getPlayerHandler().getCurrentPlayer().setActiveCharacter(null);
                     game.getPlayerHandler().nextPlayerByAssistance();
                     i++;
                 } else {
+
+                    System.out.println("Il player ha effettuato: ");
+                    for (Action action:game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList()) {
+                        System.out.print(action.getActionType().toString() + " ");
+                    }
+                    System.out.println();
                     //TODO: update the map through the virtualView
                     virtualView.sendToEveryone(new UpdateGameBoard(game));
-                    //TODO: send possible actions to the current player
-                    virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),false));
+                    //TODO: send possible actions to the current player (if expert or base moves)
+                    if(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter() == null){
+                        virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),false));
+                    } else {
+                        virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter().getRules().nextPossibleActions(),false));
+                    }
+
                     int currentActionsNumber = game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size();
                     synchronized (this) {
                         while (game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size() <= currentActionsNumber) {

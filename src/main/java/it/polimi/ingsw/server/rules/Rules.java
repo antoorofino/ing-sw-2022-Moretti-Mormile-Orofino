@@ -28,18 +28,19 @@ public class Rules {
 		RoundActions nextPossibleActions = new RoundActions();
 
 		if (roundActions.hasMovedStudents() < 3) {
-			controlTeacher();
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_ISLAND));
-		} else
-			nextPossibleActions.add(new Action(ActionType.MOVE_MOTHER_NATURE));
+		} else {
+			if (!roundActions.hasMovedMother())
+				nextPossibleActions.add(new Action(ActionType.MOVE_MOTHER_NATURE));
+			else {
+				// FIXME: scommenta qua
+				//nextPossibleActions.add(new Action(ActionType.CHOOSE_CLOUD));
 
-		if (roundActions.hasMovedMother())
-			calculateInfluence();
-			nextPossibleActions.add(new Action(ActionType.CHOOSE_CLOUD));
-
-		if (roundActions.hasChooseCloud())
-			nextPossibleActions.add(new Action(ActionType.END));
+			}
+		}
+		//if (roundActions.hasChooseCloud())
+		//	nextPossibleActions.add(new Action(ActionType.END));
 
 		return nextPossibleActions;
 	}
@@ -55,6 +56,8 @@ public class Rules {
 				break;
 			case MOVE_MOTHER_NATURE:
 				returnValue = doMoveMother(action);
+				// FIXME: metti dopo choose cloud
+				getCurrentPlayer().registerAction(new Action(ActionType.END));
 				break;
 			case CHOOSE_CLOUD:
 				returnValue = doChooseCloud(action);
@@ -67,17 +70,25 @@ public class Rules {
 
 	protected boolean doMoveDiningRoom(Action action) {
 		try {
-			// remove from entrance
 			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+
 		} catch (SpecificStudentNotFoundException e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
+
+		try {
+			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
+		} catch (SpecificStudentNotFoundException e) {
+			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
+			return false;
+		}
+		controlTeacher();
 		return true;
 	}
 
 	protected boolean doMoveIsland(Action action) {
-		System.out.println("Entro in Rules");
+
 		try {
 			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
@@ -93,12 +104,15 @@ public class Rules {
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
 			return false;
 		}
+		//System.out.println("Muovo studente su isola");
 		return true;
 	}
 
 	protected boolean doMoveMother(Action action){
-		if (getCurrentPlayer().getLastCardUsed().getMovements() > action.getID()){
+		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getID()){
 			game.getIslandHandler().moveMotherNature(action.getID());
+		//	System.out.println("Muovo madre natura");
+			calculateInfluence();
 			return true;
 		}
 		return false;
@@ -114,11 +128,13 @@ public class Rules {
 			return false;
 		}
 		getCurrentPlayer().getPlayerBoard().addToEntrance(cloud.getStudents());
+	//	System.out.println("Assegno isola a board studente");
 		return true;
 	}
 
 
 	protected void calculateInfluence() {
+
 		int currentMother = game.getIslandHandler().getMotherNature();
 		Island currentIsland = null;
 		try {
@@ -128,9 +144,11 @@ public class Rules {
 			e.printStackTrace();
 		}
 		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
+		//System.out.println("Calcolo influenza");
 	}
 
 	protected void controlTeacher() {
+		//System.out.println("Calcolo influenza");
 		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 	}
 

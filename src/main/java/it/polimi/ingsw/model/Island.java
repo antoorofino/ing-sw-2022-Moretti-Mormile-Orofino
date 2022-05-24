@@ -81,6 +81,7 @@ public class Island implements Serializable {
      */
 
     public void calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
+        // true null null
         int count;
         Player player;
         HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
@@ -109,20 +110,27 @@ public class Island implements Serializable {
                 scores.put(player, count + getSize());
             }
         }
-
-        // find the new owner
-        player = getIslandOwner();
+        System.out.println("Punteggi:");
         for (Player p : scores.keySet()) {
-            if((player== null) || (!p.equals(player) && scores.get(p)>scores.get(player)))
-                player = p;
+            System.out.println(p.getNickname() + " "+ scores.get(p));
         }
-
-        if(getIslandOwner()==null || !getIslandOwner().equals(player) ){
-            if(getIslandOwner()!=null)
-                getIslandOwner().addTower(getSize());
-            player.removeTower(getSize());
-            islandOwner = player;
+        // find the new owner
+        for (Player p : scores.keySet()) {
+            player = getIslandOwner();
+            if(player != null) {
+                if (!p.equals(player) && scores.get(p) > scores.get(player)) {
+                    player.addTower(getSize());
+                    p.removeTower(getSize());
+                    islandOwner = p;
+                }
+            }else{
+                if(scores.get(p)!=0){
+                    p.removeTower(getSize());
+                    islandOwner = p;
+                }
+            }
         }
+        //System.out.println(islandOwner.getNickname());
     }
 
     public int getCount(Player player,HashMap<Player, Integer> map){
