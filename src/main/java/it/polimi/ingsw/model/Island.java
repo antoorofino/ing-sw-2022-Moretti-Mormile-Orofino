@@ -130,7 +130,6 @@ public class Island implements Serializable {
                 }
             }
         }
-        //System.out.println(islandOwner.getNickname());
     }
 
     public int getCount(Player player,HashMap<Player, Integer> map){

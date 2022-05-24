@@ -150,6 +150,7 @@ public class GameController {
             int i = 0;
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
                 virtualView.sendToEveryone(new UpdateCurrentPlayer(game.getPlayerHandler().getCurrentPlayer().getNickname()));
+                virtualView.sendToEveryone(new UpdateGameBoard(game));
                 if(game.getPlayerHandler().getCurrentPlayer().getRoundActions().hasEnded()){
                     System.out.println("Il player " + game.getPlayerHandler().getCurrentPlayer().getNickname() + " ha terminato il turno");
                     game.getPlayerHandler().getCurrentPlayer().resetRoundAction();
@@ -164,13 +165,9 @@ public class GameController {
                     }
                     System.out.println();
                     //TODO: update the map through the virtualView
-                    virtualView.sendToEveryone(new UpdateGameBoard(game));
+
                     //TODO: send possible actions to the current player (if expert or base moves)
-                    if(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter() == null){
-                        virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),false));
-                    } else {
-                        virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter().getRules().nextPossibleActions(),false));
-                    }
+                    sendPossibleActions();
 
                     int currentActionsNumber = game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size();
                     synchronized (this) {
@@ -186,6 +183,14 @@ public class GameController {
         } catch (Exception ignored) {
             //FIXME: should be created a custom exception
             throw new RuntimeException("Double tie");
+        }
+    }
+
+    private void sendPossibleActions(){
+        if(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter() == null){
+            virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),false));
+        } else {
+            virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter().getRules().nextPossibleActions(),false));
         }
     }
 
@@ -227,9 +232,9 @@ public class GameController {
         //TODO: what to do with winner player
     }
 
-    public boolean setAction(Action action, String nickname) throws PlayerException {
+    public void setAction(Action action, String nickname) throws PlayerException {
         if(!checkIfIsCurrentPlayer(nickname))
-            return false;
+            sendPossibleActions();
         Player thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
         boolean legalAction;
         if(thePlayer.getActiveCharacter() == null){
@@ -238,14 +243,13 @@ public class GameController {
             legalAction = thePlayer.getActiveCharacter().getRules().doAction(action);
         }
         if(!legalAction)
-            return false;
+            sendPossibleActions();
         if(thePlayer.getNumOfTower() == 0)
             endImmediately = true;
         if(game.getIslandHandler().getIslands().size() <= 3)
             endImmediately = true;
-        wakeUpController();
         System.out.println("Setto azione al player "+ nickname);
-        return true;
+        wakeUpController();
     }
 
     public boolean setAssistantCard(String nickname, AssistantCard card){
