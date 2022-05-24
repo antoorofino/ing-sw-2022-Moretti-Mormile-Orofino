@@ -50,7 +50,6 @@ public class BoardTest {
         } catch (SpecificStudentNotFoundException ignored) {
 
         }
-        students.remove(Piece.FROG);
         assertEquals(students,board.getStudentsEntrance());
 
         Map<Piece,Integer> studentsRoom = new HashMap<>();

@@ -42,8 +42,8 @@ public class PlayerTest {
 	@Test
 	void setPlayerColorTest(){
 		TowerColor color = TowerColor.BLACK;
-		player.setPlayerColor(color);
-		assertEquals(color,player.getPlayerColor());
+		player.setTowerColor(color);
+		assertEquals(color,player.getTowerColor());
 	}
 
 	@Test
