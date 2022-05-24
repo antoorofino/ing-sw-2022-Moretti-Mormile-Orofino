@@ -132,6 +132,7 @@ public class GameController {
             }
             for(int i = 0; i < game.getPlayerHandler().getNumPlayers(); i++){
                 virtualView.sendToEveryone(new UpdateCurrentPlayer(game.getPlayerHandler().getCurrentPlayer().getNickname()));
+                virtualView.sendToEveryone(new UpdateGameBoard(game));
                 List<AssistantCard> possibleCards = game.getPlayerHandler().getCurrentPlayer().getDeck().stream()
                         .filter(this::checkAssistantCard)
                         .collect(Collectors.toList());
