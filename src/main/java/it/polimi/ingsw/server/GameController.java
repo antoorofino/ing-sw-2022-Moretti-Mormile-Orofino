@@ -160,15 +160,14 @@ public class GameController {
                     i++;
                 } else {
 
-                    System.out.println("Il player ha effettuato: ");
+                    System.out.println("Il player " + game.getPlayerHandler().getCurrentPlayer().getNickname() +  " ha effettuato: ");
                     for (Action action:game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList()) {
                         System.out.print(action.getActionType().toString() + " ");
                     }
                     System.out.println();
-                    //TODO: update the map through the virtualView
 
                     //TODO: send possible actions to the current player (if expert or base moves)
-                    sendPossibleActions();
+                    sendPossibleActions(false);
 
                     int currentActionsNumber = game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size();
                     synchronized (this) {
@@ -187,11 +186,11 @@ public class GameController {
         }
     }
 
-    private void sendPossibleActions(){
+    private void sendPossibleActions(boolean isInvalidAction){
         if(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter() == null){
-            virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),false));
+            virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),isInvalidAction));
         } else {
-            virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter().getRules().nextPossibleActions(),false));
+            virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(game.getPlayerHandler().getCurrentPlayer().getActiveCharacter().getRules().nextPossibleActions(),isInvalidAction));
         }
     }
 
@@ -235,7 +234,7 @@ public class GameController {
 
     public void setAction(Action action, String nickname) throws PlayerException {
         if(!checkIfIsCurrentPlayer(nickname))
-            sendPossibleActions();
+            sendPossibleActions(false);
         Player thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
         boolean legalAction;
         if(thePlayer.getActiveCharacter() == null){
@@ -244,12 +243,11 @@ public class GameController {
             legalAction = thePlayer.getActiveCharacter().getRules().doAction(action);
         }
         if(!legalAction)
-            sendPossibleActions();
+            sendPossibleActions(true);
         if(thePlayer.getNumOfTower() == 0)
             endImmediately = true;
         if(game.getIslandHandler().getIslands().size() <= 3)
             endImmediately = true;
-        System.out.println("Setto azione al player "+ nickname);
         wakeUpController();
     }
 
@@ -259,7 +257,7 @@ public class GameController {
                 game.getPlayerHandler().getCurrentPlayer().setLastCardUsed(card);
                 isCardChosen = true;
                 wakeUpController();
-                System.out.println("Setto carta " + card.toString() + " al player:" + nickname);
+                System.out.println("Set assistant card to " + nickname);
                 return true;
             } catch (CardException e){
                 System.out.println(e.getMessage());

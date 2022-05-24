@@ -110,10 +110,7 @@ public class Island implements Serializable {
                 scores.put(player, count + getSize());
             }
         }
-        System.out.println("Punteggi:");
-        for (Player p : scores.keySet()) {
-            System.out.println(p.getNickname() + " "+ scores.get(p));
-        }
+
         // find the new owner
         for (Player p : scores.keySet()) {
             player = getIslandOwner();
@@ -153,5 +150,9 @@ public class Island implements Serializable {
     public int getFlagNoInfluence(){
         return this.flagNoInfluence;
     }
+
+    public void increaseSize(){ this.size++;}
+
+    public void decreaseID(){this.ID--;}
 
 }

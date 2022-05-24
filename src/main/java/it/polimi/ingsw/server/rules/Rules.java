@@ -28,19 +28,15 @@ public class Rules {
 		RoundActions nextPossibleActions = new RoundActions();
 
 		if (roundActions.hasMovedStudents() < 3) {
-			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_ISLAND));
+			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 		} else {
 			if (!roundActions.hasMovedMother())
 				nextPossibleActions.add(new Action(ActionType.MOVE_MOTHER_NATURE));
-			else {
-				// FIXME: scommenta qua
-				//nextPossibleActions.add(new Action(ActionType.CHOOSE_CLOUD));
+			else
+				nextPossibleActions.add(new Action(ActionType.CHOOSE_CLOUD));
 
-			}
 		}
-		//if (roundActions.hasChooseCloud())
-		//	nextPossibleActions.add(new Action(ActionType.END));
 
 		return nextPossibleActions;
 	}
@@ -56,7 +52,7 @@ public class Rules {
 				break;
 			case MOVE_MOTHER_NATURE:
 				returnValue = doMoveMother(action);
-				// FIXME: metti dopo choose cloud
+				// FIXME: quando aggiungi cloud metti dopo choose cloud se return value è true
 				getCurrentPlayer().registerAction(new Action(ActionType.END));
 				break;
 			case CHOOSE_CLOUD:
@@ -128,13 +124,11 @@ public class Rules {
 			return false;
 		}
 		getCurrentPlayer().getPlayerBoard().addToEntrance(cloud.getStudents());
-	//	System.out.println("Assegno isola a board studente");
 		return true;
 	}
 
 
 	protected void calculateInfluence() {
-
 		int currentMother = game.getIslandHandler().getMotherNature();
 		Island currentIsland = null;
 		try {
@@ -144,11 +138,10 @@ public class Rules {
 			e.printStackTrace();
 		}
 		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
-		//System.out.println("Calcolo influenza");
+		game.getIslandHandler().mergeIsland();
 	}
 
 	protected void controlTeacher() {
-		//System.out.println("Calcolo influenza");
 		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 	}
 

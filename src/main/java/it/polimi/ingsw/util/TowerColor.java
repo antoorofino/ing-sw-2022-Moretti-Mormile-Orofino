@@ -16,7 +16,11 @@ public enum TowerColor {
     }
 
     public static TowerColor getPlayerColorByName(String color) {
-        return TowerColor.valueOf(color.toUpperCase());
+        try{
+            return TowerColor.valueOf(color.toUpperCase());
+        }catch (IllegalArgumentException e){
+            return null;
+        }
     }
 
     @Override
