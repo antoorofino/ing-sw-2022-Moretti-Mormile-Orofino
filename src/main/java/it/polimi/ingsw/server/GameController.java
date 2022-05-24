@@ -124,6 +124,7 @@ public class GameController {
         //Round handler
         while(!isGameEnd() && !endImmediately){
             //Planning phase
+            // TODO: inizialise clouds
             game.getPlayerHandler().initialiseCurrentPlayerPlanningPhase();
             if (firstMessage) {
                 virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));
@@ -156,7 +157,9 @@ public class GameController {
                     i++;
                 } else {
                     //TODO: update the map through the virtualView
+                    virtualView.sendToEveryone(new UpdateGameBoard(game));
                     //TODO: send possible actions to the current player
+                    virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAction(rules.nextPossibleActions(),false));
                     int currentActionsNumber = game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size();
                     synchronized (this) {
                         while (game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size() <= currentActionsNumber) {
@@ -229,6 +232,7 @@ public class GameController {
         if(game.getIslandHandler().getIslands().size() <= 3)
             endImmediately = true;
         wakeUpController();
+        System.out.println("Setto azione al player "+ nickname);
         return true;
     }
 
@@ -238,8 +242,10 @@ public class GameController {
                 game.getPlayerHandler().getCurrentPlayer().setLastCardUsed(card);
                 isCardChosen = true;
                 wakeUpController();
+                System.out.println("Setto carta " + card.toString() + " al player:" + nickname);
                 return true;
             } catch (CardException e){
+                System.out.println(e.getMessage());
                 return false;
             }
         }

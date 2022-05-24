@@ -67,10 +67,14 @@ public class Player implements Serializable {
 	}
 
 	public void setLastCardUsed(AssistantCard lastCardUsed) throws CardException {
-		if(!cards.contains(lastCardUsed))
-			throw new CardException("Player doesn't have the specific card");
-		cards.remove(lastCardUsed);
-		this.lastCardUsed = lastCardUsed;
+		for (AssistantCard card:cards){
+			if(card.getCardID() == lastCardUsed.getCardID()){
+				cards.remove(card);
+				this.lastCardUsed = card;
+				return;
+			}
+		}
+		throw new CardException("Player doesn't have the specific card");
 	}
 
 	public boolean noMoreCards() {

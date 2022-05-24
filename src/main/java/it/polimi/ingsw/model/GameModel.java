@@ -130,7 +130,7 @@ public class GameModel implements Serializable {
             if(cloud.getCloudID() == cloudID)
                 return  cloud;
         }
-        throw new SpecificCloudNotFoundException("Cannot found island with this id");
+        throw new SpecificCloudNotFoundException("Cannot found cloud with this id");
     }
 
     /**

@@ -27,14 +27,14 @@ public class IslandsHandler implements Serializable {
 		}
 		this.motherNature = rand.nextInt(12);
 		for(int i = 0; i < 12; i++){
+			island = new Island(i);
 			if(i != motherNature && i != (motherNature + 6)%12){
 				//FIXME: is it right to put i as index
-				island = new Island(i);
 				randPosition = rand.nextInt(studentsArray.size());
 				island.addStudent(studentsArray.get(randPosition));
 				studentsArray.remove(randPosition);
-				islandArrayList.add(island);
 			}
+			islandArrayList.add(island);
 		}
 		this.setIslands(islandArrayList);
 	}
@@ -47,7 +47,7 @@ public class IslandsHandler implements Serializable {
 			if (island.getID() == ID)
 				return island;
 		}
-		throw new SpecificIslandNotFoundException("Cannot found cloud with this ID");
+		throw new SpecificIslandNotFoundException("Cannot found island with this ID");
 	}
 
 	public int getMotherNature() {

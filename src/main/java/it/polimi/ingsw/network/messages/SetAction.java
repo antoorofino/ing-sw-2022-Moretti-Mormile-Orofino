@@ -30,7 +30,7 @@ public class SetAction implements VCMessage, Serializable {
 	@Override
 	public void execute(GameController controller) {
 		try {
-			controller.setAction(action,nickname);
+			System.out.println("set action return value: " + controller.setAction(action,nickname));
 		}catch(PlayerException e){
 			System.out.println("Non è il tuo turno!");
 		}

@@ -49,12 +49,16 @@ public class Rules {
 		switch (action.getActionType()) {
 			case MOVE_STUDENT_TO_DININGROOM:
 				returnValue = doMoveDiningRoom(action);
+				break;
 			case MOVE_STUDENT_TO_ISLAND:
 				returnValue = doMoveIsland(action);
+				break;
 			case MOVE_MOTHER_NATURE:
 				returnValue = doMoveMother(action);
+				break;
 			case CHOOSE_CLOUD:
 				returnValue = doChooseCloud(action);
+				break;
 		}
 		if(returnValue)
 			getCurrentPlayer().registerAction(action);
@@ -66,15 +70,18 @@ public class Rules {
 			// remove from entrance
 			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		return true;
 	}
 
 	protected boolean doMoveIsland(Action action) {
+		System.out.println("Entro in Rules");
 		try {
 			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 
@@ -82,6 +89,7 @@ public class Rules {
 			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
 		} catch (SpecificIslandNotFoundException e) {
 			// roolback function
+			System.out.println(e.getMessage());
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
 			return false;
 		}
@@ -102,6 +110,7 @@ public class Rules {
 		try {
 			cloud = game.getCloudByID(action.getID());
 		} catch (SpecificCloudNotFoundException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		getCurrentPlayer().getPlayerBoard().addToEntrance(cloud.getStudents());
@@ -115,6 +124,7 @@ public class Rules {
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
 		} catch (SpecificIslandNotFoundException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);

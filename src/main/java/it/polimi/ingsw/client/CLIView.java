@@ -127,7 +127,7 @@ public class CLIView implements View{
 				}
 				System.out.println();
 				System.out.print("  ↳: ");
-				inputColor = scanner.next();
+				inputColor = scanner.nextLine();
 				chosenColor = TowerColor.getPlayerColorByName(inputColor);
 				//correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
 				//if (!correct) {
@@ -177,14 +177,15 @@ public class CLIView implements View{
 		} else {
 			boolean correct = false;
 			do {
-				System.out.print(" > Choose your card ID between: ");
+				System.out.println(" > Choose your card ID between: ");
 				for (int i = 0; i < cards.size(); i++) {
-					System.out.print(cards.get(i) + " / ");
+					System.out.println(cards.get(i).toString());
 				}
 				System.out.println();
 				System.out.print("  ↳: ");
-				chosenID = Integer.parseInt(scanner.next());
+				chosenID = Integer.parseInt(scanner.nextLine());
 				chosenCard = InputValidator.isIDBetween(chosenID,cards);
+				System.out.println("Chosen card: "+ chosenCard.toString());
 				if (chosenCard!=null)
 					correct = true;
 				else
@@ -208,20 +209,20 @@ public class CLIView implements View{
 			correct = false;
 			showPossibleActions(roundActions);
 			System.out.print("Insert your action type: [MOVE_STUDENT_ISLAND <msi> / MOVE_STUDENT_ROOM <msr> / MOVE_MOTHER <mm> / CHOOSE_CLOUD <cc>]:");
-			action = scanner.next();
+			action = scanner.nextLine();
 			if (action.equalsIgnoreCase("msi")) {
 				System.out.print("Insert the student's color [red / blue / green / yellow / pink]: ");
-				chosenPiece = Piece.getPieceByColor(scanner.next());
+				chosenPiece = Piece.getPieceByColor(scanner.nextLine());
 				if(chosenPiece!=null){
 					System.out.print("Insert the island ID: ");
-					chosenId = Integer.parseInt(scanner.next());
+					chosenId = Integer.parseInt(scanner.nextLine());
 					chosenAction = new Action(ActionType.MOVE_STUDENT_TO_ISLAND, chosenPiece,null,chosenId);
 				}else
 					System.out.println(" Please insert a valid value for color");
 			}
 			if (action.equalsIgnoreCase("msr")) {
 				System.out.print("Insert the student's color [red / blue / green / yellow / pink]: ");
-				chosenPiece = Piece.getPieceByColor(scanner.next());
+				chosenPiece = Piece.getPieceByColor(scanner.nextLine());
 				if(chosenPiece!=null){
 					chosenAction = new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, chosenPiece,null,0);
 				}else
@@ -229,17 +230,17 @@ public class CLIView implements View{
 			}
 			if (action.equalsIgnoreCase("mm")){
 				System.out.print(" Insert the number of mother nature steps: ");
-				chosenId = Integer.parseInt(scanner.next());
+				chosenId = Integer.parseInt(scanner.nextLine());
 				chosenAction = new Action(ActionType.MOVE_MOTHER_NATURE,null,null,chosenId);
 			}
 			if (action.equalsIgnoreCase("cc")){
 				System.out.print("Insert the cloud ID: ");
-				chosenId = Integer.parseInt(scanner.next());
+				chosenId = Integer.parseInt(scanner.nextLine());
 				chosenAction = new Action(ActionType.CHOOSE_CLOUD,null,null,chosenId);
 			}
-			if ((chosenAction == null)||(!roundActions.getActionsList().contains(chosenAction.getActionType()))) {
-				System.out.println(" > Invalid action. Try again.");
-			}else
+			//if ((chosenAction == null)||(!roundActions.getActionsList().contains(chosenAction.getActionType()))) {
+			//	System.out.println(" > Invalid action. Try again.");
+			//}else
 				correct = true;
 		} while (!correct);
 		serverHandler.send(new SetAction(nickname,chosenAction));
@@ -256,7 +257,7 @@ public class CLIView implements View{
 		do {
 			correct = false;
 			System.out.print("Insert the name of the game you want to join ('.' for updating the list): ");
-			gameName = scanner.next();
+			gameName = scanner.nextLine();
 			if(Objects.equals(gameName, ".")){
 				serverHandler.send(new AskGameListMessage(playerId));
 				return;
@@ -287,31 +288,44 @@ public class CLIView implements View{
 	@Override
 	public void showGame(GameModel game) {
 		for (Player p : game.getPlayerHandler().getPlayers()) {
-			System.out.println(("<===================" + p.getNickname() + "===========================>"));
-			System.out.println(" Board ENTRANCE: ");
+			System.out.println(("================== " + p.getNickname() + " =========================="));
+			System.out.println("Board ENTRANCE: ");
 			for (Piece piece:p.getPlayerBoard().getStudentsEntrance()) {
-				System.out.print(piece.getColor() + " ");
+				System.out.print(piece.toString() + " ");
 			}
 			System.out.println();
-			System.out.println(" Board DINING ROOM: ");
+			System.out.println("Board DINING ROOM: ");
 			for (Piece piece:Piece.values()) {
-				System.out.print(piece.getColor() + " x" +  p.getPlayerBoard().getNumOfStudentsRoom(piece));
-				if(game.getTeacherHandler().getTeacherOwner(piece).getNickname().equals(p.getNickname()))
-					System.out.print(" Teacher ");
+				System.out.print(piece.toString() + " x" +  p.getPlayerBoard().getNumOfStudentsRoom(piece));
+				Player owner = game.getTeacherHandler().getTeacherOwner(piece);
+				if(owner!= null)
+					if(owner.getNickname().equals(p.getNickname()))
+						System.out.print("Teacher ");
 				System.out.println();
 			}
-			System.out.println(" #TOWER "+ p.getNumOfTower());
+			System.out.println("#TOWER "+ p.getNumOfTower());
 		}
 
-		System.out.println(("<****************** ISLANDS *********************>"));
+		System.out.println(("****************** ISLANDS *********************"));
 		for (Island island : game.getIslandHandler().getIslands()) {
 			System.out.println("ID: " + island.getID() + " size: " + island.getSize());
-			System.out.println(" Students:  ");
+			System.out.print("Students: ");
 			for (Piece piece:Piece.values()) {
-				System.out.print(piece.getColor() + " x" +  island.getNumStudents(piece) + " / ");
+				System.out.print(piece.toString() + "x" +  island.getNumStudents(piece) + "		");
 			}
 			if(island.towerIsAlreadyBuild())
 				System.out.println("Presente torre di: " + island.getIslandOwner().getNickname());
+			System.out.println();
+		}
+
+		System.out.println(("################### CLOUDS #################"));
+		for (Cloud cloud : game.getClouds()) {
+			System.out.println("ID: " + cloud.getCloudID());
+			System.out.print("Students: ");
+			for (Piece piece:cloud.getStudents()) {
+				System.out.print(piece.toString() + " ");
+			}
+			System.out.println();
 		}
 	}
 

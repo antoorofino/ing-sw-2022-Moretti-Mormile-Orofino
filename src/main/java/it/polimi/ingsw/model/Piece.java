@@ -45,10 +45,7 @@ public enum Piece implements Serializable {
 
     @Override
     public String toString() {
-        return "Piece{" +
-                "colorString='" + colorString + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return colorString;
     }
 
 

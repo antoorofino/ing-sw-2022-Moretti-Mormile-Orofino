@@ -64,4 +64,11 @@ public class AssistantCard implements Serializable {
     public boolean isSameValue(AssistantCard card){
         return cardValue == card.cardValue;
     }
+
+    @Override
+    public String toString() {
+        return "cardValue=" + cardValue +
+                ", movements=" + movements +
+                ", cardID=" + cardID;
+    }
 }
