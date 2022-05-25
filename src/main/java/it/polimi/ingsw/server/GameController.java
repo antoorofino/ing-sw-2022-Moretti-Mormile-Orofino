@@ -124,7 +124,7 @@ public class GameController {
         //Round handler
         while(!isGameEnd() && !endImmediately){
             //Planning phase
-            // TODO: inizialise clouds
+            game.cloudsRefill();
             game.getPlayerHandler().initialiseCurrentPlayerPlanningPhase();
             if (firstMessage) {
                 virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));

@@ -42,12 +42,8 @@ public class GameModel implements Serializable {
      * Sets up the game
      */
     public void setupGame(){
-        Random rand = new Random();
         int numPlayers = this.playerHandler.getNumPlayers();
         int numTowers, numEntranceStudents;
-        ArrayList<TowerColor> colors = new ArrayList<>();
-        colors.add(TowerColor.BLACK);
-        colors.add(TowerColor.WHITE);
         this.islandHandler.setupIslands();
         if(numPlayers == 2){
             numTowers = 8;
@@ -55,18 +51,17 @@ public class GameModel implements Serializable {
         } else if(numPlayers == 3){
             numTowers = 6;
             numEntranceStudents = 9;
-            colors.add(TowerColor.GRAY);
         } else {
             throw new IllegalStateException("Unexpected value numPlayers: " + numPlayers);
         }
-        int index = 0, randomIndex;
+        int index = 0;
         for(Player player: this.getPlayerHandler().getPlayers()){
             player.setNumOfTower(numTowers);
             player.addCards(AssistantCard.createDeck(index++));
-            randomIndex = rand.nextInt(colors.size());
-            player.setTowerColor(colors.get(randomIndex));
-            colors.remove(randomIndex);
             player.getPlayerBoard().addToEntrance(this.studentsBag.popStudents(numEntranceStudents));
+        }
+        for (int i = 1; i <= numPlayers; i++) {
+            clouds.add(new Cloud(i));
         }
         if(gameMode == GameMode.EXPERT){
             for(Player player: this.getPlayerHandler().getPlayers()){
@@ -212,5 +207,11 @@ public class GameModel implements Serializable {
 
     public void setGameName(String name) {
         this.name = name;
+    }
+
+    public void cloudsRefill() {
+        for (Cloud cloud : clouds) {
+            cloud.addStudents(studentsBag.popStudents(playerHandler.getNumPlayers()+1));
+        }
     }
 }
