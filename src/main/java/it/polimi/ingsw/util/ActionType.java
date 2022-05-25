@@ -4,7 +4,7 @@ public enum ActionType {
     MOVE_STUDENT_TO_ISLAND(GameMode.BASIC," Muovi studente da ingresso a isola",1),
     MOVE_STUDENT_TO_DININGROOM(GameMode.BASIC," Muovi studente da ingresso a sala da pranzo",2),
     MOVE_MOTHER_NATURE(GameMode.BASIC," Muovi madre natura",3),
-    CHOOSE_CLOUD(GameMode.BASIC," Scegli isola",4),
+    CHOOSE_CLOUD(GameMode.BASIC," Scegli nuvola",4),
     END(GameMode.BASIC," Termina turno",5),
 
     CHOOSE_CHARACTER(GameMode.EXPERT," Usa carta personaggio",6),

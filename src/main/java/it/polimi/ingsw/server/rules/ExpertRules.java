@@ -55,7 +55,7 @@ public class ExpertRules extends Rules{
 			return false;
 		}
 		getCurrentPlayer().setActiveCharacter(character);
-		getCurrentPlayer().registerAction(action); // save action
+		//getCurrentPlayer().registerAction(action); // save action
 		return true;
 	}
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.server.rules.Rules;
+import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.TowerColor;
 import it.polimi.ingsw.util.exception.CardException;
 import it.polimi.ingsw.util.exception.DisconnectionException;
@@ -244,6 +245,12 @@ public class GameController {
         }
         if(!legalAction)
             sendPossibleActions(true);
+        else{
+            // register action
+            game.getPlayerHandler().getCurrentPlayer().registerAction(action);
+            if(action.getActionType() == ActionType.CHOOSE_CLOUD)
+                game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.END));
+        }
         if(thePlayer.getNumOfTower() == 0)
             endImmediately = true;
         if(game.getIslandHandler().getIslands().size() <= 3)
