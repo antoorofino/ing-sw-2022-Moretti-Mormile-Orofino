@@ -52,7 +52,7 @@ public class CLIView implements View{
 
 		System.out.print(" Enter the server port [press enter for default port]: ");
 		try{
-			port = Integer.parseInt(scanner.nextLine());
+			port = scanner.nextInt();
 		}catch(NumberFormatException e){
 			port = Configurator.getServerPort();
 		}
@@ -147,7 +147,7 @@ public class CLIView implements View{
 		while(!correct){
 			System.out.print(" Enter number of players: ");
 			scanner = new Scanner(System.in);
-			numPlayers = Integer.parseInt(scanner.nextLine());
+			numPlayers = scanner.nextInt();
 			if(InputValidator.isNumberBetween(numPlayers,1,4))
 				correct = true;
 			if (!correct) {
@@ -189,7 +189,7 @@ public class CLIView implements View{
 					System.out.println(cards.get(i).toString());
 				}
 				System.out.print(" ↳: ");
-				chosenID = Integer.parseInt(scanner.nextLine());
+				chosenID = scanner.nextInt();
 				chosenCard = InputValidator.isIDBetween(chosenID,cards);
 				if (chosenCard!=null){
 					System.out.println(" Chosen card: "+ chosenCard.toString());
@@ -216,7 +216,7 @@ public class CLIView implements View{
 			correct = false;
 			showPossibleActions(roundActions);
 			System.out.print(" ↳: ");
-			num =  Integer.parseInt(scanner.nextLine());
+			num =  scanner.nextInt();
 			if(InputValidator.isValidAction(num,roundActions)){
 				correct = true;
 				action = roundActions.getActionsList().get(num).getActionType();
@@ -225,7 +225,7 @@ public class CLIView implements View{
 					case STUDENT_FROM_CARD_TO_ISLAND:
 						chosenPiece = getColorInput();
 						System.out.print(" Insert the island ID: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenId = scanner.nextInt();
 						chosenAction = new Action(action, chosenPiece,null,chosenId);
 						break;
 					case MOVE_STUDENT_TO_DININGROOM:
@@ -237,25 +237,26 @@ public class CLIView implements View{
 						chosenPiece = getColorInput();
 						chosenAction = new Action(action, chosenPiece,null,0);
 						break;
+						// FIXME: request for up to max moves
 					case MOVE_MOTHER_NATURE:
 					case DOUBLE_INFLUENCE:
 						System.out.print(" Insert the number of mother nature steps: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenId = scanner.nextInt();
 						chosenAction = new Action(action,null,null,chosenId);
 						break;
 					case CHOOSE_CLOUD:
 						System.out.print(" Insert the cloud ID: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenId = scanner.nextInt();
 						chosenAction = new Action(action,null,null,chosenId);
 						break;
 					case CHOOSE_CHARACTER:
 						System.out.print(" Insert the character ID to activate: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenId = scanner.nextInt();
 						chosenAction = new Action(action,null,null,chosenId);
 						break;
 					case NO_INFLUENCE:
 						System.out.print(" Insert the island ID: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenId = scanner.nextInt();
 						chosenAction = new Action(action,null,null,chosenId);
 						break;
 				}
