@@ -7,10 +7,11 @@ import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.*;
 import it.polimi.ingsw.model.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Rules {
+public class Rules implements Serializable {
 
 	protected GameModel game;
 

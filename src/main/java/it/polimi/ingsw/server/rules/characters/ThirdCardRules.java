@@ -9,13 +9,13 @@ import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
-public class ThirdClassRules extends ExpertRules {
+public class ThirdCardRules extends ExpertRules {
 	/**
 	 * Create the game rules
 	 *
 	 * @param game obj that contains the game status
 	 */
-	public ThirdClassRules(GameModel game) {
+	public ThirdCardRules(GameModel game) {
 		super(game);
 	}
 

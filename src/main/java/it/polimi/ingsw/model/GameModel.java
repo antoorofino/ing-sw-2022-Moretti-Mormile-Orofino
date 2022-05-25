@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.util.Configurator;
 import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
 import it.polimi.ingsw.util.exception.SpecificCloudNotFoundException;
 import it.polimi.ingsw.util.GameMode;
@@ -7,6 +8,7 @@ import it.polimi.ingsw.util.TowerColor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -68,7 +70,13 @@ public class GameModel implements Serializable {
                 player.setCoin(1);
                 this.coins--;
             }
-            //TODO: add three characters cards
+            Random random = new Random();
+            List<Character> list = Configurator.getAllCharactersCards(this);
+            for (int i = 0; i < 3; i++) {
+                int randInt = random.nextInt(list.size());
+                characters.add(list.get(randInt));
+                list.remove(randInt);
+            }
         }
     }
 
