@@ -156,7 +156,6 @@ public class GameModel implements Serializable {
      * Remove a coin if are enough
      */
     public void getCoin(){
-        //TODO controlla se va bene togliere eccezione qui
         if(coinsAreEnough())
             coins--;
     }

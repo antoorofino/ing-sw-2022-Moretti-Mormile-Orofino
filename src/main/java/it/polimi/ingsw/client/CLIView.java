@@ -204,10 +204,11 @@ public class CLIView implements View{
 
 	@Override
 	public void askAction(RoundActions roundActions,boolean isInvalidAction) {
-		int action;
+		int num;
 		Piece chosenPiece;
 		int chosenId;
 		Action chosenAction = null;
+		ActionType action;
 		boolean correct;
 		if(isInvalidAction)
 			System.out.println(" Mossa non valida! ");
@@ -215,70 +216,47 @@ public class CLIView implements View{
 			correct = false;
 			showPossibleActions(roundActions);
 			System.out.print(" ↳: ");
-			action =  Integer.parseInt(scanner.nextLine());
-			if(InputValidator.isValidAction(action,roundActions)){
+			num =  Integer.parseInt(scanner.nextLine());
+			if(InputValidator.isValidAction(num,roundActions)){
 				correct = true;
+				action = roundActions.getActionsList().get(num).getActionType();
 				switch(action){
-					case 1:
+					case MOVE_STUDENT_TO_ISLAND:
+					case STUDENT_FROM_CARD_TO_ISLAND:
 						chosenPiece = getColorInput();
 						System.out.print(" Insert the island ID: ");
 						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.MOVE_STUDENT_TO_ISLAND, chosenPiece,null,chosenId);
+						chosenAction = new Action(action, chosenPiece,null,chosenId);
 						break;
-					case 2:
+					case MOVE_STUDENT_TO_DININGROOM:
+					case STUDENT_FROM_CARD_TO_ENTRANCE:
+					case COLOR_NO_INFLUENCE:
+					case STUDENT_FROM_ENTRANCE_TO_DINING:
+					case STUDENT_FROM_CARD_TO_DINING:
+					case STUDENT_FROM_DINING_TO_BAG:
 						chosenPiece = getColorInput();
-						chosenAction = new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, chosenPiece,null,0);
+						chosenAction = new Action(action, chosenPiece,null,0);
 						break;
-					case 3:
+					case MOVE_MOTHER_NATURE:
+					case DOUBLE_INFLUENCE:
 						System.out.print(" Insert the number of mother nature steps: ");
 						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.MOVE_MOTHER_NATURE,null,null,chosenId);
+						chosenAction = new Action(action,null,null,chosenId);
 						break;
-					case 4:
+					case CHOOSE_CLOUD:
 						System.out.print(" Insert the cloud ID: ");
 						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.CHOOSE_CLOUD,null,null,chosenId);
+						chosenAction = new Action(action,null,null,chosenId);
 						break;
-					case 5:
+					case CHOOSE_CHARACTER:
 						System.out.print(" Insert the character ID to activate: ");
 						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.CHOOSE_CHARACTER,null,null,chosenId);
+						chosenAction = new Action(action,null,null,chosenId);
 						break;
-					case 6:
-						chosenPiece = getColorInput();
+					case NO_INFLUENCE:
 						System.out.print(" Insert the island ID: ");
 						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.STUDENT_FROM_CARD_TO_ISLAND, chosenPiece,null,chosenId);
-						break;
-					case 7:
-						System.out.print(" Insert the number of mother nature steps: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.DOUBLE_INFLUENCE,null,null,chosenId);
-						break;
-					case 8:
-						System.out.print(" Insert the island ID: ");
-						chosenId = Integer.parseInt(scanner.nextLine());
-						chosenAction = new Action(ActionType.NO_INFLUENCE,null,null,chosenId);
-						break;
-					case 9:
-						chosenPiece = getColorInput();
-						chosenAction = new Action(ActionType.STUDENT_FROM_CARD_TO_ENTRANCE, chosenPiece,null,0);
-						break;
-					case 10:
-						chosenPiece = getColorInput();
-						chosenAction = new Action(ActionType.COLOR_NO_INFLUENCE, chosenPiece,null,0);
-						break;
-					case 11:
-						chosenPiece = getColorInput();
-						chosenAction = new Action(ActionType.STUDENT_FROM_ENTRANCE_TO_DINING, chosenPiece,null,0);
-						break;
-					case 12:
-						chosenPiece = getColorInput();
-						chosenAction = new Action(ActionType.STUDENT_FROM_CARD_TO_DINING, chosenPiece,null,0);
-						break;
-					case 13:
-						chosenPiece = getColorInput();
-						chosenAction = new Action(ActionType.STUDENT_FROM_DINING_TO_BAG, chosenPiece,null,0);
+						chosenAction = new Action(action,null,null,chosenId);
 						break;
 				}
 			}else
@@ -331,8 +309,10 @@ public class CLIView implements View{
 
 	public void showPossibleActions(RoundActions roundActions) {
 		System.out.println(" Your possible actions are: ");
+		int i = 0;
 		for (Action action:roundActions.getActionsList()) {
-			System.out.println(" " + action.getActionType().getCommand() + "." + action.getActionType().getDescription());
+			System.out.println(" " + i + "." + action.getActionType().getDescription());
+			i++;
 		}
 	}
 

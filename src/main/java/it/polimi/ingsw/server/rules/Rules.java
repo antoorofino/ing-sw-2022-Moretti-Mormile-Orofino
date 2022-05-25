@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.rules;
 
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
+import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.*;
 import it.polimi.ingsw.model.*;
@@ -70,8 +71,10 @@ public class Rules implements Serializable {
 
 		try {
 			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
-			if(getCurrentPlayer().getPlayerBoard().getNumOfStudentsRoom(action.getPrincipalPiece()) % 3 == 0)
+			if((getCurrentPlayer().getPlayerBoard().getNumOfStudentsRoom(action.getPrincipalPiece()) % 3 == 0)&&(game.getGameMode() == GameMode.EXPERT)&&(game.coinsAreEnough())){
+				game.getCoin();
 				getCurrentPlayer().addCoin();
+			}
 		} catch (SpecificStudentNotFoundException e) {
 			System.out.println(e.getMessage());
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));

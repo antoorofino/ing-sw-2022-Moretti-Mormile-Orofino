@@ -58,10 +58,8 @@ public class InputValidator {
 	}
 
 	public static boolean isValidAction(int numAction,RoundActions roundActions){
-		for (Action action:roundActions.getActionsList()) {
-			if(action.getActionType().getCommand() == numAction)
-				return true;
-		}
+		if(numAction> 0 && numAction<roundActions.getActionsList().size())
+			return true;
 		return false;
 	}
 }
