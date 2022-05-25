@@ -69,6 +69,8 @@ public class Rules {
 
 		try {
 			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+			if(getCurrentPlayer().getPlayerBoard().getNumOfStudentsRoom(action.getPrincipalPiece()) % 3 == 0)
+				getCurrentPlayer().addCoin();
 		} catch (SpecificStudentNotFoundException e) {
 			System.out.println(e.getMessage());
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
@@ -128,12 +130,12 @@ public class Rules {
 		Island currentIsland = null;
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
+			currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
+			game.getIslandHandler().mergeIsland();
 		} catch (SpecificIslandNotFoundException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
-		game.getIslandHandler().mergeIsland();
 	}
 
 	protected void controlTeacher() {

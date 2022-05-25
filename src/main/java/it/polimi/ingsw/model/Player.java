@@ -122,6 +122,8 @@ public class Player implements Serializable {
 		this.playerCoin+=1;
 	}
 
+	public int getCoin(){ return this.playerCoin;}
+
 	public Character getActiveCharacter() {
 		return activeCharacter;
 	}

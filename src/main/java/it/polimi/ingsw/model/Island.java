@@ -80,14 +80,14 @@ public class Island implements Serializable {
      * @param invalidColor color that isn't influent
      */
 
-    public void calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
+    public boolean calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
         // true null null
         int count;
         Player player;
         HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
         if(this.flagNoInfluence>0){
             removeFlagNoInfluence();
-            return;
+            return false;
         }
         // punteggio extra
         if(extraPoints!=null){
@@ -127,6 +127,7 @@ public class Island implements Serializable {
                 }
             }
         }
+        return true;
     }
 
     public int getCount(Player player,HashMap<Player, Integer> map){

@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.rules.characters;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.server.rules.ExpertRules;
+import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
 public class SixthCardRules extends ExpertRules {
@@ -21,9 +22,17 @@ public class SixthCardRules extends ExpertRules {
 		Island currentIsland = null;
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
+			if (!currentIsland.calculateInfluence(game.getTeacherHandler(), false, null,null)) {
+				try {
+					game.getCharacterFromID(5).addIslandFlag();
+				} catch (SpecificCharacterNotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			game.getIslandHandler().mergeIsland();
 		} catch (SpecificIslandNotFoundException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		currentIsland.calculateInfluence(game.getTeacherHandler(), false, null,null);
 	}
 }

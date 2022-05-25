@@ -92,6 +92,20 @@ public class Character implements Serializable {
     }
 
     /**
+     * Remove one island flag
+     *
+     */
+    public void removeIslandFlag() { this.islandFlag--;  }
+
+    /**
+     * Add one island flag
+     *
+     */
+    public void addIslandFlag(){
+        this.islandFlag++;
+    }
+
+    /**
      * Adds students on character
      * @param students contains students that I'll put on character
      */

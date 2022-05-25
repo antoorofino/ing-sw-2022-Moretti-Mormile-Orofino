@@ -21,13 +21,13 @@ public class TwelfthCardRules extends ExpertRules {
 	@Override
 	protected RoundActions ActionsCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
-		action_character.add(new Action(ActionType.CHOOSE_COLOR));
+		action_character.add(new Action(ActionType.STUDENT_FROM_DINING_TO_BAG));
 		return action_character;
 	}
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.CHOOSE_COLOR)
+		if(action.getActionType()!=ActionType.STUDENT_FROM_DINING_TO_BAG)
 			return false;
 		for (Player p: game.getPlayerHandler().getPlayers()) {
 			for(int i=0;i<3;i++){

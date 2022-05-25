@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
@@ -238,7 +239,47 @@ public class CLIView implements View{
 						chosenId = Integer.parseInt(scanner.nextLine());
 						chosenAction = new Action(ActionType.CHOOSE_CLOUD,null,null,chosenId);
 						break;
-					//TODO: add expert action
+					case 5:
+						System.out.print(" Insert the character ID to activate: ");
+						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenAction = new Action(ActionType.CHOOSE_CHARACTER,null,null,chosenId);
+						break;
+					case 6:
+						chosenPiece = getColorInput();
+						System.out.print(" Insert the island ID: ");
+						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenAction = new Action(ActionType.STUDENT_FROM_CARD_TO_ISLAND, chosenPiece,null,chosenId);
+						break;
+					case 7:
+						System.out.print(" Insert the number of mother nature steps: ");
+						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenAction = new Action(ActionType.DOUBLE_INFLUENCE,null,null,chosenId);
+						break;
+					case 8:
+						System.out.print(" Insert the island ID: ");
+						chosenId = Integer.parseInt(scanner.nextLine());
+						chosenAction = new Action(ActionType.NO_INFLUENCE,null,null,chosenId);
+						break;
+					case 9:
+						chosenPiece = getColorInput();
+						chosenAction = new Action(ActionType.STUDENT_FROM_CARD_TO_ENTRANCE, chosenPiece,null,0);
+						break;
+					case 10:
+						chosenPiece = getColorInput();
+						chosenAction = new Action(ActionType.COLOR_NO_INFLUENCE, chosenPiece,null,0);
+						break;
+					case 11:
+						chosenPiece = getColorInput();
+						chosenAction = new Action(ActionType.STUDENT_FROM_ENTRANCE_TO_DINING, chosenPiece,null,0);
+						break;
+					case 12:
+						chosenPiece = getColorInput();
+						chosenAction = new Action(ActionType.STUDENT_FROM_CARD_TO_DINING, chosenPiece,null,0);
+						break;
+					case 13:
+						chosenPiece = getColorInput();
+						chosenAction = new Action(ActionType.STUDENT_FROM_DINING_TO_BAG, chosenPiece,null,0);
+						break;
 				}
 			}else
 				System.out.println(" Invalid action. Try again.");
@@ -315,7 +356,8 @@ public class CLIView implements View{
 				System.out.print(" / ");
 			}
 			System.out.println();
-			System.out.println(" Numero torri: "+ p.getNumOfTower());
+			System.out.print(" Torri: "+ p.getNumOfTower());
+			System.out.println(" Monete: " + p.getCoin());
 		}
 
 		System.out.println((" ****************** ISLANDS *********************"));
@@ -338,6 +380,15 @@ public class CLIView implements View{
 			System.out.println(" ID: " + cloud.getCloudID());
 			System.out.print(" Students: ");
 			for (Piece piece:cloud.getStudents()) {
+				System.out.print(piece.toString() + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("@@@@@@@@@@@ CHARACTERS @@@@@@@@@@@@");
+		for (Character character : game.getCharacters()) {
+			System.out.print(" ID: " + character.getID() + " cost: " + character.getCost() + " no entry: " + character.getIslandFlag());
+			System.out.print(" students: ");
+			for (Piece piece:character.getStudents()) {
 				System.out.print(piece.toString() + " ");
 			}
 			System.out.println();

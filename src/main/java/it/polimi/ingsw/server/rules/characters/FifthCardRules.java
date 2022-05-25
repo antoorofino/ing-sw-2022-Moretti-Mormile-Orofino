@@ -20,18 +20,17 @@ public class FifthCardRules extends ExpertRules {
 	@Override
 	protected RoundActions ActionsCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
-		action_character.add(new Action(ActionType.CHOOSE_ISLAND));
+		action_character.add(new Action(ActionType.NO_INFLUENCE));
 		return action_character;
 	}
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.CHOOSE_ISLAND)
+		if(action.getActionType()!=ActionType.NO_INFLUENCE)
 			return false;
 		try {
 			game.getIslandHandler().getIslandByID(action.getID()).addFlagNoInfluence();
 			// FIXME: removeIslandFlag method does not exist
-
-			//getCurrentPlayer().getActiveCharacter().removeIslandFlag();
+			getCurrentPlayer().getActiveCharacter().removeIslandFlag();
 		} catch (SpecificIslandNotFoundException e) {
 			return false;
 		}
