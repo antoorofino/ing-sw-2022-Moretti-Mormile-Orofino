@@ -73,8 +73,9 @@ public class IslandsHandler implements Serializable {
 						// shift id
 						for(int j = i + 1; j < islands.size(); j++)
 							islands.get(j).decreaseID();
+					} else {
+						i++;
 					}
-			i++;
 		}while(i < islands.size() - 1);
 		// last one
 		if(islands.get(islands.size() - 1).getIslandOwner()!=null)
@@ -90,7 +91,8 @@ public class IslandsHandler implements Serializable {
 				islands.get(to).addStudent(p);
 		}
 		islands.remove(from);
-		motherNature = to;
+		if(motherNature == from)
+			motherNature = to;
 	}
 
 }

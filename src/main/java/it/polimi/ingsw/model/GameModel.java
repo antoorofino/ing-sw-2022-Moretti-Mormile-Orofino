@@ -75,6 +75,7 @@ public class GameModel implements Serializable {
             for (int i = 0; i < 3; i++) {
                 int randInt = random.nextInt(list.size());
                 characters.add(list.get(randInt));
+                list.get(randInt).init(studentsBag);
                 list.remove(randInt);
             }
         }

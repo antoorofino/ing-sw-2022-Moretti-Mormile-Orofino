@@ -58,7 +58,7 @@ public class InputValidator {
 	}
 
 	public static boolean isValidAction(int numAction,RoundActions roundActions){
-		if(numAction> 0 && numAction<roundActions.getActionsList().size())
+		if(numAction >= 0 && numAction<roundActions.getActionsList().size())
 			return true;
 		return false;
 	}

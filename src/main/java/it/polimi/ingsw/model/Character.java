@@ -37,6 +37,22 @@ public class Character implements Serializable {
         this.studentsOnCard = new ArrayList<Piece>();
     }
 
+    public void init(Bag bag){
+        switch (ID) {
+            case 1:
+            case 11:
+                studentsOnCard.addAll(bag.popStudents(4));
+                break;
+            case 5:
+                islandFlag = 4;
+                break;
+            case 7:
+                studentsOnCard.addAll(bag.popStudents(6));
+                break;
+            default:
+        }
+    }
+
     /**
      * Gets name of character
      *
