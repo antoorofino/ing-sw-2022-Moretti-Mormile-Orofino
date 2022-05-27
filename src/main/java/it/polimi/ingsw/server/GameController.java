@@ -130,6 +130,8 @@ public class GameController {
             if (firstMessage) {
                 virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));
                 firstMessage = false;
+            } else {
+                virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
             for(int i = 0; i < game.getPlayerHandler().getNumPlayers(); i++){
                 List<AssistantCard> possibleCards = game.getPlayerHandler().getCurrentPlayer().getDeck().stream()
@@ -143,7 +145,6 @@ public class GameController {
                     isCardChosen = false;
                 }
                 game.getPlayerHandler().nextPlayerByOrder();
-                virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
 
             if (isGameEnd())
