@@ -67,17 +67,23 @@ public class GameModel implements Serializable {
         }
         if(gameMode == GameMode.EXPERT){
             for(Player player: this.getPlayerHandler().getPlayers()){
-                player.setCoin(1);
+                if (Configurator.isDebug())
+                    player.setCoin(10);
+                else
+                    player.setCoin(1);
                 this.coins--;
             }
             Random random = new Random();
             List<Character> list = Configurator.getAllCharactersCards(this);
-            for (int i = 0; i < 3; i++) {
-                int randInt = random.nextInt(list.size());
-                characters.add(list.get(randInt));
-                list.get(randInt).init(studentsBag);
-                list.remove(randInt);
-            }
+            if (Configurator.isDebug())
+                characters.addAll(list);
+            else
+                for (int i = 0; i < 3; i++) {
+                    int randInt = random.nextInt(list.size());
+                    characters.add(list.get(randInt));
+                    list.get(randInt).init(studentsBag);
+                    list.remove(randInt);
+                }
         }
     }
 

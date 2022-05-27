@@ -17,6 +17,7 @@ import java.util.List;
 public class Configurator {
     private static final int socketTimeout = 2000;
     private static final int serverPort = 8090;
+    private static final boolean debug = false;
     private static final String serverIp = "127.0.0.1";
 
     public static int getSocketTimeout() {
@@ -54,6 +55,8 @@ public class Configurator {
                     String description = element.getElementsByTagName("description").item(0).getTextContent();
                     String rules = element.getElementsByTagName("rules").item(0).getTextContent();
                     int cost = Integer.parseInt(element.getElementsByTagName("cost").item(0).getTextContent());
+                    if (Configurator.debug)
+                        cost = 1;
                     characters.add(new Character(
                             name,
                             description,
@@ -67,5 +70,9 @@ public class Configurator {
             e.printStackTrace();
         }
         return characters;
+    }
+
+    public static boolean isDebug(){
+        return Configurator.debug;
     }
 }
