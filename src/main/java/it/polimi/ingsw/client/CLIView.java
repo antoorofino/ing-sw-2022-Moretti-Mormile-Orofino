@@ -226,7 +226,6 @@ public class CLIView implements View{
 					System.out.println(card.toString());
 				}
 				System.out.print(" ↳: ");
-				scanner = new Scanner(System.in);
 				String chosenIDString = scanner.nextLine();
 				try {
 					chosenID = Integer.parseInt(chosenIDString);
@@ -391,8 +390,11 @@ public class CLIView implements View{
 				System.out.print(" / ");
 			}
 			System.out.println();
-			System.out.print(" Torri: "+ p.getNumOfTower());
-			System.out.println(" Monete: " + p.getCoin());
+			System.out.print(" Towers: "+ p.getNumOfTower());
+			System.out.print(" Coins: " + p.getCoin());
+			if (p.getLastCardUsed() != null)
+				System.out.print(" Played card: movements " + p.getLastCardUsed().getCardValue() + " - mother " + p.getLastCardUsed().getMovements());
+			System.out.println();
 		}
 
 		System.out.println((" ****************** ISLANDS *********************"));
@@ -404,9 +406,9 @@ public class CLIView implements View{
 				System.out.print(piece.toString() + "x" +  island.getNumStudents(piece) + "		");
 			}
 			if(island.towerIsAlreadyBuild())
-				System.out.print("Torre di: " + island.getIslandOwner().getNickname());
+				System.out.print("Tower owner: " + island.getIslandOwner().getNickname());
 			if(island.getID() == mother)
-				System.out.print(" Madre natura");
+				System.out.print(" Mother nature");
 			System.out.println();
 		}
 
@@ -426,13 +428,20 @@ public class CLIView implements View{
 				System.out.print(" no entry: " + character.getIslandFlag());
 			if (character.getID() == 7 || character.getID() == 11) {
 				System.out.print(" students: ");
-				for (Piece piece:character.getStudents()) {
+				for (Piece piece : character.getStudents()) {
 					System.out.print(piece.toString() + " ");
 				}
 			}
 			System.out.println();
 		}
-		System.out.println(" It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() +"'s turn");
+		if (Objects.equals(game.getPlayerHandler().getCurrentPlayer().getId(), playerId))
+			System.out.println(" --> It is your turn");
+		else
+			System.out.println(" --> It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() +"'s turn");
+		try {
+			System.in.read(new byte[System.in.available()]);
+		} catch (IOException ignored) {
+		}
 	}
 
 	@Override

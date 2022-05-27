@@ -132,7 +132,6 @@ public class GameController {
                 firstMessage = false;
             }
             for(int i = 0; i < game.getPlayerHandler().getNumPlayers(); i++){
-                virtualView.sendToEveryone(new UpdateGameBoard(game));
                 List<AssistantCard> possibleCards = game.getPlayerHandler().getCurrentPlayer().getDeck().stream()
                         .filter(this::checkAssistantCard)
                         .collect(Collectors.toList());
@@ -144,6 +143,7 @@ public class GameController {
                     isCardChosen = false;
                 }
                 game.getPlayerHandler().nextPlayerByOrder();
+                virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
 
             //Action phase
@@ -159,12 +159,6 @@ public class GameController {
                     i++;
                 } else {
 
-                    System.out.println("Il player " + game.getPlayerHandler().getCurrentPlayer().getNickname() +  " ha effettuato: ");
-                    for (Action action:game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList()) {
-                        System.out.print(action.getActionType().toString() + " ");
-                    }
-                    System.out.println();
-
                     //TODO: send possible actions to the current player (if expert or base moves)
                     sendPossibleActions(false);
 
@@ -174,6 +168,11 @@ public class GameController {
                             this.wait();
                         }
                     }
+                    System.out.println("Il player " + game.getPlayerHandler().getCurrentPlayer().getNickname() +  " ha effettuato: ");
+                    for (Action action:game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList()) {
+                        System.out.print(action.getActionType().toString() + " ");
+                    }
+                    System.out.println();
                 }
             }
         }
@@ -256,20 +255,17 @@ public class GameController {
         wakeUpController();
     }
 
-    public boolean setAssistantCard(String nickname, AssistantCard card){
+    public void setAssistantCard(String nickname, AssistantCard card){
         if(checkIfIsCurrentPlayer(nickname) && checkAssistantCard(card)){
             try{
                 game.getPlayerHandler().getCurrentPlayer().setLastCardUsed(card);
                 isCardChosen = true;
                 wakeUpController();
                 System.out.println("Set assistant card to " + nickname);
-                return true;
             } catch (CardException e){
                 System.out.println(e.getMessage());
-                return false;
             }
         }
-        return false;
     }
 
     private boolean checkAssistantCard(AssistantCard card){
