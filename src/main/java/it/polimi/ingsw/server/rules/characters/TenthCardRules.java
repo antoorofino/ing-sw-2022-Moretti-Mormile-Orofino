@@ -50,6 +50,7 @@ public class TenthCardRules extends ExpertRules {
 		movedPieces++;
 		if(movedPieces==2)
 			getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
+		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 		return true;
 	}
 }

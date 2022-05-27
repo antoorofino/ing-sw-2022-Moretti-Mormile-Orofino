@@ -274,7 +274,9 @@ public class CLIView implements View{
 							break;
 						case STUDENT_FROM_ENTRANCE_TO_DINING:
 							if(wantToContinue()){
+								System.out.println(" Insert the student to remove from entrance");
 								chosenPiece = getColorInput();
+								System.out.println(" Insert the student to add to dining");
 								secondPiece = getColorInput();
 								chosenAction = new Action(action, chosenPiece,secondPiece,0);
 							}else
