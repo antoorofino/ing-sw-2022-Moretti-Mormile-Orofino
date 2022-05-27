@@ -75,15 +75,18 @@ public class GameModel implements Serializable {
             }
             Random random = new Random();
             List<Character> list = Configurator.getAllCharactersCards(this);
-            if (Configurator.isDebug())
+            if (Configurator.isDebug()) {
                 characters.addAll(list);
-            else
+                for (Character character : characters)
+                    character.init(studentsBag);
+            } else {
                 for (int i = 0; i < 3; i++) {
                     int randInt = random.nextInt(list.size());
                     characters.add(list.get(randInt));
                     list.get(randInt).init(studentsBag);
                     list.remove(randInt);
                 }
+            }
         }
     }
 
