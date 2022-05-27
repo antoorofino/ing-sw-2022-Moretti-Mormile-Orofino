@@ -6,7 +6,6 @@ import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
-import it.polimi.ingsw.util.exception.StudentNotPresentException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +34,7 @@ public class TenthCardRules extends ExpertRules {
 	protected boolean activateCharacter(Action action){
 		if(action.getActionType()!= ActionType.STUDENT_FROM_ENTRANCE_TO_DINING)
 			return false;
-		if(action.getID()==-1) { // user doesn't want to move again
+		if(action.getInteger()==-1) { // user doesn't want to move again
 			getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 			return true;
 		}

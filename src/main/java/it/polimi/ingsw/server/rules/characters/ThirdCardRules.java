@@ -32,8 +32,8 @@ public class ThirdCardRules extends ExpertRules {
 			return false;
 		Island chosedIsland = null;
 		try {
-			chosedIsland = game.getIslandHandler().getIslandByID(action.getID());
-			if (!chosedIsland.calculateInfluence(game.getTeacherHandler(), false, null,null)) {
+			chosedIsland = game.getIslandHandler().getIslandByID(action.getInteger());
+			if (IslandHaveNoEntry(chosedIsland))  {
 				try {
 					game.getCharacterFromID(5).addIslandFlag();
 				} catch (SpecificCharacterNotFoundException e) {

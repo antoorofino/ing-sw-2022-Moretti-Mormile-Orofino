@@ -94,7 +94,7 @@ public class Rules implements Serializable {
 		}
 
 		try {
-			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
+			game.getIslandHandler().getIslandByID(action.getInteger()).addStudent(action.getPrincipalPiece());
 		} catch (SpecificIslandNotFoundException e) {
 			System.out.println(e.getMessage());
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
@@ -104,8 +104,8 @@ public class Rules implements Serializable {
 	}
 
 	protected boolean doMoveMother(Action action){
-		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getID()){
-			game.getIslandHandler().moveMotherNature(action.getID());
+		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getInteger()){
+			game.getIslandHandler().moveMotherNature(action.getInteger());
 			calculateInfluence();
 			return true;
 		}
@@ -116,7 +116,7 @@ public class Rules implements Serializable {
 	protected boolean doChooseCloud(Action action) {
 		Cloud cloud = null;
 		try {
-			cloud = game.getCloudByID(action.getID());
+			cloud = game.getCloudByID(action.getInteger());
 		} catch (SpecificCloudNotFoundException e) {
 			System.out.println(e.getMessage());
 			return false;

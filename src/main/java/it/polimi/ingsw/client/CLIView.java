@@ -242,7 +242,8 @@ public class CLIView implements View{
 	public void askAction(RoundActions roundActions, boolean isInvalidAction) {
 		int num;
 		Piece chosenPiece;
-		int chosenId;
+		Piece secondPiece;
+		int integer;
 		Action chosenAction = null;
 		ActionType action;
 		boolean correct = false;
@@ -261,35 +262,47 @@ public class CLIView implements View{
 						case MOVE_STUDENT_TO_ISLAND:
 						case STUDENT_FROM_CARD_TO_ISLAND:
 							chosenPiece = getColorInput();
-							chosenId = getNumber(" Insert the island ID: ");
-							chosenAction = new Action(action, chosenPiece,null, chosenId);
+							integer = getNumber(" Insert the island ID: ");
+							chosenAction = new Action(action, chosenPiece,null, integer);
 							break;
 						case MOVE_STUDENT_TO_DININGROOM:
-						case STUDENT_FROM_CARD_TO_ENTRANCE:
 						case COLOR_NO_INFLUENCE:
-						case STUDENT_FROM_ENTRANCE_TO_DINING:
 						case STUDENT_FROM_CARD_TO_DINING:
 						case STUDENT_FROM_DINING_TO_BAG:
 							chosenPiece = getColorInput();
 							chosenAction = new Action(action, chosenPiece,null,0);
 							break;
-						// FIXME: request for up to max moves
+						case STUDENT_FROM_ENTRANCE_TO_DINING:
+							if(wantToContinue()){
+								chosenPiece = getColorInput();
+								secondPiece = getColorInput();
+								chosenAction = new Action(action, chosenPiece,secondPiece,0);
+							}else
+								chosenAction = new Action(action, null,null,-1);
+							break;
+						case STUDENT_FROM_CARD_TO_ENTRANCE:
+							if(wantToContinue()) {
+								chosenPiece = getColorInput();
+								chosenAction = new Action(action, chosenPiece, null, 0);
+							}else
+								chosenAction = new Action(action, null,null,-1);
+							break;
 						case MOVE_MOTHER_NATURE:
 						case DOUBLE_INFLUENCE:
-							chosenId = getNumber(" Insert the number of mother nature steps: ");
-							chosenAction = new Action(action,null,null,chosenId);
+							integer = getNumber(" Insert the number of mother nature steps: ");
+							chosenAction = new Action(action,null,null,integer);
 							break;
 						case CHOOSE_CLOUD:
-							chosenId = getNumber(" Insert the cloud ID: ");
-							chosenAction = new Action(action,null,null,chosenId);
+							integer = getNumber(" Insert the cloud ID: ");
+							chosenAction = new Action(action,null,null,integer);
 							break;
 						case CHOOSE_CHARACTER:
-							chosenId = getNumber(" Insert the character ID to activate: ");
-							chosenAction = new Action(action,null,null,chosenId);
+							integer = getNumber(" Insert the character ID to activate: ");
+							chosenAction = new Action(action,null,null,integer);
 							break;
 						case NO_INFLUENCE:
-							chosenId = getNumber(" Insert the island ID: ");
-							chosenAction = new Action(action,null,null,chosenId);
+							integer = getNumber(" Insert the island ID: ");
+							chosenAction = new Action(action,null,null,integer);
 							break;
 					}
 				} else {
@@ -300,6 +313,20 @@ public class CLIView implements View{
 			}
 		} while (!correct);
 		serverHandler.send(new SetAction(nickname, chosenAction));
+	}
+
+	private boolean wantToContinue(){
+		String response;
+		while(true) {
+			System.out.print(" Do you want to continue the action? [y/n]: ");
+			response = scanner.nextLine();
+			if ((response.equalsIgnoreCase("n"))){
+				return false;
+			} else if ((response.equalsIgnoreCase("y")))
+				return true;
+			else
+				showErrorMessage("Please insert a valid answer");
+		}
 	}
 
 	private Piece getColorInput() {

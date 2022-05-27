@@ -9,8 +9,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
-import java.util.Arrays;
-
 public class ExpertRules extends Rules {
 	/**
 	 * Create the game rules
@@ -25,9 +23,10 @@ public class ExpertRules extends Rules {
 	public RoundActions nextPossibleActions() {
 		RoundActions roundActions = getCurrentPlayer().getRoundActions();
 		RoundActions nextPossibleActions = super.nextPossibleActions(); // basic action
-		if (!roundActions.hasChooseCharacter())
-			nextPossibleActions.add(new Action(ActionType.CHOOSE_CHARACTER));
-		else if (!roundActions.hasActivatedCharacter()) {
+		if (!roundActions.hasChooseCharacter()) {
+			if (!roundActions.hasMovedMother())
+				nextPossibleActions.add(new Action(ActionType.CHOOSE_CHARACTER));
+		}else if (!roundActions.hasActivatedCharacter()) {
 			nextPossibleActions = ActionsCharacter(nextPossibleActions);
 		}
 		return nextPossibleActions;
@@ -45,7 +44,7 @@ public class ExpertRules extends Rules {
 	protected boolean useCharacter(Action action) {
 		Character character = null;
 		try {
-			character = game.getCharacterFromID(action.getID());
+			character = game.getCharacterFromID(action.getInteger());
 			if (((character.getID() == 5) && (character.getIslandFlag() == 0)) || (!getCurrentPlayer().coinsAreEnough(character.getCost())))
 				return false; // no entry tile on card
 		} catch (SpecificCharacterNotFoundException e) {
@@ -73,7 +72,7 @@ public class ExpertRules extends Rules {
 		Island currentIsland = null;
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-			if (!currentIsland.calculateInfluence(game.getTeacherHandler(), true, null, null)) {
+			if (IslandHaveNoEntry(currentIsland)) {
 				try {
 					game.getCharacterFromID(5).addIslandFlag();
 				} catch (SpecificCharacterNotFoundException e) {
@@ -85,6 +84,10 @@ public class ExpertRules extends Rules {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	protected boolean IslandHaveNoEntry(Island island){
+		return !island.calculateInfluence(game.getTeacherHandler(), true, null, null);
 	}
 }
 

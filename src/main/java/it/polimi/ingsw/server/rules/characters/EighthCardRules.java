@@ -17,22 +17,7 @@ public class EighthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected void calculateInfluence() {
-		int currentMother = game.getIslandHandler().getMotherNature();
-		Island currentIsland = null;
-		try {
-			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-			if (!currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,getCurrentPlayer())) {
-				try {
-					game.getCharacterFromID(5).addIslandFlag();
-				} catch (SpecificCharacterNotFoundException e) {
-					System.out.println(e.getMessage());
-				}
-			}
-			game.getIslandHandler().mergeIsland();
-		} catch (SpecificIslandNotFoundException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+	protected boolean IslandHaveNoEntry(Island island){
+		return !island.calculateInfluence(game.getTeacherHandler(), true, null,getCurrentPlayer());
 	}
 }

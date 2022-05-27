@@ -41,7 +41,7 @@ public class FirstCardRules extends ExpertRules
 		}
 
 		try {
-			game.getIslandHandler().getIslandByID(action.getID()).addStudent(action.getPrincipalPiece());
+			game.getIslandHandler().getIslandByID(action.getInteger()).addStudent(action.getPrincipalPiece());
 		} catch (SpecificIslandNotFoundException e) {
 			// roolback function
 			getCurrentPlayer().getActiveCharacter().addStudents(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));

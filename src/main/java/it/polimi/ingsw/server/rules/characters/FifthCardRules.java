@@ -28,8 +28,7 @@ public class FifthCardRules extends ExpertRules {
 		if(action.getActionType()!=ActionType.NO_INFLUENCE)
 			return false;
 		try {
-			game.getIslandHandler().getIslandByID(action.getID()).addFlagNoInfluence();
-			// FIXME: removeIslandFlag method does not exist
+			game.getIslandHandler().getIslandByID(action.getInteger()).addFlagNoInfluence();
 			getCurrentPlayer().getActiveCharacter().removeIslandFlag();
 		} catch (SpecificIslandNotFoundException e) {
 			return false;
