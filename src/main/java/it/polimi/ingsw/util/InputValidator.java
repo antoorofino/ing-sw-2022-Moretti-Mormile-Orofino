@@ -19,11 +19,15 @@ public class InputValidator {
 
 	/**
 	 * Tests if the entered ip is empty
-	 * @param serverIP  The entered server ip
+	 * @param string  The entered server ip
 	 * @return  True if the ip is empty, otherwise false
 	 */
-	public static boolean isEmptyIp(String serverIP) {
-		return serverIP.equals("");
+	public static boolean isEmpty(String string) {
+		return string.equals("");
+	}
+
+	public static boolean isPortNumber(int port) {
+		return InputValidator.isNumberBetween(port, 0,65536);
 	}
 
 	public static boolean isTowerColorBetween(TowerColor choice, List<TowerColor> availableColors) {
@@ -35,11 +39,11 @@ public class InputValidator {
 		return false;
 	}
 
-	public static boolean isNickname(String nickname) {
+	public static boolean isWordNotEmpty(String nickname) {
 		return !(nickname.equals("") || nickname.contains(" "));
 	}
 
-	public static boolean isNumberBetween(int num, int a, int b){ return (a < num)&&(num < b);}
+	public static boolean isNumberBetween(int num, int a, int b){ return ( a <= num ) && ( num <= b );}
 
 	public static AssistantCard isIDBetween(int id, List<AssistantCard> cards){
 		for (AssistantCard card:cards) {

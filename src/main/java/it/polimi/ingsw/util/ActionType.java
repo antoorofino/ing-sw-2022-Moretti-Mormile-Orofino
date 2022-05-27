@@ -1,24 +1,24 @@
 package it.polimi.ingsw.util;
 
 public enum ActionType {
-    MOVE_STUDENT_TO_ISLAND(GameMode.BASIC," Muovi studente da ingresso a isola"),
-    MOVE_STUDENT_TO_DININGROOM(GameMode.BASIC," Muovi studente da ingresso a sala da pranzo"),
-    MOVE_MOTHER_NATURE(GameMode.BASIC," Muovi madre natura"),
-    CHOOSE_CLOUD(GameMode.BASIC," Scegli nuvola"),
+    MOVE_STUDENT_TO_ISLAND(GameMode.BASIC," Move student from entrance to island"),
+    MOVE_STUDENT_TO_DININGROOM(GameMode.BASIC," Move student from entrance to dining room"),
+    MOVE_MOTHER_NATURE(GameMode.BASIC," Move mother nature"),
+    CHOOSE_CLOUD(GameMode.BASIC," Choose a cloud"),
     END(GameMode.BASIC," Termina turno"), // no command by user
 
     CHOOSE_CHARACTER(GameMode.EXPERT," Usa carta personaggio"),
-    ACTIVATED_CHARACTER(GameMode.EXPERT," Attiva carta personaggio"), // no command by user
+    ACTIVATED_CHARACTER(GameMode.EXPERT," Buy a character card"), // no command by user
 
-    STUDENT_FROM_CARD_TO_ISLAND(GameMode.EXPERT," Sposta studente da carta a isola"),// 1 character
-    DOUBLE_INFLUENCE(GameMode.EXPERT," Sposta madre natura extra"), // 3 character
-    NO_INFLUENCE(GameMode.EXPERT," Scegli isola per posizionare no entry"), // 5 character
-    STUDENT_FROM_CARD_TO_ENTRANCE(GameMode.EXPERT," Sposta studente da carta a ingresso"), // 7 character
+    STUDENT_FROM_CARD_TO_ISLAND(GameMode.EXPERT," Move student from character card to island"),// 1 character
+    DOUBLE_INFLUENCE(GameMode.EXPERT," Move mother nature of extra steps"), // 3 character
+    NO_INFLUENCE(GameMode.EXPERT," Choose island to place no-entry flag"), // 5 character
+    STUDENT_FROM_CARD_TO_ENTRANCE(GameMode.EXPERT," Move student from character to "), // 7 character
 
-    COLOR_NO_INFLUENCE(GameMode.EXPERT," Scegli colore non valido nel calcolo influenza"), // 9 character
-    STUDENT_FROM_ENTRANCE_TO_DINING(GameMode.EXPERT," Sposta da ingresso a sala da pranzo"), // 10 character
-    STUDENT_FROM_CARD_TO_DINING(GameMode.EXPERT," Sposta da carta a sala da pranzo"), // 11 character
-    STUDENT_FROM_DINING_TO_BAG(GameMode.EXPERT," Scegli colore dello studente da riposizionare nel sacchetto");  //12 character
+    COLOR_NO_INFLUENCE(GameMode.EXPERT," Choose a color that won't be taken in account for the influence calculus"), // 9 character
+    STUDENT_FROM_ENTRANCE_TO_DINING(GameMode.EXPERT," Move student from entrance to dining room"), // 10 character
+    STUDENT_FROM_CARD_TO_DINING(GameMode.EXPERT," Move student from character to dining room"), // 11 character
+    STUDENT_FROM_DINING_TO_BAG(GameMode.EXPERT," Choose a student to put back into the bag");  //12 character
 
     private final GameMode mode;
     private final String description;

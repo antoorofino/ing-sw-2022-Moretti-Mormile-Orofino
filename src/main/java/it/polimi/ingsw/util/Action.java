@@ -6,16 +6,16 @@ import it.polimi.ingsw.model.*;
 import java.io.Serializable;
 
 public class Action implements Serializable {
-        private ActionType actionType;
+        private final ActionType actionType;
         private Piece principalPiece;
         private Piece optionalPiece;
         private int ID;
 
         public Action(ActionType actionType, Piece principalPiece, Piece optionalPiece, int ID) {
             this.actionType = actionType;
-            this.principalPiece= principalPiece;
-            this.optionalPiece= optionalPiece;
-            this.ID= ID;
+            this.principalPiece = principalPiece;
+            this.optionalPiece = optionalPiece;
+            this.ID = ID;
         }
 
         public Action(ActionType actionType) {
@@ -30,21 +30,21 @@ public class Action implements Serializable {
             return this.principalPiece;
         }
 
-        public void setPrincipalPiece(Piece piece) {
+        /*public void setPrincipalPiece(Piece piece) {
             this.principalPiece = piece;
-        }
+        }*/
 
-        public void setOptionalPiece(Piece piece){
+        /*public void setOptionalPiece(Piece piece){
             this.optionalPiece = piece;
-        }
+        }*/
 
         public Piece getOptionalPiece(){
             return this.optionalPiece;
         }
 
-        public void setID(int ID){
+        /*public void setID(int ID){
             this.ID = ID;
-        }
+        }*/
 
         public int getID(){
             return this.ID;

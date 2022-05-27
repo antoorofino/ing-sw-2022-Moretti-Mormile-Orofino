@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.messages.AskNewGameName;
 import it.polimi.ingsw.network.messages.AskNickname;
 import it.polimi.ingsw.network.messages.GameListMessage;
@@ -127,6 +128,23 @@ public class ServerMain {
 
     public void removeClientHandlerById(String playerId){
         System.out.println("Disconnection of player " + playerId);
+        synchronized (gameControllerList) {
+            GameController controllerToRemove = null;
+            boolean controllerFound = false;
+            for (GameController controller : gameControllerList) {
+                for (Player player : controller.getGame().getPlayerHandler().getPlayers()) {
+                    if (Objects.equals(player.getId(), playerId)) {
+                        controllerFound = true;
+                        controllerToRemove = controller;
+                        break;
+                    }
+                }
+                if (controllerFound)
+                    break;
+            }
+            if (controllerFound)
+                gameControllerList.remove(controllerToRemove);
+        }
         synchronized (clientHandlerList) {
             try {
                 clientHandlerList.remove(getClientHandlerByPlayerId(playerId));

@@ -2,10 +2,12 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.GameModel;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.TowerColor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +23,7 @@ public interface View {
 	/**
 	 * Interface launcher. Asks the server IP to connect to and notify it to the serverHandler
 	 */
-	void launch();
-
+	void launch() throws IOException;
 	void setPlayerId(String playerId);
 
 	/**
@@ -70,13 +71,6 @@ public interface View {
 	 *
 	 */
 	void showGame(GameModel game);
-
-	/**
-	 * Shows the user who is taking his turn
-	 *
-	 * @param currentNickname The nickname of the user who is taking his turn
-	 */
-	void showTurn(String currentNickname);
 
 	/**
 	 * Shows a specified message to the user

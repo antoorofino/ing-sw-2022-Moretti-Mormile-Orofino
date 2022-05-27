@@ -25,6 +25,5 @@ public class GameStart implements CVMessage, Serializable {
 	@Override
 	public void execute(View view) {
 		view.showGame(game);
-		view.showTurn(firstPlayer);
 	}
 }

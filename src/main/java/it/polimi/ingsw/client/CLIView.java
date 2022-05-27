@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,10 +14,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CLIView implements View{
 	private Scanner scanner;
-	// TODO: se qualcuno scrive mentre non è il tuo turno si riempe buffer, chiedi a pale
-	private Thread inputOutOfTurn;
+	// TODO: se qualcuno scrive mentre non è il suo turno si riempe buffer, chiedi a pale
+	/*private Thread inputOutOfTurn;
 	private boolean isYourTurn;
-	private AtomicBoolean myTurn = new AtomicBoolean(false);
+	private AtomicBoolean myTurn = new AtomicBoolean(false);*/
 	private ServerHandler serverHandler;
 	private String playerId;
 	private String nickname;
@@ -31,108 +32,144 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void launch() {
+	public void launch() throws IOException {
 		String serverIP;
-		int port;
+		String serverPort;
+		int portNumber;
 		boolean correct = false;
 
 		do {
 			System.out.print(" Enter the server IP [press enter for default IP]: ");
 			serverIP = scanner.nextLine();
-			if (InputValidator.isEmptyIp(serverIP)) {
+			if (serverIP.isEmpty()) {
 				correct = true;
 				serverIP = Configurator.getServerIp();
 			}else{
 				if (!InputValidator.isIp(serverIP))
-					System.out.println(" Invalid IP. Try again.");
+					showErrorMessage("Invalid IP. Try again.");
 				else
 					correct = true;
 			}
 		}while(!correct);
 
-		System.out.print(" Enter the server port [press enter for default port]: ");
-		try{
-			port = scanner.nextInt();
-		}catch(NumberFormatException e){
-			port = Configurator.getServerPort();
-		}
-		serverHandler.setConnection(serverIP,port);
+		correct = false;
+		do {
+			System.out.print(" Enter the server port [press enter for default port]: ");
+			serverPort = scanner.nextLine();
+			if (serverPort.isEmpty()) {
+				correct = true;
+				portNumber = Configurator.getServerPort();
+			} else {
+				try {
+					portNumber = Integer.parseInt(serverPort);
+					if (!InputValidator.isPortNumber(portNumber))
+						showErrorMessage("Invalid port number. Try again.");
+					else
+						correct = true;
+				} catch (NumberFormatException e) {
+					portNumber = Configurator.getServerPort();
+					showErrorMessage("Invalid port number. Try again.");
+				}
+			}
+		} while (!correct);
+		serverHandler.setConnection(serverIP, portNumber);
 	}
 
 	@Override
 	public void setPlayerId(String playerId) {
-		System.out.println(" Your player identifier is: " +  playerId);
+		//System.out.println(" Your player identifier is: " +  playerId);
 		this.playerId = playerId;
 		askLobbyOrNew();
 	}
 
-	protected void askLobbyOrNew(){
+	private void askLobbyOrNew(){
 		boolean correct = false;
-		while(!correct){
-			correct = true;
+		do {
 			System.out.print(" Do do you want to create a new game or join an existing one? [n/e]: ");
 			String preferredMode = scanner.nextLine();
 			if ((preferredMode.equalsIgnoreCase("n"))){
-				System.out.print(" Please insert the game name: ");
-				String gameName = scanner.nextLine();
-				serverHandler.send(new NewGameMessage(playerId, gameName));
-			}
-			else if ((preferredMode.equalsIgnoreCase("e")))
+				boolean correctName = false;
+				do {
+					System.out.print(" Please insert the game name: ");
+					String gameName = scanner.nextLine();
+					// FIXME: can the name of the game contain spaces ?
+					if (InputValidator.isWordNotEmpty(gameName)) {
+						correct = true;
+						correctName = true;
+						serverHandler.send(new NewGameMessage(playerId, gameName));
+					} else {
+						showErrorMessage("Please insert a correct value");
+					}
+				} while (!correctName);
+			} else if ((preferredMode.equalsIgnoreCase("e"))) {
+				correct = true;
 				serverHandler.send(new AskGameListMessage(playerId));
-			else{
-				System.out.println(" Please insert a correct value ");
-				correct = false;
+			} else {
+				showErrorMessage("Please insert a correct value");
 			}
-		}
+		} while (!correct);
 	}
 
 	@Override
 	public void askNewGameName() {
-		System.out.print(" The game name is already chosen. Please insert a new one: ");
-		String gameName = scanner.nextLine();
-		serverHandler.send(new NewGameMessage(playerId, gameName));
+		boolean correct = false;
+		do {
+			System.out.print(" The game name is already chosen. Please insert a new one: ");
+			String gameName = scanner.nextLine();
+			if (InputValidator.isWordNotEmpty(gameName)) {
+				correct = true;
+				serverHandler.send(new NewGameMessage(playerId, gameName));
+			} else {
+				showErrorMessage("Please insert a correct value");
+			}
+		} while (!correct);
 	}
 
 	@Override
 	public void askNickname(boolean isFirstRequest) {
 		if(!isFirstRequest)
 			System.out.println(" This nickname is already chosen. Please insert a new one.");
-		boolean correct;
+		boolean correct = false;
 		do {
 			System.out.print(" Enter your nickname: ");
 			nickname = scanner.nextLine();
-			correct = InputValidator.isNickname(nickname);
-			if (!correct) {
-				System.out.println(" Invalid nickname. Try again.");
+			if (InputValidator.isWordNotEmpty(nickname)) {
+				correct = true;
+			} else {
+				showErrorMessage("Invalid nickname. Try again.");
 			}
 		} while (!correct);
-		serverHandler.send(new SetNickname(playerId,nickname));
+		serverHandler.send(new SetNickname(playerId, nickname));
 	}
 
 	@Override
-	public void askTowerColor(List<TowerColor> possibleColor,boolean isFirstRequest) {
+	public void askTowerColor(List<TowerColor> possibleColor, boolean isFirstRequest) {
 		TowerColor chosenColor;
 		String inputColor;
 		if (!isFirstRequest)
 			System.out.println(" This color is already chosen. Please insert a new one");
-		// There's only one color?
 		if (possibleColor.size() == 1) {
 			chosenColor = possibleColor.get(0);
 			System.out.println(" Your color will be " + chosenColor.toString());
+			System.out.println("Press ENTER to continue");
+			scanner.nextLine();
 		} else {
 			boolean correct;
 			do {
 				System.out.print(" Choose your tower color between: ");
-				for (int i = 0; i < possibleColor.size(); i++) {
-					System.out.print(possibleColor.get(i).toString() + " ");
+				for (TowerColor towerColor : possibleColor) {
+					System.out.print(towerColor.toString() + " ");
 				}
 				System.out.println();
 				System.out.print(" ↳: ");
 				inputColor = scanner.nextLine();
 				chosenColor = TowerColor.getPlayerColorByName(inputColor);
-				correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
+				if (chosenColor == null)
+					correct = false;
+				else
+					correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
 				if (!correct) {
-					System.out.println(" Invalid choice. Try again.");
+					showErrorMessage("Invalid choice. Try again.");
 				}
 			} while (!correct);
 		}
@@ -143,41 +180,41 @@ public class CLIView implements View{
 	public void askGameSettings() {
 		boolean correct = false;
 		int numPlayers = 0;
-		GameMode gameMode = GameMode.BASIC;
-		while(!correct){
+		GameMode gameMode = null;
+		do {
 			System.out.print(" Enter number of players: ");
-			scanner = new Scanner(System.in);
-			numPlayers = scanner.nextInt();
-			if(InputValidator.isNumberBetween(numPlayers,1,4))
-				correct = true;
-			if (!correct) {
-				System.out.println(" Invalid number. Try again.");
+			try {
+				String stringRead = scanner.nextLine();
+				numPlayers = Integer.parseInt(stringRead);
+				if (InputValidator.isNumberBetween(numPlayers, 2, 3))
+					correct = true;
+				else
+					showErrorMessage("Invalid value. Try again.");
+			} catch (NumberFormatException e) {
+				showErrorMessage("Invalid value. Try again.");
 			}
-		}
+		} while (!correct);
 		correct = false;
-
-
-		while(!correct){
+		do {
 			System.out.print(" Basic mode? [y/n]: ");
 			String preferredMode = scanner.nextLine();
-			correct = true;
-			if ((preferredMode.equalsIgnoreCase("n")))
+			if ((preferredMode.equalsIgnoreCase("n"))) {
+				correct = true;
 				gameMode = GameMode.EXPERT;
-			else if ((preferredMode.equalsIgnoreCase("y")))
+			} else if ((preferredMode.equalsIgnoreCase("y"))) {
+				correct = true;
 				gameMode = GameMode.BASIC;
-			else
-				correct = false;
-			if(!correct)
-				System.out.println(" Invalid answer. Try again.");
-		}
-		serverHandler.send(new SetGameSettings(playerId, gameMode,numPlayers));
+			} else {
+				showErrorMessage("Invalid value. Try again.");
+			}
+		} while (!correct);
+		serverHandler.send(new SetGameSettings(playerId, gameMode, numPlayers));
 	}
-
 
 	@Override
 	public void askAssistantCard(List<AssistantCard> cards) {
 		int chosenID;
-		AssistantCard chosenCard;
+		AssistantCard chosenCard = null;
 		if (cards.size() == 1) {
 			chosenCard = cards.get(0);
 			System.out.println(" Your card will be " + chosenCard.getCardID());
@@ -185,108 +222,127 @@ public class CLIView implements View{
 			boolean correct = false;
 			do {
 				System.out.println(" Choose your card ID between: ");
-				for (int i = 0; i < cards.size(); i++) {
-					System.out.println(cards.get(i).toString());
+				for (AssistantCard card : cards) {
+					System.out.println(card.toString());
 				}
 				System.out.print(" ↳: ");
-				chosenID = scanner.nextInt();
-				chosenCard = InputValidator.isIDBetween(chosenID,cards);
-				if (chosenCard!=null){
-					System.out.println(" Chosen card: "+ chosenCard.toString());
-					correct = true;
+				scanner = new Scanner(System.in);
+				String chosenIDString = scanner.nextLine();
+				try {
+					chosenID = Integer.parseInt(chosenIDString);
+					chosenCard = InputValidator.isIDBetween(chosenID, cards);
+					if (chosenCard != null){
+						System.out.println(" Chosen card: "+ chosenCard);
+						correct = true;
+					} else {
+						showErrorMessage("Invalid choice. Try again.");
+					}
+				} catch (NumberFormatException e) {
+					showErrorMessage("Invalid choice. Try again.");
 				}
-				else
-					System.out.println(" Invalid choice. Try again.");
 			} while (!correct);
 		}
 		serverHandler.send(new SetAssistantCard(nickname,chosenCard));
 	}
 
 	@Override
-	public void askAction(RoundActions roundActions,boolean isInvalidAction) {
+	public void askAction(RoundActions roundActions, boolean isInvalidAction) {
 		int num;
 		Piece chosenPiece;
 		int chosenId;
 		Action chosenAction = null;
 		ActionType action;
-		boolean correct;
+		boolean correct = false;
 		if(isInvalidAction)
-			System.out.println(" Mossa non valida! ");
+			showErrorMessage("Invalid action. Try again.");
 		do {
-			correct = false;
 			showPossibleActions(roundActions);
 			System.out.print(" ↳: ");
-			num =  scanner.nextInt();
-			if(InputValidator.isValidAction(num,roundActions)){
-				correct = true;
-				action = roundActions.getActionsList().get(num).getActionType();
-				switch(action){
-					case MOVE_STUDENT_TO_ISLAND:
-					case STUDENT_FROM_CARD_TO_ISLAND:
-						chosenPiece = getColorInput();
-						System.out.print(" Insert the island ID: ");
-						chosenId = scanner.nextInt();
-						chosenAction = new Action(action, chosenPiece,null,chosenId);
-						break;
-					case MOVE_STUDENT_TO_DININGROOM:
-					case STUDENT_FROM_CARD_TO_ENTRANCE:
-					case COLOR_NO_INFLUENCE:
-					case STUDENT_FROM_ENTRANCE_TO_DINING:
-					case STUDENT_FROM_CARD_TO_DINING:
-					case STUDENT_FROM_DINING_TO_BAG:
-						chosenPiece = getColorInput();
-						chosenAction = new Action(action, chosenPiece,null,0);
-						break;
+			try {
+				String numRead = scanner.nextLine();
+				num = Integer.parseInt(numRead);
+				if(InputValidator.isValidAction(num,roundActions)){
+					correct = true;
+					action = roundActions.getActionsList().get(num).getActionType();
+					switch(action){
+						case MOVE_STUDENT_TO_ISLAND:
+						case STUDENT_FROM_CARD_TO_ISLAND:
+							chosenPiece = getColorInput();
+							chosenId = getNumber(" Insert the island ID: ");
+							chosenAction = new Action(action, chosenPiece,null, chosenId);
+							break;
+						case MOVE_STUDENT_TO_DININGROOM:
+						case STUDENT_FROM_CARD_TO_ENTRANCE:
+						case COLOR_NO_INFLUENCE:
+						case STUDENT_FROM_ENTRANCE_TO_DINING:
+						case STUDENT_FROM_CARD_TO_DINING:
+						case STUDENT_FROM_DINING_TO_BAG:
+							chosenPiece = getColorInput();
+							chosenAction = new Action(action, chosenPiece,null,0);
+							break;
 						// FIXME: request for up to max moves
-					case MOVE_MOTHER_NATURE:
-					case DOUBLE_INFLUENCE:
-						System.out.print(" Insert the number of mother nature steps: ");
-						chosenId = scanner.nextInt();
-						chosenAction = new Action(action,null,null,chosenId);
-						break;
-					case CHOOSE_CLOUD:
-						System.out.print(" Insert the cloud ID: ");
-						chosenId = scanner.nextInt();
-						chosenAction = new Action(action,null,null,chosenId);
-						break;
-					case CHOOSE_CHARACTER:
-						System.out.print(" Insert the character ID to activate: ");
-						chosenId = scanner.nextInt();
-						chosenAction = new Action(action,null,null,chosenId);
-						break;
-					case NO_INFLUENCE:
-						System.out.print(" Insert the island ID: ");
-						chosenId = scanner.nextInt();
-						chosenAction = new Action(action,null,null,chosenId);
-						break;
+						case MOVE_MOTHER_NATURE:
+						case DOUBLE_INFLUENCE:
+							chosenId = getNumber(" Insert the number of mother nature steps: ");
+							chosenAction = new Action(action,null,null,chosenId);
+							break;
+						case CHOOSE_CLOUD:
+							chosenId = getNumber(" Insert the cloud ID: ");
+							chosenAction = new Action(action,null,null,chosenId);
+							break;
+						case CHOOSE_CHARACTER:
+							chosenId = getNumber(" Insert the character ID to activate: ");
+							chosenAction = new Action(action,null,null,chosenId);
+							break;
+						case NO_INFLUENCE:
+							chosenId = getNumber(" Insert the island ID: ");
+							chosenAction = new Action(action,null,null,chosenId);
+							break;
+					}
+				} else {
+					showErrorMessage("Invalid action. Try again.");
 				}
-			}else
-				System.out.println(" Invalid action. Try again.");
+			} catch (NumberFormatException e) {
+				showErrorMessage("Invalid action. Try again.");
+			}
 		} while (!correct);
-		serverHandler.send(new SetAction(nickname,chosenAction));
+		serverHandler.send(new SetAction(nickname, chosenAction));
 	}
 
-	protected Piece getColorInput(){
+	private Piece getColorInput() {
 		Piece piece;
-		while(true){
+		while(true) {
 			System.out.print(" Insert the student's color [red / blue / green / yellow / purple]: ");
 			piece = Piece.getPieceByColor(scanner.nextLine());
-			if(piece!=null)
+			if(piece != null)
 				return piece;
 			else
-				System.out.println(" Please insert a valid value for color");
+				showErrorMessage("Please insert a valid value for color");
+		}
+	}
+
+	private int getNumber(String request) {
+		int num;
+		while (true) {
+			System.out.print(request);
+			String stringRead = scanner.nextLine();
+			try {
+				num = Integer.parseInt(stringRead);
+				return num;
+			} catch (NumberFormatException e) {
+				showErrorMessage("Please insert a valid number");
+			}
 		}
 	}
 
 	@Override
 	public void showGamesList(List<GameListInfo> gamesList) {
-		boolean correct;
+		boolean correct = false;
 		String gameName;
 		for (GameListInfo gameInfo:gamesList) {
 			System.out.println(" Game: " + gameInfo.getGameName() + " #Players: " + gameInfo.getNumPlayers() +  " Mode: " + gameInfo.getGameMode());
 		}
 		do {
-			correct = false;
 			System.out.print(" Insert the name of the game you want to join ('.' for updating the list): ");
 			gameName = scanner.nextLine();
 			if(Objects.equals(gameName, ".")){
@@ -303,12 +359,11 @@ public class CLIView implements View{
 
 	@Override
 	public void askNewGameChoice() {
-		System.out.println(" Invalid choice, the game is full");
+		System.out.println(" The game is already full");
 		serverHandler.send(new AskGameListMessage(playerId));
 	}
 
-
-	public void showPossibleActions(RoundActions roundActions) {
+	private void showPossibleActions(RoundActions roundActions) {
 		System.out.println(" Your possible actions are: ");
 		int i = 0;
 		for (Action action:roundActions.getActionsList()) {
@@ -316,7 +371,6 @@ public class CLIView implements View{
 			i++;
 		}
 	}
-
 
 	@Override
 	public void showGame(GameModel game) {
@@ -358,7 +412,7 @@ public class CLIView implements View{
 
 		System.out.println((" ################### CLOUDS #################"));
 		for (Cloud cloud : game.getClouds()) {
-			System.out.println(" ID: " + cloud.getCloudID());
+			System.out.print(" ID: " + cloud.getCloudID());
 			System.out.print(" Students: ");
 			for (Piece piece:cloud.getStudents()) {
 				System.out.print(piece.toString() + " ");
@@ -367,18 +421,18 @@ public class CLIView implements View{
 		}
 		System.out.println("@@@@@@@@@@@ CHARACTERS @@@@@@@@@@@@");
 		for (Character character : game.getCharacters()) {
-			System.out.print(" ID: " + character.getID() + " cost: " + character.getCost() + " no entry: " + character.getIslandFlag());
-			System.out.print(" students: ");
-			for (Piece piece:character.getStudents()) {
-				System.out.print(piece.toString() + " ");
+			System.out.print(" ID: " + character.getID() + " cost: " + character.getCost());
+			if (character.getID() == 5)
+				System.out.print(" no entry: " + character.getIslandFlag());
+			if (character.getID() == 7 || character.getID() == 11) {
+				System.out.print(" students: ");
+				for (Piece piece:character.getStudents()) {
+					System.out.print(piece.toString() + " ");
+				}
 			}
 			System.out.println();
 		}
-	}
-
-	@Override
-	public void showTurn(String currentNickname) {
-		System.out.println(" It is " + currentNickname +"'s turn");
+		System.out.println(" It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() +"'s turn");
 	}
 
 	@Override
@@ -393,11 +447,11 @@ public class CLIView implements View{
 
 	@Override
 	public void showGameEndMessage(String winnerNickname) {
-		System.out.println(" Il vincitore è: " + winnerNickname);
+		System.out.println(" Match finished. The winner is: " + winnerNickname);
 	}
 
 	@Override
 	public void showErrorMessage(String errorMessage) {
-		System.out.println(" Errore: "+ errorMessage);
+		System.out.println(" Error: "+ errorMessage);
 	}
 }

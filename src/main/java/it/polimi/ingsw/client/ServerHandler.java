@@ -33,18 +33,14 @@ public class ServerHandler implements NetworkHandler {
 	 *
 	 * @param serverIP IP address of the server
 	 */
-	public void setConnection(String serverIP,int port) {
-		try {
-			socket = new Socket(serverIP, port);
-			output = new ObjectOutputStream(socket.getOutputStream());
-			input = new ObjectInputStream(socket.getInputStream());
-			isConnected = true;
+	public void setConnection(String serverIP,int port) throws IOException {
+		socket = new Socket(serverIP, port);
+		output = new ObjectOutputStream(socket.getOutputStream());
+		input = new ObjectInputStream(socket.getInputStream());
+		isConnected = true;
 
-			socket.setSoTimeout(Configurator.getSocketTimeout());
-			(new HeartbeatSender(this, false)).start();
-		} catch (IOException e) {
-			view.showErrorMessage("Server unreachable");
-		}
+		socket.setSoTimeout(Configurator.getSocketTimeout());
+		(new HeartbeatSender(this, false)).start();
 		startListening();
 	}
 
