@@ -146,6 +146,9 @@ public class GameController {
                 virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
 
+            if (isGameEnd())
+                virtualView.sendToEveryone(new ShowLastRound());
+
             //Action phase
             game.getPlayerHandler().initialiseCurrentPlayerActionPhase();
             int i = 0;
@@ -158,10 +161,7 @@ public class GameController {
                     game.getPlayerHandler().nextPlayerByAssistance();
                     i++;
                 } else {
-
-                    //TODO: send possible actions to the current player (if expert or base moves)
                     sendPossibleActions(false);
-
                     int currentActionsNumber = game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size();
                     synchronized (this) {
                         while (game.getPlayerHandler().getCurrentPlayer().getRoundActions().getActionsList().size() <= currentActionsNumber) {
@@ -179,8 +179,9 @@ public class GameController {
         try {
             manageWin();
         } catch (Exception ignored) {
-            //FIXME: should be created a custom exception
-            throw new RuntimeException("Double tie");
+            // FIXME: what to do with double tie ?
+            System.out.println("ERROR: double tie!!");
+            virtualView.sendToEveryone(new ShowEndGame(""));
         }
     }
 
@@ -227,7 +228,7 @@ public class GameController {
                 //FIXME: double tie!
                 throw new Exception("Double tie");
         }
-        //TODO: what to do with winner player
+        virtualView.sendToEveryone(new ShowEndGame(winner.getNickname()));
     }
 
     public void setAction(Action action, String nickname) throws PlayerException {
