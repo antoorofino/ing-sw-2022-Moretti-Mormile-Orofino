@@ -111,6 +111,11 @@ public class Island implements Serializable {
             }
         }
 
+        System.out.print("Punteggi influenza: ");
+        for (Player p : scores.keySet()) {
+            System.out.println(p.getNickname() + ": " + scores.get(p));
+        }
+
         // find the new owner
         for (Player p : scores.keySet()) {
             player = getIslandOwner();

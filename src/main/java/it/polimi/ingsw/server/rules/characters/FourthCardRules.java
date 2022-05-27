@@ -18,6 +18,7 @@ public class FourthCardRules extends ExpertRules {
 	protected boolean doMoveMother(Action action){
 		if (getCurrentPlayer().getLastCardUsed().getMovements() + 2 >= action.getInteger()){
 			game.getIslandHandler().moveMotherNature(action.getInteger());
+			calculateInfluence();
 			return true;
 		}
 		return false;

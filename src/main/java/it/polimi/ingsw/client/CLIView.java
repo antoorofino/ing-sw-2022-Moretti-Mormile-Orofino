@@ -432,6 +432,8 @@ public class CLIView implements View{
 				System.out.print("Tower owner: " + island.getIslandOwner().getNickname());
 			if(island.getID() == mother)
 				System.out.print(" Mother nature");
+			if(island.getFlagNoInfluence()!=0)
+				System.out.print(" No entry tiles: " + island.getFlagNoInfluence());
 			System.out.println();
 		}
 
