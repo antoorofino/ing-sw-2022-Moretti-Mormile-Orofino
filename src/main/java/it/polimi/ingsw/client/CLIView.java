@@ -6,18 +6,12 @@ import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CLIView implements View{
-	private Scanner scanner;
-	// TODO: se qualcuno scrive mentre non è il suo turno si riempe buffer, chiedi a pale
-	/*private Thread inputOutOfTurn;
-	private boolean isYourTurn;
-	private AtomicBoolean myTurn = new AtomicBoolean(false);*/
+	private final Scanner scanner;
 	private ServerHandler serverHandler;
 	private String playerId;
 	private String nickname;
@@ -426,7 +420,7 @@ public class CLIView implements View{
 			System.out.print(" ID: " + character.getID() + " cost: " + character.getCost());
 			if (character.getID() == 5)
 				System.out.print(" no entry: " + character.getIslandFlag());
-			if (character.getID() == 7 || character.getID() == 11) {
+			if (character.getID() == 1 || character.getID() == 7 || character.getID() == 11) {
 				System.out.print(" students: ");
 				for (Piece piece : character.getStudents()) {
 					System.out.print(piece.toString() + " ");

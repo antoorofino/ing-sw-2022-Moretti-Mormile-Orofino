@@ -64,18 +64,18 @@ public class IslandsHandler implements Serializable {
 	}
 
 	public void mergeIsland(){
-		int i=0;
+		int i = 0;
 		do{
-			if(islands.get(i).getIslandOwner()!=null)
-				if(islands.get(i+1).getIslandOwner()!=null)
-					if(islands.get(i).getIslandOwner().getNickname().equals(islands.get(i+1).getIslandOwner().getNickname())){
-						moveValue(i + 1, i);
-						// shift id
-						for(int j = i + 1; j < islands.size(); j++)
-							islands.get(j).decreaseID();
-					} else {
-						i++;
-					}
+			if(islands.get(i).getIslandOwner() != null && islands.get(i+1).getIslandOwner() != null)
+				if(islands.get(i).getIslandOwner().getNickname().equals(islands.get(i+1).getIslandOwner().getNickname())){
+					moveValue(i + 1, i);
+					i--;
+					// shift id
+					for(int j = i + 1; j < islands.size(); j++)
+						islands.get(j).decreaseID();
+
+				}
+			i++;
 		}while(i < islands.size() - 1);
 		// last one
 		if(islands.get(islands.size() - 1).getIslandOwner()!=null)
