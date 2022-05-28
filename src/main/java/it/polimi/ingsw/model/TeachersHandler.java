@@ -10,13 +10,14 @@ public class TeachersHandler implements Serializable {
     private Map<Piece,Player> teachers;
 
     public TeachersHandler(){
-        teachers = new HashMap<Piece,Player>();
+        teachers = new HashMap<>();
     }
 
     public void calculateTeacher(ArrayList<Player> players, boolean geq){
         int countOwner;
         int countPossibleOwner;
         Player currentOwner;
+        teachers = new HashMap<>(); // Reset teachers
         for (Piece piece : Piece.values()) { // per ogni pedina
             for (Player p : players) {
                 countPossibleOwner = p.getPlayerBoard().getNumOfStudentsRoom(piece);

@@ -34,6 +34,7 @@ public class TwelfthCardRules extends ExpertRules {
 				try {
 					p.getPlayerBoard().removeFromRoom(action.getPrincipalPiece());
 					game.getStudentsBag().addStudent(action.getPrincipalPiece(),1); // restore in bag
+					controlTeacher();
 				} catch (SpecificStudentNotFoundException e) {
 					break;
 				}
