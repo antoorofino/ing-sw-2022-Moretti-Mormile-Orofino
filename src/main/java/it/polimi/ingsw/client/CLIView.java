@@ -291,8 +291,8 @@ public class CLIView implements View{
 							break;
 						case MOVE_MOTHER_NATURE:
 						case DOUBLE_INFLUENCE:
-							integer = getNumber(" Insert the number of mother nature steps: ");
-							chosenAction = new Action(action,null,null,integer);
+							integer = getNumber(" Insert the id of the island you want to resolve: ");
+							chosenAction = new Action(action,null,null, integer);
 							break;
 						case CHOOSE_CLOUD:
 							integer = getNumber(" Insert the cloud ID: ");
