@@ -11,7 +11,7 @@ public enum ActionType {
     ACTIVATED_CHARACTER(GameMode.EXPERT," Buy a character card"), // no command by user
 
     STUDENT_FROM_CARD_TO_ISLAND(GameMode.EXPERT," Move student from character card to island"),// 1 character
-    DOUBLE_INFLUENCE(GameMode.EXPERT," Move mother nature of extra steps"), // 3 character
+    DOUBLE_INFLUENCE(GameMode.EXPERT," Choose an island you want to resolve like mother nature was there"), // 3 character
     NO_INFLUENCE(GameMode.EXPERT," Choose island to place no-entry flag"), // 5 character
     STUDENT_FROM_CARD_TO_ENTRANCE(GameMode.EXPERT," Move student from character to "), // 7 character
 
