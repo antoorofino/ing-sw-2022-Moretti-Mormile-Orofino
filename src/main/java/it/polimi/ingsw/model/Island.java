@@ -46,7 +46,7 @@ public class Island implements Serializable {
      * @return number of students on island
      */
     public int getNumStudents(Piece s){
-        return studentsOnIsland.get(s).intValue();
+        return studentsOnIsland.get(s);
     }
 
     /**
@@ -81,7 +81,6 @@ public class Island implements Serializable {
      */
 
     public boolean calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
-        // true null null
         int count;
         Player player;
         HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
@@ -113,7 +112,7 @@ public class Island implements Serializable {
 
         System.out.print("Punteggi influenza: ");
         for (Player p : scores.keySet()) {
-            System.out.println(p.getNickname() + ": " + scores.get(p));
+            System.out.print(p.getNickname() + ":" + scores.get(p) + "     ");
         }
 
         // find the new owner

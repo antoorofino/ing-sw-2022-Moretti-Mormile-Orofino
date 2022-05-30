@@ -18,6 +18,7 @@ public class Character implements Serializable {
     private ArrayList<Piece> studentsOnCard;
     private int islandFlag;
     private int cost;
+    private boolean first;
 
     /**
      * Constructor: build the Character Card
@@ -35,6 +36,7 @@ public class Character implements Serializable {
         this.ID=ID;
         this.rules = rules;
         this.studentsOnCard = new ArrayList<Piece>();
+        this.first = true;
     }
 
     public void init(Bag bag){
@@ -108,18 +110,18 @@ public class Character implements Serializable {
     }
 
     /**
-     * Remove one island flag
-     *
-     */
-    public void removeIslandFlag() { this.islandFlag--;  }
-
-    /**
      * Add one island flag
      *
      */
     public void addIslandFlag(){
         this.islandFlag++;
     }
+
+    /**
+     * Remove one island flag
+     *
+     */
+    public void removeIslandFlag() { this.islandFlag--;  }
 
     /**
      * Adds students on character
@@ -152,7 +154,9 @@ public class Character implements Serializable {
      * Increases cost to activate character's ability
      */
     public void increaseCost(){
-        this.cost++;
+        if(first)
+            this.cost++;
+        first = false;
     }
 
     /**

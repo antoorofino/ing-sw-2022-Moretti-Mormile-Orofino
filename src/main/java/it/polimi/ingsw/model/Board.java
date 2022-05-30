@@ -37,6 +37,14 @@ public class Board implements Serializable {
     }
 
     /**
+     * Adds students in the entrance
+     *
+     */
+    public void addToEntrance(ArrayList<Piece> students){
+        this.studentsEntrance.addAll(students);
+    }
+
+    /**
      * Remove a students from the entrance
      * @param student student to remove
      * @throws SpecificStudentNotFoundException
@@ -58,27 +66,19 @@ public class Board implements Serializable {
     }
 
     /**
-     * Adds students in the entrance
-     *
-     */
-    public void addToEntrance(ArrayList<Piece> students){
-        this.studentsEntrance.addAll(students);
-    }
-
-    /**
      * Adds students in the room and automatically remove it from entrance
      * @param student student to remove
      * @throws SpecificStudentNotFoundException
      */
     // TODO: fix test methods calls after remove the automatically remove from entrance
     public void addStudentToRoom(Piece student) throws SpecificStudentNotFoundException {
-        studentsRoom.put(student,(studentsRoom.get(student)).intValue()+1);
+        studentsRoom.put(student, studentsRoom.get(student) +1);
     }
 
     
     public void removeFromRoom(Piece student) throws SpecificStudentNotFoundException {
-        if(this.studentsRoom.get(student).intValue() > 0 )
-            studentsRoom.put(student,(studentsRoom.get(student)).intValue()-1);
+        if(this.studentsRoom.get(student) > 0 )
+            studentsRoom.put(student, studentsRoom.get(student) - 1);
         else throw new SpecificStudentNotFoundException("Specific student isn't present");
     }
 
