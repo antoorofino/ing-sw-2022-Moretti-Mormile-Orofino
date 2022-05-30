@@ -24,10 +24,10 @@ public class ExpertRules extends Rules {
 		RoundActions roundActions = getCurrentPlayer().getRoundActions();
 		RoundActions nextPossibleActions = super.nextPossibleActions(); // basic action
 		if (!roundActions.hasChooseCharacter()) {
-			if (!roundActions.hasMovedMother())
+			if (!roundActions.hasChooseCloud())
 				nextPossibleActions.add(new Action(ActionType.CHOOSE_CHARACTER));
 		}else if (!roundActions.hasActivatedCharacter()) {
-			nextPossibleActions = ActionsCharacter(nextPossibleActions);
+			nextPossibleActions = askToActivateCharacter(nextPossibleActions);
 		}
 		return nextPossibleActions;
 	}
@@ -37,16 +37,58 @@ public class ExpertRules extends Rules {
 		if (action.getActionType().getMode().equals(GameMode.BASIC)) // basic mode action
 			return super.doAction(action);
 		if (action.getActionType() == ActionType.CHOOSE_CHARACTER)
-			return useCharacter(action);
-		return activateCharacter(action);
+			return chosenCharacter(action);
+		else
+			return activateCharacter(action);
 	}
 
-	protected boolean useCharacter(Action action) {
+	@Override
+	public boolean doMoveDiningRoom(Action action){
+		if(!super.doMoveDiningRoom(action))
+			return false;
+		if((getCurrentPlayer().getPlayerBoard().getNumOfStudentsRoom(action.getPrincipalPiece()) % 3 == 0)&&(game.coinsAreEnough())){
+			game.getCoin();
+			getCurrentPlayer().addCoin();
+		}
+		return true;
+	}
+
+	/**
+	 * Check if player can use the chosen caracter
+	 * @param action
+	 * @return
+	 */
+	protected boolean chosenCharacter(Action action) {
 		Character character = null;
 		try {
 			character = game.getCharacterFromID(action.getInteger());
-			if (((character.getID() == 5) && (character.getIslandFlag() == 0)) || (!getCurrentPlayer().coinsAreEnough(character.getCost())))
-				return false; // no entry tile on card
+			if(!getCurrentPlayer().coinsAreEnough(character.getCost()))
+				return false;
+			switch(character.getID()){
+				case 4:
+				case 6:
+				case 8:
+				case 9:
+					if(getCurrentPlayer().getRoundActions().hasMovedMother())
+						return false;
+					break;
+				case 5:
+					if(character.getIslandFlag() == 0)
+						return false;
+					break;
+				case 7:
+					if(getCurrentPlayer().getPlayerBoard().getStudentsEntrance().isEmpty())
+						return false;
+					break;
+				case 10:
+					if(getCurrentPlayer().getPlayerBoard().getStudentsEntrance().isEmpty())
+						return false;
+					if(getCurrentPlayer().getPlayerBoard().getStudentsRoom().isEmpty())
+						return false;
+					break;
+				default:
+					break;
+			}
 		} catch (SpecificCharacterNotFoundException e) {
 			return false;
 		}
@@ -57,7 +99,7 @@ public class ExpertRules extends Rules {
 	}
 
 	// if card needs an activation by player the following methods should be overrided
-	protected RoundActions ActionsCharacter(RoundActions previousAction) {
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 		return previousAction;
 	}
@@ -72,22 +114,24 @@ public class ExpertRules extends Rules {
 		Island currentIsland = null;
 		try {
 			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-			if (IslandHaveNoEntry(currentIsland)) {
-				try {
-					game.getCharacterFromID(5).addIslandFlag();
-				} catch (SpecificCharacterNotFoundException e) {
-					System.out.println(e.getMessage());
-				}
-			}
+			if (islandHaveNoEntry(currentIsland))
+				restoreNoEntry();
 			game.getIslandHandler().mergeIsland();
 		} catch (SpecificIslandNotFoundException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}
 	}
 
-	protected boolean IslandHaveNoEntry(Island island){
+	protected boolean islandHaveNoEntry(Island island){
 		return !island.calculateInfluence(game.getTeacherHandler(), true, null, null);
+	}
+
+	protected void restoreNoEntry(){
+		try {
+			game.getCharacterFromID(5).addIslandFlag();
+		} catch (SpecificCharacterNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
 

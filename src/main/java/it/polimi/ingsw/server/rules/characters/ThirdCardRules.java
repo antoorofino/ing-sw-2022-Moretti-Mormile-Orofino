@@ -20,7 +20,7 @@ public class ThirdCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected RoundActions ActionsCharacter(RoundActions previousAction) {
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
 		action_character.add(new Action(ActionType.DOUBLE_INFLUENCE));
 		return action_character;
@@ -33,15 +33,11 @@ public class ThirdCardRules extends ExpertRules {
 		Island chosedIsland = null;
 		try {
 			chosedIsland = game.getIslandHandler().getIslandByID(action.getInteger());
-			if (IslandHaveNoEntry(chosedIsland))  {
-				try {
-					game.getCharacterFromID(5).addIslandFlag();
-				} catch (SpecificCharacterNotFoundException e) {
-					System.out.println(e.getMessage());
-				}
-			}
+			if (islandHaveNoEntry(chosedIsland))
+				restoreNoEntry();
+			game.getIslandHandler().mergeIsland();
 		} catch (SpecificIslandNotFoundException e) {
-			return false;
+			System.out.println(e.getMessage());
 		}
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 		return true;

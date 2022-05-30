@@ -23,7 +23,7 @@ public class NinthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected RoundActions ActionsCharacter(RoundActions previousAction) {
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
 		action_character.add(new Action(ActionType.COLOR_NO_INFLUENCE));
 		return action_character;
@@ -39,7 +39,7 @@ public class NinthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected boolean IslandHaveNoEntry(Island island){
+	protected boolean islandHaveNoEntry(Island island){
 		return !island.calculateInfluence(game.getTeacherHandler(), true, invalidColor,null);
 	}
 }

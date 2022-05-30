@@ -261,7 +261,7 @@ public class CLIView implements View{
 					switch(action){
 						case MOVE_STUDENT_TO_ISLAND:
 						case STUDENT_FROM_CARD_TO_ISLAND:
-							chosenPiece = getColorInput();
+							chosenPiece = getColorInput(" Insert the student's color [red / blue / green / yellow / purple]: ");
 							integer = getNumber(" Insert the island ID: ");
 							chosenAction = new Action(action, chosenPiece,null, integer);
 							break;
@@ -269,29 +269,11 @@ public class CLIView implements View{
 						case COLOR_NO_INFLUENCE:
 						case STUDENT_FROM_CARD_TO_DINING:
 						case STUDENT_FROM_DINING_TO_BAG:
-							chosenPiece = getColorInput();
+							chosenPiece = getColorInput(" Insert the student's color [red / blue / green / yellow / purple]: ");
 							chosenAction = new Action(action, chosenPiece,null,0);
 							break;
-						case STUDENT_FROM_ENTRANCE_TO_DINING:
-							if(wantToContinue()){
-								System.out.println(" Insert the student to remove from entrance");
-								chosenPiece = getColorInput();
-								System.out.println(" Insert the student to add to dining");
-								secondPiece = getColorInput();
-								chosenAction = new Action(action, chosenPiece,secondPiece,0);
-							}else
-								chosenAction = new Action(action, null,null,-1);
-							break;
-						case STUDENT_FROM_CARD_TO_ENTRANCE:
-							if(wantToContinue()) {
-								chosenPiece = getColorInput();
-								chosenAction = new Action(action, chosenPiece, null, 0);
-							}else
-								chosenAction = new Action(action, null,null,-1);
-							break;
 						case MOVE_MOTHER_NATURE:
-						case DOUBLE_INFLUENCE:
-							integer = getNumber(" Insert the id of the island you want to resolve: ");
+							integer = getNumber(" Insert the number of mother nature steps: ");
 							chosenAction = new Action(action,null,null, integer);
 							break;
 						case CHOOSE_CLOUD:
@@ -302,9 +284,26 @@ public class CLIView implements View{
 							integer = getNumber(" Insert the character ID to activate: ");
 							chosenAction = new Action(action,null,null,integer);
 							break;
+						case DOUBLE_INFLUENCE:
 						case NO_INFLUENCE:
 							integer = getNumber(" Insert the island ID: ");
 							chosenAction = new Action(action,null,null,integer);
+							break;
+						case STUDENT_FROM_CARD_TO_ENTRANCE:
+							if(wantToContinue()) {
+								chosenPiece = getColorInput(" Insert the student's color to remove from card [red / blue / green / yellow / purple]: ");
+								secondPiece = getColorInput(" Insert the student's color to remove from entrance [red / blue / green / yellow / purple]: ");
+								chosenAction = new Action(action, chosenPiece, secondPiece, 0);
+							}else
+								chosenAction = new Action(action, null,null,-1);
+							break;
+						case STUDENT_FROM_ENTRANCE_TO_DINING:
+							if(wantToContinue()){
+								chosenPiece = getColorInput(" Insert the student's color to remove from entrance [red / blue / green / yellow / purple]: ");
+								secondPiece = getColorInput(" Insert the student's color to remove from dining [red / blue / green / yellow / purple]: ");
+								chosenAction = new Action(action, chosenPiece,secondPiece,0);
+							}else
+								chosenAction = new Action(action, null,null,-1);
 							break;
 					}
 				} else {
@@ -331,10 +330,10 @@ public class CLIView implements View{
 		}
 	}
 
-	private Piece getColorInput() {
+	private Piece getColorInput(String string) {
 		Piece piece;
 		while(true) {
-			System.out.print(" Insert the student's color [red / blue / green / yellow / purple]: ");
+			System.out.print(string);
 			piece = Piece.getPieceByColor(scanner.nextLine());
 			if(piece != null)
 				return piece;

@@ -24,7 +24,7 @@ public class FirstCardRules extends ExpertRules
 	}
 
 	@Override
-	protected RoundActions ActionsCharacter(RoundActions previousAction) {
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
 		action_character.add(new Action(ActionType.STUDENT_FROM_CARD_TO_ISLAND));
 		return action_character;

@@ -37,9 +37,7 @@ public class Rules implements Serializable {
 				nextPossibleActions.add(new Action(ActionType.MOVE_MOTHER_NATURE));
 			else
 				nextPossibleActions.add(new Action(ActionType.CHOOSE_CLOUD));
-
 		}
-
 		return nextPossibleActions;
 	}
 
@@ -71,14 +69,9 @@ public class Rules implements Serializable {
 
 		try {
 			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
-			if((getCurrentPlayer().getPlayerBoard().getNumOfStudentsRoom(action.getPrincipalPiece()) % 3 == 0)&&(game.getGameMode() == GameMode.EXPERT)&&(game.coinsAreEnough())){
-				game.getCoin();
-				getCurrentPlayer().addCoin();
-			}
 		} catch (SpecificStudentNotFoundException e) {
 			System.out.println(e.getMessage());
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
-			System.out.println(e.getMessage());
 			return false;
 		}
 		controlTeacher();
@@ -138,7 +131,6 @@ public class Rules implements Serializable {
 			game.getIslandHandler().mergeIsland();
 		} catch (SpecificIslandNotFoundException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}
 	}
 

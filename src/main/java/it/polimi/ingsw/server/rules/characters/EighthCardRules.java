@@ -17,7 +17,7 @@ public class EighthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected boolean IslandHaveNoEntry(Island island){
+	protected boolean islandHaveNoEntry(Island island){
 		return !island.calculateInfluence(game.getTeacherHandler(), true, null,getCurrentPlayer());
 	}
 }

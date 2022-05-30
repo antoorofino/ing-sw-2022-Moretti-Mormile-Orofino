@@ -17,7 +17,7 @@ public class SixthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected boolean IslandHaveNoEntry(Island island){
+	protected boolean islandHaveNoEntry(Island island){
 		return !island.calculateInfluence(game.getTeacherHandler(), false, null,null);
 	}
 }

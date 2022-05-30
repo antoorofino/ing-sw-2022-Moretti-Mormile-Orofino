@@ -18,7 +18,7 @@ public class FifthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected RoundActions ActionsCharacter(RoundActions previousAction) {
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
 		action_character.add(new Action(ActionType.NO_INFLUENCE));
 		return action_character;

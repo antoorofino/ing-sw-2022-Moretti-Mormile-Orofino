@@ -13,12 +13,12 @@ public enum ActionType {
     STUDENT_FROM_CARD_TO_ISLAND(GameMode.EXPERT," Move student from character card to island"),// 1 character
     DOUBLE_INFLUENCE(GameMode.EXPERT," Choose an island you want to resolve like mother nature was there"), // 3 character
     NO_INFLUENCE(GameMode.EXPERT," Choose island to place no-entry flag"), // 5 character
-    STUDENT_FROM_CARD_TO_ENTRANCE(GameMode.EXPERT," Move student from character to "), // 7 character
 
+    STUDENT_FROM_CARD_TO_ENTRANCE(GameMode.EXPERT," Reverse students between card and entrance "), // 7 character
     COLOR_NO_INFLUENCE(GameMode.EXPERT," Choose a color that won't be taken in account for the influence calculus"), // 9 character
-    STUDENT_FROM_ENTRANCE_TO_DINING(GameMode.EXPERT," Move student from entrance to dining room"), // 10 character
-    STUDENT_FROM_CARD_TO_DINING(GameMode.EXPERT," Move student from character to dining room"), // 11 character
-    STUDENT_FROM_DINING_TO_BAG(GameMode.EXPERT," Choose a student to put back into the bag");  //12 character
+    STUDENT_FROM_ENTRANCE_TO_DINING(GameMode.EXPERT," Reverse student between entrance and dining room"), // 10 character
+    STUDENT_FROM_CARD_TO_DINING(GameMode.EXPERT,"  Reverse students between card and dining room"), // 11 character
+    STUDENT_FROM_DINING_TO_BAG(GameMode.EXPERT," Choose a student to put back into the bag (x3)");  //12 character
 
     private final GameMode mode;
     private final String description;

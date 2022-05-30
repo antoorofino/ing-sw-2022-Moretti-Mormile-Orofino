@@ -19,7 +19,7 @@ public class TwelfthCardRules extends ExpertRules {
 	}
 
 	@Override
-	protected RoundActions ActionsCharacter(RoundActions previousAction) {
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		RoundActions action_character = new RoundActions();
 		action_character.add(new Action(ActionType.STUDENT_FROM_DINING_TO_BAG));
 		return action_character;
