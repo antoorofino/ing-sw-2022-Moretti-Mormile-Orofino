@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.cli.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -206,20 +208,17 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void askAssistantCard(List<AssistantCard> cards) {
+	public void askAssistantCard(List<AssistantCard> cards,GameModel game) {
 		int chosenID;
 		AssistantCard chosenCard = null;
+		printGame(game,cards);
 		if (cards.size() == 1) {
 			chosenCard = cards.get(0);
 			System.out.println(" Your card will be " + chosenCard.getCardID());
 		} else {
 			boolean correct = false;
 			do {
-				System.out.println(" Choose your card ID between: ");
-				for (AssistantCard card : cards) {
-					System.out.println(card.toString());
-				}
-				System.out.print(" ↳: ");
+				System.out.println(" Insert your card value: ");
 				String chosenIDString = scanner.nextLine();
 				try {
 					chosenID = Integer.parseInt(chosenIDString);
@@ -395,57 +394,60 @@ public class CLIView implements View{
 
 	@Override
 	public void showGame(GameModel game) {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+		printGame(game,null);
+	}
+
+	// TODO: finire i personaggi
+	protected void printGame(GameModel game, List<AssistantCard> possibleCards){
+		CLIGame cliGame = new CLIGame(250,38);
+		boolean first = true;
+
 		for (Player p : game.getPlayerHandler().getPlayers()) {
-			System.out.println((" ================== " + p.getNickname() + " =========================="));
-			System.out.println(" Board ENTRANCE: ");
-			for (Piece piece:p.getPlayerBoard().getStudentsEntrance()) {
-				System.out.print(piece.toString() + " ");
+			CLIPlayer cliPlayer = new CLIPlayer(p, game.getTeacherHandler());
+
+			if (p.getId().equals(playerId))
+				cliGame.drawElement(5, 105, cliPlayer);
+			else {
+				if (first) {
+					cliGame.drawElement(1, 155, cliPlayer);
+					first = false;
+				} else
+					cliGame.drawElement(15, 155, cliPlayer);
 			}
-			System.out.println();
-			System.out.println(" Board DINING ROOM: ");
-			for (Piece piece:Piece.values()) {
-				System.out.print(piece.toString() + " x" +  p.getPlayerBoard().getNumOfStudentsRoom(piece));
-				Player owner = game.getTeacherHandler().getTeacherOwner(piece);
-				if(owner!= null)
-					if(owner.getNickname().equals(p.getNickname()))
-						System.out.print(" Teacher");
-				System.out.print(" / ");
-			}
-			System.out.println();
-			System.out.print(" Towers: "+ p.getNumOfTower());
-			System.out.print(" Coins: " + p.getCoin());
-			if (p.getLastCardUsed() != null)
-				System.out.print(" Played card: movements " + p.getLastCardUsed().getCardValue() + " - mother " + p.getLastCardUsed().getMovements());
-			System.out.println();
 		}
 
-		System.out.println((" ****************** ISLANDS *********************"));
-		int mother = game.getIslandHandler().getMotherNature();
-		for (Island island : game.getIslandHandler().getIslands()) {
-			System.out.print(" ID: " + island.getID() + " size: " + island.getSize());
-			System.out.print(" Students: ");
-			for (Piece piece:Piece.values()) {
-				System.out.print(piece.toString() + "x" +  island.getNumStudents(piece) + "		");
-			}
-			if(island.towerIsAlreadyBuild())
-				System.out.print("Tower owner: " + island.getIslandOwner().getNickname());
-			if(island.getID() == mother)
-				System.out.print(" Mother nature");
-			if(island.getFlagNoInfluence()!=0)
-				System.out.print(" No entry tiles: " + island.getFlagNoInfluence());
-			System.out.println();
-		}
+		// draw islands
+		CLIIslandBoard islands = new CLIIslandBoard(100,30);
+		islands.drawIslands(game);
+		cliGame.drawElement(0,0,islands);
 
-		System.out.println((" ################### CLOUDS #################"));
+		// draw clouds
+		CLICloud cliCloud;
 		for (Cloud cloud : game.getClouds()) {
-			System.out.print(" ID: " + cloud.getCloudID());
-			System.out.print(" Students: ");
-			for (Piece piece:cloud.getStudents()) {
-				System.out.print(piece.toString() + " ");
-			}
-			System.out.println();
+			cliCloud = new CLICloud(cloud.getCloudID());
+			cliCloud.addStudent(cloud.getStudents());
+			cliGame.drawElement(12,28 + 16*(cloud.getCloudID()-1),cliCloud);
 		}
-		System.out.println("@@@@@@@@@@@ CHARACTERS @@@@@@@@@@@@");
+
+		// draw assistant card
+		if(possibleCards!=null){
+			int i = 35;
+			CLIAssistanceCard assistanceCard;
+			for(AssistantCard card: game.getPlayerHandler().getCurrentPlayer().getDeck()){
+				if(possibleCards.contains(card))
+					assistanceCard = new CLIAssistanceCard(card.getCardValue(), card.getMovements(),true);
+				else
+					assistanceCard = new CLIAssistanceCard(card.getCardValue(), card.getMovements(),false);
+				cliGame.drawElement(32,i,assistanceCard);
+				i+=10;
+			}
+		}
+
+		cliGame.display();
+
+		System.out.println(" CHARACTERS ");
 		for (Character character : game.getCharacters()) {
 			System.out.print(" ID: " + character.getID() + " cost: " + character.getCost());
 			if (character.getID() == 5)

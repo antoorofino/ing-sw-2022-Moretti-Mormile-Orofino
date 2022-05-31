@@ -55,7 +55,7 @@ public interface View {
 	 *
 	 * @param cards All the possible cards
 	 */
-	void askAssistantCard(List<AssistantCard> cards);
+	void askAssistantCard(List<AssistantCard> cards,GameModel game);
 
 	/**
 	 * Asks the action the player wants to perform
