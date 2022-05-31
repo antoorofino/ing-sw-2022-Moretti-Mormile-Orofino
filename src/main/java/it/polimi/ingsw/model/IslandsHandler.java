@@ -72,7 +72,7 @@ public class IslandsHandler implements Serializable {
 					// shift id
 					for(int j = i + 1; j < islands.size(); j++)
 						islands.get(j).decreaseID();
-
+					i--;
 				}
 			i++;
 		}while(i < islands.size() - 1);
