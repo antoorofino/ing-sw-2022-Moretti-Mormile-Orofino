@@ -160,4 +160,6 @@ public class Island implements Serializable {
 
     public void decreaseID(){this.ID--;}
 
+    public Map<Piece, Integer> getStudentsOnIsland(){ return new HashMap<>(studentsOnIsland);}
+
 }

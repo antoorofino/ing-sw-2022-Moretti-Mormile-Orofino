@@ -69,7 +69,6 @@ public class IslandsHandler implements Serializable {
 			if(islands.get(i).getIslandOwner() != null && islands.get(i+1).getIslandOwner() != null)
 				if(islands.get(i).getIslandOwner().getNickname().equals(islands.get(i+1).getIslandOwner().getNickname())){
 					moveValue(i + 1, i);
-					i--;
 					// shift id
 					for(int j = i + 1; j < islands.size(); j++)
 						islands.get(j).decreaseID();
