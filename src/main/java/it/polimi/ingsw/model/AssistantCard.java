@@ -12,10 +12,10 @@ public class AssistantCard implements Serializable {
     private final int movements;
     private final int cardID;
 
-    public static ArrayList<AssistantCard> createDeck(int offset){
+    public static ArrayList<AssistantCard> createDeck(){
         ArrayList<AssistantCard> deck = new ArrayList<>();
         for(int i = 1; i <= 10; i++){
-            deck.add(new AssistantCard(i, (i+1)/2,i+(offset*10)));
+            deck.add(new AssistantCard(i, (i+1)/2,i));
         }
         return deck;
     }

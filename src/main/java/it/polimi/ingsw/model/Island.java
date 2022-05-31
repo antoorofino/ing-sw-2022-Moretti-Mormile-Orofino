@@ -2,7 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Stores information about island
@@ -114,6 +116,22 @@ public class Island implements Serializable {
         for (Player p : scores.keySet()) {
             System.out.print(p.getNickname() + ":" + scores.get(p) + "     ");
         }
+
+        boolean tie = false;
+        if(scores.size() > 1){
+            tie = true;
+            Iterator it = scores.entrySet().iterator();
+            Map.Entry entry = (Map.Entry)it.next();
+            Map.Entry next;
+            while(it.hasNext()){
+                next = (Map.Entry)it.next();
+                if(entry.getValue()!=next.getValue())
+                    tie = false;
+            }
+        }
+
+        if(tie) // pareggio non aggiorno owner
+            return true;
 
         // find the new owner
         for (Player p : scores.keySet()) {

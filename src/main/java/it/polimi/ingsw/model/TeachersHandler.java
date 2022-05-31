@@ -17,7 +17,6 @@ public class TeachersHandler implements Serializable {
         int countOwner;
         int countPossibleOwner;
         Player currentOwner;
-        // FIXME: anto perchè hai aggiunto il reset?? si rompe così
         //teachers = new HashMap<>(); // Reset teachers
         for (Piece piece : Piece.values()) { // per ogni pedina
             for (Player p : players) {

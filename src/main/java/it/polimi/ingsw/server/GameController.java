@@ -137,7 +137,7 @@ public class GameController {
                 List<AssistantCard> possibleCards = game.getPlayerHandler().getCurrentPlayer().getDeck().stream()
                         .filter(this::checkAssistantCard)
                         .collect(Collectors.toList());
-                virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAssistantCard(possibleCards));
+                virtualView.getClientHandlerById(game.getPlayerHandler().getCurrentPlayer().getId()).send(new AskAssistantCard(possibleCards,game));
                 synchronized (this) {
                     while (!isCardChosen) {
                         this.wait();

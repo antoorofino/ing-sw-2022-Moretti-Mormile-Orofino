@@ -68,9 +68,9 @@ public class PlayersHandlerTest {
 
     @Test
     public void playersOrder(){
-        p1.addCards(AssistantCard.createDeck(0));
-        p2.addCards(AssistantCard.createDeck(1));
-        p3.addCards(AssistantCard.createDeck(2));
+        p1.addCards(AssistantCard.createDeck());
+        p2.addCards(AssistantCard.createDeck());
+        p3.addCards(AssistantCard.createDeck());
 
         assertEquals(null, playersHandler.getCurrentPlayer());
         playersHandler.initialiseCurrentPlayerPlanningPhase();
@@ -170,9 +170,9 @@ public class PlayersHandlerTest {
         playersHandler.setNumPlayers(3);
         assertEquals(3, playersHandler.getNumPlayers());
 
-        p1.addCards(AssistantCard.createDeck(0));
-        p2.addCards(AssistantCard.createDeck(1));
-        p3.addCards(AssistantCard.createDeck(2));
+        p1.addCards(AssistantCard.createDeck());
+        p2.addCards(AssistantCard.createDeck());
+        p3.addCards(AssistantCard.createDeck());
         for(int i = 0;  i < 10; i++){
             assertEquals(false, playersHandler.playerWithNoMoreCards());
             try {

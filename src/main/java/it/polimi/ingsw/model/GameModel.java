@@ -59,7 +59,7 @@ public class GameModel implements Serializable {
         int index = 0;
         for(Player player: this.getPlayerHandler().getPlayers()){
             player.setNumOfTower(numTowers);
-            player.addCards(AssistantCard.createDeck(index++));
+            player.addCards(AssistantCard.createDeck());
             player.getPlayerBoard().addToEntrance(this.studentsBag.popStudents(numEntranceStudents));
         }
         for (int i = 1; i <= numPlayers; i++) {
