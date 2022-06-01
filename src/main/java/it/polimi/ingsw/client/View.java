@@ -23,7 +23,7 @@ public interface View {
 	/**
 	 * Interface launcher. Asks the server IP to connect to and notify it to the serverHandler
 	 */
-	void launch() throws IOException;
+	void launch();
 	void setPlayerId(String playerId);
 
 	/**

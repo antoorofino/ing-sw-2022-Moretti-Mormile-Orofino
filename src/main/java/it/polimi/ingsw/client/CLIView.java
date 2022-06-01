@@ -28,47 +28,57 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void launch() throws IOException {
+	public void launch() {
 		String serverIP;
 		String serverPort;
 		int portNumber;
 		boolean correct = false;
+		boolean connected = false;
 
 		do {
-			System.out.print(" Enter the server IP [press enter for default IP]: ");
-			serverIP = scanner.nextLine();
-			if (serverIP.isEmpty()) {
-				correct = true;
-				serverIP = Configurator.getServerIp();
-			}else{
-				if (!InputValidator.isIp(serverIP))
-					showErrorMessage("Invalid IP. Try again.");
-				else
+			do {
+				System.out.print(" Enter the server IP [press enter for default IP]: ");
+				serverIP = scanner.nextLine();
+				if (serverIP.isEmpty()) {
 					correct = true;
-			}
-		}while(!correct);
-
-		correct = false;
-		do {
-			System.out.print(" Enter the server port [press enter for default port]: ");
-			serverPort = scanner.nextLine();
-			if (serverPort.isEmpty()) {
-				correct = true;
-				portNumber = Configurator.getServerPort();
-			} else {
-				try {
-					portNumber = Integer.parseInt(serverPort);
-					if (!InputValidator.isPortNumber(portNumber))
-						showErrorMessage("Invalid port number. Try again.");
+					serverIP = Configurator.getServerIp();
+				}else{
+					if (!InputValidator.isIp(serverIP))
+						showErrorMessage("Invalid IP. Try again.");
 					else
 						correct = true;
-				} catch (NumberFormatException e) {
-					portNumber = Configurator.getServerPort();
-					showErrorMessage("Invalid port number. Try again.");
 				}
+			}while(!correct);
+
+			correct = false;
+			do {
+				System.out.print(" Enter the server port [press enter for default port]: ");
+				serverPort = scanner.nextLine();
+				if (serverPort.isEmpty()) {
+					correct = true;
+					portNumber = Configurator.getServerPort();
+				} else {
+					try {
+						portNumber = Integer.parseInt(serverPort);
+						if (!InputValidator.isPortNumber(portNumber))
+							showErrorMessage("Invalid port number. Try again.");
+						else
+							correct = true;
+					} catch (NumberFormatException e) {
+						portNumber = Configurator.getServerPort();
+						showErrorMessage("Invalid port number. Try again.");
+					}
+				}
+			} while (!correct);
+
+			try {
+				serverHandler.setConnection(serverIP, portNumber);
+				connected = true;
+			} catch (IOException ignored) {
+				showErrorMessage("Error:  Server unreachable");
 			}
-		} while (!correct);
-		serverHandler.setConnection(serverIP, portNumber);
+
+		} while (!connected);
 	}
 
 	@Override

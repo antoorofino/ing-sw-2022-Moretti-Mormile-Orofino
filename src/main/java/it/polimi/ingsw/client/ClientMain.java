@@ -33,15 +33,7 @@ public class ClientMain {
 				System.out.println(" Invalid choice. Try again.");
 			}
 		} while (incorrect);
-		
-		incorrect = true;
-		do {
-			try {
-				view.launch();
-				incorrect = false;
-			} catch (IOException e) {
-				view.showErrorMessage(" Server unreachable");
-			}
-		} while (incorrect);
+
+		view.launch();
 	}
 }
