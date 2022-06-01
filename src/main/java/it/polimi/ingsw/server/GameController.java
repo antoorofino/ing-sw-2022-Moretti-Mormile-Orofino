@@ -127,13 +127,13 @@ public class GameController {
             //Planning phase
             game.cloudsRefill();
             game.getPlayerHandler().initialiseCurrentPlayerPlanningPhase();
-            if (firstMessage) {
-                virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));
-                firstMessage = false;
-            } else {
-                virtualView.sendToEveryone(new UpdateGameBoard(game));
-            }
             for(int i = 0; i < game.getPlayerHandler().getNumPlayers(); i++){
+                if (firstMessage) {
+                    virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));
+                    firstMessage = false;
+                } else {
+                    virtualView.sendToEveryone(new UpdateGameBoard(game));
+                }
                 List<AssistantCard> possibleCards = game.getPlayerHandler().getCurrentPlayer().getDeck().stream()
                         .filter(this::checkAssistantCard)
                         .collect(Collectors.toList());
