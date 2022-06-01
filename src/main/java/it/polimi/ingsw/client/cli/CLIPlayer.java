@@ -13,7 +13,7 @@ public class CLIPlayer extends CLIMatrix{
 		drawElement(1,0,cliBoard);
 
 		drawText("Name : " + player.getNickname(),1,0,0);
-		drawText(" Towers: "+ player.getNumOfTower() + " Coins: " + player.getCoin(),1,12,0);
+		drawText("Towers: "+ player.getNumOfTower() + " Coins: " + player.getCoin(),1,12,0);
 		if (player.getLastCardUsed() != null)
 			drawText(" Played card: movements " + player.getLastCardUsed().getCardValue() + " - mother " + player.getLastCardUsed().getMovements(),1,13,0);
 

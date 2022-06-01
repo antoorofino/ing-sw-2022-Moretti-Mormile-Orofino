@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 /**
  * Stores information about island
@@ -174,7 +173,7 @@ public class Island implements Serializable {
         return this.flagNoInfluence;
     }
 
-    public void increaseSize(){ this.size++;}
+    public void increaseSize(int size){ this.size+=size;}
 
     public void decreaseID(){this.ID--;}
 

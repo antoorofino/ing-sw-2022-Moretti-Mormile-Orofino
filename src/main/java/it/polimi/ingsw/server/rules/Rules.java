@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.rules;
 
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
-import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.*;
 import it.polimi.ingsw.model.*;
@@ -29,7 +28,7 @@ public class Rules implements Serializable {
 		RoundActions roundActions = getCurrentPlayer().getRoundActions();
 		RoundActions nextPossibleActions = new RoundActions();
 
-		if (roundActions.hasMovedStudents() < 3) {
+		if (roundActions.hasMovedStudents() < game.getPlayerHandler().getNumPlayers() + 1) {
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_ISLAND));
 			nextPossibleActions.add(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 		} else {

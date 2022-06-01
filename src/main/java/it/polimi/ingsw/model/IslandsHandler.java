@@ -9,10 +9,12 @@ import java.util.Random;
 public class IslandsHandler implements Serializable {
 	private ArrayList<Island> islands;
 	private int motherNature;
+	private int leftMerge;
 
 	public IslandsHandler(){
 		this.islands = new ArrayList<>();
 		this.motherNature = 0;
+		this.leftMerge = 0;
 	}
 
 	public void setupIslands(){
@@ -68,6 +70,8 @@ public class IslandsHandler implements Serializable {
 		do{
 			if(islands.get(i).getIslandOwner() != null && islands.get(i+1).getIslandOwner() != null)
 				if(islands.get(i).getIslandOwner().getNickname().equals(islands.get(i+1).getIslandOwner().getNickname())){
+					if(motherNature > i)
+						moveMotherNature(-1);
 					moveValue(i + 1, i);
 					// shift id
 					for(int j = i + 1; j < islands.size(); j++)
@@ -79,19 +83,24 @@ public class IslandsHandler implements Serializable {
 		// last one
 		if(islands.get(islands.size() - 1).getIslandOwner()!=null)
 			if(islands.get(0).getIslandOwner()!=null)
-				if(islands.get(0).getIslandOwner().getNickname().equals(islands.get(islands.size() - 1).getIslandOwner().getNickname()))
+				if(islands.get(0).getIslandOwner().getNickname().equals(islands.get(islands.size() - 1).getIslandOwner().getNickname())){
+					// leftmerge mi effettua uno shift grafico a sx
+					leftMerge+= islands.get(islands.size() - 1).getSize();
+					if(motherNature == (islands.size() - 1))
+						moveMotherNature(1);
 					moveValue(islands.size() - 1,0);
+				}
 	}
 
 	protected void moveValue(int from,int to){
-		islands.get(to).increaseSize();
+		islands.get(to).increaseSize(islands.get(from).getSize());
 		for (Piece p: Piece.values()) {
 			for(int n=0;n<islands.get(from).getNumStudents(p);n++)
 				islands.get(to).addStudent(p);
 		}
 		islands.remove(from);
-		if(motherNature == from)
-			motherNature = to;
 	}
+
+	public int getLeftMerge(){ return this.leftMerge;}
 
 }
