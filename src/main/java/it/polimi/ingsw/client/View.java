@@ -2,13 +2,10 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.GameModel;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.TowerColor;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface View {
@@ -23,14 +20,8 @@ public interface View {
 	/**
 	 * Interface launcher. Asks the server IP to connect to and notify it to the serverHandler
 	 */
-	void launch();
+	void run();
 	void setPlayerId(String playerId);
-
-	/**
-	 * Asks the number of players and the game mode
-	 *
-	 */
-	void askGameSettings();
 
 	void askNewGameName();
 
@@ -41,7 +32,6 @@ public interface View {
 	 *
 	 */
 	void askNickname(boolean isFirstRequest);
-
 
 	/**
 	 * Asks the player color
@@ -66,6 +56,7 @@ public interface View {
 
 	void showGamesList(List<GameListInfo> gamesList);
 
+	void showGameStart(GameModel game, String firstPlayerNickname);
 	/**
 	 * Shows the board of the game
 	 *
@@ -74,10 +65,8 @@ public interface View {
 
 	/**
 	 * Shows a specified message to the user
-	 *
-	 * @param message   The message to be shown
 	 */
-	void showMessage(String message);
+	void showLastRound();
 
 	/**
 	 * Shows a message to say to the user that is connected to
@@ -91,12 +80,13 @@ public interface View {
 	 * @param winnerNickname The nickname of the winner
 	 */
 	void showGameEndMessage(String winnerNickname);
-	/**
-	 *
-	 * Shows an error message to the user and terminate the client
-	 *
-	 * @param errorMessage The message to be shown
-	 */
-	void showErrorMessage(String errorMessage);
 
+	/**
+	 * Shows an error message to the user and terminate the client
+	 */
+	void showConnectionErrorMessage();
+
+	void showErrorOnConnection();
+
+	void showDisconnection(String playerDisconnected);
 }

@@ -68,16 +68,15 @@ public class ClientHandler extends Thread implements NetworkHandler {
                 if (controller != null) {
                     if (isConnected) {
                         // This player has disconnected
-                        System.out.println("Warning: player has disconnected during message receiving");
+                        System.out.println("Warning: player " + playerId + " has disconnected during message receiving");
                         controller.setAsDisconnected(playerId);
                     } else {
                         // Another player has disconnected
-                        System.out.println("Status: player was forced to stop during message receiving");
+                        System.out.println("Status: player " + playerId + " was forced to stop during message receiving");
                     }
-                    controller.setAsInactive();
                 }
                 isConnected = false;
-                serverMain.removeClientHandlerById(playerId);
+                serverMain.removeClientHandlerById(playerId , controller);
                 close();
             }
         }
@@ -112,10 +111,8 @@ public class ClientHandler extends Thread implements NetworkHandler {
                         // Another player has disconnected
                         System.out.println("Status: player was forced to stop during message sending");
                     }
-                    controller.setAsInactive();
+                    close();
                 }
-                serverMain.removeClientHandlerById(playerId);
-                close();
             }
         }
     }

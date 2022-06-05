@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.heartbeat;
 
 import it.polimi.ingsw.network.NetworkHandler;
 import it.polimi.ingsw.util.Configurator;
-import it.polimi.ingsw.util.MessageType;
 
 public class HeartbeatSender extends Thread{
     private final NetworkHandler networkHandler;

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,8 @@ public class PlayersHandlerTest {
 
     @BeforeEach
     public void setUp() {
-        playersHandler = new PlayersHandler();
+        playersHandler = new PlayersHandler(3);
+        assertEquals(3, playersHandler.getNumPlayers());
         p1 = new Player("id_p1");
         p2 = new Player("is_p2");
         p3 = new Player("id_p3");
@@ -59,7 +61,7 @@ public class PlayersHandlerTest {
             assertEquals(nicknames.get(i),nicknames2.get(i));
         }
 
-        ArrayList<Player> players = playersHandler.getPlayers();
+        List<Player> players = playersHandler.getPlayers();
         assertEquals(players.get(0),p1);
         assertEquals(players.get(1),p2);
         assertEquals(players.get(2),p3);
@@ -166,10 +168,6 @@ public class PlayersHandlerTest {
 
     @Test
     public void getSetPlayerNoMoreCards(){
-        assertEquals(0, playersHandler.getNumPlayers());
-        playersHandler.setNumPlayers(3);
-        assertEquals(3, playersHandler.getNumPlayers());
-
         p1.addCards(AssistantCard.createDeck());
         p2.addCards(AssistantCard.createDeck());
         p3.addCards(AssistantCard.createDeck());

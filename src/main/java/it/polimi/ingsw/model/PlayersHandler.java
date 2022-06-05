@@ -7,15 +7,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlayersHandler implements Serializable {
-    private int numPlayers;
+    private final int numPlayers;
     private final ArrayList<Player> players;
     private Player currentPlayer;
     private Player firstPlayer;
     private ArrayList<Player> alreadyPlayed;
 
-    public PlayersHandler(){
+    public PlayersHandler(int numPlayers){
         this.players = new ArrayList<>();
-        this.numPlayers = 0;
+        this.numPlayers = numPlayers;
         this.currentPlayer = null;
         this.firstPlayer = null;
         this.alreadyPlayed = new ArrayList<>();
@@ -23,10 +23,6 @@ public class PlayersHandler implements Serializable {
 
     public void addPlayer(Player player){
         this.players.add(player);
-    }
-
-    public void setNumPlayers(int numPlayers){
-        this.numPlayers = numPlayers;
     }
 
     public int getNumPlayers(){
@@ -37,6 +33,7 @@ public class PlayersHandler implements Serializable {
         return new ArrayList<>(players);
     }
 
+    //TODO: useless -> to be removed
     public ArrayList<String> getPlayersNickName(){
         ArrayList<String> nicknames = new ArrayList<>();
         for(Player p : this.players){
@@ -50,7 +47,15 @@ public class PlayersHandler implements Serializable {
             if(p.getNickname().equals(nickname))
                 return p;
         }
-        throw new PlayerException("Cannot found player with this nickname");
+        throw new PlayerException("Cannot found player with nickname " + nickname);
+    }
+
+    public Player getPlayersById(String id) throws PlayerException {
+        for(Player p : this.players){
+            if(p.getId().equals(id))
+                return p;
+        }
+        throw new PlayerException("Cannot found player with id " + id);
     }
 
     public Player getCurrentPlayer() {
@@ -114,6 +119,6 @@ public class PlayersHandler implements Serializable {
     }
 
     public boolean everyPlayerIsReadyToPlay(){
-        return numPlayers != 0 && players.stream().filter(Player::isReadyToPlay).count() == numPlayers ;
+        return players.stream().filter(Player::isReadyToPlay).count() == numPlayers ;
     }
 }

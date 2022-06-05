@@ -4,12 +4,9 @@ import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.util.Action;
-import it.polimi.ingsw.util.ActionType;
-import it.polimi.ingsw.util.RoundActions;
+import it.polimi.ingsw.util.*;
 import it.polimi.ingsw.server.rules.Rules;
 import it.polimi.ingsw.util.exception.CardException;
-import it.polimi.ingsw.util.TowerColor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +68,7 @@ public class PlayerTest {
 
 	@Test
 	void CharacterUseTest(){
-		Character character = new Character("Test","Test description",1,1,new Rules(new GameModel()));
+		Character character = new Character("Test","Test description",1,1,new Rules(new GameModel(new GameListInfo("", GameMode.BASIC,2))));
 		player.setActiveCharacter(character);
 		assertEquals(character,player.getActiveCharacter());
 	}

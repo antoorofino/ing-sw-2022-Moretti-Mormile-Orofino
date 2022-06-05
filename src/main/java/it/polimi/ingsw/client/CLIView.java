@@ -28,57 +28,51 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void launch() {
+	public void run() {
 		String serverIP;
 		String serverPort;
 		int portNumber;
 		boolean correct = false;
-		boolean connected = false;
 
 		do {
-			do {
-				System.out.print(" Enter the server IP [press enter for default IP]: ");
-				serverIP = scanner.nextLine();
-				if (serverIP.isEmpty()) {
+			System.out.print(" Enter the server IP [press enter for default IP]: ");
+			serverIP = scanner.nextLine();
+			if (serverIP.isEmpty()) {
+				correct = true;
+				serverIP = Configurator.getServerIp();
+			}else{
+				if (!InputValidator.isIp(serverIP))
+					showErrorMessage("Invalid IP. Try again.");
+				else
 					correct = true;
-					serverIP = Configurator.getServerIp();
-				}else{
-					if (!InputValidator.isIp(serverIP))
-						showErrorMessage("Invalid IP. Try again.");
+			}
+		}while(!correct);
+
+		correct = false;
+		do {
+			System.out.print(" Enter the server port [press enter for default port]: ");
+			serverPort = scanner.nextLine();
+			if (serverPort.isEmpty()) {
+				correct = true;
+				portNumber = Configurator.getServerPort();
+			} else {
+				//FIXME: use new method InputValidator.isPortNumber that accept a string
+				//	(check if the sting is a number is also a check, therefore it should be done by the validator)
+				//	It removes try catch blocks here
+				try {
+					portNumber = Integer.parseInt(serverPort);
+					if (!InputValidator.isPortNumber(portNumber))
+						showErrorMessage("Invalid port number. Try again.");
 					else
 						correct = true;
-				}
-			}while(!correct);
-
-			correct = false;
-			do {
-				System.out.print(" Enter the server port [press enter for default port]: ");
-				serverPort = scanner.nextLine();
-				if (serverPort.isEmpty()) {
-					correct = true;
+				} catch (NumberFormatException e) {
 					portNumber = Configurator.getServerPort();
-				} else {
-					try {
-						portNumber = Integer.parseInt(serverPort);
-						if (!InputValidator.isPortNumber(portNumber))
-							showErrorMessage("Invalid port number. Try again.");
-						else
-							correct = true;
-					} catch (NumberFormatException e) {
-						portNumber = Configurator.getServerPort();
-						showErrorMessage("Invalid port number. Try again.");
-					}
+					showErrorMessage("Invalid port number. Try again.");
 				}
-			} while (!correct);
-
-			try {
-				serverHandler.setConnection(serverIP, portNumber);
-				connected = true;
-			} catch (IOException ignored) {
-				showErrorMessage("Error:  Server unreachable");
 			}
+		} while (!correct);
 
-		} while (!connected);
+		serverHandler.setConnection(serverIP, portNumber);
 	}
 
 	@Override
@@ -102,7 +96,8 @@ public class CLIView implements View{
 					if (InputValidator.isWordNotEmpty(gameName)) {
 						correct = true;
 						correctName = true;
-						serverHandler.send(new NewGameMessage(playerId, gameName));
+						//FIXME: game settings must be sent together with the game name
+						//serverHandler.send(new NewGameMessage(playerId, gameName));
 					} else {
 						showErrorMessage("Please insert a correct value");
 					}
@@ -124,7 +119,8 @@ public class CLIView implements View{
 			String gameName = scanner.nextLine();
 			if (InputValidator.isWordNotEmpty(gameName)) {
 				correct = true;
-				serverHandler.send(new NewGameMessage(playerId, gameName));
+				//FIXME: game settings must be sent together with the game nam
+				//serverHandler.send(new NewGameMessage(playerId, gameName));
 			} else {
 				showErrorMessage("Please insert a correct value");
 			}
@@ -182,7 +178,7 @@ public class CLIView implements View{
 		serverHandler.send(new SetTowerColor(playerId,chosenColor));
 	}
 
-	@Override
+	//FIXME: this method can become private and called by the lobby method
 	public void askGameSettings() {
 		boolean correct = false;
 		int numPlayers = 0;
@@ -214,7 +210,7 @@ public class CLIView implements View{
 				showErrorMessage("Invalid value. Try again.");
 			}
 		} while (!correct);
-		serverHandler.send(new SetGameSettings(playerId, gameMode, numPlayers));
+		//serverHandler.send(new SetGameSettings(playerId, gameMode, numPlayers));
 	}
 
 	@Override
@@ -387,6 +383,15 @@ public class CLIView implements View{
 		serverHandler.send(new SelectGameMessage(playerId,gameName));
 	}
 
+	/**
+	 * @param game
+	 * @param firstPlayerNickname
+	 */
+	@Override
+	public void showGameStart(GameModel game, String firstPlayerNickname) {
+		//TODO: not yet implemented
+	}
+
 	@Override
 	public void askNewGameChoice() {
 		System.out.println(" The game is already full");
@@ -407,6 +412,14 @@ public class CLIView implements View{
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 		printGame(game,null);
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public void showLastRound() {
+
 	}
 
 	// TODO: finire i personaggi
@@ -481,11 +494,6 @@ public class CLIView implements View{
 	}
 
 	@Override
-	public void showMessage(String message) {
-		System.out.println(message);
-	}
-
-	@Override
 	public void showQueuedMessage() {
 		System.out.println(" Waiting other players...");
 	}
@@ -495,8 +503,26 @@ public class CLIView implements View{
 		System.out.println(" Match finished. The winner is: " + winnerNickname);
 	}
 
+	/**
+	 *
+	 */
 	@Override
+	public void showConnectionErrorMessage() {
+	}
+
+	//FIXME: it's better to keep it private and use as a helper method
 	public void showErrorMessage(String errorMessage) {
 		System.out.println(" Error: "+ errorMessage);
+	}
+
+	@Override
+	public void showDisconnection(String playerDisconnected) {
+		showErrorMessage("Player " + playerDisconnected + " disconnected from the game");
+		serverHandler.close();
+	}
+
+	@Override
+	public void showErrorOnConnection() {
+		showErrorMessage("Unable to connect to the server");
 	}
 }

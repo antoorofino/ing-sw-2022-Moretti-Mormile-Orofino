@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.VirtualView;
 /**
  * System message between Server and Client
  */
-public interface SYSMessage extends Message {
+public interface SYSMessage {
 
     /**
      * Execute the request server-side

@@ -3,18 +3,24 @@ package it.polimi.ingsw.util;
 
 import it.polimi.ingsw.model.AssistantCard;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InputValidator {
-	//TODO create methods input validator
 	public static boolean isIp(String serverIP) {
-		for(int i=0; i<serverIP.length(); i++){
-			if(!((serverIP.charAt(i)<='9' && serverIP.charAt(i)>='0') || serverIP.charAt(i)=='.')){
-				return false;
-			}
+		String zeroTo255
+				= "(\\d{1,2}|(0|1)\\"
+				+ "d{2}|2[0-4]\\d|25[0-5])";
+		String regex
+				= zeroTo255 + "\\."
+				+ zeroTo255 + "\\."
+				+ zeroTo255 + "\\."
+				+ zeroTo255;
+		if (serverIP == null) {
+			return false;
 		}
-		return true;
+		return Pattern.compile(regex).matcher(serverIP).matches();
 	}
 
 	/**
@@ -28,6 +34,16 @@ public class InputValidator {
 
 	public static boolean isPortNumber(int port) {
 		return InputValidator.isNumberBetween(port, 0,65536);
+	}
+
+	public static boolean isPortNumber(String port) {
+		int portNumber;
+		try {
+			portNumber = Integer.parseInt(port);
+			return InputValidator.isNumberBetween(portNumber, 0,65536);
+		} catch (NumberFormatException ignored) {
+			return false;
+		}
 	}
 
 	public static boolean isTowerColorBetween(TowerColor choice, List<TowerColor> availableColors) {
@@ -62,9 +78,7 @@ public class InputValidator {
 	}
 
 	public static boolean isValidAction(int numAction,RoundActions roundActions){
-		if(numAction >= 0 && numAction<roundActions.getActionsList().size())
-			return true;
-		return false;
+		return numAction >= 0 && numAction < roundActions.getActionsList().size();
 	}
 }
 

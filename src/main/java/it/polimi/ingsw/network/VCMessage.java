@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.VirtualView;
 /**
  * Message from View to Controller
  */
-public interface VCMessage extends Message {
+public interface VCMessage {
 
     /**
      * Execute the request server-side

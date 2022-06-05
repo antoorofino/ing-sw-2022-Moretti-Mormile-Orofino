@@ -3,11 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.network.CVMessage;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.NetworkHandler;
-import it.polimi.ingsw.network.VCMessage;
 import it.polimi.ingsw.network.heartbeat.HeartbeatSender;
 import it.polimi.ingsw.util.Configurator;
-import it.polimi.ingsw.util.MessageType;
-
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,7 +15,7 @@ public class ServerHandler implements NetworkHandler {
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
 	private Socket socket;
-	private View view;
+	private final View view;
 	private final Object lock;
 	private boolean isConnected;
 
@@ -33,15 +30,19 @@ public class ServerHandler implements NetworkHandler {
 	 *
 	 * @param serverIP IP address of the server
 	 */
-	public void setConnection(String serverIP,int port) throws IOException {
-		socket = new Socket(serverIP, port);
-		output = new ObjectOutputStream(socket.getOutputStream());
-		input = new ObjectInputStream(socket.getInputStream());
-		isConnected = true;
+	public void setConnection(String serverIP,int port) {
+		try {
+			socket = new Socket(serverIP, port);
+			output = new ObjectOutputStream(socket.getOutputStream());
+			input = new ObjectInputStream(socket.getInputStream());
+			isConnected = true;
 
-		socket.setSoTimeout(Configurator.getSocketTimeout());
-		(new HeartbeatSender(this, false)).start();
-		startListening();
+			socket.setSoTimeout(Configurator.getSocketTimeout());
+			(new HeartbeatSender(this, false)).start();
+			startListening();
+		} catch (IOException ignored) {
+			view.showErrorOnConnection();
+		}
 	}
 
 	/**
@@ -54,11 +55,9 @@ public class ServerHandler implements NetworkHandler {
 				CVMessage serverMessage = (CVMessage) input.readObject();
 				serverMessage.execute(view);
 			} catch (IOException | ClassNotFoundException e) {
-				System.out.println(e.getMessage());
-				if (isConnected) {
-					view.showErrorMessage("Server unreachable");
-				}
-				isConnected = false;
+				if (isConnected)
+					view.showConnectionErrorMessage();
+				close();
 			}
 		}
 	}
@@ -79,15 +78,15 @@ public class ServerHandler implements NetworkHandler {
 	 */
 	public void send(Message message) {
 		if (isConnected) {
-			synchronized (lock){
-				try {
+			try {
+				synchronized (lock) {
 					output.writeUnshared(message);
 					output.flush();
 					output.reset();
-				} catch (IOException e) {
-					view.showErrorMessage("> Server unreachable");
-					close();
 				}
+			} catch (IOException ignored) {
+				view.showConnectionErrorMessage();
+				close();
 			}
 		}
 	}
@@ -96,12 +95,12 @@ public class ServerHandler implements NetworkHandler {
 	 * Closes the connection to the server
 	 */
 	public void close(){
+		if(socket == null)
+			return;
 		try {
-			socket.close();
 			isConnected = false;
-		} catch (IOException e) {
-			view.showErrorMessage("> An error occurred when closing the connection");
-			e.printStackTrace();
+			socket.close();
+		} catch (IOException ignored) {
 		}
 	}
 }

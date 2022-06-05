@@ -5,7 +5,7 @@ import it.polimi.ingsw.client.View;
 /**
  * Message from Controller to View
  */
-public interface CVMessage extends Message {
+public interface CVMessage {
 
     /**
      * Execute the request client-side

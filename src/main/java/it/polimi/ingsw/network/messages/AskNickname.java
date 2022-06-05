@@ -2,21 +2,15 @@ package it.polimi.ingsw.network.messages;
 
 import it.polimi.ingsw.client.View;
 import it.polimi.ingsw.network.CVMessage;
+import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.util.MessageType;
 
-import java.io.Serializable;
-
-public class AskNickname implements CVMessage, Serializable {
-	private final MessageType messageType;
+public class AskNickname extends Message implements CVMessage {
 	private final boolean isFirstRequest;
 
 	public AskNickname(boolean isFirstRequest){
-		this.messageType = MessageType.CV;
+		super(MessageType.CV);
 		this.isFirstRequest = isFirstRequest;
-	}
-	@Override
-	public MessageType getType() {
-		return messageType;
 	}
 
 	@Override

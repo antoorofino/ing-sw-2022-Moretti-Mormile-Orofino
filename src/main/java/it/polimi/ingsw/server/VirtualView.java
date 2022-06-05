@@ -35,6 +35,10 @@ public class VirtualView {
         }
     }
 
+    public void sendToPlayerId(String playerId, Message message) {
+        getClientHandlerById(playerId).send(message);
+    }
+
     public void closeAll(){
         for (ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.isConnected()) {
