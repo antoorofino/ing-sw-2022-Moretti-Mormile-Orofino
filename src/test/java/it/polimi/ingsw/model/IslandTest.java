@@ -133,7 +133,7 @@ public class IslandTest {
 		p3.getPlayerBoard().addToEntrance(studentsP3);
 
 
-		PlayersHandler playersHandler = new PlayersHandler();
+		PlayersHandler playersHandler = new PlayersHandler(3);
 		playersHandler.addPlayer(p1);
 		playersHandler.addPlayer(p2);
 		playersHandler.addPlayer(p3);

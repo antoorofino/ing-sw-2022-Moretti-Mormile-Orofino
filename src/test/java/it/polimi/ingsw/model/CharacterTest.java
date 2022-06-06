@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.server.rules.Rules;
+import it.polimi.ingsw.util.GameListInfo;
+import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.util.exception.StudentNotPresentException;
 import org.junit.jupiter.api.AfterEach;
@@ -28,31 +30,31 @@ public class CharacterTest {
 
     @Test
     public void getNameTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         assertEquals("name1",character.getName());
     }
     @Test
     public void getDescriptionTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         assertEquals("description1",character.getDescription());
     }
     @Test
     public void getIDTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         assertEquals(0,character.getID());
     }
     @Test
     public void getRulesTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         assertEquals(r,character.getRules());
     }
     @Test
     public void getIslandFlagTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         character.setIslandFlag(1);
         assertEquals(1,character.getIslandFlag());
@@ -60,7 +62,7 @@ public class CharacterTest {
 
     @Test
     public void StudentsTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         ArrayList<Piece> students = new ArrayList<>();
         assertEquals(students,character.getStudents());
@@ -87,7 +89,7 @@ public class CharacterTest {
 
     @Test
     public void costTest(){
-        Rules r = new Rules(new GameModel());
+        Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         assertEquals(1,character.getCost());
         character.increaseCost();
