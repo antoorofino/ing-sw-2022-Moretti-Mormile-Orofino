@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:id="alertPane" fx:controller="it.polimi.ingsw.client.gui.controllers.GameStartPaneController" prefHeight="200.0" prefWidth="200.0" styleClass="blur" stylesheets="@../css/stylesheet.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="blur-2" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+        <StackPane prefHeight="250.0" prefWidth="1000.0">
+            <ImageView fx:id="loadingImage" fitHeight="177.0" fitWidth="231.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                <Image url="@../images/loading.gif" />
+            </ImageView>
+            <ImageView fx:id="errorImage" fitHeight="146.0" fitWidth="247.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                <Image url="@../images/error_icon.jpg.png" />
+            </ImageView>
+        </StackPane>
+        <Text fx:id="alertText" fill="#517dff" text="Error or waiting message" textAlignment="CENTER" wrappingWidth="900.0">
+            <font>
+                <Font name="Arial Bold" size="48.0" />
+            </font>
+        </Text>
+    </VBox>
+    <ImageView fx:id="alertClose" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#onCloseAlertClicked" pickOnBounds="true" preserveRatio="true" styleClass="image-btn" visible="false" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="120.0">
+        <Image url="@../images/close_icon.png" />
+    </ImageView>
+</AnchorPane>
