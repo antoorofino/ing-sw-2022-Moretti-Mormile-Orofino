@@ -1,0 +1,205 @@
+.background{
+    -fx-background-image: url("../images/home_background.jpg");
+    -fx-background-size: stretch, auto;
+}
+
+.cloud-background{
+    -fx-background-image: url("../images/cloud_background.jpg");
+    -fx-background-size: stretch, auto;
+}
+
+.btn,
+.btn-white,
+.btn-blue,
+.btn-orange {
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-cursor: HAND;
+}
+
+.btn-white {
+    -fx-background-color: #ffff;
+    -fx-text-fill: #517dff;
+}
+
+.btn-white:hover,
+.btn-white:pressed{
+    -fx-background-color: #e5e5e5;
+}
+
+.btn-blue {
+    -fx-background-color: #184ff3;
+    -fx-text-fill: #ffffff;
+}
+
+.btn-blue:hover,
+.btn-blue:pressed{
+    -fx-background-color: #517dff;
+}
+
+.btn-orange {
+    -fx-background-color: #fa790f;
+    -fx-text-fill: #ffffff;
+}
+
+.btn-orange:hover,
+.btn-orange:pressed{
+    -fx-background-color: #d56100;
+}
+
+.rectangle{
+    -fx-border-color: linear-gradient(rgba(10,100,255,1.0),rgba(255,255,255,1.0));
+    -fx-border-width: 5;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 12px;
+    -fx-background-color: rgba(131,186,285,0.8);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 10, 0, 0, 0);
+}
+
+.blur {
+    -fx-background-color: rgba(0,0,0,0.3);
+}
+
+.blur-2 {
+    -fx-background-color: rgba(255,255,255,0.8);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 10, 0, 0, 0);
+    -fx-background-radius: 15px;
+}
+
+.image-btn {
+    -fx-cursor: HAND;
+}
+
+.image-btn:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(2, 0, 0, 0.6), 10, 0, 0, 0);
+}
+
+.game-list-view {
+    -fx-padding: 5px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10px;
+    -fx-background-color: rgba(255,255,255,0.6);
+}
+
+.game-list-view .list-cell {
+    -fx-cursor: HAND;
+    -fx-background-color: transparent, white;
+    -fx-background-radius: 0, 10px;
+    -fx-background-insets: 0, 3px ;
+}
+
+.game-list-view .list-cell:selected,
+.game-list-view .list-cell:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 10, 0, 0, 0);
+}
+
+.game-list-view .list-cell:empty {
+    -fx-cursor: DEFAULT;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-border-radius: 2.0em;
+}
+
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 0.0 10.0 0.0;
+
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 10.0 0.0 0.0;
+
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding :0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.15em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgb(84, 153, 241);
+    -fx-background-insets: 2.0, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
+}
+
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgb(30, 90, 218);
+    -fx-background-insets: 2.0, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
+}
+
+.game-list-view .scroll-bar:horizontal .increment-arrow,
+.game-list-view .scroll-bar:horizontal .decrement-arrow,
+.game-list-view .scroll-bar:horizontal .increment-button,
+.game-list-view .scroll-bar:horizontal .decrement-button {
+    -fx-padding: 0;
+}
+
+.setting-list-view {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+}
+
+.setting-list-view .list-cell {
+    -fx-cursor: HAND;
+    -fx-padding: 15px;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.setting-list-view .list-cell:disabled {
+    -fx-opacity: 0.3;
+}
+
+.setting-list-view .list-cell:selected,
+.setting-list-view .list-cell:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
+}
+
+.setting-list-view .list-cell:empty {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.setting-list-view .list-cell .text {
+    -fx-font-family: Arial;
+    -fx-font-size: 20px;
+    -fx-fill: rgb(30, 90, 218);
+}
+
+.setting-list-view .list-cell:selected .text,
+.setting-list-view .list-cell:hover .text {
+    -fx-fill: white;
+}
+
+.tower-list-background {
+    -fx-background-radius: 10px;
+    -fx-background-color: rgba(255,255,255,0.6);
+}
+

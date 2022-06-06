@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane styleClass="cloud-background" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.LobbySceneController">
+   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" prefHeight="500.0" prefWidth="1100.0">
+         <GridPane prefHeight="500.0" prefWidth="750.0" styleClass="rectangle">
+            <columnConstraints>
+               <ColumnConstraints hgrow="NEVER" prefWidth="40.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="80.0"/>
+               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="NEVER" prefWidth="40.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints prefHeight="80.0" vgrow="NEVER"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints prefHeight="80.0" vgrow="NEVER"/>
+            </rowConstraints>
+            <Button fx:id="newGameButton" mnemonicParsing="false" onMouseClicked="#onNewMatchClicked" prefHeight="45.0"
+                    prefWidth="130.0" styleClass="btn-orange" text="CREATE" GridPane.columnIndex="3"
+                    GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="20.0"/>
+               </font>
+            </Button>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a match" textAlignment="CENTER"
+                  GridPane.columnIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="36.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a match" textAlignment="CENTER"
+                  GridPane.columnIndex="3">
+               <font>
+                  <Font name="Arial Bold" size="36.0"/>
+               </font>
+            </Text>
+            <StackPane prefHeight="327.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <ListView fx:id="gameListView" prefHeight="327.0" prefWidth="300.0" styleClass="game-list-view"/>
+               <Text fx:id="noMatchesText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="No matches to join">
+                  <font>
+                     <Font name="Arial Bold" size="20.0"/>
+                  </font>
+               </Text>
+            </StackPane>
+            <Line endX="-12.92230224609375" endY="-107.11726379394531" startX="-12.92230224609375"
+                  startY="307.1611328125" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="5.0"
+                  GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <Label text="Game name" textFill="WHITE">
+                  <font>
+                     <Font name="Arial" size="24.0"/>
+                  </font>
+               </Label>
+               <TextField fx:id="newGameNameText" prefHeight="32.0" promptText="Insert a name">
+                  <font>
+                     <Font name="Arial" size="24.0"/>
+                  </font>
+               </TextField>
+               <Pane prefHeight="30.0" VBox.vgrow="NEVER"/>
+               <Label text="Number of players" textFill="WHITE">
+                  <font>
+                     <Font name="Arial" size="24.0"/>
+                  </font>
+               </Label>
+               <HBox alignment="CENTER" prefHeight="90.0">
+                  <ListView fx:id="numPlayersListView" orientation="HORIZONTAL" prefWidth="180.0"
+                            styleClass="setting-list-view"/>
+               </HBox>
+               <Label text="Game mode" textFill="WHITE">
+                  <font>
+                     <Font name="Arial" size="24.0"/>
+                  </font>
+               </Label>
+               <HBox alignment="CENTER" prefHeight="70.0">
+                  <ListView fx:id="gameModeListView" orientation="HORIZONTAL" prefWidth="210.0"
+                            styleClass="setting-list-view"/>
+               </HBox>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1"
+                  GridPane.rowIndex="2">
+               <Button mnemonicParsing="false" onMouseClicked="#onUpdateClicked" prefHeight="45.0" prefWidth="130.0"
+                       styleClass="btn-white" text="UPDATE">
+                  <font>
+                     <Font name="Arial Bold" size="20.0"/>
+                  </font>
+               </Button>
+               <Button fx:id="enterButton" mnemonicParsing="false" onMouseClicked="#onEnterClicked" prefHeight="45.0"
+                       prefWidth="130.0" styleClass="btn-blue" text="ENTER">
+                  <font>
+                     <Font name="Arial Bold" size="20.0"/>
+                  </font>
+               </Button>
+            </HBox>
+         </GridPane>
+      </HBox>
+   </VBox>
+   <fx:include fx:id="alertPane" source="alertPane.fxml" />
+   <fx:include source="fullscreenButton.fxml" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+</AnchorPane>

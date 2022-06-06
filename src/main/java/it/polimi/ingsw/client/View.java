@@ -36,9 +36,9 @@ public interface View {
 	/**
 	 * Asks the player color
 	 *
-	 * @param possibleColor All the possible Color
+	 * @param possibleColors All the possible Color
 	 */
-	void askTowerColor(List<TowerColor> possibleColor, boolean isFirstRequest);
+	void askTowerColor(List<TowerColor> possibleColors, boolean isFirstRequest);
 
 	/**
 	 * Asks the player card assistance

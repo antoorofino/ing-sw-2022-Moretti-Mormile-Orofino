@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.HomeSceneController">
+   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Button fx:id="playButton" ellipsisString="" mnemonicParsing="false" onMouseClicked="#onPlayClicked" stylesheets="@../css/stylesheet.css" text="PLAY" textAlignment="CENTER">
+         <font>
+            <Font name="Arial Bold" size="60.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-orange" />
+         </styleClass>
+      </Button>
+   </VBox>
+   <HBox alignment="CENTER" prefHeight="126.0" prefWidth="1200.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Button mnemonicParsing="false" onMouseClicked="#onSettingsClicked" prefHeight="50.0" prefWidth="170.0" styleClass="btn-white" text="SETTINGS">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font></Button>
+      <Button mnemonicParsing="false" onMouseClicked="#onCreditsClicked" prefHeight="50.0" prefWidth="170.0" styleClass="btn-blue" text="CREDITS">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font></Button>
+   </HBox>
+   <fx:include fx:id="alertPane" source="alertPane.fxml" />
+   <fx:include source="fullscreenButton.fxml" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+</AnchorPane>

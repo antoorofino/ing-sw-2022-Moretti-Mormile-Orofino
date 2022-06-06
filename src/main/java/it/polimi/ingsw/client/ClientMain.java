@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class ClientMain {
@@ -18,22 +17,21 @@ public class ClientMain {
 		View view = null;
 		boolean incorrect = true;
 
-		// TODO: use the input validator class
 		do {
 			System.out.print(" Choose the interface you want to use [CLI/GUI]: ");
 			String preferredInterface = scanner.nextLine();
 			if ((preferredInterface.equalsIgnoreCase("CLI"))) {
 				view = new CLIView();
-				serverHandler = new ServerHandler(view);
-				view.setServerHandler(serverHandler);
 				incorrect = false;
 			} else if ((preferredInterface.equalsIgnoreCase("GUI"))) {
-				System.out.println(" GUI not implemented yet");
+				view = new GUIView();
+				incorrect = false;
 			} else {
 				System.out.println(" Invalid choice. Try again.");
 			}
 		} while (incorrect);
-
-		view.launch();
+		serverHandler = new ServerHandler(view);
+		view.setServerHandler(serverHandler);
+		view.run();
 	}
 }

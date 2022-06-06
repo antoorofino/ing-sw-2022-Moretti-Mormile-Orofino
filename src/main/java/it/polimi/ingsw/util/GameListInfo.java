@@ -32,7 +32,7 @@ public class GameListInfo implements Serializable {
 	private static GameListInfo getGameInfo(GameModel gameModel){
 		return new GameListInfo(gameModel.getGameName(),
 				gameModel.getGameMode(),
-				gameModel.getPlayerHandler().getNumPlayers() - gameModel.getPlayerHandler().getPlayers().size()
+				gameModel.getPlayerHandler().getNumPlayers()
 		);
 	}
 
