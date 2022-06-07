@@ -6,17 +6,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Helper class to manage island
+ */
 public class IslandsHandler implements Serializable {
 	private ArrayList<Island> islands;
 	private int motherNature;
 	private int leftMerge;
 
+	/**
+	 * Constructor: build IslandHandler
+	 */
 	public IslandsHandler(){
 		this.islands = new ArrayList<>();
 		this.motherNature = 0;
 		this.leftMerge = 0;
 	}
 
+	/**
+	 * set up the islands when create game
+	 */
 	public void setupIslands(){
 		ArrayList<Piece> studentsArray = new ArrayList<>();
 		ArrayList<Island> islandArrayList = new ArrayList<>();
@@ -40,10 +49,21 @@ public class IslandsHandler implements Serializable {
 		}
 		this.setIslands(islandArrayList);
 	}
+
+	/**
+	 * Get list of islands
+	 * @return list of islands
+	 */
 	public ArrayList<Island> getIslands() {
 		return new ArrayList<>(islands);
 	}
 
+	/**
+	 * Get specific island by ID
+	 * @param ID id of island
+	 * @return island that has the specific ID
+	 * @throws SpecificIslandNotFoundException
+	 */
 	public Island getIslandByID(int ID) throws SpecificIslandNotFoundException {
 		for (Island island : islands) {
 			if (island.getID() == ID)
@@ -52,19 +72,31 @@ public class IslandsHandler implements Serializable {
 		throw new SpecificIslandNotFoundException("Cannot found island with this ID");
 	}
 
+	/**
+	 * Get the position of mother nature
+	 * @return position of mother nature
+	 */
 	public int getMotherNature() {
 		return motherNature;
 	}
 
+	//TODO check if usless
 	public void setIslands(ArrayList<Island> islands) {
 		this.islands = islands;
 	}
 
+	/**
+	 * Move motherNature
+	 * @param newPos specify how much steps mother nature has to do
+	 */
 	public void moveMotherNature(int newPos) {
 		if(islands.size()>0)
 			this.motherNature = (this.motherNature + newPos)%(islands.size());
 	}
 
+	/**
+	 * do merge of island
+	 */
 	public void mergeIsland(){
 		int i = 0;
 		do{
@@ -92,6 +124,11 @@ public class IslandsHandler implements Serializable {
 				}
 	}
 
+	/**
+	 * move points on Island to another when we do merge
+	 * @param from departure island
+	 * @param to arrival island
+	 */
 	protected void moveValue(int from,int to){
 		islands.get(to).increaseSize(islands.get(from).getSize());
 		for (Piece p: Piece.values()) {
@@ -101,6 +138,10 @@ public class IslandsHandler implements Serializable {
 		islands.remove(from);
 	}
 
+	/**
+	 * Helper method used for print merge
+	 * @return how much before start to merge from island 0
+	 */
 	public int getLeftMerge(){ return this.leftMerge;}
 
 }

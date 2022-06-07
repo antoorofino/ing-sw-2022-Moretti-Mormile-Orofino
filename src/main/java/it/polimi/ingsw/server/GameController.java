@@ -62,7 +62,7 @@ public class GameController {
         System.out.println("INFO: Player " + playerId + " has requested to set his nickname to: " + nickname);
         if (checkNickname(nickname)) {
             try {
-                game.getPlayerHandler().getPlayersById(playerId).setNickname(nickname);
+                game.getPlayerHandler().getPlayerById(playerId).setNickname(nickname);
                 virtualView.sendToPlayerId(
                         playerId,
                         new AskTowerColor(getAvailableTowerColors(), true)
@@ -97,7 +97,7 @@ public class GameController {
         System.out.println("INFO: Player " + playerId + " has requested to set his color to: " + color.toString());
         if (getAvailableTowerColors().contains(color)) {
             try {
-                game.getPlayerHandler().getPlayersById(playerId).setTowerColor(color);
+                game.getPlayerHandler().getPlayerById(playerId).setTowerColor(color);
                 if (game.getPlayerHandler().everyPlayerIsReadyToPlay()) {
                     status = GameStatus.READY_TO_START;
                     wakeUpController();
@@ -223,21 +223,21 @@ public class GameController {
         ArrayList<Player> orderedByTowers = new ArrayList<>(game.getPlayerHandler().getPlayers());
         Player winner;
         orderedByTowers.sort((p1, p2) -> {
-            if(p1.getNumOfTower() > p2.getNumOfTower())
+            if(p1.getNumOfTowers() > p2.getNumOfTowers())
                 return 1;
-            else if(p1.getNumOfTower() < p2.getNumOfTower())
+            else if(p1.getNumOfTowers() < p2.getNumOfTowers())
                 return -1;
             return 0;
         });
         Player first = orderedByTowers.get(0);
         Player second = orderedByTowers.get(1);
-        if(first.getNumOfTower() != second.getNumOfTower()){
+        if(first.getNumOfTowers() != second.getNumOfTowers()){
             winner = first;
         } else {
             Player finalFirst = first;
             List<Player> orderedByTeacherControl = orderedByTowers
                     .stream()
-                    .filter(p -> p.getNumOfTower() == finalFirst.getNumOfTower())
+                    .filter(p -> p.getNumOfTowers() == finalFirst.getNumOfTowers())
                     .sorted((p1, p2) -> {
                         if(game.getTeacherHandler().teachersControlled(p1) > game.getTeacherHandler().teachersControlled(p2))
                             return -1;
@@ -284,7 +284,7 @@ public class GameController {
                 game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.END));
         }
         for (Player player : game.getPlayerHandler().getPlayers())
-            if (player.getNumOfTower() == 0) {
+            if (player.getNumOfTowers() == 0) {
                 endImmediately = true;
                 break;
             }
@@ -329,7 +329,7 @@ public class GameController {
 
     public void setAsDisconnected(String playerId) {
         try {
-            String nickname = game.getPlayerHandler().getPlayersById(playerId).getNickname();
+            String nickname = game.getPlayerHandler().getPlayerById(playerId).getNickname();
             virtualView.sendToEveryone(new ShowDisconnection(nickname));
             virtualView.closeAll();
             this.status = GameStatus.INACTIVE;

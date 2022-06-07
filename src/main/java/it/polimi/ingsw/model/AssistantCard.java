@@ -61,10 +61,19 @@ public class AssistantCard implements Serializable {
         return this.movements;
     }
 
+    /**
+     * Check if two assistant card has the same value
+     * @param card assistant card
+     * @return true if has the same value otherwise false
+     */
     public boolean isSameValue(AssistantCard card){
         return cardValue == card.cardValue;
     }
 
+    /**
+     * Helper method to print assistant card
+     * @return string with card value, movements, id
+     */
     @Override
     public String toString() {
         return "cardValue=" + cardValue +

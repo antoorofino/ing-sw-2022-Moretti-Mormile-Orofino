@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Helper class, manage player
+ */
 public class PlayersHandler implements Serializable {
     private final int numPlayers;
     private final ArrayList<Player> players;
@@ -13,6 +16,10 @@ public class PlayersHandler implements Serializable {
     private Player firstPlayer;
     private ArrayList<Player> alreadyPlayed;
 
+    /**
+     * Constructor: build players handler
+     * @param numPlayers how many players will be in the game
+     */
     public PlayersHandler(int numPlayers){
         this.players = new ArrayList<>();
         this.numPlayers = numPlayers;
@@ -21,19 +28,31 @@ public class PlayersHandler implements Serializable {
         this.alreadyPlayed = new ArrayList<>();
     }
 
+    /**
+     * Add player in the list of player
+     * @param player that will be added in the list
+     */
     public void addPlayer(Player player){
         this.players.add(player);
     }
 
+    /**
+     * Get number of player
+     * @return how many players will play in the game
+     */
     public int getNumPlayers(){
         return this.numPlayers;
     }
 
+    /**
+     * Get list of players
+     * @return list of players
+     */
     public ArrayList<Player> getPlayers() {
         return new ArrayList<>(players);
     }
 
-    //TODO: useless -> to be removed
+
     public ArrayList<String> getPlayersNickName(){
         ArrayList<String> nicknames = new ArrayList<>();
         for(Player p : this.players){
@@ -42,6 +61,12 @@ public class PlayersHandler implements Serializable {
         return nicknames;
     }
 
+    /**
+     * Get player with a specifc nickname
+     * @param nickname of specific player
+     * @return player with specific nickname
+     * @throws PlayerException
+     */
     public Player getPlayersByNickName(String nickname) throws PlayerException {
         for(Player p : this.players){
             if(p.getNickname().equals(nickname))
@@ -50,7 +75,13 @@ public class PlayersHandler implements Serializable {
         throw new PlayerException("Cannot found player with nickname " + nickname);
     }
 
-    public Player getPlayersById(String id) throws PlayerException {
+    /**
+     * Get player by ID
+     * @param id specific ID of player
+     * @return player with specif ID
+     * @throws PlayerException
+     */
+    public Player getPlayerById(String id) throws PlayerException {
         for(Player p : this.players){
             if(p.getId().equals(id))
                 return p;
@@ -58,10 +89,18 @@ public class PlayersHandler implements Serializable {
         throw new PlayerException("Cannot found player with id " + id);
     }
 
+    /**
+     * Get player whose turn it's
+     * @return player whose turn it's
+     */
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Initialise the player will play at first during the turn
+     */
     public void initialiseCurrentPlayerPlanningPhase(){
         if(currentPlayer == null) {
             firstPlayer = players.get(new Random().nextInt(players.size()));
@@ -71,6 +110,9 @@ public class PlayersHandler implements Serializable {
         currentPlayer = firstPlayer;
     }
 
+    /**
+     * initialise current player order by assistance
+     */
     public void initialiseCurrentPlayerActionPhase(){
         alreadyPlayed = sortByAssistance(firstPlayer, players);
         firstPlayer = alreadyPlayed.get(0);
@@ -90,6 +132,12 @@ public class PlayersHandler implements Serializable {
         }
     }
 
+    /**
+     * Return player in order to play ordered by assistance that every player has chosen
+     * @param first first player
+     * @param toSort list of player
+     * @return sorted list of player
+     */
     private ArrayList<Player> sortByAssistance(Player first, ArrayList<Player> toSort){
         ArrayList<Player> sorted = new ArrayList<>();
         for(int i = toSort.indexOf(first); i < toSort.indexOf(first) + toSort.size(); i++)

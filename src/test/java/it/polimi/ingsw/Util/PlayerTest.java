@@ -63,7 +63,7 @@ public class PlayerTest {
 	@Test
 	void TowerPlayerTest(){
 		int towers = 1;
-		player.setNumOfTower(towers);
+		player.setNumOfTowers(towers);
 		player.removeTower(1);
 		player.addTower(1);
 		assertEquals(false,player.TowerIsEmpty());

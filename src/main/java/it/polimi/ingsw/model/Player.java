@@ -9,6 +9,9 @@ import it.polimi.ingsw.util.TowerColor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Stores information of Player
+ */
 public class Player implements Serializable {
 	private final String id;
 	private String nickname;
@@ -21,6 +24,10 @@ public class Player implements Serializable {
 	private Character activeCharacter;
 	private RoundActions roundActions;
 
+	/**
+	 * Constructor: build player
+	 * @param id player's id
+	 */
 	public Player(String id){
 		this.id = id;
 		this.nickname = null;
@@ -34,38 +41,77 @@ public class Player implements Serializable {
 		this.towerColor = null;
 	}
 
+	//TODO check if useless
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+	/**
+	 * Get player's nickname
+	 * @return player's nickname
+	 */
 
 	public String getNickname() {
 		return nickname;
 	}
 
+	/**
+	 * Get player's ID
+	 * @return player's ID
+	 */
+
 	public String getId() {
 		return id;
 	}
+
+	/**
+	 * Set color of tower that player will use
+	 * @param color
+	 */
 
 	public void setTowerColor(TowerColor color) {
 		this.towerColor = color;
 	}
 
+	/**
+	 * Get tower's color that player uses
+	 * @return
+	 */
+
 	public TowerColor getTowerColor() {
 		return this.towerColor;
 	}
+
+	/**
+	 * Get player's board
+	 * @return player's board
+	 */
 
 	public Board getPlayerBoard() {
 		return playerBoard;
 	}
 
+	/**
+	 * Get player's deck of assistant card
+	 * @return player's deck of assistant card
+	 */
 	public ArrayList<AssistantCard> getDeck(){
 		return new ArrayList<>(cards);
 	}
 
+	/**
+	 * Add cards in the player's deck
+	 * @param cards that will be added to deck
+	 */
 	public void addCards(ArrayList<AssistantCard> cards) {
 		this.cards = cards;
 	}
 
+	/**
+	 * Set last card that player used
+	 * @param lastCardUsed last card that player used
+	 * @throws CardException
+	 */
 	public void setLastCardUsed(AssistantCard lastCardUsed) throws CardException {
 		for (AssistantCard card:cards){
 			if(card.getCardID() == lastCardUsed.getCardID()){
@@ -77,77 +123,155 @@ public class Player implements Serializable {
 		throw new CardException("Player doesn't have the specific card");
 	}
 
+	/**
+	 * Check if there are any card in the deck
+	 * @return true if there aren't any cards, otherwise return true
+	 */
 	public boolean noMoreCards() {
 		return cards.isEmpty();
 	}
 
+	/**
+	 * Get last card that player used
+	 * @return
+	 */
 	public AssistantCard getLastCardUsed() {
 		return lastCardUsed;
 	}
 
-	public void setNumOfTower(int num) {
+	/**
+	 * Set number of towers that player has got
+	 * @param num number of tower
+	 */
+	public void setNumOfTowers(int num) {
 		this.numOfTower = num;
 	}
 
-	public int getNumOfTower(){
+	/**
+	 * Get number of towers that
+	 * @return
+	 */
+	public int getNumOfTowers(){
 		return numOfTower;
 	}
 
+	/**
+	 * Add towers to player
+	 * @param numTower specify how many tower will be added to player
+	 */
 	public void addTower(int numTower) {
 		this.numOfTower+=numTower;
 	}
 
+	/**
+	 * Remove towers from player
+	 * @param towerToRemove specify how many towers will be removed from player
+	 */
 	public void removeTower(int towerToRemove) {
 		this.numOfTower-=towerToRemove;
 	}
 
+	/**
+	 * Check if player hasn't any towers
+	 * @return true if player hasn't any towers otherwise return false
+	 */
 	public boolean TowerIsEmpty(){
 		return numOfTower <= 0;
 	}
 
+	/**
+	 * Give coins to player
+	 * @param numCoins how many coins player receives
+	 */
 	public void setCoin(int numCoins) {
 		this.playerCoin = numCoins;
 	}
 
+	/**
+	 * Check if player has enough coin to do the action
+	 * @param necessaryCoins how many coins are necessary
+	 * @return true if player has enough coins, otherwise false
+	 */
 	public boolean coinsAreEnough(int necessaryCoins){
 		return this.playerCoin >= necessaryCoins;
 	}
 
+	/**
+	 * player use coins to activate action
+	 * @param numCoinsToRemove how many coins player uses to do action
+	 */
 	public void removeCoin(int numCoinsToRemove){
 		if(coinsAreEnough(numCoinsToRemove))
 			this.playerCoin -= numCoinsToRemove;
 	}
 
+	/**
+	 * Player earns a coin
+	 */
 	public void addCoin() {
 		this.playerCoin+=1;
 	}
 
+	/**
+	 * Get how many coins player has
+	 * @return
+	 */
 	public int getCoin(){ return this.playerCoin;}
 
+	/**
+	 * Get character that player has activated
+	 * @return charcter activated from player
+	 */
 	public Character getActiveCharacter() {
 		return activeCharacter;
 	}
 
+	/**
+	 * Set character activated by player
+	 * @param activeCharacter charcter activated by player
+	 */
 	public void setActiveCharacter(Character activeCharacter) {
 		this.activeCharacter = activeCharacter;
 	}
 
+	/**
+	 *
+	 * @param roundActions
+	 */
+	//TODO check if useless
 	public void setRoundActions(RoundActions roundActions) {
 		this.roundActions = roundActions;
 	}
+
+	/**
+	 * Get action that player did during his turn
+	 * @return round action
+	 */
 
 	public RoundActions getRoundActions() {
 		return this.roundActions;
 	}
 
+	/**
+	 * Register an action that player did
+	 * @param action that player did
+	 */
+
 	public void registerAction(Action action) {
 		this.roundActions.add(action);
 	}
 
+	/**
+	 * reset round action ath the and of turn
+	 */
 	public void resetRoundAction() {
 		this.roundActions = new RoundActions();
 	}
 
+	/**
+	 * Check if player is ready to play
+	 * @return true if player is ready otherwise false
+	 */
 	public boolean isReadyToPlay(){
 		return nickname != null && towerColor != null;
 	}

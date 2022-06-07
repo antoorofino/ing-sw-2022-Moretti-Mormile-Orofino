@@ -39,6 +39,10 @@ public class Character implements Serializable {
         this.first = true;
     }
 
+    /**
+     * Set up of Character card in case of EXPERT mode
+     * @param bag bag
+     */
     public void init(Bag bag){
         switch (ID) {
             case 1:

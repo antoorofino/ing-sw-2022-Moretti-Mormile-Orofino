@@ -57,7 +57,7 @@ public class GameModel implements Serializable {
             throw new IllegalStateException("Unexpected value numPlayers: " + numPlayers);
         }
         for(Player player: getPlayerHandler().getPlayers()){
-            player.setNumOfTower(numTowers);
+            player.setNumOfTowers(numTowers);
             player.addCards(AssistantCard.createDeck());
             player.getPlayerBoard().addToEntrance(studentsBag.popStudents(numEntranceStudents));
             if (Configurator.isDebug())
@@ -91,6 +91,7 @@ public class GameModel implements Serializable {
      * Gets player handler
      * @return player handler
      */
+
     public PlayersHandler getPlayerHandler() {
         return playerHandler;
     }
@@ -107,6 +108,7 @@ public class GameModel implements Serializable {
      * Gets TeachersHandler
      * @return TeachersHandler
      */
+
     public TeachersHandler getTeacherHandler() {
         return teacherHandler;
     }
@@ -148,6 +150,7 @@ public class GameModel implements Serializable {
      * Gets island handler
      * @return island handler
      */
+
     public IslandsHandler getIslandHandler() {
         return islandHandler;
     }
@@ -172,6 +175,7 @@ public class GameModel implements Serializable {
      * Gets all characters
      * @return list of characters
      */
+
     public ArrayList<Character> getCharacters() {
         return new ArrayList<>(characters);
     }
@@ -203,14 +207,23 @@ public class GameModel implements Serializable {
      * Gets game mode
      * @return gameMode
      */
+
     public GameMode getGameMode() {
         return gameMode;
     }
+
+    /**
+     * Gets the name of the game
+     * @return the name of the game
+     */
 
     public String getGameName() {
         return name;
     }
 
+    /**
+     * Make refill of clouds when start a new turn
+     */
     public void cloudsRefill() {
         for (Cloud cloud : clouds) {
             cloud.addStudents(studentsBag.popStudents(playerHandler.getNumPlayers()+1));

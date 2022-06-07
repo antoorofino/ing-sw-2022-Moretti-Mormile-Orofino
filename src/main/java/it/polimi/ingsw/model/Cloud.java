@@ -24,6 +24,7 @@ public class Cloud implements Serializable {
      * Adds students on cloud
      * @param students list of students to add on cloud
      */
+
     public void addStudents(ArrayList<Piece> students){
         this.studentsClouds = new ArrayList<>(students);
     }
@@ -32,6 +33,7 @@ public class Cloud implements Serializable {
      * Get students on cloud
      * @return list of students on cloud
      */
+
     public ArrayList<Piece> getStudents() {
         return new ArrayList<>(studentsClouds);
     }

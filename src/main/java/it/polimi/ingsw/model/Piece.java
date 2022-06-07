@@ -4,6 +4,10 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * Stores information of Piece
+ */
+
 public enum Piece implements Serializable {
     UNICORN("Blue",new Color(30,200,250),"Unicorn"),
     FAIRY("Purple", new Color(255,138,228),"Fairy"),
@@ -15,16 +19,28 @@ public enum Piece implements Serializable {
     private final Color color;
     private final String name;
 
+    /**
+     * Constructor: build piece
+     * @param colorString string of pice's color
+     * @param color piece's color
+     * @param name name of piece
+     */
     Piece(String colorString, Color color, String name){
         this.name=name;
         this.color=color;
         this.colorString=colorString;
     }
 
+    //TODO Check if useless
     public static Piece getPieceByName(String name){
         return Piece.valueOf(name.toUpperCase());
     }
 
+    /**
+     * Get piece by color
+     * @param color specific color
+     * @return pice that has the specific color
+     */
     public static Piece getPieceByColor(String color) {
         for (Piece p : Piece.values()) {
             if (p.colorString.equalsIgnoreCase(color)) {
@@ -34,10 +50,15 @@ public enum Piece implements Serializable {
         return null;
     }
 
+    //TODO check if useless
     public Color getColor(){
         return this.color;
     }
 
+    /**
+     * Extract a random piece
+     * @return random piece
+     */
     public static Piece randomPiece(){
         Random random = new Random();
         return values()[random.nextInt(values().length)];

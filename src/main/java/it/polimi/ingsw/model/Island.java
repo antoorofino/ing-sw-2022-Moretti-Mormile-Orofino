@@ -81,6 +81,15 @@ public class Island implements Serializable {
      * @param invalidColor color that isn't influent
      */
 
+    /**
+     * Check if player has influence on a teacher
+     * @param teacher teacher to check if has owner
+     * @param towerCount true if tower has influence during calculation of influence
+     * @param invalidColor color that has not influence during calculation of influence
+     * @param extraPoints player that has extra points
+     * @return true if teacher has owner otherwise return false
+     */
+
     public boolean calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
         int count;
         Player player;
@@ -89,12 +98,12 @@ public class Island implements Serializable {
             removeFlagNoInfluence();
             return false;
         }
-        // punteggio extra
+        // extra points
         if(extraPoints!=null){
             scores.put(extraPoints,2);
         }
-        for (Piece piece: Piece.values()) { // assegno punteggio per pedine colori
-            if(!piece.equals(invalidColor)){ // se è valido
+        for (Piece piece: Piece.values()) { // assign points for piece color
+            if(!piece.equals(invalidColor)){ // if valid
                 player = teacher.getTeacherOwner(piece);
                 if(player!=null){
                     count = getCount(player,scores);
@@ -129,7 +138,7 @@ public class Island implements Serializable {
             }
         }
 
-        if(tie) // pareggio non aggiorno owner
+        if(tie) // tie don't update owner
             return true;
 
         // find the new owner
@@ -151,32 +160,58 @@ public class Island implements Serializable {
         return true;
     }
 
+    /**
+     * Get player's points of influence
+     * @param player player that we want to know influence's points
+     * @param map that contains points
+     * @return value of points
+     */
     public int getCount(Player player,HashMap<Player, Integer> map){
         if (!map.containsKey(player))
             map.put(player, 0);
         return map.get(player);
     }
 
+    /**
+     * Get island's ID
+     * @return island's ID
+     */
     public int getID(){
         return this.ID;
     }
 
+    /**
+     * Add flag to notify that can't calculate influence on the island
+     */
     public void addFlagNoInfluence(){
         this.flagNoInfluence++;
     }
 
+    //TODO check if useless can remove
     public void removeFlagNoInfluence(){
         this.flagNoInfluence--;
     }
 
+    //TODO check if useless can remove
     public int getFlagNoInfluence(){
         return this.flagNoInfluence;
     }
 
+    /**
+     * Increase island's size when merge islands
+     * @param size how much increase original size
+     */
     public void increaseSize(int size){ this.size+=size;}
 
+    /**
+     * Decrease ID of island when merge islands
+     */
     public void decreaseID(){this.ID--;}
 
+    /**
+     * Get students on island
+     * @return map that contains how many of each student's type are on the island
+     */
     public Map<Piece, Integer> getStudentsOnIsland(){ return new HashMap<>(studentsOnIsland);}
 
 }
