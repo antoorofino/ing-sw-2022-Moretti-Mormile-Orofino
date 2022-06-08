@@ -64,6 +64,8 @@ public class Character implements Serializable {
      *
      * @return character's name
      */
+    //TODO check if useless
+
     public String getName() {
         return name;
     }
@@ -73,6 +75,7 @@ public class Character implements Serializable {
      *
      * @return character's description
      */
+    //TODO check if useless
     public String getDescription() {
         return description;
     }
@@ -82,6 +85,8 @@ public class Character implements Serializable {
      *
      * @return character's ID
      */
+
+
     public int getID() {
         return ID;
     }
@@ -91,6 +96,7 @@ public class Character implements Serializable {
      *
      * @return character's rules that specify card's ability
      */
+
     public Rules getRules() {
         return rules;
     }
@@ -109,6 +115,7 @@ public class Character implements Serializable {
      *
      * @param num
      */
+    //TODO check if useless
     public void setIslandFlag(int num){
         this.islandFlag=num;
     }
@@ -117,6 +124,7 @@ public class Character implements Serializable {
      * Add one island flag
      *
      */
+
     public void addIslandFlag(){
         this.islandFlag++;
     }
@@ -131,6 +139,7 @@ public class Character implements Serializable {
      * Adds students on character
      * @param students contains students that I'll put on character
      */
+
     public void addStudents(ArrayList<Piece> students){
         this.studentsOnCard.addAll(students);
     }
@@ -139,6 +148,7 @@ public class Character implements Serializable {
      * Gets students on character
      * @return list of students on character
      */
+
     public ArrayList<Piece> getStudents() {
         return new ArrayList<>(studentsOnCard);
     }

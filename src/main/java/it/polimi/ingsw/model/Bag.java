@@ -26,6 +26,7 @@ public class Bag implements Serializable {
     /**
      * Put student in the bag
      */
+
     public void addStudent(Piece student, int num){
         int oldValue;
         oldValue = students.get(student);
@@ -36,6 +37,7 @@ public class Bag implements Serializable {
      * Checks if bag is empty or not
      * @return true if bag is empty else false
      */
+
     public boolean isEmpty(){
         for(Piece piece : Piece.values() ){
             if(students.get(piece)>0)

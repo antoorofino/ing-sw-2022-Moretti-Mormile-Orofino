@@ -54,6 +54,7 @@ public class Island implements Serializable {
      * Adds student on island
      * @param s student to add
      */
+
     public void addStudent(Piece s){
         studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
     }
@@ -70,24 +71,18 @@ public class Island implements Serializable {
      * Get size of island
      * @return size of island
      */
+
     public int getSize(){
         return size;
     }
 
     /**
-     * Calculate the influence on teacher
-     * @param teacher to have the influence
-     * @param towerCount true if towers are important to calculate influence
-     * @param invalidColor color that isn't influent
-     */
-
-    /**
-     * Check if player has influence on a teacher
-     * @param teacher teacher to check if has owner
+     * Check if player has influence on an island
+     * @param teacher helper of class teacher used to check if teacher has owner
      * @param towerCount true if tower has influence during calculation of influence
      * @param invalidColor color that has not influence during calculation of influence
      * @param extraPoints player that has extra points
-     * @return true if teacher has owner otherwise return false
+     * @return true if island has owner otherwise return false
      */
 
     public boolean calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
@@ -176,6 +171,7 @@ public class Island implements Serializable {
      * Get island's ID
      * @return island's ID
      */
+
     public int getID(){
         return this.ID;
     }

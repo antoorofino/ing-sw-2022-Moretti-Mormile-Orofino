@@ -119,11 +119,17 @@ public class PlayersHandler implements Serializable {
         currentPlayer = firstPlayer;
     }
 
+    /**
+     * set current player as the first player from ordered list
+     */
     public void nextPlayerByOrder(){
         alreadyPlayed.add(currentPlayer);
         currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
     }
 
+    /**
+     * set current player as the first player from ordered list by assistance
+     */
     public void nextPlayerByAssistance(){
         alreadyPlayed.remove(0);
         try {
@@ -154,10 +160,18 @@ public class PlayersHandler implements Serializable {
         return sorted;
     }
 
+    /**
+     * Get the list of cards that player has already played
+     * @return the list of cards that player has already played
+     */
     public List<AssistantCard> cardsAlreadyPlayed(){
         return alreadyPlayed.stream().map(Player::getLastCardUsed).collect(Collectors.toList());
     }
 
+    /**
+     * check if there are any player without cards
+     * @return true if a player hasn't cards enough
+     */
     public boolean playerWithNoMoreCards(){
         for(Player p : players){
             if(p.noMoreCards())
@@ -166,6 +180,10 @@ public class PlayersHandler implements Serializable {
         return false;
     }
 
+    /**
+     * check if all players in the game are ready to play
+     * @return true if all players are ready to play
+     */
     public boolean everyPlayerIsReadyToPlay(){
         return players.stream().filter(Player::isReadyToPlay).count() == numPlayers ;
     }
