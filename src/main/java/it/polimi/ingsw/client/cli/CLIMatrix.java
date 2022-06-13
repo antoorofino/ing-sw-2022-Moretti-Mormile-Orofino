@@ -6,11 +6,11 @@ public class CLIMatrix {
 
 	CLIElement[][] elements;
 
-	public CLIMatrix(int width, int height,AnsiColor color) {
+	public CLIMatrix(int width, int height,AnsiColor color,AnsiBackColor backColor) {
 		this.width = width;
 		this.height = height;
 		this.elements = new CLIElement[height][width];
-		reset(color);
+		reset(color,backColor);
 	}
 
 	public void display(){
@@ -22,11 +22,12 @@ public class CLIMatrix {
 		}
 	}
 
-	public void reset(AnsiColor color){
+	public void reset(AnsiColor color,AnsiBackColor backColor){
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
 				elements[i][j] = new CLIElement();
 				elements[i][j].color = color;
+				elements[i][j].backColor = backColor;
 			}
 		}
 	}
