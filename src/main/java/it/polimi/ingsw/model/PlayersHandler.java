@@ -54,11 +54,8 @@ public class PlayersHandler implements Serializable {
 
 
     public ArrayList<String> getPlayersNickName(){
-        ArrayList<String> nicknames = new ArrayList<>();
-        for(Player p : this.players){
-            nicknames.add(p.getNickname());
-        }
-        return nicknames;
+        List<String> nicknames = getPlayers().stream().map(Player::getNickname).collect(Collectors.toList());
+        return new ArrayList<>(nicknames);
     }
 
     /**

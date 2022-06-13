@@ -17,7 +17,7 @@ import java.util.List;
 public class Configurator {
     private static final int socketTimeout = 2000;
     private static final int serverPort = 8090;
-    private static final boolean debug = true;
+    private static final boolean debug = false;
     private static final String serverIp = "127.0.0.1";
 
     public static int getSocketTimeout() {

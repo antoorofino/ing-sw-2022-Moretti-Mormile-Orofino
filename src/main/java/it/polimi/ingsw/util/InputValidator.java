@@ -32,15 +32,17 @@ public class InputValidator {
 		return string.equals("");
 	}
 
-	public static boolean isPortNumber(int port) {
-		return InputValidator.isNumberBetween(port, 0,65536);
+	public static boolean isPortNumber(String port) {
+		if(!isNumber(port))
+			return false;
+		return InputValidator.isNumberBetween(Integer.parseInt(port), 0,65536);
 	}
 
-	public static boolean isPortNumber(String port) {
-		int portNumber;
+	public static boolean isNumber(String number) {
+		int Number;
 		try {
-			portNumber = Integer.parseInt(port);
-			return InputValidator.isNumberBetween(portNumber, 0,65536);
+			Number = Integer.parseInt(number);
+			return true;
 		} catch (NumberFormatException ignored) {
 			return false;
 		}

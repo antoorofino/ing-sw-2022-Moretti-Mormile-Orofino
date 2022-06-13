@@ -12,7 +12,7 @@ import java.util.Random;
 public class IslandsHandler implements Serializable {
 	private ArrayList<Island> islands;
 	private int motherNature;
-	private int leftMerge;
+	private int countsLastMerge;
 
 	/**
 	 * Constructor: build IslandHandler
@@ -20,7 +20,7 @@ public class IslandsHandler implements Serializable {
 	public IslandsHandler(){
 		this.islands = new ArrayList<>();
 		this.motherNature = 0;
-		this.leftMerge = 0;
+		this.countsLastMerge = 0;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class IslandsHandler implements Serializable {
 			if(islands.get(0).getIslandOwner()!=null)
 				if(islands.get(0).getIslandOwner().getNickname().equals(islands.get(islands.size() - 1).getIslandOwner().getNickname())){
 					// leftmerge mi effettua uno shift grafico a sx
-					leftMerge+= islands.get(islands.size() - 1).getSize();
+					countsLastMerge += islands.get(islands.size() - 1).getSize();
 					if(motherNature == (islands.size() - 1))
 						moveMotherNature(1);
 					moveValue(islands.size() - 1,0);
@@ -142,6 +142,6 @@ public class IslandsHandler implements Serializable {
 	 * Helper method used for print merge
 	 * @return how much before start to merge from island 0
 	 */
-	public int getLeftMerge(){ return this.leftMerge;}
+	public int getCountsLastMerge(){ return this.countsLastMerge;}
 
 }
