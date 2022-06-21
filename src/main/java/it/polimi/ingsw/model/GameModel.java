@@ -8,6 +8,7 @@ import it.polimi.ingsw.util.GameMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -50,40 +51,76 @@ public class GameModel implements Serializable {
         if(numPlayers == 2){
             numTowers = 8;
             numEntranceStudents = 6;
-        } else if(numPlayers == 3){
+        } else {
             numTowers = 6;
             numEntranceStudents = 9;
-        } else {
-            throw new IllegalStateException("Unexpected value numPlayers: " + numPlayers);
         }
-        for(Player player: getPlayerHandler().getPlayers()){
+
+        for(Player player: getPlayerHandler().getPlayers()) {
             player.setNumOfTowers(numTowers);
             player.addCards(AssistantCard.createDeck());
             player.getPlayerBoard().addToEntrance(studentsBag.popStudents(numEntranceStudents));
-            if (Configurator.isDebug())
-                player.setCoin(10);
-            else
-                player.setCoin(1);
+            player.setCoin(1);
             this.coins--;
         }
+
+        // create clouds
         for (int i = 1; i <= numPlayers; i++) {
             clouds.add(new Cloud(i));
         }
+
         if(gameMode == GameMode.EXPERT){
             Random random = new Random();
             List<Character> list = Configurator.getAllCharactersCards(this);
-            if (Configurator.isDebug()) {
-                characters.addAll(list);
-                for (Character character : characters)
-                    character.init(studentsBag);
-            } else {
-                for (int i = 0; i < 3; i++) {
-                    int randInt = random.nextInt(list.size());
-                    characters.add(list.get(randInt));
-                    list.get(randInt).init(studentsBag);
-                    list.remove(randInt);
-                }
+            for (int i = 0; i < 3; i++) {
+                int randInt = random.nextInt(list.size());
+                characters.add(list.get(randInt));
+                list.get(randInt).init(studentsBag);
+                list.remove(randInt);
             }
+        }
+    }
+
+    /**
+     * Sets up the game for the tests
+     */
+    public void setupGameTest(){
+        ArrayList<Piece> students = new ArrayList<>();
+        students.add(Piece.DRAGON);
+        students.add(Piece.DRAGON);
+        students.add(Piece.DRAGON);
+        students.add(Piece.GNOME);
+        students.add(Piece.FROG);
+        students.add(Piece.FAIRY);
+
+        // setup islands
+        this.getIslandHandler().setupIslandsTest();
+
+        for(Player player: getPlayerHandler().getPlayers()){
+            player.setNumOfTowers(8);
+            player.addCards(AssistantCard.createDeck());
+            player.getPlayerBoard().addToEntrance(students);
+            player.setCoin(1);
+        }
+
+        // setup clouds
+        Cloud cloud;
+        for (int i = 1; i <= playerHandler.getNumPlayers(); i++) {
+            cloud = new Cloud(i);
+            cloud.addStudents(Arrays.asList(Piece.DRAGON,Piece.FROG,Piece.UNICORN));
+            clouds.add(cloud);
+        }
+
+        // set 60 dragon in bag
+        Bag bag = new Bag();
+        bag.popStudents(120);
+        bag.addStudent(Piece.DRAGON,120);
+
+        if(gameMode == GameMode.EXPERT){
+            List<Character> list = Configurator.getAllCharactersCards(this);
+            characters.addAll(list);
+            for (Character character : characters)
+                 character.init(bag);
         }
     }
 
@@ -91,7 +128,6 @@ public class GameModel implements Serializable {
      * Gets player handler
      * @return player handler
      */
-
     public PlayersHandler getPlayerHandler() {
         return playerHandler;
     }
@@ -108,7 +144,6 @@ public class GameModel implements Serializable {
      * Gets TeachersHandler
      * @return TeachersHandler
      */
-
     public TeachersHandler getTeacherHandler() {
         return teacherHandler;
     }
@@ -121,22 +156,11 @@ public class GameModel implements Serializable {
         return new ArrayList<>(clouds);
     }
 
-    //TODO: remove, useless
-    /**
-     * Adds new cloud
-     * @param newCloud cloud to add
-     * @throws SpecificCloudNotFoundException
-     */
-    public void addCloud(Cloud newCloud)throws SpecificCloudNotFoundException {
-        if(this.playerHandler.getPlayers().size() ==this.clouds.size()) throw new SpecificCloudNotFoundException("Cannot add cloud");
-        this.clouds.add(newCloud);
-    }
-
     /**
      * Gets cloud by ID
      * @param cloudID identifier of cloud
      * @return specify cloud which has the same ID
-     * @throws SpecificCloudNotFoundException
+     * @throws SpecificCloudNotFoundException invalid cloud id
      */
     public Cloud getCloudByID(int cloudID) throws SpecificCloudNotFoundException {
         for(Cloud cloud : this.clouds){
@@ -150,7 +174,6 @@ public class GameModel implements Serializable {
      * Gets island handler
      * @return island handler
      */
-
     public IslandsHandler getIslandHandler() {
         return islandHandler;
     }
@@ -175,25 +198,15 @@ public class GameModel implements Serializable {
      * Gets all characters
      * @return list of characters
      */
-
     public ArrayList<Character> getCharacters() {
         return new ArrayList<>(characters);
-    }
-
-    //TODO: remove this method, it's useless
-    /**
-     * Adds new character
-     * @param c character to add
-     */
-    public void addCharacter(Character c){
-        this.characters.add(c);
     }
 
     /**
      * Gets character with specify ID
      * @param id identifier of Character
      * @return Character with specify ID
-     * @throws SpecificCharacterNotFoundException
+     * @throws SpecificCharacterNotFoundException invalid character id
      */
     public Character getCharacterFromID(int id) throws SpecificCharacterNotFoundException {
         for(Character c : this.characters){
@@ -207,7 +220,6 @@ public class GameModel implements Serializable {
      * Gets game mode
      * @return gameMode
      */
-
     public GameMode getGameMode() {
         return gameMode;
     }
@@ -216,7 +228,6 @@ public class GameModel implements Serializable {
      * Gets the name of the game
      * @return the name of the game
      */
-
     public String getGameName() {
         return name;
     }

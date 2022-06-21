@@ -5,12 +5,12 @@ import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Stores information about player's board
  */
-
 public class Board implements Serializable {
     ArrayList<Piece> studentsEntrance;
     Map<Piece,Integer> studentsRoom;
@@ -18,7 +18,6 @@ public class Board implements Serializable {
     /**
      * Constructor: Build the player's board
      */
-
     public Board(){
         this.studentsEntrance = new ArrayList<Piece>();
         this.studentsRoom = new HashMap<Piece,Integer>();
@@ -29,7 +28,6 @@ public class Board implements Serializable {
 
     /**
      * Gets all the student at the board's entrance
-     *
      * @return an array list that contains the students in the entrance
      */
     public ArrayList<Piece> getStudentsEntrance(){
@@ -38,16 +36,15 @@ public class Board implements Serializable {
 
     /**
      * Adds students in the entrance
-     *
      */
-    public void addToEntrance(ArrayList<Piece> students){
+    public void addToEntrance(List<Piece> students){
         this.studentsEntrance.addAll(students);
     }
 
     /**
      * Remove a students from the entrance
      * @param student student to remove
-     * @throws SpecificStudentNotFoundException
+     * @throws SpecificStudentNotFoundException student not found at the entrance
      */
     public void removeFromEntrance(Piece student) throws SpecificStudentNotFoundException {
         if(this.studentsEntrance.contains(student))
@@ -57,10 +54,8 @@ public class Board implements Serializable {
 
     /**
      * Gets how many students are in the room
-     *
      * @return number of students in the room
      */
-
     public int getNumOfStudentsRoom(Piece student){
         return studentsRoom.get(student);
     }
@@ -68,14 +63,16 @@ public class Board implements Serializable {
     /**
      * Adds students in the room and automatically remove it from entrance
      * @param student student to remove
-     * @throws SpecificStudentNotFoundException
      */
-    // TODO: fix test methods calls after remove the automatically remove from entrance
-    public void addStudentToRoom(Piece student) throws SpecificStudentNotFoundException {
-        studentsRoom.put(student, studentsRoom.get(student) +1);
+    public void addStudentToRoom(Piece student){
+        studentsRoom.put(student, studentsRoom.get(student) + 1);
     }
 
-    
+    /**
+     * remove student from dining room
+     * @param student student to remove
+     * @throws SpecificStudentNotFoundException student not found in the dining room
+     */
     public void removeFromRoom(Piece student) throws SpecificStudentNotFoundException {
         if(this.studentsRoom.get(student) > 0 )
             studentsRoom.put(student, studentsRoom.get(student) - 1);
@@ -84,10 +81,9 @@ public class Board implements Serializable {
 
     /**
      * Gets how many students are in the room for each type
-     *
      * @return map that contains how many students for each type are in the room
      */
-    public Map<Piece, Integer> getStudentsRoom(){return new HashMap<>(studentsRoom);}
-
-
+    public Map<Piece, Integer> getStudentsRoom(){
+        return new HashMap<>(studentsRoom);
+    }
 }

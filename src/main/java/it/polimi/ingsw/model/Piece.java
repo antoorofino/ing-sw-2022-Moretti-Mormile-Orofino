@@ -7,7 +7,6 @@ import java.util.Random;
 /**
  * Stores information of Piece
  */
-
 public enum Piece implements Serializable {
     UNICORN("Blue",new Color(30,200,250),"Unicorn"),
     FAIRY("Purple", new Color(255,138,228),"Fairy"),
@@ -31,11 +30,6 @@ public enum Piece implements Serializable {
         this.colorString=colorString;
     }
 
-    //TODO Check if useless
-    public static Piece getPieceByName(String name){
-        return Piece.valueOf(name.toUpperCase());
-    }
-
     /**
      * Get piece by color
      * @param color specific color
@@ -48,11 +42,6 @@ public enum Piece implements Serializable {
             }
         }
         return null;
-    }
-
-    //TODO check if useless
-    public Color getColor(){
-        return this.color;
     }
 
     /**
@@ -68,6 +57,4 @@ public enum Piece implements Serializable {
     public String toString() {
         return colorString;
     }
-
-
 }

@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Stores information about an assistence card of the game
+ * Stores information about an assistant card of the game
  */
-
 public class AssistantCard implements Serializable {
     private final int cardValue;
     private final int movements;
     private final int cardID;
 
+    /**
+     * Create a new assistant card deck
+     * @return the new deck
+     */
     public static ArrayList<AssistantCard> createDeck(){
         ArrayList<AssistantCard> deck = new ArrayList<>();
         for(int i = 1; i <= 10; i++){
@@ -19,14 +22,13 @@ public class AssistantCard implements Serializable {
         }
         return deck;
     }
+
     /**
      * Constructor: build the Card
-     *
      * @param cardValue Value of card
      * @param movements Value of steps that mother nature does
      * @param id        Identifier of the card
      */
-
     public AssistantCard(int cardValue, int movements, int id){
         this.cardID=id;
         this.cardValue=cardValue;
@@ -35,7 +37,6 @@ public class AssistantCard implements Serializable {
 
     /**
      * Gets the ID of the card
-     *
      * @return The ID of the card
      */
     public int getCardID(){
@@ -44,7 +45,6 @@ public class AssistantCard implements Serializable {
 
     /**
      * Gets the value of the card
-     *
      * @return The value of the card
      */
     public int getCardValue(){
@@ -53,10 +53,8 @@ public class AssistantCard implements Serializable {
 
     /**
      * Gets the value of the steps thant mother nature does whit this card
-     *
      * @return The number of steps
      */
-
     public int getMovements(){
         return this.movements;
     }

@@ -24,7 +24,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * set up the islands when create game
+	 * Set up the islands when create game
 	 */
 	public void setupIslands(){
 		ArrayList<Piece> studentsArray = new ArrayList<>();
@@ -40,14 +40,31 @@ public class IslandsHandler implements Serializable {
 		for(int i = 0; i < 12; i++){
 			island = new Island(i);
 			if(i != motherNature && i != (motherNature + 6)%12){
-				//FIXME: is it right to put i as index
 				randPosition = rand.nextInt(studentsArray.size());
 				island.addStudent(studentsArray.get(randPosition));
 				studentsArray.remove(randPosition);
 			}
 			islandArrayList.add(island);
 		}
-		this.setIslands(islandArrayList);
+		this.islands = islandArrayList;
+	}
+
+	/**
+	 * Set up the islands for testing
+	 */
+	public void setupIslandsTest(){
+		ArrayList<Piece> studentsArray = new ArrayList<>();
+		ArrayList<Island> islandArrayList = new ArrayList<>();
+		Island island;
+		motherNature = 0;
+		for(int i = 0; i < 12; i++){
+			island = new Island(i);
+			if(i != getMotherNature() && i != (getMotherNature() + 6)%12){
+				island.addStudent(Piece.DRAGON);
+			}
+			islandArrayList.add(island);
+		}
+		this.islands = islandArrayList;
 	}
 
 	/**
@@ -62,14 +79,22 @@ public class IslandsHandler implements Serializable {
 	 * Get specific island by ID
 	 * @param ID id of island
 	 * @return island that has the specific ID
-	 * @throws SpecificIslandNotFoundException
+	 * @throws SpecificIslandNotFoundException invalid island id
 	 */
 	public Island getIslandByID(int ID) throws SpecificIslandNotFoundException {
 		for (Island island : islands) {
 			if (island.getID() == ID)
 				return island;
 		}
-		throw new SpecificIslandNotFoundException("Cannot found island with this ID");
+		throw new SpecificIslandNotFoundException("Cannot found island with this id");
+	}
+
+	/**
+	 * Get the island with mother nature
+	 * @return the island
+	 */
+	public Island getCurrentIsland(){
+		return islands.get(motherNature);
 	}
 
 	/**
@@ -80,24 +105,19 @@ public class IslandsHandler implements Serializable {
 		return motherNature;
 	}
 
-	//TODO check if usless
-	public void setIslands(ArrayList<Island> islands) {
-		this.islands = islands;
-	}
-
 	/**
 	 * Move motherNature
-	 * @param newPos specify how much steps mother nature has to do
+	 * @param steps specify how much steps mother nature has to do
 	 */
-	public void moveMotherNature(int newPos) {
+	public void moveMotherNature(int steps) {
 		if(islands.size()>0)
-			this.motherNature = (this.motherNature + newPos)%(islands.size());
+			this.motherNature = (this.motherNature + steps)%(islands.size());
 	}
 
 	/**
-	 * do merge of island
+	 * Do merge of island
 	 */
-	public void mergeIsland(){
+	public void mergeIslands(){
 		int i = 0;
 		do{
 			if(islands.get(i).getIslandOwner() != null && islands.get(i+1).getIslandOwner() != null)
@@ -125,7 +145,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * move points on Island to another when we do merge
+	 * Move points on Island to another when we do merge
 	 * @param from departure island
 	 * @param to arrival island
 	 */
@@ -140,7 +160,7 @@ public class IslandsHandler implements Serializable {
 
 	/**
 	 * Helper method used for print merge
-	 * @return how much before start to merge from island 0
+	 * @return number of merge between last and fist of the list
 	 */
 	public int getCountsLastMerge(){ return this.countsLastMerge;}
 

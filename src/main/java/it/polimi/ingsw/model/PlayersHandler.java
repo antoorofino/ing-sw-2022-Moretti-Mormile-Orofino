@@ -33,6 +33,8 @@ public class PlayersHandler implements Serializable {
      * @param player that will be added in the list
      */
     public void addPlayer(Player player){
+        if(numPlayers == players.size())
+            throw new IllegalStateException("Game already full: " + numPlayers);
         this.players.add(player);
     }
 
@@ -52,17 +54,19 @@ public class PlayersHandler implements Serializable {
         return new ArrayList<>(players);
     }
 
-
+    /**
+     * Get list of players' nicknames
+     * @return list of players' nicknames
+     */
     public ArrayList<String> getPlayersNickName(){
-        List<String> nicknames = getPlayers().stream().map(Player::getNickname).collect(Collectors.toList());
-        return new ArrayList<>(nicknames);
+        return getPlayers().stream().map(Player::getNickname).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      * Get player with a specifc nickname
      * @param nickname of specific player
      * @return player with specific nickname
-     * @throws PlayerException
+     * @throws PlayerException invalid nickname for player
      */
     public Player getPlayersByNickName(String nickname) throws PlayerException {
         for(Player p : this.players){
@@ -76,7 +80,7 @@ public class PlayersHandler implements Serializable {
      * Get player by ID
      * @param id specific ID of player
      * @return player with specif ID
-     * @throws PlayerException
+     * @throws PlayerException invalid id for player
      */
     public Player getPlayerById(String id) throws PlayerException {
         for(Player p : this.players){
@@ -90,7 +94,6 @@ public class PlayersHandler implements Serializable {
      * Get player whose turn it's
      * @return player whose turn it's
      */
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -166,7 +169,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * check if there are any player without cards
+     * Check if there are any player without cards
      * @return true if a player hasn't cards enough
      */
     public boolean playerWithNoMoreCards(){

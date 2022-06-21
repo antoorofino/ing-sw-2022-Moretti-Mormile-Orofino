@@ -25,8 +25,7 @@ public class TeachersHandler implements Serializable {
         int countOwner;
         int countPossibleOwner;
         Player currentOwner;
-        //teachers = new HashMap<>(); // Reset teachers
-        for (Piece piece : Piece.values()) { // per ogni pedina
+        for (Piece piece : Piece.values()) { // foreach piece
             for (Player p : players) {
                 countPossibleOwner = p.getPlayerBoard().getNumOfStudentsRoom(piece);
                 if (!teacherIsAssigned(piece)){
@@ -35,7 +34,7 @@ public class TeachersHandler implements Serializable {
 
                 }else{
                     currentOwner = getTeacherOwner(piece); // current owner can be null
-                    if (!currentOwner.equals(p)) {    // non è il proprietario attuale
+                    if (!currentOwner.equals(p)) {
                         countOwner = currentOwner.getPlayerBoard().getNumOfStudentsRoom(piece);
                         if (countPossibleOwner > countOwner || ((countOwner == countPossibleOwner) && geq))
                             teachers.put(piece, p);

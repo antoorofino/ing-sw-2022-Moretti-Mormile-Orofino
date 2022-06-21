@@ -8,6 +8,7 @@ import it.polimi.ingsw.util.TowerColor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores information of Player
@@ -41,7 +42,10 @@ public class Player implements Serializable {
 		this.towerColor = null;
 	}
 
-	//TODO check if useless
+	/**
+	 * Set nickname to player
+	 * @param nickname the chosen nickname
+	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
@@ -50,7 +54,6 @@ public class Player implements Serializable {
 	 * Get player's nickname
 	 * @return player's nickname
 	 */
-
 	public String getNickname() {
 		return nickname;
 	}
@@ -59,25 +62,22 @@ public class Player implements Serializable {
 	 * Get player's ID
 	 * @return player's ID
 	 */
-
 	public String getId() {
 		return id;
 	}
 
 	/**
 	 * Set color of tower that player will use
-	 * @param color
+	 * @param color the color to be set
 	 */
-
 	public void setTowerColor(TowerColor color) {
 		this.towerColor = color;
 	}
 
 	/**
 	 * Get tower's color that player uses
-	 * @return
+	 * @return the tower color
 	 */
-
 	public TowerColor getTowerColor() {
 		return this.towerColor;
 	}
@@ -86,7 +86,6 @@ public class Player implements Serializable {
 	 * Get player's board
 	 * @return player's board
 	 */
-
 	public Board getPlayerBoard() {
 		return playerBoard;
 	}
@@ -103,14 +102,14 @@ public class Player implements Serializable {
 	 * Add cards in the player's deck
 	 * @param cards that will be added to deck
 	 */
-	public void addCards(ArrayList<AssistantCard> cards) {
-		this.cards = cards;
+	public void addCards(List<AssistantCard> cards) {
+		this.cards = new ArrayList<>(cards);
 	}
 
 	/**
 	 * Set last card that player used
 	 * @param lastCardUsed last card that player used
-	 * @throws CardException
+	 * @throws CardException assistant card not found in deck
 	 */
 	public void setLastCardUsed(AssistantCard lastCardUsed) throws CardException {
 		for (AssistantCard card:cards){
@@ -133,7 +132,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Get last card that player used
-	 * @return
+	 * @return the last Assistant card used
 	 */
 	public AssistantCard getLastCardUsed() {
 		return lastCardUsed;
@@ -149,7 +148,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Get number of towers that
-	 * @return
+	 * @return the number of tower owned by player
 	 */
 	public int getNumOfTowers(){
 		return numOfTower;
@@ -214,13 +213,13 @@ public class Player implements Serializable {
 
 	/**
 	 * Get how many coins player has
-	 * @return
+	 * @return the coins owned by player
 	 */
 	public int getCoin(){ return this.playerCoin;}
 
 	/**
 	 * Get character that player has activated
-	 * @return charcter activated from player
+	 * @return character activated from player
 	 */
 	public Character getActiveCharacter() {
 		return activeCharacter;
@@ -235,19 +234,9 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 *
-	 * @param roundActions
-	 */
-	//TODO check if useless
-	public void setRoundActions(RoundActions roundActions) {
-		this.roundActions = roundActions;
-	}
-
-	/**
 	 * Get action that player did during his turn
 	 * @return round action
 	 */
-
 	public RoundActions getRoundActions() {
 		return this.roundActions;
 	}
@@ -256,13 +245,12 @@ public class Player implements Serializable {
 	 * Register an action that player did
 	 * @param action that player did
 	 */
-
 	public void registerAction(Action action) {
 		this.roundActions.add(action);
 	}
 
 	/**
-	 * reset round action ath the and of turn
+	 * Reset round action at the end of turn
 	 */
 	public void resetRoundAction() {
 		this.roundActions = new RoundActions();

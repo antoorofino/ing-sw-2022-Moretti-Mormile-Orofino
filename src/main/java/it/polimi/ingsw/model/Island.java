@@ -54,7 +54,6 @@ public class Island implements Serializable {
      * Adds student on island
      * @param s student to add
      */
-
     public void addStudent(Piece s){
         studentsOnIsland.put(s,studentsOnIsland.get(s)+1);
     }
@@ -71,7 +70,6 @@ public class Island implements Serializable {
      * Get size of island
      * @return size of island
      */
-
     public int getSize(){
         return size;
     }
@@ -84,13 +82,12 @@ public class Island implements Serializable {
      * @param extraPoints player that has extra points
      * @return true if island has owner otherwise return false
      */
-
     public boolean calculateInfluence(TeachersHandler teacher, boolean towerCount, Piece invalidColor, Player extraPoints){
         int count;
         Player player;
         HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
         if(this.flagNoInfluence>0){
-            removeFlagNoInfluence();
+            this.flagNoInfluence--;
             return false;
         }
         // extra points
@@ -113,11 +110,6 @@ public class Island implements Serializable {
                 count = getCount(player,scores);
                 scores.put(player, count + getSize());
             }
-        }
-
-        System.out.print("Punteggi influenza: ");
-        for (Player p : scores.keySet()) {
-            System.out.print(p.getNickname() + ":" + scores.get(p) + "     ");
         }
 
         boolean tie = false;
@@ -171,7 +163,6 @@ public class Island implements Serializable {
      * Get island's ID
      * @return island's ID
      */
-
     public int getID(){
         return this.ID;
     }
@@ -183,12 +174,10 @@ public class Island implements Serializable {
         this.flagNoInfluence++;
     }
 
-    //TODO check if useless can remove
-    public void removeFlagNoInfluence(){
-        this.flagNoInfluence--;
-    }
-
-    //TODO check if useless can remove
+    /**
+     * Get number of flag no influence on island
+     * @return number of flag no influence on island
+     */
     public int getFlagNoInfluence(){
         return this.flagNoInfluence;
     }
@@ -209,5 +198,4 @@ public class Island implements Serializable {
      * @return map that contains how many of each student's type are on the island
      */
     public Map<Piece, Integer> getStudentsOnIsland(){ return new HashMap<>(studentsOnIsland);}
-
 }
