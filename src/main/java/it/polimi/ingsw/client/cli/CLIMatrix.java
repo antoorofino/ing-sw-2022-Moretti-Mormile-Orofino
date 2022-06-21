@@ -1,12 +1,15 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.cli.util.AnsiBackColor;
+import it.polimi.ingsw.client.cli.util.AnsiColor;
+
 public class CLIMatrix {
 	int width;
 	int height;
 
 	CLIElement[][] elements;
 
-	public CLIMatrix(int width, int height,AnsiColor color,AnsiBackColor backColor) {
+	public CLIMatrix(int width, int height, AnsiColor color, AnsiBackColor backColor) {
 		this.width = width;
 		this.height = height;
 		this.elements = new CLIElement[height][width];

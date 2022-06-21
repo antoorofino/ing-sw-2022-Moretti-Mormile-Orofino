@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.client.cli.util;
 
 public enum AnsiBackColor {
 	ANSI_BG_BLACK( "\u001B[40m"),

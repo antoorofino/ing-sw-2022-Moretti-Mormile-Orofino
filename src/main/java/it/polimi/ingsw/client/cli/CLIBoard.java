@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.cli.util.AnsiBackColor;
+import it.polimi.ingsw.client.cli.util.AnsiColor;
 import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.model.Player;
 
@@ -12,7 +14,7 @@ public class CLIBoard extends CLIMatrix {
 	private String uuid;
 
 	public CLIBoard(String uuid,int width) {
-		super(width, 11,AnsiColor.ANSI_DEFAULT,AnsiBackColor.ANSI_DEFAULT);
+		super(width, 11, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		this.uuid = uuid;
 		drawBorder("╔╗═╚╝║");
 		for (int i = 2; i < height - 1; i+=2)

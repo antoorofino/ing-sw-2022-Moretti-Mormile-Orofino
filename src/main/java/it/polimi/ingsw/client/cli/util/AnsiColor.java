@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.client.cli.util;
 
 import it.polimi.ingsw.model.Piece;
 

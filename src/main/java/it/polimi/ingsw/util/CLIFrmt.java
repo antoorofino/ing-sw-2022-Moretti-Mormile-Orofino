@@ -1,6 +1,6 @@
 package it.polimi.ingsw.util;
 
-import it.polimi.ingsw.client.cli.AnsiColor;
+import it.polimi.ingsw.client.cli.util.AnsiColor;
 
 public class CLIFrmt {
 	/**

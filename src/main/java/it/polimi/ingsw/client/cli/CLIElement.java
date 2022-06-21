@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.cli.util.AnsiBackColor;
+import it.polimi.ingsw.client.cli.util.AnsiColor;
+
 public class CLIElement {
 	char symbol;
 	AnsiColor color;

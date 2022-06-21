@@ -1,12 +1,14 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.client.cli.util.AnsiBackColor;
+import it.polimi.ingsw.client.cli.util.AnsiColor;
 import it.polimi.ingsw.model.Piece;
 
 import java.util.Map;
 
 public class CLIIsland extends CLIMatrix {
 	public CLIIsland(boolean mother,int id) {
-		super(17, 7,mother? AnsiColor.ANSI_YELLOW : AnsiColor.ANSI_DEFAULT,AnsiBackColor.ANSI_DEFAULT);
+		super(17, 7,mother? AnsiColor.ANSI_YELLOW : AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		drawText("    ┌───────┐",1,0,0);
 		drawText("  ┌─┘       └─┐",1,1,0);
 		drawText("┌─┘           └─┐",1,2,0);
@@ -15,19 +17,6 @@ public class CLIIsland extends CLIMatrix {
 		drawText("  └─┐       ┌─┘",1,5,0);
 		drawText("    └───────┘",1,6,0);
 		drawId(id);
-
-		/*
-	     └┘─│ ┤├
-	      ┏ ┓ ┗ ━ ┛ ┃
-             ┌───────┐
-		   ┌─┘   1   └─┐
-		 ┌─┘ ● x1 ● x2 └─┐
-		 │  ● x2   ● x2  │
-		 └─┐   ● x3    ┌─┘
-		   └─┐ matte ┌─┘
-		     └───────┘
-		 */
-
 	}
 
 	public void addStudents(Map<Piece, Integer> students) {
