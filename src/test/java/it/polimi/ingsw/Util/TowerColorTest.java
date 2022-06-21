@@ -1,6 +1,5 @@
-package it.polimi.ingsw.Util;
+package it.polimi.ingsw.util;
 
-import it.polimi.ingsw.util.TowerColor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

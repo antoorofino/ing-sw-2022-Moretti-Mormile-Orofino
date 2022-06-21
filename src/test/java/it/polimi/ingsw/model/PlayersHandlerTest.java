@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.util.TowerColor;
 import it.polimi.ingsw.util.exception.CardException;
 import it.polimi.ingsw.util.exception.PlayerException;
 import org.junit.jupiter.api.AfterEach;
@@ -28,17 +29,29 @@ public class PlayersHandlerTest {
         playersHandler.addPlayer(p3);
     }
 
-
     @AfterEach
     public void tearDown() {
         playersHandler = null;
     }
 
     @Test
-    public void playerTest(){
+    public void getPlayerByIdTest(){
+        try {
+            assertEquals(p1, playersHandler.getPlayerById("id_p1"));
+        } catch (PlayerException e) {
+            fail();
+        }
+        // throws exception
+        assertThrows(PlayerException.class,() -> {
+            playersHandler.getPlayerById("id_p4");
+        });
+    }
+    @Test
+    public void getPlayersByNickNameTest(){
         p1.setNickname("Moretti");
         p2.setNickname("Mormile");
         p3.setNickname("Orofino");
+
         ArrayList<String>nicknames = new ArrayList<>();
         nicknames.add("Moretti");
         nicknames.add("Mormile");
@@ -46,18 +59,17 @@ public class PlayersHandlerTest {
         try {
             assertEquals(p1, playersHandler.getPlayersByNickName("Moretti"));
         } catch (PlayerException e) {
-            e.printStackTrace();
+            fail();
         }
-
-        try {
+        // throws exception
+        assertThrows(PlayerException.class,() -> {
             playersHandler.getPlayersByNickName("Ciccio");
-        } catch (PlayerException ignored) {
-        }
+        });
 
-        ArrayList<String>nicknames2;
+        ArrayList<String> nicknames2;
         nicknames2 = playersHandler.getPlayersNickName();
         assertEquals(nicknames.size(),nicknames2.size());
-        for(int i = 0; i<nicknames.size(); i++){
+        for(int i = 0; i < nicknames.size(); i++){
             assertEquals(nicknames.get(i),nicknames2.get(i));
         }
 
@@ -65,16 +77,37 @@ public class PlayersHandlerTest {
         assertEquals(players.get(0),p1);
         assertEquals(players.get(1),p2);
         assertEquals(players.get(2),p3);
-
     }
 
     @Test
-    public void playersOrder(){
+    public void everyPlayerIsReadyToPlayTest(){
+        // to be ready need nickname and tower color
+        p1.setNickname("Moretti");
+        p2.setNickname("Mormile");
+        p3.setNickname("Orofino");
+        assertFalse(playersHandler.everyPlayerIsReadyToPlay());
+        p1.setTowerColor(TowerColor.BLACK);
+        p2.setTowerColor(TowerColor.WHITE);
+        p3.setTowerColor(TowerColor.GRAY);
+        assertTrue(playersHandler.everyPlayerIsReadyToPlay());
+    }
+
+    @Test
+    public void addPlayerTest(){
+        Player p4 = new Player("id_p4");
+        // throws exception
+        assertThrows(IllegalStateException.class,() -> {
+            playersHandler.addPlayer(p4);
+        });
+    }
+
+    @Test
+    public void playersOrderTest(){
         p1.addCards(AssistantCard.createDeck());
         p2.addCards(AssistantCard.createDeck());
         p3.addCards(AssistantCard.createDeck());
 
-        assertEquals(null, playersHandler.getCurrentPlayer());
+        assertNull(playersHandler.getCurrentPlayer());
         playersHandler.initialiseCurrentPlayerPlanningPhase();
         assertEquals(0, playersHandler.cardsAlreadyPlayed().size());
 
@@ -167,18 +200,18 @@ public class PlayersHandlerTest {
     }
 
     @Test
-    public void getSetPlayerNoMoreCards(){
+    public void playerNoMoreCardsTest(){
         p1.addCards(AssistantCard.createDeck());
         p2.addCards(AssistantCard.createDeck());
         p3.addCards(AssistantCard.createDeck());
         for(int i = 0;  i < 10; i++){
-            assertEquals(false, playersHandler.playerWithNoMoreCards());
+            assertFalse(playersHandler.playerWithNoMoreCards());
             try {
                 p1.setLastCardUsed(p1.getDeck().get(0));
             } catch (CardException e){
                 fail();
             }
         }
-        assertEquals(true, playersHandler.playerWithNoMoreCards());
+        assertTrue(playersHandler.playerWithNoMoreCards());
     }
 }

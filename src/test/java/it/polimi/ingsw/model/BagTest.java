@@ -5,19 +5,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class BagTest {
     Bag bag;
+
     @BeforeEach
     public void setUp() {
         bag = new Bag();
     }
-
 
     @AfterEach
     public void tearDown() {
@@ -26,32 +25,31 @@ public class BagTest {
 
     @Test
     public void bagTest(){
-        Map<Piece,Integer> studentsTest = new HashMap<>();
-        for(Piece p : Piece.values())
-            studentsTest.put(p,0);
+        ArrayList<Piece> students = new ArrayList<>();
+        assertFalse(bag.isEmpty());
 
-        ArrayList<Piece> studentsRandom;
-        int oldValue;
-        assertEquals(false,bag.isEmpty());
+        // remove all piece from bag
         while(!bag.isEmpty()){
-            studentsRandom=bag.popStudents(1);
-            oldValue=studentsTest.get(studentsRandom.get(0));
-            studentsTest.put(studentsRandom.get(0),oldValue+1);
-
+            students.addAll(bag.popStudents(1));
         }
-        System.out.println(studentsTest);
-        assertEquals(true,bag.isEmpty());
-        //assertEquals(120,studentsRandom.size());
-        for(Piece p : Piece.values())
-            assertEquals(24,studentsTest.get(p).intValue());
 
+        assertTrue(bag.isEmpty());
+        assertEquals(120,students.size());
+
+        // check removed students
+        for(Piece p : Piece.values()){
+            assertEquals(24,Collections.frequency(students, p));
+        }
+
+        // add student to bag
         bag.addStudent(Piece.FROG,1);
-        studentsRandom=new ArrayList<>();
-        while(!bag.isEmpty())
-            studentsRandom.addAll(bag.popStudents(1));
+        students = new ArrayList<>();
 
-        assertEquals(1,studentsRandom.size());
-        assertEquals(Piece.FROG,studentsRandom.get(0));
+        while(!bag.isEmpty())
+            students.addAll(bag.popStudents(1));
+
+        assertEquals(1,students.size());
+        assertEquals(Piece.FROG,students.get(0));
 
     }
 }

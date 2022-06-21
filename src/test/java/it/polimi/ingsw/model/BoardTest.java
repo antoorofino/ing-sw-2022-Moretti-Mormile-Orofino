@@ -2,22 +2,15 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class BoardTest {
-
     Board board;
-
-    @BeforeEach
-    public void setUp() {
-    }
 
     @AfterEach
     public void tearDown() {
@@ -34,36 +27,24 @@ public class BoardTest {
         students.add(Piece.FAIRY);
         students.add(Piece.DRAGON);
 
+        // add students to entrance
         board.addToEntrance(students);
         assertEquals(students,board.getStudentsEntrance());
 
+        // remove student from entrance
         try {
             board.removeFromEntrance(Piece.GNOME);
-        } catch (SpecificStudentNotFoundException ignored) {
-
+        } catch (SpecificStudentNotFoundException ex) {
+            fail();
         }
         students.remove(Piece.GNOME);
         assertEquals(students,board.getStudentsEntrance());
 
-        try {
-            board.addStudentToRoom(Piece.FROG);
-        } catch (SpecificStudentNotFoundException ignored) {
-
-        }
+        // add student to dining room
+        board.addStudentToRoom(Piece.FROG);
         assertEquals(students,board.getStudentsEntrance());
 
-        Map<Piece,Integer> studentsRoom = new HashMap<>();
-        for(Piece p : Piece.values()){
-            if(p.equals(Piece.FROG))
-                studentsRoom.put(Piece.FROG,1);
-            else
-                studentsRoom.put(p,0);
-        }
-        assertEquals(studentsRoom,board.getStudentsRoom());
-        try {
-            board.addStudentToRoom(Piece.UNICORN);
-        } catch (SpecificStudentNotFoundException ignored) {
-
-        }
+        // check students in the dining room
+        assertEquals(1,board.getStudentsRoom().get(Piece.FROG));
     }
 }
