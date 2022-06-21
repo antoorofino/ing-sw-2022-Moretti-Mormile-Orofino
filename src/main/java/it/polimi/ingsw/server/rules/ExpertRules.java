@@ -7,12 +7,15 @@ import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
-import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ExpertRules extends Rules {
+
 	/**
 	 * Create the game rules
-	 *
 	 * @param game obj that contains the game status
 	 */
 	public ExpertRules(GameModel game) {
@@ -34,6 +37,10 @@ public class ExpertRules extends Rules {
 
 	@Override
 	public boolean doAction(Action action) {
+		List<ActionType> possibleAction = nextPossibleActions().getActionsList()
+				.stream().map(Action::getActionType).collect(Collectors.toList());
+		if(!possibleAction.contains(action.getActionType()))
+			return false;
 		if (action.getActionType().getMode().equals(GameMode.BASIC)) // basic mode action
 			return super.doAction(action);
 		if (action.getActionType() == ActionType.CHOOSE_CHARACTER)
@@ -43,7 +50,7 @@ public class ExpertRules extends Rules {
 	}
 
 	@Override
-	public boolean doMoveDiningRoom(Action action){
+	protected boolean doMoveDiningRoom(Action action){
 		if(!super.doMoveDiningRoom(action))
 			return false;
 		if((getCurrentPlayer().getPlayerBoard().getNumOfStudentsRoom(action.getPrincipalPiece()) % 3 == 0)&&(game.coinsAreEnough())){
@@ -54,9 +61,9 @@ public class ExpertRules extends Rules {
 	}
 
 	/**
-	 * Check if player can use the chosen caracter
-	 * @param action
-	 * @return
+	 * Check if player can use the chosen character
+	 * @param action contains the id of chosen character
+	 * @return true if is valid action
 	 */
 	protected boolean chosenCharacter(Action action) {
 		Character character = null;
@@ -81,10 +88,19 @@ public class ExpertRules extends Rules {
 						return false;
 					break;
 				case 10:
+					// check students in entrance
 					if(getCurrentPlayer().getPlayerBoard().getStudentsEntrance().isEmpty())
 						return false;
-					if(getCurrentPlayer().getPlayerBoard().getStudentsRoom().isEmpty())
-						return false;
+					// check students in dining room
+					boolean check = false;
+					Map<Piece,Integer> studentsRoom = getCurrentPlayer().getPlayerBoard().getStudentsRoom();
+					for (Integer value: studentsRoom.values()) {
+						if (value != 0) {
+							check  = true;
+						}
+					}
+					if(!check)
+						return check;
 					break;
 				default:
 					break;
@@ -98,40 +114,52 @@ public class ExpertRules extends Rules {
 		return true;
 	}
 
-	// if card needs an activation by player the following methods should be overrided
-	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
-		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
-		return previousAction;
-	}
-
-	protected boolean activateCharacter(Action action) {
-		return true;
-	}
-
 	@Override
 	protected void calculateInfluence() { // entry tiles should be restore to card 5
-		int currentMother = game.getIslandHandler().getMotherNature();
 		Island currentIsland = null;
-		try {
-			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-			if (islandHaveNoEntry(currentIsland))
-				restoreNoEntry();
-			game.getIslandHandler().mergeIsland();
-		} catch (SpecificIslandNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
+		currentIsland = game.getIslandHandler().getCurrentIsland();
+		if (islandHaveNoEntry(currentIsland))
+			restoreNoEntry();
+		game.getIslandHandler().mergeIslands();
 	}
 
+	/**
+	 *
+	 * @param island
+	 * @return
+	 */
 	protected boolean islandHaveNoEntry(Island island){
 		return !island.calculateInfluence(game.getTeacherHandler(), true, null, null);
 	}
 
+	/**
+	 *
+	 */
 	protected void restoreNoEntry(){
 		try {
 			game.getCharacterFromID(5).addIslandFlag();
 		} catch (SpecificCharacterNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	/** if card needs an activation by player the following methods should be overrided
+	 *
+	 * @param previousAction
+	 * @return
+	 */
+	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
+		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
+		return previousAction;
+	}
+
+	/**
+	 *
+	 * @param action
+	 * @return
+	 */
+	protected boolean activateCharacter(Action action) {
+		return false;
 	}
 }
 

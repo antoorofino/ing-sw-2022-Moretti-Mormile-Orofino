@@ -32,8 +32,6 @@ public class FirstCardRules extends ExpertRules
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.STUDENT_FROM_CARD_TO_ISLAND)
-			return false;
 		try {
 			getCurrentPlayer().getActiveCharacter().delStudent(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException|StudentNotPresentException e) {

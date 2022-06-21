@@ -7,8 +7,6 @@ import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
-import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
-import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;;
 
 public class NinthCardRules extends ExpertRules {
 	protected Piece invalidColor;
@@ -31,9 +29,9 @@ public class NinthCardRules extends ExpertRules {
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.COLOR_NO_INFLUENCE)
-			return false;
 		invalidColor = action.getPrincipalPiece();
+		if(invalidColor == null)
+			return false;
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 		return true;
 	}

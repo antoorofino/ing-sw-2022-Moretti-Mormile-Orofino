@@ -32,8 +32,6 @@ public class TenthCardRules extends ExpertRules {
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!= ActionType.STUDENT_FROM_ENTRANCE_TO_DINING)
-			return false;
 		if(action.getInteger()==-1) { // user doesn't want to move again
 			getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 			return true;

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.rules;
 
-
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
@@ -10,6 +9,8 @@ import it.polimi.ingsw.model.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Rules implements Serializable {
 
@@ -41,6 +42,11 @@ public class Rules implements Serializable {
 	}
 
 	public boolean doAction(Action action){
+		// check if he can do the action
+		List<ActionType> possibleAction = nextPossibleActions().getActionsList()
+				.stream().map(Action::getActionType).collect(Collectors.toList());
+		if(!possibleAction.contains(action.getActionType()))
+			return false;
 		boolean returnValue = false;
 		switch (action.getActionType()) {
 			case MOVE_STUDENT_TO_DININGROOM:
@@ -66,13 +72,7 @@ public class Rules implements Serializable {
 			return false;
 		}
 
-		try {
-			getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
-		} catch (SpecificStudentNotFoundException e) {
-			System.out.println(e.getMessage());
-			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
-			return false;
-		}
+		getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
 		controlTeacher();
 		return true;
 	}
@@ -122,15 +122,10 @@ public class Rules implements Serializable {
 
 
 	protected void calculateInfluence() {
-		int currentMother = game.getIslandHandler().getMotherNature();
 		Island currentIsland = null;
-		try {
-			currentIsland = game.getIslandHandler().getIslandByID(currentMother);
-			currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
-			game.getIslandHandler().mergeIsland();
-		} catch (SpecificIslandNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
+		currentIsland = game.getIslandHandler().getCurrentIsland();
+		currentIsland.calculateInfluence(game.getTeacherHandler(), true, null,null);
+		game.getIslandHandler().mergeIslands();
 	}
 
 	protected void controlTeacher() {

@@ -3,8 +3,6 @@ package it.polimi.ingsw.server.rules.characters;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.server.rules.ExpertRules;
-import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
-import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
 public class SixthCardRules extends ExpertRules {
 	/**

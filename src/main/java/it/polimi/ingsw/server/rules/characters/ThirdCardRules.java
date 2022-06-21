@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
-import it.polimi.ingsw.util.exception.SpecificCharacterNotFoundException;
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
 public class ThirdCardRules extends ExpertRules {
@@ -28,16 +27,14 @@ public class ThirdCardRules extends ExpertRules {
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.DOUBLE_INFLUENCE)
-			return false;
 		Island chosedIsland = null;
 		try {
 			chosedIsland = game.getIslandHandler().getIslandByID(action.getInteger());
 			if (islandHaveNoEntry(chosedIsland))
 				restoreNoEntry();
-			game.getIslandHandler().mergeIsland();
+			game.getIslandHandler().mergeIslands();
 		} catch (SpecificIslandNotFoundException e) {
-			System.out.println(e.getMessage());
+			return false;
 		}
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 		return true;

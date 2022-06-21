@@ -33,8 +33,6 @@ public class SeventhCardRules extends ExpertRules {
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!= ActionType.STUDENT_FROM_CARD_TO_ENTRANCE)
-			return false;
 		if(action.getInteger()==-1) { // user doesn't want to move again
 			getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 			return true;
@@ -52,5 +50,4 @@ public class SeventhCardRules extends ExpertRules {
 			getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 		return true;
 	}
-
 }

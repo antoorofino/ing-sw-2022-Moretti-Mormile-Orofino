@@ -6,22 +6,16 @@ import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.util.exception.StudentNotPresentException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class CharacterTest {
     Character character;
-
-    @BeforeEach
-    public void setUp() {
-
-    }
-
 
     @AfterEach
     public void tearDown() {
@@ -61,7 +55,8 @@ public class CharacterTest {
     }
 
     @Test
-    public void StudentsTest(){
+    public void studentsTest(){
+        // create e initialise character card
         Rules r = new Rules(new GameModel(new GameListInfo("name", GameMode.BASIC,3)));
         character = new Character("name1","description1",1,0,r);
         ArrayList<Piece> students = new ArrayList<>();
@@ -69,22 +64,17 @@ public class CharacterTest {
         students.add(Piece.FROG);
         students.add(Piece.FAIRY);
         character.addStudents(students);
+
+        // check students on card
         assertEquals(students,character.getStudents());
+        // remove student from card
         try {
             character.delStudent(Piece.FROG);
-        } catch (StudentNotPresentException e) {
-            e.printStackTrace();
-        } catch (SpecificStudentNotFoundException ignored) {
+        } catch (StudentNotPresentException | SpecificStudentNotFoundException e) {
+            fail();
         }
         students.remove(Piece.FROG);
         assertEquals(students,character.getStudents());
-
-        try {
-            character.delStudent(Piece.UNICORN);
-        } catch (StudentNotPresentException e) {
-            e.printStackTrace();
-        } catch (SpecificStudentNotFoundException ignored) {
-        }
     }
 
     @Test
@@ -94,8 +84,8 @@ public class CharacterTest {
         assertEquals(1,character.getCost());
         character.increaseCost();
         assertEquals(2,character.getCost());
+        // increase only first time
+        character.increaseCost();
+        assertEquals(2,character.getCost());
     }
-
-
-
 }

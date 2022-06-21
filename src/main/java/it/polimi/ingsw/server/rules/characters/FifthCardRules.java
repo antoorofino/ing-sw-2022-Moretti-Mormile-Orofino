@@ -25,8 +25,6 @@ public class FifthCardRules extends ExpertRules {
 	}
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.NO_INFLUENCE)
-			return false;
 		try {
 			game.getIslandHandler().getIslandByID(action.getInteger()).addFlagNoInfluence();
 			getCurrentPlayer().getActiveCharacter().removeIslandFlag();
@@ -36,5 +34,4 @@ public class FifthCardRules extends ExpertRules {
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
 		return true;
 	}
-
 }

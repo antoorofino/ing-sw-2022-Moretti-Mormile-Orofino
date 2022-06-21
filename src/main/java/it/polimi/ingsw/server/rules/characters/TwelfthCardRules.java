@@ -27,7 +27,7 @@ public class TwelfthCardRules extends ExpertRules {
 
 	@Override
 	protected boolean activateCharacter(Action action){
-		if(action.getActionType()!=ActionType.STUDENT_FROM_DINING_TO_BAG)
+		if(action.getPrincipalPiece() == null)
 			return false;
 		for (Player p: game.getPlayerHandler().getPlayers()) {
 			for(int i=0;i<3;i++){
