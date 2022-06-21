@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.DelayAction;
+import it.polimi.ingsw.client.gui.utils.GUISwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -58,5 +59,6 @@ public class GameStartPaneController {
 
     public void onCloseAlertClicked() {
         closeAlertPane(true);
+        GUISwitcher.getInstance().getMineBoardController().activate();
     }
 }

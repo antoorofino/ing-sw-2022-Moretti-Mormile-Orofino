@@ -17,6 +17,9 @@ public class GUISwitcher {
     private LobbySceneController lobbySceneController;
     private PlayerInfoSceneController playerInfoSceneController;
     private SceneController lastController;
+
+    private MineBoardController mineBoardController;
+
     private GUISwitcher(){
     }
 
@@ -49,6 +52,8 @@ public class GUISwitcher {
         return playerInfoSceneController;
     }
 
+    public MineBoardController getMineBoardController() { this.primaryStage.setResizable(false); return mineBoardController; }
+
     public void initialise(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
@@ -57,6 +62,7 @@ public class GUISwitcher {
         this.disconnectedSceneController = (DisconnectedSceneController) loadController("disconnectedScene");
         this.lobbySceneController = (LobbySceneController) loadController("lobbyScene");
         this.playerInfoSceneController = (PlayerInfoSceneController) loadController("playerInfoScene");
+        this.mineBoardController = (MineBoardController) loadController("mineBoard");
     }
 
     private SceneController loadController(String fxmlFileName) {

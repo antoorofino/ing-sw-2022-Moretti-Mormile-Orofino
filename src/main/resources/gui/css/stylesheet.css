@@ -8,6 +8,11 @@
     -fx-background-size: stretch, auto;
 }
 
+.board{
+    -fx-background-image: url("../images/plancia.png");
+    -fx-background-size: stretch, auto;
+}
+
 .btn,
 .btn-white,
 .btn-blue,
@@ -177,8 +182,11 @@
     -fx-opacity: 0.3;
 }
 
+.student-green-active :selected,
+.student-green-active:hover,
 .setting-list-view .list-cell:selected,
-.setting-list-view .list-cell:hover {
+.setting-list-view .list-cell:hover,
+.student-green-select{
     -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
 }
 
@@ -203,3 +211,21 @@
     -fx-background-color: rgba(255,255,255,0.6);
 }
 
+.plancia{
+    -fx-background-image: url("../images/plancia2.png");
+    -fx-background-size: stretch, auto;
+}
+
+.student-green-background{
+    -fx-background-image: url("../images/student_green.png");
+    -fx-background-size: stretch, auto;
+}
+
+
+.student-green-active{
+    -fx-opacity: 1;
+}
+
+.student-green-disable{
+    -fx-opacity: 0;
+}

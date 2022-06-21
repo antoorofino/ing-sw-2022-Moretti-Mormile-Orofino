@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -58,10 +59,16 @@ public class GUIView extends Application implements View {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Eriantys");
-        stage.setMinHeight(800.0);
+        /*stage.setMinHeight(800.0);
         stage.setMinWidth(1200.0);
         stage.setHeight(800.0);
-        stage.setWidth(1200.0);
+        stage.setWidth(1200.0);*/
+        //stage.getIcons().add();
+        //stage.getIcons().add(new Image(getClass().getResourceAsStream("")));
+        stage.setMinHeight(600.0);
+        stage.setMinWidth(900.0);
+        stage.setHeight(600.0);
+        stage.setWidth(900.0);
         stage.setScene(new Scene(new Group()));
         switcher.initialise(stage);
         switcher.setDefaultController();

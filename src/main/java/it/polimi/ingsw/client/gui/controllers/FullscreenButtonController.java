@@ -15,6 +15,10 @@ public class FullscreenButtonController {
     @FXML
     public ImageView buttonExit;
 
+    /**
+     * initialize button that it will be used to set full screen or exit from full screen
+     *
+     */
     @FXML
     public void initialize(){
         buttonEnter.fitWidthProperty().bind(pane.prefWidthProperty());

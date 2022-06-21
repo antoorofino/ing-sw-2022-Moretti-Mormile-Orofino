@@ -18,6 +18,10 @@ public class AlertPaneController {
     @FXML
     public ImageView alertClose;
 
+    /**
+     * Close  alert pane
+     * @param force explain if is necessary to close alert pane
+     */
     public void closeAlertPane(Boolean force) {
         if (force) {
             alertPane.setVisible(false);
@@ -28,6 +32,10 @@ public class AlertPaneController {
         });
     }
 
+    /**
+     * show panel for error
+     * @param errorMessage message of error
+     */
     public void showError(String errorMessage) {
         alertPane.setVisible(false);
         alertClose.setVisible(true);
@@ -37,6 +45,10 @@ public class AlertPaneController {
         alertPane.setVisible(true);
     }
 
+    /**
+     * Show loading pane
+     * @param loadingMessage message of loading
+     */
     public void showLoading(String loadingMessage) {
         alertPane.setVisible(false);
         alertClose.setVisible(false);
@@ -46,6 +58,9 @@ public class AlertPaneController {
         alertPane.setVisible(true);
     }
 
+    /**
+     * forcing close alert pane, the method is called when click on the icon that close alert pane
+     */
     public void onCloseAlertClicked() {
         closeAlertPane(true);
     }

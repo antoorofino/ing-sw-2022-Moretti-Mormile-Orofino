@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:id="alertPane" fx:controller="it.polimi.ingsw.client.gui.controllers.AlertPaneController" prefHeight="200.0" prefWidth="200.0" styleClass="blur" stylesheets="@../css/stylesheet.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="alertPane" prefHeight="200.0" prefWidth="200.0" styleClass="blur" stylesheets="@../css/stylesheet.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.AlertPaneController">
     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="blur-2" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
         <StackPane prefHeight="250.0" prefWidth="1000.0">
             <ImageView fx:id="loadingImage" fitHeight="177.0" fitWidth="231.0" pickOnBounds="true" preserveRatio="true" visible="false">
