@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.cli.*;
+import it.polimi.ingsw.client.cli.util.AnsiBackColor;
+import it.polimi.ingsw.client.cli.util.AnsiColor;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
@@ -19,6 +21,10 @@ public class CLIView implements View{
 	private int currentRow;
 	private int currentColumn;
 
+	/**
+	 * Constructor: build CLIView
+	 * create new Scanner from standard input
+	 */
 	public CLIView() {
 		this.scanner = new Scanner(System.in);
 	}
@@ -35,7 +41,7 @@ public class CLIView implements View{
 		String serverPort;
 		int portNumber = 0;
 		boolean correct = false;
-		CLIGameSettings.drawTitle(AnsiColor.ANSI_BRIGHT_BLUE,AnsiBackColor.ANSI_DEFAULT);
+		CLIGame.drawTitle(AnsiColor.ANSI_BRIGHT_BLUE, AnsiBackColor.ANSI_DEFAULT);
 		currentRow = 21;
 		currentColumn = 64;
 		do {
@@ -77,11 +83,13 @@ public class CLIView implements View{
 
 	@Override
 	public void setPlayerId(String playerId) {
-		//System.out.println(" Your player identifier is: " +  playerId);
 		this.playerId = playerId;
 		askLobbyOrNew();
 	}
 
+	/**
+	 * Asks to join a game or create one
+	 */
 	private void askLobbyOrNew(){
 		boolean correct;
 		do {
@@ -101,6 +109,9 @@ public class CLIView implements View{
 		} while (!correct);
 	}
 
+	/**
+	 * Asks the settings of the new game: name, number of players and mode
+	 */
 	private void askGameSettings(){
 		boolean correct = false;
 		GameMode gameMode = null;
@@ -119,8 +130,7 @@ public class CLIView implements View{
 		} while (!correct);
 		correct = false;
 		do {
-			System.out.print(" Enter number of players: ");
-			numPlayers = getNumber();
+			numPlayers = getNumber(" Enter number of players: ");
 			setCursor();
 			if (InputValidator.isNumberBetween(numPlayers, 2, 3))
 				correct = true;
@@ -224,7 +234,6 @@ public class CLIView implements View{
 		serverHandler.send(new SetTowerColor(playerId,chosenColor));
 	}
 
-
 	@Override
 	public void askAssistantCard(List<AssistantCard> cards,GameModel game) {
 		int chosenID;
@@ -236,8 +245,7 @@ public class CLIView implements View{
 		} else {
 			boolean correct = false;
 			do {
-				System.out.println(" Insert your card value: ");
-				chosenID = getNumber();
+				chosenID = getNumber(" Insert your card value: ");
 				chosenCard = InputValidator.isIDBetween(chosenID, cards);
 				if (chosenCard != null){
 					System.out.println(" Chosen card: "+ chosenCard);
@@ -259,16 +267,18 @@ public class CLIView implements View{
 		Action chosenAction = null;
 		ActionType action = ActionType.END;
 		boolean correct = false;
+
 		if(isInvalidAction)
 			showErrorMessage("Invalid action. Try again.");
+
 		if (roundActions.getActionsList().size() == 1) { // only one possible action
 			action = roundActions.getActionsList().get(0).getActionType();
 			correct = true;
 		}
+
 		while(!correct) {
 			showPossibleActions(roundActions);
-			System.out.print(" -> ");
-			num = getNumber();
+			num = getNumber( "Enter the number of the action ");
 			if (InputValidator.isValidAction(num, roundActions)) {
 				action = roundActions.getActionsList().get(num).getActionType();
 				correct = true;
@@ -326,6 +336,10 @@ public class CLIView implements View{
 		serverHandler.send(new SetAction(nickname, chosenAction));
 	}
 
+	/**
+	 * Asks if you want to continue the moves of the character cards
+	 * @return the answer
+	 */
 	private boolean wantToContinue(){
 		String response;
 		while(true) {
@@ -340,6 +354,11 @@ public class CLIView implements View{
 		}
 	}
 
+	/**
+	 * Asks for the color of the piece
+	 * @param string contains the message to be printed
+	 * @return Piece of chosen color
+	 */
 	private Piece getColorInput(String string) {
 		Piece piece;
 		while(true) {
@@ -352,12 +371,14 @@ public class CLIView implements View{
 		}
 	}
 
-	private int getNumber(String req){
-		System.out.println(req);
-		return getNumber();
-	}
-
-	private int getNumber() {
+	/**
+	 * Asks for a number
+	 * @param string contains the message to be printed
+	 * @return selected number
+	 */
+	private int getNumber(String string){
+		System.out.println(string);
+		System.out.print(" -> ");
 		int num;
 		while (true) {
 			String stringRead = scanner.nextLine();
@@ -392,10 +413,6 @@ public class CLIView implements View{
 		serverHandler.send(new SelectGameMessage(playerId,gameName));
 	}
 
-	/**
-	 * @param game the game model
-	 * @param firstPlayerNickname the nickname of first player to play
-	 */
 	@Override
 	public void showGameStart(GameModel game, String firstPlayerNickname) {
 		System.out.println(" The players will be " + game.getPlayerHandler().getPlayersNickName());
@@ -410,6 +427,10 @@ public class CLIView implements View{
 		serverHandler.send(new AskGameListMessage(playerId));
 	}
 
+	/**
+	 * Print possible actions
+	 * @param roundActions contains the list of possible actions
+	 */
 	private void showPossibleActions(RoundActions roundActions) {
 		System.out.println(" Your possible actions are: ");
 		int i = 0;
@@ -424,7 +445,6 @@ public class CLIView implements View{
 		clear();
 		printGame(game,null);
 	}
-
 
 	@Override
 	public void showLastRound() {
@@ -457,10 +477,19 @@ public class CLIView implements View{
 		showErrorMessage("Unable to connect to the server");
 	}
 
+	/**
+	 *
+	 * @param errorMessage
+	 */
 	private void showErrorMessage(String errorMessage) {
 		System.out.println(" Error: "+ errorMessage);
 	}
 
+	/**
+	 *
+	 * @param game
+	 * @param possibleCards
+	 */
 	protected void printGame(GameModel game, List<AssistantCard> possibleCards){
 		CLIGame cliGame = new CLIGame(game,possibleCards,playerId);
 		cliGame.display();
@@ -476,10 +505,16 @@ public class CLIView implements View{
 		}
 	}
 
+	/**
+	 * Cleans the screen
+	 */
 	private void clear(){
 		System.out.print("\033[H\033[2J"); // clear screen
 	}
 
+	/**
+	 * Sets the cursor to the next line
+	 */
 	private void setCursor(){
 		currentRow++;
 		System.out.print("\u001b[" + currentRow +";" + currentColumn + "H"); // muove cursore

@@ -71,8 +71,4 @@ public class Configurator {
         }
         return characters;
     }
-
-    public static boolean isDebug(){
-        return Configurator.debug;
-    }
 }
