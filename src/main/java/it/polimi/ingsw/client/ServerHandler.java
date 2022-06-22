@@ -19,6 +19,10 @@ public class ServerHandler implements NetworkHandler {
 	private final Object lock;
 	private boolean isConnected;
 
+	/**
+	 * Constructor: build server handler
+	 * @param view the linked view
+	 */
 	public ServerHandler(View view){
 		this.lock = new Object();
 		this.isConnected = false;
@@ -27,7 +31,6 @@ public class ServerHandler implements NetworkHandler {
 
 	/**
 	 * Sets connection to the specified server
-	 *
 	 * @param serverIP IP address of the server
 	 */
 	public void setConnection(String serverIP,int port) {
@@ -48,7 +51,6 @@ public class ServerHandler implements NetworkHandler {
 	/**
 	 * Starts listening for server messages and execute them client-side
 	 */
-
 	public void startListening() {
 		while (isConnected) {
 			try {
@@ -64,8 +66,7 @@ public class ServerHandler implements NetworkHandler {
 
 	/**
 	 * Checks the connection status
-	 *
-	 * @return True if it is connected, otherwise false
+	 * @return true if it is connected, otherwise false
 	 */
 	public boolean isConnected() {
 		return isConnected;
@@ -73,7 +74,6 @@ public class ServerHandler implements NetworkHandler {
 
 	/**
 	 * Sends a message
-	 *
 	 * @param message The message to be sent
 	 */
 	public void send(Message message) {

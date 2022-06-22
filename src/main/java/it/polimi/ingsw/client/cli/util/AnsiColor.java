@@ -2,6 +2,9 @@ package it.polimi.ingsw.client.cli.util;
 
 import it.polimi.ingsw.model.Piece;
 
+/**
+ * Enum class for ansi color codes
+ */
 public enum AnsiColor {
 	ANSI_BLACK("\u001B[30m"),
 	ANSI_RED  ("\u001B[31m"),
@@ -21,13 +24,21 @@ public enum AnsiColor {
 	ANSI_BRIGHT_WHITE("\u001B[97m"),
 	ANSI_DEFAULT("\u001B[0m");
 
-
 	private final String code;
 
+	/**
+	 * Constructor: build ansi code
+	 * @param code ansi code
+	 */
 	AnsiColor(String code){
 		this.code = code;
 	}
 
+	/**
+	 * Get ansi color from piece
+	 * @param p the piece
+	 * @return the color code of the piece
+	 */
 	public static AnsiColor getAnsiByPiece(Piece p){
 		switch(p){
 			case UNICORN:
@@ -44,6 +55,10 @@ public enum AnsiColor {
 		return null;
 	}
 
+	/**
+	 * Get ansi code from enum
+	 * @return the ansi code
+	 */
 	public String getCode(){
 		return code;
 	}

@@ -6,7 +6,16 @@ import it.polimi.ingsw.model.Piece;
 
 import java.util.Map;
 
+/**
+ * Creates a matrix of characters that contains an island
+ */
 public class CLIIsland extends CLIMatrix {
+
+	/**
+	 * Constructor: build island
+	 * @param mother true if mother is on the island
+	 * @param id the island id
+	 */
 	public CLIIsland(boolean mother,int id) {
 		super(17, 7,mother? AnsiColor.ANSI_YELLOW : AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		drawText("    ┌───────┐",1,0,0);
@@ -16,9 +25,17 @@ public class CLIIsland extends CLIMatrix {
 		drawText("└─┐           ┌─┘",1,4,0);
 		drawText("  └─┐       ┌─┘",1,5,0);
 		drawText("    └───────┘",1,6,0);
-		drawId(id);
+		// draw id
+		if(id > 9){
+			elements[1][10].symbol = String.valueOf(id /10).charAt(0);
+		}
+		elements[1][11].symbol = String.valueOf(id %10).charAt(0);
 	}
 
+	/**
+	 * Draw students on the island
+	 * @param students array of students
+	 */
 	public void addStudents(Map<Piece, Integer> students) {
 		final int[][] studentsPositions = { { 2, 4 }, { 2, 9 }, { 3, 3 }, { 3, 10 }, { 4, 6 }};
 		int i = 0;
@@ -37,13 +54,10 @@ public class CLIIsland extends CLIMatrix {
 		}
 	}
 
-	protected void drawId(int id){
-		if(id > 9){
-			elements[1][10].symbol = String.valueOf(id /10).charAt(0);
-		}
-		elements[1][11].symbol = String.valueOf(id %10).charAt(0);
-	}
-
+	/**
+	 * Draw name of the island owner
+	 * @param owner the owner's name
+	 */
 	public void drawOwner(String owner){
 		this.drawText(owner.substring(0,4),1,height/2,2*width/3);
 	}
