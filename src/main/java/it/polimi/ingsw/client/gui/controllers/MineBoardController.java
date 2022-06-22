@@ -44,15 +44,18 @@ public class MineBoardController extends SceneController{
     public void moveToRoom(){
 
         //HP la sala sia vuota
-        size++;
-        String id="#";
-        if(selectedPiece.getStyleClass().contains("student-green-background"))
-            id = id + "g";
-        id = id +size;
-        GridPane firstFree = (GridPane) s.getRoot().lookup(id);
-        firstFree.getStyleClass().add("student-green-background");
-        selectedPiece.getStyleClass().clear();
-        selectedPiece=null;
+        if(selectedPiece!=null){
+            size++;
+            String id="#";
+            if(selectedPiece.getStyleClass().contains("student-green-background"))
+                id = id + "g";
+            id = id +size;
+            GridPane firstFree = (GridPane) s.getRoot().lookup(id);
+            firstFree.getStyleClass().add("student-green-background");
+            selectedPiece.getStyleClass().clear();
+            selectedPiece=null;
+        }
+
 
     }
 
