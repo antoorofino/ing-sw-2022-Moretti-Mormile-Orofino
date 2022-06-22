@@ -8,11 +8,19 @@ import it.polimi.ingsw.model.Player;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Creates a matrix of characters that contains a player's board
+ */
 public class CLIBoard extends CLIMatrix {
 	private final int entranceSize = 6;
 	private final int teacherSize = 5;
 	private String uuid;
 
+	/**
+	 * Constructor: build player's board
+	 * @param uuid the player id
+	 * @param width the board width
+	 */
 	public CLIBoard(String uuid,int width) {
 		super(width, 11, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		this.uuid = uuid;
@@ -23,6 +31,10 @@ public class CLIBoard extends CLIMatrix {
 		drawColumn(width-teacherSize,"╦╩╠═║╬");
 	}
 
+	/**
+	 * Draw the students at the entrance on the board
+	 * @param students the student array
+	 */
 	public void addPieceEntrance(ArrayList<Piece> students){
 		int row,column;
 		row  = 1;
@@ -39,6 +51,10 @@ public class CLIBoard extends CLIMatrix {
 		}
 	}
 
+	/**
+	 * Draw the students in the dining room on the board
+	 * @param students the student map
+	 */
 	public void drawDiningRoom(Map<Piece,Integer> students){
 		for(Piece p: students.keySet()){
 			for(int i=2;i<students.get(p)*3;i+=3){
@@ -48,6 +64,10 @@ public class CLIBoard extends CLIMatrix {
 		}
 	}
 
+	/**
+	 * Draws the teachers owned by the player
+	 * @param teachers the teacher map
+	 */
 	public void drawTeachers(Map<Piece, Player> teachers){
 		for(Piece p: teachers.keySet()){
 			if(teachers.get(p).getId().equals(uuid)) { // possiedo il professore
@@ -57,6 +77,11 @@ public class CLIBoard extends CLIMatrix {
 		}
 	}
 
+	/**
+	 * Returns the row number for each student
+	 * @param p the student
+	 * @return the row number of specified student
+	 */
 	protected int getPiecePosition(Piece p){
 		switch(p){
 			case FROG:

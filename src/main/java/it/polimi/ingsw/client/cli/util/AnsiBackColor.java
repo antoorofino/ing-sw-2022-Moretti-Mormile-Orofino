@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.cli.util;
 
+/**
+ * Enum class for ansi backcolor codes
+ */
 public enum AnsiBackColor {
 	ANSI_BG_BLACK( "\u001B[40m"),
 	ANSI_BG_RED  ( "\u001B[41m"),
@@ -19,13 +22,20 @@ public enum AnsiBackColor {
 	ANSI_BRIGHT_BG_WHITE( "\u001B[107m"),
 	ANSI_DEFAULT("\u001B[0m");
 
-
 	private final String code;
 
+	/**
+	 * Constructor: build ansi code
+	 * @param code ansi code
+	 */
 	AnsiBackColor(String code){
 		this.code = code;
 	}
 
+	/**
+	 * Get ansi code from enum
+	 * @return the ansi code
+	 */
 	public String getCode(){
 		return code;
 	}

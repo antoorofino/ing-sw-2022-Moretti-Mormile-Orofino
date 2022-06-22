@@ -478,19 +478,19 @@ public class CLIView implements View{
 	}
 
 	/**
-	 *
-	 * @param errorMessage
+	 * Show an error message
+	 * @param errorMessage the message to show
 	 */
 	private void showErrorMessage(String errorMessage) {
 		System.out.println(" Error: "+ errorMessage);
 	}
 
 	/**
-	 *
-	 * @param game
-	 * @param possibleCards
+	 * Updates the game status on the screen
+	 * @param game the game model
+	 * @param possibleCards the assistant cards that the player can use
 	 */
-	protected void printGame(GameModel game, List<AssistantCard> possibleCards){
+	private void printGame(GameModel game, List<AssistantCard> possibleCards){
 		CLIGame cliGame = new CLIGame(game,possibleCards,playerId);
 		cliGame.display();
 
@@ -498,7 +498,7 @@ public class CLIView implements View{
 			System.out.println(" -> It is your turn");
 		else
 			System.out.println(" -> It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() +"'s turn");
-		// TODO: non mi convince
+
 		try {
 			System.in.read(new byte[System.in.available()]);
 		} catch (IOException ignored) {

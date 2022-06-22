@@ -3,12 +3,21 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.cli.util.AnsiBackColor;
 import it.polimi.ingsw.client.cli.util.AnsiColor;
 
+/**
+ * Creates a matrix of empty characters
+ */
 public class CLIMatrix {
 	int width;
 	int height;
-
 	CLIElement[][] elements;
 
+	/**
+	 * Constructor: build empty matrix
+	 * @param width matrix width
+	 * @param height matrix height
+	 * @param color matrix character color
+	 * @param backColor matrix backcolor
+	 */
 	public CLIMatrix(int width, int height, AnsiColor color, AnsiBackColor backColor) {
 		this.width = width;
 		this.height = height;
@@ -16,6 +25,9 @@ public class CLIMatrix {
 		reset(color,backColor);
 	}
 
+	/**
+	 * Draw matrix on system out
+	 */
 	public void display(){
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
@@ -25,6 +37,11 @@ public class CLIMatrix {
 		}
 	}
 
+	/**
+	 * Initialize the empty matrix
+	 * @param color the matrix's character color
+	 * @param backColor the matrix backcolor
+	 */
 	public void reset(AnsiColor color,AnsiBackColor backColor){
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
@@ -35,6 +52,13 @@ public class CLIMatrix {
 		}
 	}
 
+	/**
+	 * Write some text inside the character matrix
+	 * @param text the text to be written
+	 * @param line number of lines of text to do
+	 * @param row row of the matrix where to write the text
+	 * @param column column of the matrix where to write the text
+	 */
 	public void drawText(String text,int line,int row,int column){
 		int sublength = text.length();
 		if(line!=0)
@@ -46,7 +70,12 @@ public class CLIMatrix {
 		}
 	}
 
-
+	/**
+	 * Copy character matrix within the current
+	 * @param y_anchor x coordinate where to start
+	 * @param x_anchor y coordinate where to start
+	 * @param copy item to copy
+	 */
 	public void drawElement(int y_anchor, int x_anchor,CLIMatrix copy){
 		for(int i = 0; i < copy.height; i++){
 			for(int j = 0; j < copy.width; j++){
@@ -58,6 +87,10 @@ public class CLIMatrix {
 		}
 	}
 
+	/**
+	 * Draw border to the matrix
+	 * @param charSet character set to use
+	 */
 	protected void drawBorder(String charSet){
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -84,18 +117,30 @@ public class CLIMatrix {
 		}
 	}
 
-	protected void drawLine(int line,int leftborder,int rightborder,String charSet) {
+	/**
+	 * Draw horizontal line in the matrix
+	 * @param row row of the matrix where to write the text
+	 * @param leftborder column to start the row from
+	 * @param rightborder column in which to end the row
+	 * @param charSet character set to use
+	 */
+	protected void drawLine(int row,int leftborder,int rightborder,String charSet) {
 		for (int j = leftborder; j < rightborder; j++) {
 			if (j == leftborder) {
-				elements[line][j].symbol = charSet.charAt(0);
+				elements[row][j].symbol = charSet.charAt(0);
 			} else if (j != rightborder - 1) {
-				elements[line][j].symbol = charSet.charAt(1);
+				elements[row][j].symbol = charSet.charAt(1);
 			} else {
-				elements[line][j].symbol = charSet.charAt(2);
+				elements[row][j].symbol = charSet.charAt(2);
 			}
 		}
 	}
 
+	/**
+	 * Draw vertical line in the matrix
+	 * @param column column in which to draw the row
+	 * @param charSet character set to use
+	 */
 	protected void drawColumn(int column,String charSet){
 		for (int i = 0; i < height; i++) {
 			if (i == 0) {
@@ -110,5 +155,4 @@ public class CLIMatrix {
 			}
 		}
 	}
-
 }

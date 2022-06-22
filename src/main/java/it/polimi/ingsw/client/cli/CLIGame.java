@@ -10,8 +10,17 @@ import it.polimi.ingsw.util.exception.PlayerException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Creates a matrix of characters that contains the full game
+ */
 public class CLIGame extends CLIMatrix{
 
+	/**
+	 * Constructor: build game's board
+	 * @param game the game model received from the server
+	 * @param possibleCards the assistant cards that can be played by the player
+	 * @param playerId the player id
+	 */
 	public CLIGame(GameModel game, List<AssistantCard> possibleCards,String playerId) {
 		super(195,33, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 
@@ -53,7 +62,6 @@ public class CLIGame extends CLIMatrix{
 		}
 		int i = 10;
 		// draw assistant card
-		// FIXME: quello che dicevo ad anto per gli assistenti utilizzati
 		drawText("Your assistance cards:",1,26,5);
 		for(AssistantCard card: deck){
 			cliAssistanceCard = CLIAssistantCard(card, possibleCards == null || possibleCards.contains(card));
@@ -75,6 +83,11 @@ public class CLIGame extends CLIMatrix{
 		}
 	}
 
+	/**
+	 * Draw the main title
+	 * @param color color of the title
+	 * @param backColor backcolor of the title
+	 */
 	public static void drawTitle(AnsiColor color, AnsiBackColor backColor) {
 		CLIMatrix matrix = new CLIMatrix(200, 20, color, backColor);
 		int x = 60;
@@ -90,7 +103,14 @@ public class CLIGame extends CLIMatrix{
 		matrix.display();
 	}
 
-	public CLIMatrix CLIPlayer(Player player, TeachersHandler teachersHandler, boolean mainPlayer) {
+	/**
+	 * Draw info about the player
+	 * @param player the player
+	 * @param teachersHandler the teachers' owner
+	 * @param mainPlayer true if is the main player
+	 * @return matrix containing the player's table
+	 */
+	private CLIMatrix CLIPlayer(Player player, TeachersHandler teachersHandler, boolean mainPlayer) {
 		CLIMatrix cliPlayer = new CLIMatrix(40, 14, AnsiColor.ANSI_DEFAULT,AnsiBackColor.ANSI_DEFAULT);
 		CLIBoard cliBoard = new CLIBoard(player.getId(),mainPlayer? 40 : 35);
 		cliBoard.addPieceEntrance(player.getPlayerBoard().getStudentsEntrance());
@@ -104,7 +124,13 @@ public class CLIGame extends CLIMatrix{
 		return cliPlayer;
 	}
 
-	protected CLIMatrix CLIAssistantCard(AssistantCard card, boolean playable){
+	/**
+	 * Draws the player's assistant card
+	 * @param card the card to draw
+	 * @param playable true if player can use it
+	 * @return matrix containing the player's card
+	 */
+	private CLIMatrix CLIAssistantCard(AssistantCard card, boolean playable){
 		CLIMatrix cliAssistantCard = new CLIMatrix(9, 6, playable ? AnsiColor.ANSI_DEFAULT : AnsiColor.ANSI_RED,AnsiBackColor.ANSI_DEFAULT);
 		cliAssistantCard.drawBorder("╭╮─╰╯│");
 		cliAssistantCard.drawText("   ○ ",1,2,1);
@@ -115,7 +141,12 @@ public class CLIGame extends CLIMatrix{
 		return cliAssistantCard;
 	}
 
-	protected CLIMatrix CLICloud(Cloud cloud) {
+	/**
+	 * Draws the game's cloud
+	 * @param cloud the cloud to draw
+	 * @return matrix containing the game's cloud
+	 */
+	private CLIMatrix CLICloud(Cloud cloud) {
 		CLIMatrix cliCloud = new CLIMatrix(15, 4, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		cliCloud.drawText("╭─────╮", 1, 0, 3);
 		cliCloud.drawText("╭─╯     ╰───╮", 1, 1, 1);
@@ -134,7 +165,12 @@ public class CLIGame extends CLIMatrix{
 		return cliCloud;
 	}
 
-	protected CLIMatrix CLICharacterCard(Character character) {
+	/**
+	 * Draws the game's character card
+	 * @param character the card to draw
+	 * @return matrix containing the character card
+	 */
+	private CLIMatrix CLICharacterCard(Character character) {
 		CLIMatrix cliCharacterCard = new CLIMatrix(10, 6, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		cliCharacterCard.drawBorder("╭╮─╰╯│");
 		if(character.getID() == 5)
@@ -157,7 +193,12 @@ public class CLIGame extends CLIMatrix{
 		return cliCharacterCard;
 	}
 
-	protected CLIMatrix CLIIslandBoard(IslandsHandler islandsHandler) {
+	/**
+	 * Draws the set of islands
+	 * @param islandsHandler the island handler
+	 * @return matrix containing the set of islands
+	 */
+	private CLIMatrix CLIIslandBoard(IslandsHandler islandsHandler) {
 		CLIMatrix cliIslandBoard = new CLIMatrix(105, 26,AnsiColor.ANSI_DEFAULT,AnsiBackColor.ANSI_DEFAULT);
 		ArrayList<Island> islands = islandsHandler.getIslands();
 		int index = (12 - islandsHandler.getCountsLastMerge())%12; // countsLastMerge
@@ -176,13 +217,13 @@ public class CLIGame extends CLIMatrix{
 				if(island.getSize()==1 || i==1)
 					cliIsland.addStudents(island.getStudentsOnIsland());
 				if(i!=0){
-					x += relativePosition[index][0];
-					y += relativePosition[index][1];
+					y += relativePosition[index][0];
+					x += relativePosition[index][1];
 				}else{
-					x = absolutePositions[index][0];
-					y = absolutePositions[index][1];
+					y = absolutePositions[index][0];
+					x = absolutePositions[index][1];
 				}
-				cliIslandBoard.drawElement(x,y,cliIsland);
+				cliIslandBoard.drawElement(y,x,cliIsland);
 				index = (index + 1)%12;
 			}
 		}
