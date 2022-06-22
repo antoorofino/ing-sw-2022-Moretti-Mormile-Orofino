@@ -8,10 +8,7 @@
     -fx-background-size: stretch, auto;
 }
 
-.board{
-    -fx-background-image: url("../images/plancia.png");
-    -fx-background-size: stretch, auto;
-}
+
 
 .btn,
 .btn-white,
@@ -182,8 +179,6 @@
     -fx-opacity: 0.3;
 }
 
-.student-green-active :selected,
-.student-green-active:hover,
 .setting-list-view .list-cell:selected,
 .setting-list-view .list-cell:hover,
 .student-green-select{
@@ -221,11 +216,48 @@
     -fx-background-size: stretch, auto;
 }
 
-
-.student-green-active{
-    -fx-opacity: 1;
+.student-red-background{
+    -fx-background-image: url("../images/student_red.png");
+    -fx-background-size: stretch, auto;
 }
 
-.student-green-disable{
-    -fx-opacity: 0;
+.student-pink-background{
+    -fx-background-image: url("../images/student_pink.png");
+    -fx-background-size: stretch, auto;
 }
+
+.student-yellow-background{
+    -fx-background-image: url("../images/student_yellow.png");
+    -fx-background-size: stretch, auto;
+}
+
+.student-blue-background{
+    -fx-background-image: url("../images/student_blue.png");
+    -fx-background-size: stretch, auto;
+}
+
+.teacher-green-background{
+    -fx-background-image: url("../images/teacher_green.png");
+    -fx-background-size: stretch, auto;
+}
+
+.teacher-red-background{
+    -fx-background-image: url("../images/teacher_red.png");
+    -fx-background-size: stretch, auto;
+}
+
+.teacher-pink-background{
+    -fx-background-image: url("../images/teacher_pink.png");
+    -fx-background-size: stretch, auto;
+}
+
+.teacher-yellow-background{
+    -fx-background-image: url("../images/teacher_yellow.png");
+    -fx-background-size: stretch, auto;
+}
+
+.teacher-blue-background{
+    -fx-background-image: url("../images/teacher_blue.png");
+    -fx-background-size: stretch, auto;
+}
+

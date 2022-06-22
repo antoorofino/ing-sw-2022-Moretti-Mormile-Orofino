@@ -86,6 +86,6 @@ public class GUISwitcher {
     }
 
     public void setDefaultController() {
-        changeController(homeSceneController);
+        changeController(mineBoardController);
     }
 }

@@ -1,20 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" styleClass="cloud-background" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.MineBoardController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" styleClass="cloud-background" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.MineBoardController">
    <children>
-      <VBox layoutX="185.0" layoutY="176.0" prefHeight="341.0" prefWidth="584.0" spacing="20.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="50.0">
+      <VBox layoutX="17.0" layoutY="54.0" prefHeight="496.0" prefWidth="860.0" spacing="20.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="54.0">
          <children>
-            <AnchorPane prefHeight="377.0" prefWidth="775.0" styleClass="plancia">
+            <AnchorPane prefHeight="373.0" prefWidth="861.0" styleClass="plancia">
                <children>
-                  <GridPane fx:id="green1" layoutX="143.0" layoutY="47.0" prefHeight="35.0" prefWidth="35.0" styleClass="student-green-background" AnchorPane.bottomAnchor="293.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="49.0">
+                  <GridPane layoutX="81.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="81.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="30.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="30.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="81.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="30.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="81.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="30.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="81.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="79.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green1" layoutX="161.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="49.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -22,7 +89,446 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <GridPane layoutX="177.0" layoutY="49.0" prefHeight="35.0" prefWidth="35.0" styleClass="student-green-background" AnchorPane.bottomAnchor="293.0" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="49.0">
+                  <GridPane fx:id="green2" layoutX="203.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green3" layoutX="241.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="239.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green4" layoutX="283.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="279.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green5" layoutX="324.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="319.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green6" layoutX="366.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green7" layoutX="406.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green8" layoutX="447.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green9" layoutX="488.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane fx:id="green10" layoutX="528.0" layoutY="49.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-green-background" AnchorPane.bottomAnchor="290.3333333333333" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="49.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <!-- ########################################################## !-->
+                  <!--  ########################### RED  #########################!-->
+                  <!-- ########################################################## !-->
+                  <GridPane layoutX="159.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="199.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="239.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="239.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="279.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="279.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="319.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="319.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="360.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="400.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="440.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="480.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="520.0" layoutY="109.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-red-background" AnchorPane.bottomAnchor="230.33333333333331" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="109.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <!-- ########################################################## !-->
+                  <!--  ########################## YELLOW  #######################!-->
+                  <!-- ########################################################## !-->
+                  <GridPane layoutX="159.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="199.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="239.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="239.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="279.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="279.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="319.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="319.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="360.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="400.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="440.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="480.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="520.0" layoutY="170.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-yellow-background" AnchorPane.bottomAnchor="169.33333333333331" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="170.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <!-- ########################################################## !-->
+                  <!-- ######################## PINK #############################!-->
+                  <!-- ########################################################## !-->
+                  <GridPane layoutX="159.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="199.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="239.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="239.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="279.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="279.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="319.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="319.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="360.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="400.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="440.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="480.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="520.0" layoutY="231.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-pink-background" AnchorPane.bottomAnchor="108.33333333333331" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="231.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <!-- ########################################################## !-->
+                  <!-- ######################### BLUE ############################!-->
+                  <!-- ########################################################## !-->
+                  <GridPane layoutX="159.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="200.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="240.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="280.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="320.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="361.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="361.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="401.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="441.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="441.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="481.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="481.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="521.0" layoutY="292.0" prefHeight="34.0" prefWidth="34.0" styleClass="student-blue-background" AnchorPane.bottomAnchor="47.333333333333314" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="292.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <!-- ########################################################## !-->
+                  <!-- ####################### TEACHER ###########################!-->
+                  <!-- ########################################################## !-->
+                  <GridPane layoutX="609.0" layoutY="45.0" prefHeight="40.0" prefWidth="40.0" rotate="90.0" styleClass="teacher-green-background" AnchorPane.bottomAnchor="288.3333333333333" AnchorPane.leftAnchor="598.0" AnchorPane.topAnchor="45.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="609.0" layoutY="103.0" prefHeight="40.0" prefWidth="40.0" rotate="90.0" styleClass="teacher-red-background" AnchorPane.bottomAnchor="227.33333333333331" AnchorPane.leftAnchor="598.0" AnchorPane.topAnchor="106.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="609.0" layoutY="164.0" prefHeight="40.0" prefWidth="40.0" rotate="90.0" styleClass="teacher-yellow-background" AnchorPane.bottomAnchor="166.33333333333331" AnchorPane.leftAnchor="598.0" AnchorPane.topAnchor="167.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="609.0" layoutY="225.0" prefHeight="40.0" prefWidth="40.0" rotate="90.0" styleClass="teacher-pink-background" AnchorPane.bottomAnchor="105.33333333333331" AnchorPane.leftAnchor="598.0" AnchorPane.topAnchor="228.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="609.0" layoutY="286.0" prefHeight="40.0" prefWidth="40.0" rotate="90.0" styleClass="teacher-blue-background" AnchorPane.bottomAnchor="45.333333333333314" AnchorPane.leftAnchor="598.0" AnchorPane.topAnchor="288.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
@@ -35,7 +541,7 @@
             <HBox alignment="CENTER" prefHeight="34.0" prefWidth="580.0" spacing="30.0">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#moveToIsland" prefHeight="39.0" prefWidth="99.0" text="Move To Island" textAlignment="CENTER" />
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#moveToRoom" prefHeight="55.0" prefWidth="91.0" text="Move to room" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#moveToRoom" prefHeight="45.0" prefWidth="96.0" text="Move to room" />
                </children>
             </HBox>
          </children>
