@@ -90,6 +90,7 @@
     -fx-background-insets: 0, 3px ;
 }
 
+
 .game-list-view .list-cell:selected,
 .game-list-view .list-cell:hover {
     -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 10, 0, 0, 0);
@@ -181,7 +182,7 @@
 
 .setting-list-view .list-cell:selected,
 .setting-list-view .list-cell:hover,
-.student-green-select{
+.student-select{
     -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
 }
 
