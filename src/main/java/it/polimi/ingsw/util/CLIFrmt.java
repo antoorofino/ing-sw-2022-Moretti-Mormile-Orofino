@@ -47,11 +47,11 @@ public class CLIFrmt {
 		}
 	}
 
-	public static String println(char style,char color, String text) {
-		return getStyle(style) + getColor(color).getCode() + text;
+	public static String print(char style,char color, String text) {
+		return getStyle(style) + getColor(color).getCode() + text + getColor('d').getCode();
 	}
 
-	public static String println(char color, String text) {
+	public static String print(char color, String text) {
 		return getColor(color).getCode() + text;
 	}
 }

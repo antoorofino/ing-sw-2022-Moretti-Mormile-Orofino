@@ -22,7 +22,6 @@ public class Rules implements Serializable {
 
 	/**
 	 * Calculate the next possible action of the current player
-	 *
 	 * @return ArrayList of Action that current player can do
 	 */
 	public RoundActions nextPossibleActions() {
@@ -41,6 +40,11 @@ public class Rules implements Serializable {
 		return nextPossibleActions;
 	}
 
+	/**
+	 *
+	 * @param action
+	 * @return
+	 */
 	public boolean doAction(Action action){
 		// check if he can do the action
 		List<ActionType> possibleAction = nextPossibleActions().getActionsList()
@@ -65,6 +69,11 @@ public class Rules implements Serializable {
 		return returnValue;
 	}
 
+	/**
+	 *
+	 * @param action
+	 * @return
+	 */
 	protected boolean doMoveDiningRoom(Action action) {
 		try {
 			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
@@ -77,6 +86,11 @@ public class Rules implements Serializable {
 		return true;
 	}
 
+	/**
+	 *
+	 * @param action
+	 * @return
+	 */
 	protected boolean doMoveIsland(Action action) {
 		try {
 			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
@@ -95,6 +109,11 @@ public class Rules implements Serializable {
 		return true;
 	}
 
+	/**
+	 *
+	 * @param action
+	 * @return
+	 */
 	protected boolean doMoveMother(Action action){
 		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getInteger()){
 			game.getIslandHandler().moveMotherNature(action.getInteger());
@@ -104,7 +123,11 @@ public class Rules implements Serializable {
 		return false;
 	}
 
-
+	/**
+	 *
+	 * @param action
+	 * @return
+	 */
 	protected boolean doChooseCloud(Action action) {
 		Cloud cloud = null;
 		try {
@@ -120,7 +143,9 @@ public class Rules implements Serializable {
 		return true;
 	}
 
-
+	/**
+	 *
+	 */
 	protected void calculateInfluence() {
 		Island currentIsland = null;
 		currentIsland = game.getIslandHandler().getCurrentIsland();
@@ -128,10 +153,17 @@ public class Rules implements Serializable {
 		game.getIslandHandler().mergeIslands();
 	}
 
+	/**
+	 *
+	 */
 	protected void controlTeacher() {
 		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	protected Player getCurrentPlayer() {
 		return game.getPlayerHandler().getCurrentPlayer();
 	}

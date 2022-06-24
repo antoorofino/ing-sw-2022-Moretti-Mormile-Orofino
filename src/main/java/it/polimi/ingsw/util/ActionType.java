@@ -5,10 +5,11 @@ public enum ActionType {
     MOVE_STUDENT_TO_DININGROOM(GameMode.BASIC," Move student from entrance to dining room"),
     MOVE_MOTHER_NATURE(GameMode.BASIC," Move mother nature"),
     CHOOSE_CLOUD(GameMode.BASIC," Choose a cloud"),
-    END(GameMode.BASIC," Termina turno"), // no command by user
+    END(GameMode.BASIC," End turn"), // no command by user
 
-    CHOOSE_CHARACTER(GameMode.EXPERT," Usa carta personaggio"),
-    ACTIVATED_CHARACTER(GameMode.EXPERT," Buy a character card"), // no command by user
+    CHOOSE_CHARACTER(GameMode.EXPERT," Buy a character card"),
+    ACTIVATED_CHARACTER(GameMode.EXPERT," Activated character card"), // no command by user
+    INFO_CHARACTER(GameMode.EXPERT, " Get info about characters card"),
 
     STUDENT_FROM_CARD_TO_ISLAND(GameMode.EXPERT," Move student from character card to island"),// 1 character
     DOUBLE_INFLUENCE(GameMode.EXPERT," Choose an island you want to resolve like mother nature was there"), // 3 character

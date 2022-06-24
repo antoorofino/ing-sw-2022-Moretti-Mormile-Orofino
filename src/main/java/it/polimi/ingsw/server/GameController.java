@@ -140,6 +140,10 @@ public class GameController {
             //Planning phase
             game.cloudsRefill();
             game.getPlayerHandler().initialiseCurrentPlayerPlanningPhase();
+            // set null lastCardUsed
+            for (Player p:game.getPlayerHandler().getPlayers()) {
+                p.resetLastCard();
+            }
             for(int i = 0; i < game.getPlayerHandler().getNumPlayers(); i++){
                 if (firstMessage) {
                     virtualView.sendToEveryone(new GameStart(game, game.getPlayerHandler().getCurrentPlayer().getNickname()));
@@ -182,13 +186,13 @@ public class GameController {
                             this.wait();
                         }
                     }
-                    virtualView.sendToEveryone(new UpdateGameBoard(game));
                     System.out.println("Il player " + getCurrentPlayer().getNickname() +  " ha effettuato: ");
                     for (Action action : getCurrentPlayer().getRoundActions().getActionsList()) {
                         System.out.print(action.getActionType().toString() + " ");
                     }
                     System.out.println();
                 }
+                virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
         }
         try {

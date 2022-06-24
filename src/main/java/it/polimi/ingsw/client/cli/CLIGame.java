@@ -89,9 +89,9 @@ public class CLIGame extends CLIMatrix{
 	 * @param backColor backcolor of the title
 	 */
 	public static void drawTitle(AnsiColor color, AnsiBackColor backColor) {
-		CLIMatrix matrix = new CLIMatrix(200, 20, color, backColor);
+		CLIMatrix matrix = new CLIMatrix(200, 18, color, backColor);
 		int x = 60;
-		int y = 11;
+		int y = 8;
 		matrix.drawText(" ▄████████▄   ▄████████▄   ▄█    ▄████████  ███▄▄▄▄       ███     ▄██   ▄      ▄████████",1,y,x);
 		matrix.drawText(" ███    ███   ███    ███   ███   ███    ███ ███▀▀▀██▄ ▀█████████▄ ███   ██▄   ███    ███",1,y+1,x);
 		matrix.drawText(" ███    █▀    ███    ███   ███   ███    ███ ███   ███    ▀███▀▀██ ███▄▄▄███   ███    █▀ ",1,y+2,x);
@@ -120,7 +120,7 @@ public class CLIGame extends CLIMatrix{
 		cliPlayer.drawText("Name : " + player.getNickname(),1,0,0);
 		cliPlayer.drawText("Towers: "+ player.getNumOfTowers() + " Coins: " + player.getCoin(),1,12,0);
 		if (player.getLastCardUsed() != null)
-			cliPlayer.drawText("Played card: movements " + player.getLastCardUsed().getCardValue() + " - mother " + player.getLastCardUsed().getMovements(),1,13,0);
+			cliPlayer.drawText("Played card: value " + player.getLastCardUsed().getCardValue() + " - movements " + player.getLastCardUsed().getMovements(),1,13,0);
 		return cliPlayer;
 	}
 

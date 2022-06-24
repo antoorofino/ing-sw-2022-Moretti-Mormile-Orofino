@@ -9,7 +9,6 @@ public interface CVMessage {
 
     /**
      * Execute the request client-side
-     *
      * @param view The recipient component
      */
     void execute(View view);

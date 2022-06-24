@@ -16,7 +16,6 @@ public class FirstCardRules extends ExpertRules
 {
 	/**
 	 * Create the game rules
-	 *
 	 * @param game obj that contains the game status
 	 */
 	public FirstCardRules(GameModel game) {

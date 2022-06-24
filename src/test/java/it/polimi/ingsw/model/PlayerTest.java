@@ -82,6 +82,9 @@ public class PlayerTest {
 		assertThrows(CardException.class,() -> {
 			player.setLastCardUsed(assistantCard);
 		});
+		// reset last card
+		player.resetLastCard();
+		assertNull(player.getLastCardUsed());
 	}
 
 	@Test

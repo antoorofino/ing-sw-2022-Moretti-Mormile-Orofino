@@ -4,10 +4,12 @@ import it.polimi.ingsw.client.cli.*;
 import it.polimi.ingsw.client.cli.util.AnsiBackColor;
 import it.polimi.ingsw.client.cli.util.AnsiColor;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -18,8 +20,7 @@ public class CLIView implements View{
 	private String playerId;
 	private String nickname;
 	private GameListInfo gameInfo;
-	private int currentRow;
-	private int currentColumn;
+	private ArrayList<Character> gameCharacters;
 
 	/**
 	 * Constructor: build CLIView
@@ -27,6 +28,7 @@ public class CLIView implements View{
 	 */
 	public CLIView() {
 		this.scanner = new Scanner(System.in);
+
 	}
 
 	@Override
@@ -36,35 +38,31 @@ public class CLIView implements View{
 
 	@Override
 	public void run() {
-		clear();
+		clearAll();
 		String serverIP;
 		String serverPort;
 		int portNumber = 0;
 		boolean correct = false;
 		CLIGame.drawTitle(AnsiColor.ANSI_BRIGHT_BLUE, AnsiBackColor.ANSI_DEFAULT);
-		currentRow = 21;
-		currentColumn = 64;
 		do {
-			setCursor();
-			System.out.print(CLIFrmt.println('i','d'," Enter the server IP [press enter for default IP]: "));
+			centeredInput(CLIFrmt.print('b','b'," Enter the server IP [press enter for default IP]: "));
 			serverIP = scanner.nextLine();
-			setCursor();
 			if (serverIP.isEmpty()) {
 				correct = true;
 				serverIP = Configurator.getServerIp();
 			}else{
 				if (!InputValidator.isIp(serverIP)){
-					showErrorMessage("Invalid IP. Try again.");
+					showErrorMessage("Invalid IP. Try again.",true,1);
 				}
 				else
 					correct = true;
 			}
 		}while(!correct);
+
 		correct = false;
 		do {
-			System.out.print(" Enter the server port [press enter for default port]: ");
+			centeredInput(CLIFrmt.print('b','b'," Enter the server port [press enter for default port]: "));
 			serverPort = scanner.nextLine();
-			setCursor();
 			if (serverPort.isEmpty()) {
 				correct = true;
 				portNumber = Configurator.getServerPort();
@@ -73,8 +71,7 @@ public class CLIView implements View{
 					correct = true;
 					portNumber = Integer.parseInt(serverPort);
 				} else {
-					showErrorMessage("Invalid port number. Try again.");
-					setCursor();
+					showErrorMessage("Invalid port number. Try again.",true,1);
 				}
 			}
 		} while (!correct);
@@ -94,16 +91,14 @@ public class CLIView implements View{
 		boolean correct;
 		do {
 			correct = true;
-			System.out.print(" Do do you want to create a new game or join an existing one? [n/e]: ");
+			centeredInput(CLIFrmt.print('i','d'," Do do you want to create a new game or join an existing one? [n/e]: "));
 			String preferredMode = scanner.nextLine();
-			setCursor();
 			if ((preferredMode.equalsIgnoreCase("n"))){
 				askGameSettings();
 			} else if ((preferredMode.equalsIgnoreCase("e"))) {
 				serverHandler.send(new AskGameListMessage(playerId));
 			} else {
-				showErrorMessage("Please insert a correct value");
-				setCursor();
+				showErrorMessage("Please insert a correct value",true,1);
 				correct = false;
 			}
 		} while (!correct);
@@ -118,32 +113,29 @@ public class CLIView implements View{
 		String gameName ;
 		int numPlayers = 0;
 		do {
-			System.out.print(" Please insert the game name: ");
+			centeredInput(CLIFrmt.print('d','g'," Please insert the game name: "));
 			gameName = scanner.nextLine();
-			setCursor();
 			if (InputValidator.isWordNotEmpty(gameName)) {
 				correct = true;
 			} else {
-				showErrorMessage("Please insert a correct value");
-				setCursor();
+				showErrorMessage("Please insert a correct value",true,1);
 			}
 		} while (!correct);
 		correct = false;
+
 		do {
-			numPlayers = getNumber(" Enter number of players: ");
-			setCursor();
+			numPlayers = getNumber(CLIFrmt.print('d','g'," Enter number of players: "),true);
 			if (InputValidator.isNumberBetween(numPlayers, 2, 3))
 				correct = true;
 			else{
-				showErrorMessage("Invalid value. Try again.");
-				setCursor();
+				showErrorMessage("Invalid value. Try again.",true,1);
 			}
 		} while (!correct);
 		correct = false;
+
 		do {
-			System.out.print(" Basic mode? [y/n]: ");
+			centeredInput(CLIFrmt.print('d','g'," Basic mode? [y/n]: "));
 			String preferredMode = scanner.nextLine();
-			setCursor();
 			if ((preferredMode.equalsIgnoreCase("n"))) {
 				correct = true;
 				gameMode = GameMode.EXPERT;
@@ -151,8 +143,7 @@ public class CLIView implements View{
 				correct = true;
 				gameMode = GameMode.BASIC;
 			} else {
-				showErrorMessage("Invalid value. Try again.");
-				setCursor();
+				showErrorMessage("Invalid value. Try again.",true,1);
 			}
 		} while (!correct);
 		this.gameInfo = new GameListInfo(gameName,gameMode,numPlayers);
@@ -163,15 +154,13 @@ public class CLIView implements View{
 	public void askNewGameName() {
 		boolean correct = false;
 		do {
-			System.out.print(" The game name is already chosen. Please insert a new one: ");
+			showErrorMessage(" The game name is already chosen. Please insert a new one: ",true,5);
 			String gameName = scanner.nextLine();
-			setCursor();
 			if (InputValidator.isWordNotEmpty(gameName)) {
 				correct = true;
 				serverHandler.send(new NewGameMessage(playerId, new GameListInfo(gameName,gameInfo.getGameMode(),gameInfo.getNumPlayers())));
 			} else {
-				showErrorMessage("Please insert a correct value");
-				setCursor();
+				showErrorMessage("Please insert a correct value",true,1);
 			}
 		} while (!correct);
 	}
@@ -179,19 +168,17 @@ public class CLIView implements View{
 	@Override
 	public void askNickname(boolean isFirstRequest) {
 		if(!isFirstRequest){
-			System.out.println(" This nickname is already chosen. Please insert a new one.");
-			setCursor();
+			centeredPrint(" This nickname is already chosen. Please insert a new one.");
 		}
+
 		boolean correct = false;
 		do {
-			System.out.print(" Enter your nickname: ");
+			centeredInput(" Enter your nickname: ");
 			nickname = scanner.nextLine();
-			setCursor();
 			if (InputValidator.isWordNotEmpty(nickname)) {
 				correct = true;
 			} else {
-				showErrorMessage("Invalid nickname. Try again.");
-				setCursor();
+				showErrorMessage("Invalid nickname. Try again.",true,1);
 			}
 		} while (!correct);
 		serverHandler.send(new SetNickname(playerId, nickname));
@@ -201,33 +188,29 @@ public class CLIView implements View{
 	public void askTowerColor(List<TowerColor> possibleColor, boolean isFirstRequest) {
 		TowerColor chosenColor;
 		String inputColor;
+
 		if (!isFirstRequest) {
-			System.out.println(" This color is already chosen. Please insert a new one");
-			setCursor();
+			centeredPrint(" This color is already chosen. Please insert a new one");
 		}
 		if (possibleColor.size() == 1) {
 			chosenColor = possibleColor.get(0);
-			System.out.println(" Your color will be " + chosenColor.toString());
-			setCursor();
+			centeredPrint(" Your color will be " + chosenColor.toString());
 		} else {
 			boolean correct;
 			do {
-				System.out.print(" Choose your tower color between: ");
+				centeredInput(" Choose your tower color between ( ");
 				for (TowerColor towerColor : possibleColor) {
 					System.out.print(towerColor.toString() + " ");
 				}
-				setCursor();
-				System.out.print(" -> ");
+				System.out.print(") : ");
 				inputColor = scanner.nextLine();
-				setCursor();
 				chosenColor = TowerColor.getPlayerColorByName(inputColor);
 				if (chosenColor == null)
 					correct = false;
 				else
 					correct = InputValidator.isTowerColorBetween(chosenColor,possibleColor);
 				if (!correct) {
-					showErrorMessage("Invalid choice. Try again.");
-					setCursor();
+					showErrorMessage("Invalid choice. Try again.",true,1);
 				}
 			} while (!correct);
 		}
@@ -245,13 +228,12 @@ public class CLIView implements View{
 		} else {
 			boolean correct = false;
 			do {
-				chosenID = getNumber(" Insert your card value: ");
+				chosenID = getNumber(" Insert your card value: ",false);
 				chosenCard = InputValidator.isIDBetween(chosenID, cards);
 				if (chosenCard != null){
-					System.out.println(" Chosen card: "+ chosenCard);
 					correct = true;
 				} else {
-					showErrorMessage("Invalid choice. Try again.");
+					showErrorMessage("Invalid choice. Try again.",false,1);
 				}
 			} while (!correct);
 		}
@@ -268,8 +250,10 @@ public class CLIView implements View{
 		ActionType action = ActionType.END;
 		boolean correct = false;
 
-		if(isInvalidAction)
-			showErrorMessage("Invalid action. Try again.");
+		if(isInvalidAction){
+			clearAction();
+			showErrorMessage("Invalid action. Try again.",false,0);
+		}
 
 		if (roundActions.getActionsList().size() == 1) { // only one possible action
 			action = roundActions.getActionsList().get(0).getActionType();
@@ -278,10 +262,23 @@ public class CLIView implements View{
 
 		while(!correct) {
 			showPossibleActions(roundActions);
-			num = getNumber( "Enter the number of the action ");
+			num = getNumber( " Enter the number of the action: ",false);
 			if (InputValidator.isValidAction(num, roundActions)) {
 				action = roundActions.getActionsList().get(num).getActionType();
-				correct = true;
+				if(action != ActionType.INFO_CHARACTER)
+					correct = true;
+				else{
+					// show character info
+					for (Character character:gameCharacters) {
+						System.out.println(CLIFrmt.print('d','y'," " + character.getID() + ". " + character.getDescription()));
+					}
+					System.out.println(CLIFrmt.print('d','y'," Press ENTER to continue"));
+					scanner.nextLine();
+					clearAction();
+				}
+			}else{
+				clearAction();
+				showErrorMessage("Invalid action. Try again.",false,0);
 			}
 		}
 
@@ -289,7 +286,7 @@ public class CLIView implements View{
 			case MOVE_STUDENT_TO_ISLAND:
 			case STUDENT_FROM_CARD_TO_ISLAND:
 				chosenPiece = getColorInput(" Insert the student's color [red / blue / green / yellow / purple]: ");
-				integer = getNumber(" Insert the island ID: ");
+				integer = getNumber(" Insert the island ID: ",false);
 				chosenAction = new Action(action, chosenPiece,null, integer);
 				break;
 			case MOVE_STUDENT_TO_DININGROOM:
@@ -300,20 +297,20 @@ public class CLIView implements View{
 				chosenAction = new Action(action, chosenPiece,null,0);
 				break;
 			case MOVE_MOTHER_NATURE:
-				integer = getNumber(" Insert the number of mother nature steps: ");
+				integer = getNumber(" Insert the number of mother nature steps: ",false);
 				chosenAction = new Action(action,null,null, integer);
 				break;
 			case CHOOSE_CLOUD:
-				integer = getNumber(" Insert the cloud ID: ");
+				integer = getNumber(" Insert the cloud ID: ",false);
 				chosenAction = new Action(action,null,null,integer);
 				break;
 			case CHOOSE_CHARACTER:
-				integer = getNumber(" Insert the character ID to activate: ");
+				integer = getNumber(" Insert the character ID to activate: ",false);
 				chosenAction = new Action(action,null,null,integer);
 				break;
 			case DOUBLE_INFLUENCE:
 			case NO_INFLUENCE:
-				integer = getNumber(" Insert the island ID: ");
+				integer = getNumber(" Insert the island ID: ",false);
 				chosenAction = new Action(action,null,null,integer);
 				break;
 			case STUDENT_FROM_CARD_TO_ENTRANCE:
@@ -350,7 +347,7 @@ public class CLIView implements View{
 			} else if ((response.equalsIgnoreCase("y")))
 				return true;
 			else
-				showErrorMessage("Please insert a valid answer");
+				showErrorMessage("Please insert a valid answer",false,1);
 		}
 	}
 
@@ -367,7 +364,7 @@ public class CLIView implements View{
 			if(piece != null)
 				return piece;
 			else
-				showErrorMessage("Please insert a valid value for color");
+				showErrorMessage("Please insert a valid value for color",false,1);
 		}
 	}
 
@@ -376,14 +373,16 @@ public class CLIView implements View{
 	 * @param string contains the message to be printed
 	 * @return selected number
 	 */
-	private int getNumber(String string){
-		System.out.println(string);
-		System.out.print(" -> ");
+	private int getNumber(String string,boolean centered){
 		int num;
 		while (true) {
+			if(centered)
+				centeredInput(string);
+			else
+				System.out.print(string);
 			String stringRead = scanner.nextLine();
 			if (!InputValidator.isNumber(stringRead))
-				showErrorMessage("Please insert a valid number");
+				showErrorMessage("Please insert a valid number",centered,1);
 			else {
 				num = Integer.parseInt(stringRead);
 				return num;
@@ -396,10 +395,10 @@ public class CLIView implements View{
 		boolean correct = false;
 		String gameName;
 		for (GameListInfo gameInfo:gamesList) {
-			System.out.println(" Game: " + gameInfo.getGameName() + " #Players: " + gameInfo.getNumPlayers() +  " Mode: " + gameInfo.getGameMode());
+			centeredPrint(CLIFrmt.print('d','y',"   Game: " + gameInfo.getGameName() + " #Players: " + gameInfo.getNumPlayers() +  " Mode: " + gameInfo.getGameMode()));
 		}
 		do {
-			System.out.print(" Insert the name of the game you want to join ('.' for updating the list): ");
+			centeredInput(" Insert the name of the game you want to join ('.' for updating the list): ");
 			gameName = scanner.nextLine();
 			if(Objects.equals(gameName, ".")){
 				serverHandler.send(new AskGameListMessage(playerId));
@@ -407,17 +406,19 @@ public class CLIView implements View{
 			}
 			if(InputValidator.isGameName(gameName,gamesList))
 				correct = true;
-			else
-				System.out.println(" Please insert a valid value for game name");
+			else{
+				centeredPrint(" Please insert a valid value for game name");
+			}
 		} while (!correct);
 		serverHandler.send(new SelectGameMessage(playerId,gameName));
 	}
 
 	@Override
 	public void showGameStart(GameModel game, String firstPlayerNickname) {
-		System.out.println(" The players will be " + game.getPlayerHandler().getPlayersNickName());
-		System.out.println("Press ENTER to continue");
+		centeredPrint(" The players will be " + game.getPlayerHandler().getPlayersNickName());
+		centeredPrint(" Press ENTER to continue");
 		scanner.nextLine();
+		gameCharacters = game.getCharacters();
 		printGame(game,null);
 	}
 
@@ -442,7 +443,6 @@ public class CLIView implements View{
 
 	@Override
 	public void showGame(GameModel game) {
-		clear();
 		printGame(game,null);
 	}
 
@@ -453,7 +453,7 @@ public class CLIView implements View{
 
 	@Override
 	public void showQueuedMessage() {
-		System.out.println(" Waiting other players...");
+		centeredPrint(" Waiting other players...");
 	}
 
 	@Override
@@ -468,21 +468,27 @@ public class CLIView implements View{
 
 	@Override
 	public void showDisconnection(String playerDisconnected) {
-		showErrorMessage("Player " + playerDisconnected + " disconnected from the game");
+		showErrorMessage("Player " + playerDisconnected + " disconnected from the game",false,0);
 		serverHandler.close();
 	}
 
 	@Override
 	public void showErrorOnConnection() {
-		showErrorMessage("Unable to connect to the server");
+		showErrorMessage("Unable to connect to the server",true,0);
 	}
 
 	/**
 	 * Show an error message
 	 * @param errorMessage the message to show
 	 */
-	private void showErrorMessage(String errorMessage) {
-		System.out.println(" Error: "+ errorMessage);
+	private void showErrorMessage(String errorMessage, boolean centered,int top) {
+		cursorUp(top);
+		clearDown();
+		cursorUp(top);
+		if(centered)
+			centeredPrint(CLIFrmt.print('b','r'," Error: "+ errorMessage));
+		else
+			System.out.println(CLIFrmt.print('b','r'," Error: "+ errorMessage));
 	}
 
 	/**
@@ -491,6 +497,7 @@ public class CLIView implements View{
 	 * @param possibleCards the assistant cards that the player can use
 	 */
 	private void printGame(GameModel game, List<AssistantCard> possibleCards){
+		clearAll();
 		CLIGame cliGame = new CLIGame(game,possibleCards,playerId);
 		cliGame.display();
 
@@ -506,17 +513,37 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Cleans the screen
+	 * Sets the cursor to the next line
 	 */
-	private void clear(){
-		System.out.print("\033[H\033[2J"); // clear screen
+	private void centeredPrint(String text){
+		System.out.print("\u001b[64G"); // column = 64
+		System.out.println(text);
+	}
+
+	private void centeredInput(String text){
+		System.out.print("\u001b[64G"); // column = 64
+		System.out.print(text);
+	}
+
+	private void cursorUp(int top){
+		System.out.print("\u001b[" + top + "A");
 	}
 
 	/**
-	 * Sets the cursor to the next line
+	 * Cleans the screen
 	 */
-	private void setCursor(){
-		currentRow++;
-		System.out.print("\u001b[" + currentRow +";" + currentColumn + "H"); // muove cursore
+	private void clearAll(){
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
+	private void clearDown(){
+		System.out.println("\033[0J"); // erase from cursor to end display
+	}
+
+	private void clearAction(){
+		System.out.print("\u001b[36;0H"); // height table game = 36
+		clearDown();
+		System.out.print("\u001b[36;0H");
 	}
 }

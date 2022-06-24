@@ -7,9 +7,15 @@ import it.polimi.ingsw.network.SYSMessage;
 import it.polimi.ingsw.server.ServerMain;
 import it.polimi.ingsw.util.MessageType;
 
-import java.io.Serializable;
-
+/**
+ * Message exchanged between server and client to check connection
+ */
 public class HeartbeatMessage extends Message implements CVMessage, SYSMessage {
+
+    /**
+     * Constructor: build the Heartbeat message
+     * @param isServer true if it is sent by the server
+     */
     public HeartbeatMessage(boolean isServer) {
         super(isServer ? MessageType.CV : MessageType.SYS);
     }

@@ -263,4 +263,9 @@ public class Player implements Serializable {
 	public boolean isReadyToPlay(){
 		return nickname != null && towerColor != null;
 	}
+
+	/**
+	 * Reset lastCardUsed
+	 */
+	public void resetLastCard(){this.lastCardUsed = null;}
 }

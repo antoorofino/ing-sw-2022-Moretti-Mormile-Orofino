@@ -20,7 +20,7 @@ public enum Piece implements Serializable {
 
     /**
      * Constructor: build piece
-     * @param colorString string of pice's color
+     * @param colorString string of piece's color
      * @param color piece's color
      * @param name name of piece
      */

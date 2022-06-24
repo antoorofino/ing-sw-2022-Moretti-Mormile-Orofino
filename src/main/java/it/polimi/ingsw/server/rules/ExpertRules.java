@@ -27,6 +27,7 @@ public class ExpertRules extends Rules {
 		RoundActions roundActions = getCurrentPlayer().getRoundActions();
 		RoundActions nextPossibleActions = super.nextPossibleActions(); // basic action
 		if (!roundActions.hasChooseCharacter()) {
+			nextPossibleActions.add(new Action(ActionType.INFO_CHARACTER));
 			if (!roundActions.hasChooseCloud())
 				nextPossibleActions.add(new Action(ActionType.CHOOSE_CHARACTER));
 		}else if (!roundActions.hasActivatedCharacter()) {
