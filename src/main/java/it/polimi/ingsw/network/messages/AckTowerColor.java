@@ -5,8 +5,15 @@ import it.polimi.ingsw.network.CVMessage;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.util.MessageType;
 
+/**
+ * This message is sent from the server to the client to ask the player to choose the color
+ * of the towers
+ */
 public class AckTowerColor extends Message implements CVMessage {
 
+    /**
+     * Constructor: build the message
+     */
     public AckTowerColor(){
         super(MessageType.CV);
     }

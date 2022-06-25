@@ -6,10 +6,18 @@ import it.polimi.ingsw.server.GameController;
 import it.polimi.ingsw.util.MessageType;
 import it.polimi.ingsw.util.TowerColor;
 
+/**
+ * VCMessage sent to the server with the chosen color
+ */
 public class SetTowerColor extends Message implements VCMessage {
 	private final String playerId;
 	private final TowerColor color;
 
+	/**
+	 * Constructor: build the message
+	 * @param playerId the ID of the message’s sender
+	 * @param color the color chosen by the player
+	 */
 	public SetTowerColor(String playerId, TowerColor color){
 		super(MessageType.VC);
 		this.playerId = playerId;

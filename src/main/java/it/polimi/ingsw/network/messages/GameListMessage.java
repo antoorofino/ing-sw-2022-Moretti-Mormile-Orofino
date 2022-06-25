@@ -8,9 +8,16 @@ import it.polimi.ingsw.util.MessageType;
 
 import java.util.List;
 
+/**
+ * This message is sent from the server to the client (CVMessage) to show the list of available games
+ */
 public class GameListMessage extends Message implements CVMessage {
     private final List<GameListInfo> gameList;
 
+    /**
+     * Constructor: build the message
+     * @param gameList the list of available games
+     */
     public GameListMessage(List<GameListInfo> gameList){
         super(MessageType.CV);
         this.gameList = gameList;
