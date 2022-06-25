@@ -8,7 +8,9 @@ import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.exception.PlayerException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Creates a matrix of characters that contains the full game
@@ -115,7 +117,7 @@ public class CLIGame extends CLIMatrix{
 		CLIBoard cliBoard = new CLIBoard(player.getId(),mainPlayer? 40 : 35);
 		cliBoard.addPieceEntrance(player.getPlayerBoard().getStudentsEntrance());
 		cliBoard.drawDiningRoom(player.getPlayerBoard().getStudentsRoom());
-		cliBoard.drawTeachers(teachersHandler.getTeachers());
+		cliBoard.drawTeachers(teachersHandler.getTeachersByPlayerId(player.getId()));
 		cliPlayer.drawElement(1,0,cliBoard);
 		cliPlayer.drawText("Name : " + player.getNickname(),1,0,0);
 		cliPlayer.drawText("Towers: "+ player.getNumOfTowers() + " Coins: " + player.getCoin(),1,12,0);
@@ -131,14 +133,27 @@ public class CLIGame extends CLIMatrix{
 	 * @return matrix containing the player's card
 	 */
 	private CLIMatrix CLIAssistantCard(AssistantCard card, boolean playable){
-		CLIMatrix cliAssistantCard = new CLIMatrix(9, 6, playable ? AnsiColor.ANSI_DEFAULT : AnsiColor.ANSI_RED,AnsiBackColor.ANSI_DEFAULT);
+		CLIMatrix cliAssistantCard = new CLIMatrix(11, 6, playable ? AnsiColor.ANSI_DEFAULT : AnsiColor.ANSI_RED,AnsiBackColor.ANSI_DEFAULT);
 		cliAssistantCard.drawBorder("╭╮─╰╯│");
-		cliAssistantCard.drawText("   ○ ",1,2,1);
-		cliAssistantCard.drawText(" ( | )",1,3,1);
-		cliAssistantCard.drawText("  / \\",1,4,1);
+		randomIcon(cliAssistantCard);
 		cliAssistantCard.drawText(String.valueOf(card.getCardValue()),1,1,1);
-		cliAssistantCard.drawText(String.valueOf(card.getMovements()),1,1,7);
+		cliAssistantCard.drawText(String.valueOf(card.getMovements()),1,1,9);
 		return cliAssistantCard;
+	}
+
+	/**
+	 * Create a random icon for assistant card
+	 * @param assistance the card to draw
+	 */
+	private void randomIcon(CLIMatrix assistance){
+		Random rand = new Random();
+		assistance.drawText(" ___ ",1,1,3);
+		List<String> faces = Arrays.asList("J'-'L","%\"-\"%","|'-'|","/+_+\\");
+		assistance.drawText(faces.get(rand.nextInt(faces.size())), 1,2,3);
+		List<String> bodies = Arrays.asList("-[:]-","/[U]\\","/[\\]\\","/[Y]\\");
+		assistance.drawText(bodies.get(rand.nextInt(bodies.size())), 1,3,3);
+		List<String> feet = Arrays.asList("_/ |_","_| \\_","_/ \\_","_| |_");
+		assistance.drawText(feet.get(rand.nextInt(feet.size())),1,4,3);
 	}
 
 	/**

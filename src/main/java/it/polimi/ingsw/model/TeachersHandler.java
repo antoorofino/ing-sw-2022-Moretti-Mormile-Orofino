@@ -75,15 +75,6 @@ public class TeachersHandler implements Serializable {
     }
 
     /**
-     * Get teachers with his owner
-     * @return teachers with his owner
-     */
-    //FIXME: remove this method!! Use the one underneath :)
-    public Map<Piece, Player> getTeachers() {
-        return new HashMap<>(teachers);
-    }
-
-    /**
      * Get teachers list of the player by player id
      * @param playerId id of the player
      * @return list of teachers owned

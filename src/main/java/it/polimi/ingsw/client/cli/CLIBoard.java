@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,15 +38,15 @@ public class CLIBoard extends CLIMatrix {
 	 */
 	public void addPieceEntrance(ArrayList<Piece> students){
 		int row,column;
-		row  = 1;
+		row  = 2;
 		column = 2;
 		for (Piece p:students) {
 			elements[row][column].color = AnsiColor.getAnsiByPiece(p);
 			elements[row][column].symbol = '●';
-			if(row!=9)
+			if(row!=8)
 				row+=2;
 			else{
-				row=2;
+				row=1;
 				column=4;
 			}
 		}
@@ -68,12 +69,10 @@ public class CLIBoard extends CLIMatrix {
 	 * Draws the teachers owned by the player
 	 * @param teachers the teacher map
 	 */
-	public void drawTeachers(Map<Piece, Player> teachers){
-		for(Piece p: teachers.keySet()){
-			if(teachers.get(p).getId().equals(uuid)) { // possiedo il professore
-				elements[getPiecePosition(p)][width - teacherSize + 2].symbol = '◍';
-				elements[getPiecePosition(p)][width - teacherSize + 2].color = AnsiColor.getAnsiByPiece(p);
-			}
+	public void drawTeachers(List<Piece> teachers){
+		for(Piece p: teachers){
+			elements[getPiecePosition(p)][width - teacherSize + 2].symbol = '◍';
+			elements[getPiecePosition(p)][width - teacherSize + 2].color = AnsiColor.getAnsiByPiece(p);
 		}
 	}
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -103,10 +104,8 @@ public class TeacherHandlerTest {
         assertEquals(1,teachersHandler.teachersControlled(p2));
         assertEquals(2,teachersHandler.teachersControlled(p3));
 
-        // getTeachers test
-        for (Piece p: teachersHandler.getTeachers().keySet()) {
-            assertEquals(teachersHandler.getTeachers().get(p),teachersHandler.getTeacherOwner(p));
-        }
+        // getTeachersByPlayer test
+        assertTrue(Arrays.asList(Piece.GNOME,Piece.DRAGON).containsAll(teachersHandler.getTeachersByPlayerId(p3.getId())));
     }
 
     @Test

@@ -21,6 +21,7 @@ public class CLIView implements View{
 	private String nickname;
 	private GameListInfo gameInfo;
 	private ArrayList<Character> gameCharacters;
+	private final int center = 64;
 
 	/**
 	 * Constructor: build CLIView
@@ -513,20 +514,29 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Sets the cursor to the next line
+	 * Print center-aligned text
+	 * @param text the text to be printed
 	 */
 	private void centeredPrint(String text){
-		System.out.print("\u001b[64G"); // column = 64
+		System.out.print("\u001b["+ center +"G"); // column = 64
 		System.out.println(text);
 	}
 
+	/**
+	 * Print center-aligned text and go to the next line
+	 * @param text the text to be printed
+	 */
 	private void centeredInput(String text){
-		System.out.print("\u001b[64G"); // column = 64
+		System.out.print("\u001b["+ center +"G");
 		System.out.print(text);
 	}
 
-	private void cursorUp(int top){
-		System.out.print("\u001b[" + top + "A");
+	/**
+	 * Moves the cursor up n row
+	 * @param n number of lines to move
+	 */
+	private void cursorUp(int n){
+		System.out.print("\u001b[" + n + "A");
 	}
 
 	/**
@@ -537,10 +547,16 @@ public class CLIView implements View{
 		System.out.flush();
 	}
 
+	/**
+	 * Erase from cursor to end display
+	 */
 	private void clearDown(){
-		System.out.println("\033[0J"); // erase from cursor to end display
+		System.out.println("\033[0J");
 	}
 
+	/**
+	 * Delete text under the game board
+	 */
 	private void clearAction(){
 		System.out.print("\u001b[36;0H"); // height table game = 36
 		clearDown();
