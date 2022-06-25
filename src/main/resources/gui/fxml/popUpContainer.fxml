@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="popUpPane" prefHeight="200.0" prefWidth="200.0" styleClass="blur" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.PopUpContainerController">
+    <VBox fx:id="rootPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" styleClass="blur-2" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
+    <ImageView fx:id="popUpClose" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" styleClass="image-btn" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="120.0">
+        <Image url="@../images/close_icon.png" />
+    </ImageView>
+</AnchorPane>

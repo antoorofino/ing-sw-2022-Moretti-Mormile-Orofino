@@ -58,9 +58,9 @@ public class GUIView extends Application implements View {
     public void start(Stage stage) {
         stage.setTitle("Eriantys");
         //TODO: add app icon
-        stage.setMinHeight(600.0);
+        stage.setMinHeight(750.0);
         stage.setMinWidth(900.0);
-        stage.setHeight(600.0);
+        stage.setHeight(750.0);
         stage.setWidth(900.0);
         stage.setScene(new Scene(new Group()));
         switcher.initialise(stage);

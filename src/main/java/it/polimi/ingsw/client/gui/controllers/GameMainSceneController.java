@@ -1,23 +1,24 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
+import it.polimi.ingsw.client.gui.components.BoardPopUp;
 import it.polimi.ingsw.client.gui.components.IslandGUI;
 import it.polimi.ingsw.client.gui.components.PlayerBoard;
 import it.polimi.ingsw.client.gui.components.PlayerDashboard;
 import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Island;
-import it.polimi.ingsw.model.IslandsHandler;
-import it.polimi.ingsw.model.Piece;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.util.GameMode;
 import it.polimi.ingsw.util.exception.PlayerException;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameMainSceneController extends SceneController {
@@ -29,6 +30,10 @@ public class GameMainSceneController extends SceneController {
    public Pane playerDashboardPane;
    @FXML
    public Pane playerBoard;
+   @FXML
+   public Button boardsButton;
+   @FXML
+   public PopUpContainerController popUpController;
 
    private PlayerBoard playerBoardController;
    private PlayerDashboard playerDashboard;
@@ -124,6 +129,19 @@ public class GameMainSceneController extends SceneController {
       //CLIIslandBoardTest(Arrays.asList(1,1,1,1,1,1,1,1,1,1,1,1));
       //CLIIslandBoardTest(Arrays.asList(2,1,3,1,4,1));
       //CLIIslandBoardTest(Arrays.asList(1,2,2,1,2,1,3));
+
+      boardsButton.setOnMouseClicked(e -> {
+         popUpController.clear();
+         BoardPopUp boardPopUp;
+         for(Player player : clientData.getGame().getPlayerHandler().getPlayers()) {
+            if (!player.getId().equals(GUIView.getPlayerId())) {
+               boardPopUp = new BoardPopUp();
+               boardPopUp.setPlayerInfo(player, clientData.getGame().getGameMode(), clientData.getGame().getTeacherHandler());
+               popUpController.add(boardPopUp.getRoot());
+            }
+         }
+         popUpController.display();
+      });
    }
 
    private void updateIslands(IslandsHandler handler) {
@@ -137,24 +155,16 @@ public class GameMainSceneController extends SceneController {
       final int[][] relativePosition = { { -1, 0 }, { 0, 1 }, { 0, 1 }, { 0, 1 }, { 0, 1 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 }};
       int x = 0;
       int y = 0;
-      boolean[] emptyRows = new boolean[5];
-      Arrays.fill(emptyRows, true);
-      boolean[] emptyColumns = new boolean[11];
-      Arrays.fill(emptyColumns, true);
+      //boolean[] emptyRows = new boolean[5];
+      //Arrays.fill(emptyRows, true);
+      //boolean[] emptyColumns = new boolean[11];
+      //Arrays.fill(emptyColumns, true);
       boolean mother;
       IslandGUI islandGUI;
-      //int[] dim = {1,3,4,1,1,2};
       for(Island island:islands){
-      //for(int j = 0; j < dim.length; j++){
          mother = island.getID() == handler.getMotherNature();
-         //for(int i = 0; i < dim[j]; i++){
          for(int i = 0; i < island.getSize(); i++){
             islandGUI = new IslandGUI();
-            island.addStudent(Piece.UNICORN);
-            island.addStudent(Piece.DRAGON);
-            island.addStudent(Piece.GNOME);
-            island.addStudent(Piece.FAIRY);
-            island.addStudent(Piece.FROG);
             if(island.getIslandOwner() != null)
                islandGUI.setTower(island.getIslandOwner().getTowerColor());
             if(island.getSize()==1 || i==1) {
@@ -162,7 +172,6 @@ public class GameMainSceneController extends SceneController {
                if(mother)
                   islandGUI.setMotherNature();
             }
-            //TODO: mother nature
             if(i!=0){
                y += relativePosition[index][0];
                x += relativePosition[index][1];
@@ -170,13 +179,13 @@ public class GameMainSceneController extends SceneController {
                y = absolutePositions[index][0];
                x = absolutePositions[index][1];
             }
-            emptyColumns[x] = false;
-            emptyRows[y] = false;
+            //emptyColumns[x] = false;
+            //emptyRows[y] = false;
             GridPane.setConstraints(islandGUI.getRoot(), x, y);
             islandsGridPane.getChildren().add(islandGUI.getRoot());
             index = (index + 1)%12;
          }
-         islandsGridPane.getRowConstraints().clear();
+         /*islandsGridPane.getRowConstraints().clear();
          RowConstraints rowConstraints;
          for (boolean emptyRow : emptyRows) {
             rowConstraints = new RowConstraints();
@@ -200,6 +209,7 @@ public class GameMainSceneController extends SceneController {
             }
             islandsGridPane.getColumnConstraints().add(columnConstraints);
          }
+          */
       }
    }
 
@@ -214,8 +224,7 @@ public class GameMainSceneController extends SceneController {
       } catch (PlayerException e) {
          throw new RuntimeException(e);
       }
-      playerBoardController.setEntranceStudents(board.getStudentsEntrance());
-      playerBoardController.setDiningRoom(board.getStudentsRoom());
+      playerBoardController.setBoard(board, clientData.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
       ensureActive();
    }
 

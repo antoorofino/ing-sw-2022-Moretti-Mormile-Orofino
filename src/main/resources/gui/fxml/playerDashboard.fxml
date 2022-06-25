@@ -8,18 +8,18 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-    <Label fx:id="playerNameLabel" text="Player name">
+    <Label fx:id="playerNameLabel" text="Player name" textFill="WHITE">
         <font>
-            <Font name="Helvetica" size="20.0" />
+            <Font name="Arial Bold" size="26.0" />
         </font>
     </Label>
     <HBox alignment="CENTER" prefHeight="50.0" spacing="52.0">
         <ImageView fx:id="towerImageView" fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/tower_black.png" />
         </ImageView>
-        <Label fx:id="towerLabel" text="4">
+        <Label fx:id="towerLabel" text="4" textFill="WHITE">
             <font>
-                <Font name="Helvetica" size="15.0" />
+                <Font name="Arial Bold" size="25.0" />
             </font>
         </Label>
     </HBox>
@@ -27,9 +27,9 @@
         <ImageView fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/coin.png" />
         </ImageView>
-        <Label fx:id="coinLabel" text="4">
+        <Label fx:id="coinLabel" text="4" textFill="WHITE">
             <font>
-                <Font name="Helvetica" size="15.0" />
+                <Font name="Arial Bold" size="25.0" />
             </font>
         </Label>
     </HBox>

@@ -14,9 +14,9 @@
                 <Image url="@../images/error_icon.jpg.png" />
             </ImageView>
         </StackPane>
-        <Text fx:id="alertText" fill="#517dff" text="Error or waiting message" textAlignment="CENTER" wrappingWidth="900.0">
+        <Text fx:id="alertText" fill="#517dff" text="Error or waiting message" textAlignment="CENTER" wrappingWidth="700.0">
             <font>
-                <Font name="Arial Bold" size="48.0" />
+                <Font name="Arial Bold" size="42.0" />
             </font>
         </Text>
     </VBox>

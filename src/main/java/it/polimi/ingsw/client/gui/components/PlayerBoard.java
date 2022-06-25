@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.gui.utils.Tmp;
+import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Piece;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,35 +55,30 @@ public class PlayerBoard {
         }
     }
 
-    private void clearEntrance() {
+    public void setBoard(Board board, List<Piece> teachersList) {
+        // Clear entrance
         for (Node piece : entrance.getChildren()) {
             piece.getStyleClass().clear();
         }
-    }
-
-    private void clearDiningRoom() {
+        // Clear dining rooms
         for (Node room : diningRoom.getChildren()) {
             for (Node piece : ((Pane) room).getChildren()) {
                 piece.getStyleClass().clear();
             }
         }
-    }
-
-    private void clearTeachers() {
+        // Clear teachers
         for (Node piece : teachers.getChildren()) {
             piece.getStyleClass().clear();
         }
-    }
 
-    public void setEntranceStudents(List<Piece> entranceArray) {
-        clearEntrance();
+        // Set entrance students
+        List<Piece> entranceArray = board.getStudentsEntrance();
         for (int i = 0; i < entranceArray.size(); i++) {
             entrance.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(entranceArray.get(i)));
         }
-    }
 
-    public void setDiningRoom(Map<Piece, Integer> studentsMap) {
-        clearDiningRoom();
+        // Set dining room students
+        Map<Piece, Integer> studentsMap = board.getStudentsRoom();
         for(Piece piece : studentsMap.keySet()) {
             Pane diningRoom;
             switch (piece) {
@@ -108,11 +104,8 @@ public class PlayerBoard {
                 diningRoom.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(piece));
             }
         }
-    }
-
-    public void setTeachers(List<Piece> teachersArray) {
-        clearTeachers();
-        for(Piece teacher : teachersArray) {
+        // Set teachers
+        for(Piece teacher : teachersList) {
             switch (teacher) {
                 case FROG:
                     teacherGreen.getStyleClass().add(Tmp.pieceToClassName(teacher));

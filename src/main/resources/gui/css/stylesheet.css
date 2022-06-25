@@ -1,10 +1,10 @@
 .background{
-    -fx-background-image: url("../images/home_background.jpg");
+    -fx-background-image: url("../images/home_background.png");
     -fx-background-size: stretch, auto;
 }
 
 .cloud-background{
-    -fx-background-image: url("../images/cloud_background.jpg");
+    -fx-background-image: url("../images/cloud_background.png");
     -fx-background-size: stretch, auto;
 }
 
@@ -318,8 +318,14 @@
 }
 
 .dashboard-bottom-background {
-    -fx-background-color: rgba(255,255,255,0.7);
+    -fx-background-color: rgba(30, 90, 218, 0.4);
     -fx-background-radius: 15px 15px 0 0;
+}
+
+.dashboard-other-players-background {
+    -fx-background-color: rgba(30, 90, 218, 0.4);
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
 }
 
 .island-1 {
@@ -336,8 +342,6 @@
 
 .islands-grid {
     -fx-grid-lines-visible: false;
-    -fx-background-color: rgba(30, 90, 218, 0.4);
-    -fx-background-radius: 15px;
     -fx-padding: 10px;
 }
 

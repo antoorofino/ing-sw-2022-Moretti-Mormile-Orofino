@@ -66,7 +66,7 @@ public class SettingsSceneController extends SceneController {
         }
 
         if(incorrect) {
-            alertPaneController.showError("Wrong valid for server ip or port number");
+            alertPaneController.showError("Wrong value for server ip or port number");
         } else {
             data.setIpAddress(serverIp);
             data.setPortNumber(serverPort);
