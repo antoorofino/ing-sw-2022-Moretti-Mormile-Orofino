@@ -59,6 +59,6 @@ public class GameStartPaneController {
 
     public void onCloseAlertClicked() {
         closeAlertPane(true);
-        GUISwitcher.getInstance().getMineBoardController().activate();
+        GUISwitcher.getInstance().getGameMainSceneController().ensureActive();
     }
 }

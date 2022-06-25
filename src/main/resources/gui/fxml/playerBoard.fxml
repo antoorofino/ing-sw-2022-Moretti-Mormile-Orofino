@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="370.0" styleClass="board-background" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <Pane fx:id="entrance" prefHeight="200.0" prefWidth="75.0">
+      <Pane layoutX="15.0" layoutY="43.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="15.0" layoutY="75.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="15.0" layoutY="108.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="15.0" layoutY="141.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="42.0" layoutY="25.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="42.0" layoutY="58.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="42.0" layoutY="90.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="42.0" layoutY="123.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      <Pane layoutX="42.0" layoutY="156.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+   </Pane>
+   <Pane fx:id="diningRoom" layoutX="75.0" prefHeight="200.0" prefWidth="240.0">
+      <Pane fx:id="diningRoomGreen" layoutX="10.0" layoutY="25.0" prefHeight="20.0" prefWidth="220.0">
+         <Pane prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="22.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="44.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="66.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="88.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="110.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="132.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="154.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="176.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="197.0" prefHeight="20.0" prefWidth="20.0" />
+      </Pane>
+      <Pane fx:id="diningRoomRed" layoutX="10.0" layoutY="58.0" prefHeight="20.0" prefWidth="220.0">
+         <Pane prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="22.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="44.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="66.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="88.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="110.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="132.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="154.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="176.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="197.0" prefHeight="20.0" prefWidth="20.0" />
+      </Pane>
+      <Pane fx:id="diningRoomYellow" layoutX="10.0" layoutY="91.0" prefHeight="20.0" prefWidth="220.0">
+         <Pane prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="22.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="44.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="66.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="88.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="110.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="132.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="154.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="176.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="197.0" prefHeight="20.0" prefWidth="20.0" />
+      </Pane>
+      <Pane fx:id="diningRoomPurple" layoutX="10.0" layoutY="123.0" prefHeight="20.0" prefWidth="220.0">
+         <Pane prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="22.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="44.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="66.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="88.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="110.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="132.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="154.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="176.0" prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="197.0" prefHeight="20.0" prefWidth="20.0" />
+      </Pane>
+      <Pane fx:id="diningRoomBlue" layoutX="10.0" layoutY="155.0" prefHeight="20.0" prefWidth="220.0">
+         <Pane prefHeight="20.0" prefWidth="20.0" />
+         <Pane layoutX="22.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="44.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="66.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="88.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="110.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="132.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="154.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="176.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+         <Pane layoutX="197.0" prefHeight="20.0" prefWidth="20.0" styleClass="student-blue-background"/>
+      </Pane>
+   </Pane>
+   <Pane fx:id="teachers" layoutX="315.0" prefHeight="200.0" prefWidth="55.0">
+      <Pane fx:id="teacherGreen" layoutX="11.0" layoutY="24.0" prefHeight="20.0" prefWidth="20.0" />
+      <Pane fx:id="teacherRed" layoutX="11.0" layoutY="57.0" prefHeight="20.0" prefWidth="20.0" />
+      <Pane fx:id="teacherYellow" layoutX="11.0" layoutY="90.0" prefHeight="20.0" prefWidth="20.0" />
+      <Pane fx:id="teacherPurple" layoutX="11.0" layoutY="122.0" prefHeight="20.0" prefWidth="20.0" />
+      <Pane fx:id="teacherBlue" layoutX="11.0" layoutY="155.0" prefHeight="20.0" prefWidth="20.0" />
+   </Pane>
+</Pane>

@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.gui.utils.DelayAction;
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.network.messages.AskGameListMessage;
-import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.TowerColor;
@@ -14,7 +13,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -59,12 +57,7 @@ public class GUIView extends Application implements View {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Eriantys");
-        /*stage.setMinHeight(800.0);
-        stage.setMinWidth(1200.0);
-        stage.setHeight(800.0);
-        stage.setWidth(1200.0);*/
-        //stage.getIcons().add();
-        //stage.getIcons().add(new Image(getClass().getResourceAsStream("")));
+        //TODO: add app icon
         stage.setMinHeight(600.0);
         stage.setMinWidth(900.0);
         stage.setHeight(600.0);
@@ -179,7 +172,8 @@ public class GUIView extends Application implements View {
     public void showGameStart(GameModel game, String firstPlayerNickname) {
         clientData.setGame(game);
         Platform.runLater(() -> {
-            DelayAction.executeLater(() -> switcher.getPlayerInfoSceneController().showGameStart());
+            //DelayAction.executeLater(() -> switcher.getPlayerInfoSceneController().showGameStart());
+            DelayAction.executeLater(() -> switcher.getGameMainSceneController().showGameHandler());
         });
     }
 
