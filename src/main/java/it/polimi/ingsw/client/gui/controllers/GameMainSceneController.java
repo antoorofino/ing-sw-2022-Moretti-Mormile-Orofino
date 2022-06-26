@@ -39,6 +39,7 @@ public class GameMainSceneController extends SceneController {
    private PlayerDashboard playerDashboardController;
    private final YourCardsPopUp yourCardsPopUp = new YourCardsPopUp();
    private final List<BoardPopUp> boardPopUps = new ArrayList<>();
+   private final PlayedCardsPopUp playedCardsPopUp = new PlayedCardsPopUp();
 
    private final GUISwitcher switcher = GUISwitcher.getInstance();
    private final ClientData clientData = ClientData.getInstance();
@@ -152,7 +153,10 @@ public class GameMainSceneController extends SceneController {
       });
 
       playedCardsButton.setOnMouseClicked(e -> {
-         alertPaneController.showError("NOT YET IMPLEMENTED");
+         popUpController.clear();
+         playedCardsPopUp.setCards();
+         popUpController.add(playedCardsPopUp.getRoot());
+         popUpController.display();
       });
    }
 
@@ -261,6 +265,7 @@ public class GameMainSceneController extends SceneController {
       //PopUps update
       boardPopUpInitialize();
       yourCardsPopUp.setCards();
+      playedCardsButton.setDisable(playedCardsPopUp.setCards());
    }
 
    public void setMessage(String message) {

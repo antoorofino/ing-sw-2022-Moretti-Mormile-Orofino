@@ -12,9 +12,9 @@
    <Pane fx:id="assistantBlurPane" prefHeight="200.0" prefWidth="200.0" styleClass="assistant-not-available" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    <HBox fx:id="messageHBox" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <VBox alignment="CENTER">
-         <Label fx:id="messageLabel" styleClass="assistant-message-text" text="Message" textFill="WHITE">
+         <Label fx:id="messageLabel" contentDisplay="CENTER" styleClass="assistant-message-text" text="Message" textAlignment="CENTER" textFill="WHITE" wrapText="true">
             <font>
-               <Font name="Arial Bold" size="13.0" />
+               <Font name="Arial Bold" size="16.0" />
             </font>
          </Label>
       </VBox>

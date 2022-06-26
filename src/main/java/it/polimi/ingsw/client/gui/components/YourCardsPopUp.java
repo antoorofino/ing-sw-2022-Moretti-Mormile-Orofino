@@ -63,9 +63,9 @@ public class YourCardsPopUp {
             cardGUI.initialize(i);
             int finalI = i;
             if(data.getPlayer().getDeck().stream().filter(c -> c.getCardID() == finalI).findFirst().orElse(null) == null) {
-                cardGUI.setAlreadyPlayed();
-            } else if (data.getPossibleCards() != null && data.getPossibleCards().stream().filter(c -> c.getCardID() == finalI).findFirst().orElse(null) == null) {
                 cardGUI.setNotAvailable();
+            } else if (data.getPossibleCards() != null && data.getPossibleCards().stream().filter(c -> c.getCardID() == finalI).findFirst().orElse(null) == null) {
+                cardGUI.setAlreadyPlayed();
             } else {
                 cardGUI.setOnClickedListener(id -> {
                     if (selectedCard == 0) { // No previous card selected

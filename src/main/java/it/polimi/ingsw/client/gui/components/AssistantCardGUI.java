@@ -19,11 +19,11 @@ public class AssistantCardGUI {
     private HBox messageHBox;
     @FXML
     private Label messageLabel;
-    private final String selectedClassName = "assistant-selected";
-    private final String notAvailableClassName = "assistant-not-available";
-    private final String notAvailableMessageText = "Already played";
-    private final String alreadyPlayedClassName = "assistant-already-played";
-    private final String alreadyPlayedMessageText = "Not available";
+    private final static String selectedClassName = "assistant-selected";
+    private final static String notAvailableClassName = "assistant-not-available";
+    private final static String notAvailableMessageText = "Already played";
+    private final static String alreadyPlayedClassName = "assistant-already-played";
+    private final static String alreadyPlayedMessageText = "Not available";
     private Consumer<Integer> listener;
     private Parent root;
 
@@ -81,6 +81,14 @@ public class AssistantCardGUI {
         assistantBlurPane.getStyleClass().add(notAvailableClassName);
         messageLabel.setText(notAvailableMessageText);
         messageLabel.setVisible(true);
+        messageHBox.setVisible(true);
+    }
+
+    public void setPlayedByNickname(String nickname) {
+        assistantBlurPane.setVisible(true);
+        messageLabel.setText(nickname);
+        messageLabel.setVisible(true);
+        messageLabel.setTranslateY(200.00);
         messageHBox.setVisible(true);
     }
 }
