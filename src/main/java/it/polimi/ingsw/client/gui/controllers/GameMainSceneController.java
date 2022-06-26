@@ -261,8 +261,6 @@ public class GameMainSceneController extends SceneController {
       //PopUps update
       boardPopUpInitialize();
       yourCardsPopUp.setCards();
-
-      ensureActive();
    }
 
    public void setMessage(String message) {

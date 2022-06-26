@@ -176,10 +176,10 @@ public class GUIView extends Application implements View {
     public void showGameStart(GameModel game, String firstPlayerNickname) {
         clientData.setGame(game);
         Platform.runLater(() -> {
+            switcher.getGameMainSceneController().showGameHandler();
             if (!firstPlayerNickname.equals(clientData.getPlayer().getNickname()))
                 switcher.getGameMainSceneController().setMessage(firstPlayerNickname + " starts the match");
-            //DelayAction.executeLater(() -> switcher.getPlayerInfoSceneController().showGameStart());
-            DelayAction.executeLater(() -> switcher.getGameMainSceneController().showGameHandler());
+            DelayAction.executeLater(() -> switcher.getPlayerInfoSceneController().showGameStart());
         });
     }
 

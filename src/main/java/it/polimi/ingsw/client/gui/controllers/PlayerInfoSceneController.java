@@ -36,6 +36,8 @@ public class PlayerInfoSceneController extends SceneController {
 
     @FXML
     public void initialize() {
+        alertPaneController.closeAlertPane(true);
+        gameStartPaneController.close();
         nicknameIsSet = false;
         askColorPane.setVisible(false);
         applyButton.setDisable(true);

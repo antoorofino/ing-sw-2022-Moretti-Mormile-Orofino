@@ -1,64 +1,46 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.GUIView;
+import it.polimi.ingsw.client.gui.components.PlayerDashboard;
+import it.polimi.ingsw.client.gui.components.PlayerStartPane;
 import it.polimi.ingsw.client.gui.utils.ClientData;
-import it.polimi.ingsw.client.gui.utils.DelayAction;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
+import it.polimi.ingsw.model.Player;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
-
-//TODO: class work in progress
+import javafx.scene.layout.HBox;
 
 public class GameStartPaneController {
     @FXML
     public AnchorPane alertPane;
     @FXML
-    public ImageView loadingImage;
+    public Label gameNameLabel;
     @FXML
-    public ImageView errorImage;
+    public HBox containerHBox;
     @FXML
-    public Text alertText;
-    @FXML
-    public ImageView alertClose;
+    public Button goToMatchButton;
 
-    public void showGameStart(){
-        StringBuilder message = new StringBuilder("Ready to play. Enjoy! Players: ");
-        for (String nick : ClientData.getInstance().getGame().getPlayerHandler().getPlayersNickName())
-            message.append(nick).append(" ");
-        showError(message.toString());
+    public void showGameStart() {
+        containerHBox.getChildren().clear();
+        gameNameLabel.setText("Game " + ClientData.getInstance().getGame().getGameName() + " is ready to start");
+        for (Player player : ClientData.getInstance().getGame().getPlayerHandler().getPlayers()) {
+            PlayerStartPane p = new PlayerStartPane();
+            p.setPlayerInfo(player, player.getId().equals(GUIView.getPlayerId()));
+            containerHBox.getChildren().add(p.getRoot());
+        }
+        alertPane.setVisible(true);
     }
 
-    public void closeAlertPane(Boolean force) {
-        if (force) {
-            alertPane.setVisible(false);
-            return;
-        }
-        DelayAction.executeLater(() -> {
-            alertPane.setVisible(false);
+    @FXML
+    public void initialize() {
+        goToMatchButton.setOnMouseClicked(e -> {
+            GUISwitcher.getInstance().getGameMainSceneController().ensureActive();
         });
     }
 
-    public void showError(String errorMessage) {
+    public void close() {
         alertPane.setVisible(false);
-        alertClose.setVisible(true);
-        loadingImage.setVisible(false);
-        errorImage.setVisible(false);
-        alertText.setText(errorMessage);
-        alertPane.setVisible(true);
-    }
-
-    public void showLoading(String loadingMessage) {
-        alertPane.setVisible(false);
-        alertClose.setVisible(false);
-        loadingImage.setVisible(true);
-        errorImage.setVisible(false);
-        alertText.setText(loadingMessage);
-        alertPane.setVisible(true);
-    }
-
-    public void onCloseAlertClicked() {
-        closeAlertPane(true);
-        GUISwitcher.getInstance().getGameMainSceneController().ensureActive();
     }
 }
