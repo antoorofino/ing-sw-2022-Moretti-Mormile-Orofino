@@ -46,8 +46,8 @@
         <Pane HBox.hgrow="ALWAYS" />
         <Pane fx:id="playerBoard" prefWidth="370.0" />
         <Pane HBox.hgrow="ALWAYS" />
-        <VBox alignment="CENTER" prefWidth="200.0" spacing="10.0" styleClass="dashboard-bottom-background">
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Characters">
+        <VBox fx:id="buttonsVBox" alignment="CENTER" prefWidth="200.0" spacing="10.0" styleClass="dashboard-bottom-background">
+            <Button fx:id="charactersButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Characters">
                 <font>
                     <Font name="Helvetica" size="17.0" />
                 </font>
@@ -57,12 +57,12 @@
                     <Font name="Helvetica" size="17.0" />
                 </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Played cards">
+            <Button fx:id="playedCardsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Played cards">
                 <font>
                     <Font name="Helvetica" size="17.0" />
                 </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Your cards">
+            <Button fx:id="yourCardsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Your cards">
                 <font>
                     <Font name="Helvetica" size="17.0" />
                 </font>
@@ -70,4 +70,5 @@
         </VBox>
     </HBox>
     <fx:include fx:id="popUp" source="popUpContainer.fxml" />
+    <fx:include fx:id="alertPane" source="alertPane.fxml" />
 </AnchorPane>

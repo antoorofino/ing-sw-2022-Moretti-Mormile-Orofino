@@ -207,13 +207,6 @@
     -fx-background-color: rgba(255,255,255,0.6);
 }
 
-.plancia{
-    -fx-background-image: url("../images/plancia2.png");
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-
 .student-green-background{
     -fx-background-image: url("../images/student_green.png");
     -fx-background-size: contain;
@@ -243,7 +236,7 @@
 }
 
 .student-blue-background{
-    -fx-background-image: url("../images/student_blue2.png");
+    -fx-background-image: url("../images/student_blue.png");
     -fx-background-size: contain;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -352,7 +345,101 @@
     -fx-background-position: center;
 }
 
-.hover-selected {
+.assistant-1 {
+    -fx-background-image: url("../images/assistant_1.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-2 {
+    -fx-background-image: url("../images/assistant_2.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+.assistant-3 {
+    -fx-background-image: url("../images/assistant_3.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-4 {
+    -fx-background-image: url("../images/assistant_4.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-5 {
+    -fx-background-image: url("../images/assistant_5.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-6 {
+    -fx-background-image: url("../images/assistant_6.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-7 {
+    -fx-background-image: url("../images/assistant_7.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-8 {
+    -fx-background-image: url("../images/assistant_8.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-9 {
+    -fx-background-image: url("../images/assistant_9.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-10 {
+    -fx-background-image: url("../images/assistant_10.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.assistant-already-played {
+    -fx-background-color: rgba(255,255,255,0.6);
+}
+
+.assistant-not-available {
+    -fx-background-color: rgba(250, 238, 186, 0.6);
+}
+
+.assistant-message-text {
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: rgba(1, 43, 84, 0.6);
+}
+
+.assistant-1:hover,
+.assistant-2:hover,
+.assistant-3:hover,
+.assistant-4:hover,
+.assistant-5:hover,
+.assistant-6:hover,
+.assistant-7:hover,
+.assistant-8:hover,
+.assistant-9:hover,
+.assistant-10:hover,
+.assistant-selected {
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
 }

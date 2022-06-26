@@ -1,24 +1,16 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.components.BoardPopUp;
-import it.polimi.ingsw.client.gui.components.IslandGUI;
-import it.polimi.ingsw.client.gui.components.PlayerBoard;
-import it.polimi.ingsw.client.gui.components.PlayerDashboard;
+import it.polimi.ingsw.client.gui.components.*;
 import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.util.GameMode;
-import it.polimi.ingsw.util.exception.PlayerException;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameMainSceneController extends SceneController {
@@ -31,12 +23,21 @@ public class GameMainSceneController extends SceneController {
    @FXML
    public Pane playerBoard;
    @FXML
+   public VBox buttonsVBox;
+   @FXML
+   public Button charactersButton;
+   @FXML
    public Button boardsButton;
+   @FXML
+   public Button playedCardsButton;
+   @FXML
+   public Button yourCardsButton;
    @FXML
    public PopUpContainerController popUpController;
 
    private PlayerBoard playerBoardController;
-   private PlayerDashboard playerDashboard;
+   private PlayerDashboard playerDashboardController;
+   private final YourCardsPopUp yourCardsPopUp = new YourCardsPopUp();
 
    private final GUISwitcher switcher = GUISwitcher.getInstance();
    private final ClientData clientData = ClientData.getInstance();
@@ -68,8 +69,8 @@ public class GameMainSceneController extends SceneController {
       playerBoardController = new PlayerBoard();
       playerBoard.getChildren().add(playerBoardController.getRoot());
 
-      playerDashboard = new PlayerDashboard();
-      playerDashboardPane.getChildren().add(playerDashboard.getRoot());
+      playerDashboardController = new PlayerDashboard();
+      playerDashboardPane.getChildren().add(playerDashboardController.getRoot());
 
       /*
       Map<Piece, Integer> map = new HashMap<>();
@@ -130,18 +131,36 @@ public class GameMainSceneController extends SceneController {
       //CLIIslandBoardTest(Arrays.asList(2,1,3,1,4,1));
       //CLIIslandBoardTest(Arrays.asList(1,2,2,1,2,1,3));
 
+      charactersButton.setOnMouseClicked(e -> {
+         alertPaneController.showError("NOT YET IMPLEMENTED");
+      });
+
       boardsButton.setOnMouseClicked(e -> {
          popUpController.clear();
-         BoardPopUp boardPopUp;
-         for(Player player : clientData.getGame().getPlayerHandler().getPlayers()) {
-            if (!player.getId().equals(GUIView.getPlayerId())) {
-               boardPopUp = new BoardPopUp();
-               boardPopUp.setPlayerInfo(player, clientData.getGame().getGameMode(), clientData.getGame().getTeacherHandler());
-               popUpController.add(boardPopUp.getRoot());
-            }
-         }
+         boardPopUpInitialize();
          popUpController.display();
       });
+
+      yourCardsButton.setOnMouseClicked(e -> {
+         popUpController.clear();
+         yourCardsPopUp.setCards();
+         popUpController.add(yourCardsPopUp.getRoot());
+         popUpController.display();
+      });
+
+      playedCardsButton.setOnMouseClicked(e -> {
+         alertPaneController.showError("NOT YET IMPLEMENTED");
+      });
+   }
+
+   private void boardPopUpInitialize() {
+      OtherPlayerDashboard otherPlayerDashboard = new OtherPlayerDashboard();
+      for(Player player : clientData.getGame().getPlayerHandler().getPlayers()) {
+         if (!player.getId().equals(GUIView.getPlayerId())) {
+            otherPlayerDashboard.setPlayerInfo(player, clientData.getGame().getGameMode(), clientData.getGame().getTeacherHandler());
+            popUpController.add(otherPlayerDashboard.getRoot());
+         }
+      }
    }
 
    private void updateIslands(IslandsHandler handler) {
@@ -215,17 +234,31 @@ public class GameMainSceneController extends SceneController {
 
    public void showGameHandler() {
 
+      //FIXME: should be moved somewhere else
+      //Remove
+      if(clientData.getGame().getGameMode() == GameMode.BASIC) {
+         buttonsVBox.getChildren().remove(charactersButton);
+      }
+
+      //Islands grid update
       CLIIslandBoard(clientData.getGame().getIslandHandler());
 
-      Board board;
-      try {
-         board = clientData.getGame().getPlayerHandler().getPlayerById(GUIView.getPlayerId()).getPlayerBoard();
-         playerDashboard.setPlayerInfo(clientData.getGame().getPlayerHandler().getPlayerById(GUIView.getPlayerId()), clientData.getGameInfo().getGameMode());
-      } catch (PlayerException e) {
-         throw new RuntimeException(e);
-      }
-      playerBoardController.setBoard(board, clientData.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
+      //Player dashboard update
+      playerDashboardController.setPlayerInfo(clientData.getPlayer(), clientData.getGame().getGameMode());
+
+      //Player board update
+      playerBoardController.setBoard(clientData.getPlayer().getPlayerBoard(),
+              clientData.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
+
+      //PopUps update
+      //boardPopUpInitialize();
+      yourCardsPopUp.setCards();
+
       ensureActive();
+   }
+
+   public void setMessage(String message) {
+      messageTextLabel.setText(message);
    }
 
 }

@@ -138,8 +138,11 @@ public class GUIView extends Application implements View {
      */
     @Override
     public void askAssistantCard(List<AssistantCard> cards, GameModel game) {
+        clientData.setGame(game);
+        clientData.setPossibleCards(cards);
         Platform.runLater(() -> {
-            //TODO: not yet implemented
+            switcher.getGameMainSceneController().setMessage("It's your turn, play an assistant card");
+            switcher.getGameMainSceneController().showGameHandler();
         });
     }
 
@@ -150,6 +153,7 @@ public class GUIView extends Application implements View {
     @Override
     public void askAction(RoundActions roundActions, boolean isInvalidAction) {
         Platform.runLater(() -> {
+            switcher.getGameMainSceneController().setMessage("It's your turn, do an  (TODO)");
             //TODO: not yet implemented
         });
     }
@@ -172,6 +176,8 @@ public class GUIView extends Application implements View {
     public void showGameStart(GameModel game, String firstPlayerNickname) {
         clientData.setGame(game);
         Platform.runLater(() -> {
+            if (!firstPlayerNickname.equals(clientData.getPlayer().getNickname()))
+                switcher.getGameMainSceneController().setMessage(firstPlayerNickname + " starts the match");
             //DelayAction.executeLater(() -> switcher.getPlayerInfoSceneController().showGameStart());
             DelayAction.executeLater(() -> switcher.getGameMainSceneController().showGameHandler());
         });
@@ -184,7 +190,11 @@ public class GUIView extends Application implements View {
     public void showGame(GameModel game) {
         clientData.setGame(game);
         Platform.runLater(() -> {
-            //TODO: not yet implemented
+            if (game.getPlayerHandler().getCurrentPlayer().getNickname().equals(clientData.getPlayer().getNickname()))
+                switcher.getGameMainSceneController().setMessage("It is your turn");
+            else
+                switcher.getGameMainSceneController().setMessage("It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() + "'s turn");
+            switcher.getGameMainSceneController().showGameHandler();
         });
     }
 
