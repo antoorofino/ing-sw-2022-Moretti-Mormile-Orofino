@@ -2,9 +2,7 @@ package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.utils.ClientData;
-import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.network.messages.SetAssistantCard;
-import it.polimi.ingsw.util.exception.PlayerException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

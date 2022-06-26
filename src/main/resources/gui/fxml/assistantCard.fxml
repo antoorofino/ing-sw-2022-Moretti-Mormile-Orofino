@@ -14,7 +14,7 @@
       <VBox alignment="CENTER">
          <Label fx:id="messageLabel" styleClass="assistant-message-text" text="Message" textFill="WHITE">
             <font>
-               <Font name="Arial Bold" size="15.0" />
+               <Font name="Arial Bold" size="13.0" />
             </font>
          </Label>
       </VBox>

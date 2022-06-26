@@ -416,14 +416,18 @@
 
 .assistant-already-played {
     -fx-background-color: rgba(255,255,255,0.6);
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
 }
 
 .assistant-not-available {
     -fx-background-color: rgba(250, 238, 186, 0.6);
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
 }
 
 .assistant-message-text {
-    -fx-padding: 10px 20px;
+    -fx-padding: 5px 10px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-background-color: rgba(1, 43, 84, 0.6);
