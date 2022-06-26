@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.VCMessage;
 import it.polimi.ingsw.network.heartbeat.HeartbeatSender;
 import it.polimi.ingsw.network.messages.NotifyPlayerIdMessage;
 import it.polimi.ingsw.util.Configurator;
+import it.polimi.ingsw.util.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,8 +24,9 @@ public class ClientHandler extends Thread implements NetworkHandler {
     private final ObjectInputStream input;
     private final Object lock;
     private boolean isConnected;
+    private final Logger logger;
 
-    public ClientHandler(ServerMain serverMain, Socket socket) throws IOException {
+    public ClientHandler(ServerMain serverMain, Socket socket, Logger logger) throws IOException {
         this.socket = socket;
         this.serverMain = serverMain;
         this.controller = null;
@@ -39,6 +41,9 @@ public class ClientHandler extends Thread implements NetworkHandler {
 
         this.playerId = UUID.randomUUID().toString();
         send(new NotifyPlayerIdMessage(playerId));
+
+        this.logger = logger;
+        logger.log(3, 'i', "Start heartbeat thread for client " + playerId);
     }
 
     public String getPlayerId() {
@@ -68,11 +73,11 @@ public class ClientHandler extends Thread implements NetworkHandler {
                 if (controller != null) {
                     if (isConnected) {
                         // This player has disconnected
-                        System.out.println("Warning: player " + playerId + " has disconnected during message receiving");
+                        logger.log(1, 'w', "Player " + playerId + " has disconnected during message receiving");
                         controller.setAsDisconnected(playerId);
                     } else {
                         // Another player has disconnected
-                        System.out.println("Status: player " + playerId + " was forced to stop during message receiving");
+                        logger.log(1, 'w', "Player " + playerId + " was forced to stop during message receiving");
                     }
                 }
                 isConnected = false;
@@ -104,12 +109,12 @@ public class ClientHandler extends Thread implements NetworkHandler {
                 if (controller != null) {
                     if (isConnected) {
                         // This player has disconnected
-                        System.out.println("Warning: player has disconnected during message sending");
+                        logger.log(1, 'w', "Player " + playerId + " has disconnected during message sending");
                         isConnected = false;
                         controller.setAsDisconnected(playerId);
                     } else {
                         // Another player has disconnected
-                        System.out.println("Status: player was forced to stop during message sending");
+                        logger.log(1, 'w', "Player " + playerId + " was forced to stop during message sending");
                     }
                     close();
                 }
@@ -120,6 +125,7 @@ public class ClientHandler extends Thread implements NetworkHandler {
     private void close(){
         try {
             socket.close();
+            logger.log(1, 'i', "Socket closed for player " + playerId);
         } catch (IOException ignored) {
         }
     }

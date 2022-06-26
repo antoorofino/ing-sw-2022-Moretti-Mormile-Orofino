@@ -20,8 +20,9 @@ public class GameController {
     private boolean isCardChosen;
     private boolean endImmediately;
     private final Rules rules;
+    private final Logger logger;
 
-    public GameController(GameListInfo gameInfo) {
+    public GameController(GameListInfo gameInfo, Logger logger) {
         this.game = new GameModel(gameInfo);
         this.virtualView = new VirtualView();
         this.status = GameStatus.ACCEPT_PLAYERS;
@@ -32,6 +33,7 @@ public class GameController {
         } else {
             this.rules = new ExpertRules(game);
         }
+        this.logger = logger;
     }
 
     public GameModel getGame(){
@@ -59,7 +61,7 @@ public class GameController {
     }
 
     public void setPlayerNickname(String playerId, String nickname){
-        System.out.println("INFO: Player " + playerId + " has requested to set his nickname to: " + nickname);
+        logger.log(4, 'g', "Player " + playerId + " has requested to set his nickname to: " + nickname);
         if (checkNickname(nickname)) {
             try {
                 game.getPlayerHandler().getPlayerById(playerId).setNickname(nickname);
@@ -68,11 +70,11 @@ public class GameController {
                         new AskTowerColor(getAvailableTowerColors(), true)
                 );
             } catch (PlayerException e) {
-                System.out.println("FATAL ERROR: Player " + playerId + " not found in PlayersHandler ");
+                logger.log(0, 'f', "Player " + playerId + " not found in PlayersHandler");
                 throw new RuntimeException(e);
             }
         } else {
-            System.out.println("ERROR: Nickname " + nickname + " has been already chosen");
+            logger.log(4, 'w', "Nickname " + nickname + " has been already chosen");
             virtualView.sendToPlayerId(
                     playerId,
                     new AskNickname(false)
@@ -94,7 +96,7 @@ public class GameController {
     }
 
     public void setPlayerTowerColor(String playerId, TowerColor color){
-        System.out.println("INFO: Player " + playerId + " has requested to set his color to: " + color.toString());
+        logger.log(4, 'g', "Player " + playerId + " has requested to set his color to: " + color.toString());
         if (getAvailableTowerColors().contains(color)) {
             try {
                 game.getPlayerHandler().getPlayerById(playerId).setTowerColor(color);
@@ -107,11 +109,11 @@ public class GameController {
                         new AckTowerColor()
                 );
             } catch (PlayerException e) {
-                System.out.println("FATAL ERROR: Player " + playerId + " not found in PlayersHandler ");
+                logger.log(0, 'f', "Player " + playerId + " not found in PlayersHandler");
                 throw new RuntimeException(e);
             }
         } else {
-            System.out.println("ERROR: Color " + color + " has been already chosen");
+            logger.log(4, 'w', "Color " + color + " has been already chosen");
             virtualView.sendToPlayerId(
                     playerId,
                     new AskTowerColor(getAvailableTowerColors(), false)
@@ -173,7 +175,7 @@ public class GameController {
             int i = 0;
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
                 if(getCurrentPlayer().getRoundActions().hasEnded()){
-                    System.out.println("Il player " + getCurrentPlayer().getNickname() + " ha terminato il turno");
+                    logger.log(4, 'g', "Player " + getCurrentPlayer().getNickname() + " ended his round");
                     getCurrentPlayer().resetRoundAction();
                     getCurrentPlayer().setActiveCharacter(null);
                     game.getPlayerHandler().nextPlayerByAssistance();
@@ -186,11 +188,11 @@ public class GameController {
                             this.wait();
                         }
                     }
-                    System.out.println("Il player " + getCurrentPlayer().getNickname() +  " ha effettuato: ");
+                    StringBuilder actions = new StringBuilder();
                     for (Action action : getCurrentPlayer().getRoundActions().getActionsList()) {
-                        System.out.print(action.getActionType().toString() + " ");
+                        actions.append(action.getActionType().toString()).append(" - ");
                     }
-                    System.out.println();
+                    logger.log(4, 'g', "Player " + getCurrentPlayer().getNickname() + "'s actions: " + actions);
                 }
                 virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
@@ -200,6 +202,7 @@ public class GameController {
         } catch (Exception ignored) {
             // FIXME: what to do with double tie ?
             System.out.println("ERROR: double tie!!");
+            logger.log(4, 'w', "Double time for match " + game.getGameName());
             virtualView.sendToEveryone(new ShowEndGame(""));
         }
     }
@@ -258,9 +261,9 @@ public class GameController {
                 //FIXME: double tie!
                 throw new Exception("Double tie");
         }
-        System.out.println("INFO: Player " + winner.getNickname() + " won");
+        logger.log(4, 'g', "Player " + winner.getNickname() + " won");
         virtualView.sendToEveryone(new ShowEndGame(winner.getNickname()));
-        System.out.println("INFO: Controller of game " + game.getGameName() + " closed");
+        logger.log(3, 'i', "Controller of game " + game.getGameName() + " terminated");
     }
 
     public void setAction(Action action, String nickname) {
@@ -270,7 +273,7 @@ public class GameController {
         try {
             thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
         } catch (PlayerException e) {
-            System.out.println("FATAL ERROR: Player " + nickname + " not found in PlayersHandler ");
+            logger.log(0, 'f', "Player " + nickname + " not found in PlayersHandler");
             throw new RuntimeException(e);
         }
         boolean legalAction;
@@ -303,7 +306,7 @@ public class GameController {
                 game.getPlayerHandler().getCurrentPlayer().setLastCardUsed(card);
                 isCardChosen = true;
                 wakeUpController();
-                System.out.println("Set assistant card to " + nickname);
+                logger.log(4, 'g', "Set assistant card with id " + card.getCardID() + " to " + nickname);
             } catch (CardException e){
                 System.out.println(e.getMessage());
             }

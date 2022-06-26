@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.messages.GameListMessage;
 import it.polimi.ingsw.util.Configurator;
 import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.GameStatus;
-import it.polimi.ingsw.util.exception.DisconnectionException;
+import it.polimi.ingsw.util.Logger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -23,11 +23,13 @@ public class ServerMain {
     private final ServerSocket serverSocket;
     private final List<ClientHandler> clientHandlerList;
     private final List<GameController> gameControllerList;
+    private final Logger logger;
 
     public ServerMain() throws IOException {
         serverSocket = new ServerSocket(Configurator.getServerPort());
         clientHandlerList = new ArrayList<>();
         gameControllerList = new ArrayList<>();
+        logger = new Logger(4);
     }
 
     private List<GameModel> gameModelList(Boolean onlyAcceptPlayers){
@@ -47,22 +49,22 @@ public class ServerMain {
         try {
             serverMain = new ServerMain();
         } catch (IOException e) {
-            System.out.println("FATAL ERROR: Could not start the server");
+            Logger.log('f', "Could not start the server");
             return;
         }
         try {
-            System.out.println("INFO: Server listening on port " + Configurator.getServerPort());
+            Logger.log('i', "Server listening on port " + Configurator.getServerPort());
             serverMain.listeningForClients();
         } catch (IOException e) {
-            System.out.println("FATAL ERROR: ould not connect the client");
+            Logger.log('f', "Could not connect the client");
         }
     }
 
     public void listeningForClients() throws IOException {
         while (true) {
             Socket socket = serverSocket.accept();
-            ClientHandler clientHandler = new ClientHandler(this, socket);
-            System.out.println("INFO: Client connected with id " + clientHandler.getPlayerId());
+            ClientHandler clientHandler = new ClientHandler(this, socket, logger);
+            logger.log(1, 'i', "Client connected with id " + clientHandler.getPlayerId());
             synchronized (clientHandlerList) {
                 clientHandlerList.add(clientHandler);
             }
@@ -72,13 +74,13 @@ public class ServerMain {
 
     public void createNewGame(String playerId, GameListInfo gameInfo){
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
-        System.out.println("INFO: Player " + playerId + " has requested to create game " + gameInfo.getGameName());
+        logger.log(2, 'i', "Player " + playerId + " has requested to create game " + gameInfo.getGameName());
         synchronized (gameControllerList) {
             if(checkName(gameInfo.getGameName())){
-                GameController controller = new GameController(gameInfo);
+                GameController controller = new GameController(gameInfo, logger);
                 controller.addClientHandler(clientHandler);
                 controller.addPlayer(playerId);
-                System.out.println("INFO: Player " + playerId + " added to the game " + gameInfo.getGameName());
+                logger.log(2, 'i', "Player " + playerId + " added to the game " + gameInfo.getGameName());
                 gameControllerList.add(controller);
                 clientHandler.setController(controller);
                 (new Thread(() -> {
@@ -87,32 +89,31 @@ public class ServerMain {
                     } catch (Exception ignored) {
                     }
                 })).start();
-                System.out.println("INFO: Game " + gameInfo.getGameName() + " created and controller started");
+                logger.log(3, 'i', "Game " + gameInfo.getGameName() + " created and controller started");
                 clientHandler.send(new AskNickname(true));
             } else {
-                System.out.println("ERROR: name " + gameInfo.getGameName() + " is already used");
+                logger.log(2, 'w', "Name " + gameInfo.getGameName() + " is already used");
                 clientHandler.send(new AskNewGameName());
             }
         }
     }
 
     public void selectGame(String playerId, String gameName){
-        System.out.println("INFO: Player " + playerId + " has requested to join game " + gameName);
+        logger.log(2, 'i', "Player " + playerId + " has requested to join game " + gameName);
         ClientHandler clientHandler = getClientHandlerByPlayerId(playerId);
         synchronized (gameControllerList) {
             GameController controller = getControllerByGameName(gameName);
             if(controller == null || controller.getStatus() != GameStatus.ACCEPT_PLAYERS) {
-                System.out.println("ERROR: Impossible to join game " + gameName);
+                logger.log(2, 'w', "Impossible to join game " + gameName);
                 clientHandler.send(new AskNewGameChoice());
             } else {
                 controller.addClientHandler(clientHandler);
                 controller.addPlayer(playerId);
-                System.out.println("INFO: Player " + playerId + " added to the game " + gameName);
+                logger.log(2, 'i', "Player " + playerId + " added to the game " + gameName);
                 clientHandler.setController(controller);
                 if (controller.getStatus() != GameStatus.ACCEPT_PLAYERS){
                     gameControllerList.remove(controller);
-                    //TODO: verbose
-                    System.out.println("INFO-VERBOSE: Game controller of game " + gameName + " detached from ServerMain");
+                    logger.log(3, 'i', "Game controller of game " + gameName + " detached from ServerMain");
                 }
                 clientHandler.send(new AskNickname(true));
             }
@@ -132,7 +133,7 @@ public class ServerMain {
     }
 
     public void sendActiveGames(String playerId){
-        System.out.println("INFO: Player " + playerId + " has requested the list of active games");
+        logger.log(2, 'i', "Player " + playerId + " has requested the list of active games");
         getClientHandlerByPlayerId(playerId).send(
                 new GameListMessage(GameListInfo.createGameInfoList(gameModelList(true)))
         );
@@ -142,20 +143,17 @@ public class ServerMain {
         synchronized (gameControllerList) {
             try {
                 gameControllerList.remove(controllerToRemove);
-                //TODO: verbose
-                System.out.println("INFO-VERBOSE: GameController of game " +
+                logger.log(3, 'i',"GameController of game " +
                         controllerToRemove.getGame().getGameName() +
-                        " removed from clientHandlerList");
+                                " removed from clientHandlerList");
             } catch (Exception ignored) {
-
             }
         }
         synchronized (clientHandlerList) {
             try {
                 clientHandlerList.remove(getClientHandlerByPlayerId(playerId));
-                //TODO: verbose
-                System.out.println("INFO-VERBOSE: ClientHandler " +
-                        playerId + " removed from clientHandlerList");
+                logger.log(3, 'i', "ClientHandler " +
+                        playerId + " removed from clientHandlerList" );
             } catch (Exception ignored){
             }
         }

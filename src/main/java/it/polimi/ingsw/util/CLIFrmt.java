@@ -8,7 +8,7 @@ public class CLIFrmt {
 	 * @param color
 	 * @return ansicolor code
 	 */
-	protected static AnsiColor getColor(char color) {
+	private static AnsiColor getColor(char color) {
 		color = Character.toLowerCase(color);
 		switch (color) {
 			case 'r':
@@ -31,7 +31,7 @@ public class CLIFrmt {
 	 * @param style
 	 * @return clifrmt code
 	 */
-	public static String getStyle(char style) {
+	private static String getStyle(char style) {
 		style = Character.toLowerCase(style);
 		switch (style) {
 			case 'i':
@@ -47,7 +47,7 @@ public class CLIFrmt {
 		}
 	}
 
-	public static String print(char style,char color, String text) {
+	public static String print(char style, char color, String text) {
 		return getStyle(style) + getColor(color).getCode() + text + getColor('d').getCode();
 	}
 
