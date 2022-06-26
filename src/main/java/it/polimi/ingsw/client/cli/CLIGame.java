@@ -57,6 +57,7 @@ public class CLIGame extends CLIMatrix{
 
 		CLIMatrix cliAssistanceCard;
 		List<AssistantCard> deck;
+		List<AssistantCard> fullDeck = AssistantCard.createDeck();
 		try{
 			deck = game.getPlayerHandler().getPlayerById(playerId).getDeck();
 		}catch (PlayerException e) {
@@ -65,12 +66,11 @@ public class CLIGame extends CLIMatrix{
 		int i = 10;
 		// draw assistant card
 		drawText("Your assistance cards:",1,26,5);
-		for(AssistantCard card: deck){
-			cliAssistanceCard = CLIAssistantCard(card, possibleCards == null || possibleCards.contains(card));
+		for(AssistantCard card: fullDeck){
+			cliAssistanceCard = CLIAssistantCard(card, possibleCards == null || possibleCards.stream().filter(c -> c.getCardID() == card.getCardID()).findFirst().orElse(null) != null, deck.stream().filter(c -> c.getCardID() == card.getCardID()).findFirst().orElse(null) != null);
 			drawElement(27,i,cliAssistanceCard);
 			i+=12;
 		}
-
 
 		CLIMatrix cliCharacterCard;
 		i = 110;
@@ -132,8 +132,9 @@ public class CLIGame extends CLIMatrix{
 	 * @param playable true if player can use it
 	 * @return matrix containing the player's card
 	 */
-	private CLIMatrix CLIAssistantCard(AssistantCard card, boolean playable){
-		CLIMatrix cliAssistantCard = new CLIMatrix(11, 6, playable ? AnsiColor.ANSI_DEFAULT : AnsiColor.ANSI_RED,AnsiBackColor.ANSI_DEFAULT);
+	private CLIMatrix CLIAssistantCard(AssistantCard card, boolean playable,boolean available){
+		AnsiColor color = (!available) ? AnsiColor.ANSI_BRIGHT_BLACK : ((!playable) ? AnsiColor.ANSI_RED : AnsiColor.ANSI_YELLOW );
+		CLIMatrix cliAssistantCard = new CLIMatrix(11, 6,color,AnsiBackColor.ANSI_DEFAULT);
 		cliAssistantCard.drawBorder("╭╮─╰╯│");
 		randomIcon(cliAssistantCard);
 		cliAssistantCard.drawText(String.valueOf(card.getCardValue()),1,1,1);

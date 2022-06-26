@@ -65,12 +65,12 @@ public class RulesTest {
 	public void doActionTest()  {
 		// -------------- Action MOVE_STUDENT_TO_ISLAND ----------------- //
 		// student not present at the entrance
-		assertFalse(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_ISLAND,Piece.UNICORN,null,0)));
+		assertFalse(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_ISLAND,Piece.UNICORN,0)));
 		// invalid island id
-		assertFalse(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_ISLAND,Piece.DRAGON,null,12)));
+		assertFalse(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_ISLAND,Piece.DRAGON,12)));
 
 		// frog from entrance to first island
-		assertTrue(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_ISLAND,Piece.FROG,null,0)));
+		assertTrue(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_ISLAND,Piece.FROG,0)));
 		assertFalse(firstPlayer.getPlayerBoard().getStudentsEntrance().contains(Piece.FROG));
 		try {
 			assertEquals(1, game.getIslandHandler().getIslandByID(0).getNumStudents(Piece.FROG));
@@ -81,37 +81,37 @@ public class RulesTest {
 
 		// -------------- Action MOVE_STUDENT_TO_DININGROOM ----------------- //
 		// student not present at the entrance
-		assertFalse(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM,Piece.UNICORN,null,0)));
+		assertFalse(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM,Piece.UNICORN)));
 
 		// move dragon from entrance to dining
-		assertTrue(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM,Piece.DRAGON,null,0)));
+		assertTrue(rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM,Piece.DRAGON)));
 		assertEquals(1,firstPlayer.getPlayerBoard().getNumOfStudentsRoom(Piece.DRAGON));
 		game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 
 
 		// -------------- Action MOVE_MOTHER_NATURE ----------------- //
 		// move mother nature too soon
-		assertFalse(rules.doAction(new Action(ActionType.MOVE_MOTHER_NATURE,null,null,1)));
-		rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM,Piece.DRAGON,null,0));
+		assertFalse(rules.doAction(new Action(ActionType.MOVE_MOTHER_NATURE,1)));
+		rules.doAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM,Piece.DRAGON));
 		game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.MOVE_STUDENT_TO_DININGROOM));
 
 		// too many steps
-		assertFalse(rules.doAction(new Action(ActionType.MOVE_MOTHER_NATURE,null,null,6)));
+		assertFalse(rules.doAction(new Action(ActionType.MOVE_MOTHER_NATURE,6)));
 
 		// move mother
-		assertTrue(rules.doAction(new Action(ActionType.MOVE_MOTHER_NATURE,null,null,1)));
+		assertTrue(rules.doAction(new Action(ActionType.MOVE_MOTHER_NATURE,1)));
 		assertEquals(1,game.getIslandHandler().getMotherNature());
 		game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.MOVE_MOTHER_NATURE));
 
 		// -------------- Action CHOOSE_CLOUD ----------------- //
 		// invalid cloud id
-		assertFalse(rules.doAction(new Action(ActionType.CHOOSE_CLOUD,null,null,3)));
+		assertFalse(rules.doAction(new Action(ActionType.CHOOSE_CLOUD,3)));
 
 		// choose cloud
-		assertTrue(rules.doAction(new Action(ActionType.CHOOSE_CLOUD,null,null,1)));
+		assertTrue(rules.doAction(new Action(ActionType.CHOOSE_CLOUD,1)));
 
 		// empty cloud
-		assertFalse(rules.doAction(new Action(ActionType.CHOOSE_CLOUD,null,null,1)));
+		assertFalse(rules.doAction(new Action(ActionType.CHOOSE_CLOUD,1)));
 
 	}
 }

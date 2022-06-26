@@ -11,10 +11,25 @@ public class Action implements Serializable {
         private Piece optionalPiece;
         private int integer;
 
-        public Action(ActionType actionType, Piece principalPiece, Piece optionalPiece, int integer) {
+        public Action(ActionType actionType, Piece principalPiece){
+            this.actionType = actionType;
+            this.principalPiece = principalPiece;
+        }
+
+        public Action(ActionType actionType, Piece principalPiece,Piece optionalPiece){
             this.actionType = actionType;
             this.principalPiece = principalPiece;
             this.optionalPiece = optionalPiece;
+        }
+
+        public Action(ActionType actionType, Piece principalPiece, int integer){
+            this.actionType = actionType;
+            this.principalPiece = principalPiece;
+            this.integer = integer;
+        }
+
+        public Action(ActionType actionType, int integer){
+            this.actionType = actionType;
             this.integer = integer;
         }
 

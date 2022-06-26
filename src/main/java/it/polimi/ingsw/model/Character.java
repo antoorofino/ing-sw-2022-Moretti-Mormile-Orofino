@@ -6,6 +6,7 @@ import it.polimi.ingsw.util.exception.StudentNotPresentException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Stores information about a character game's card
@@ -161,4 +162,14 @@ public class Character implements Serializable {
      * @return cost to activate character's ability
      */
     public int getCost(){return this.cost;}
+
 }
+
+class CompareByID implements Comparator<Character> {
+    public int compare(Character one, Character two) {
+        return one.getID() - two.getID();
+    }
+}
+
+
+

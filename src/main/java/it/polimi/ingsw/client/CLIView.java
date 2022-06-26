@@ -288,47 +288,47 @@ public class CLIView implements View{
 			case STUDENT_FROM_CARD_TO_ISLAND:
 				chosenPiece = getColorInput(" Insert the student's color [red / blue / green / yellow / purple]: ");
 				integer = getNumber(" Insert the island ID: ",false);
-				chosenAction = new Action(action, chosenPiece,null, integer);
+				chosenAction = new Action(action, chosenPiece, integer);
 				break;
 			case MOVE_STUDENT_TO_DININGROOM:
 			case COLOR_NO_INFLUENCE:
 			case STUDENT_FROM_CARD_TO_DINING:
 			case STUDENT_FROM_DINING_TO_BAG:
 				chosenPiece = getColorInput(" Insert the student's color [red / blue / green / yellow / purple]: ");
-				chosenAction = new Action(action, chosenPiece,null,0);
+				chosenAction = new Action(action, chosenPiece);
 				break;
 			case MOVE_MOTHER_NATURE:
 				integer = getNumber(" Insert the number of mother nature steps: ",false);
-				chosenAction = new Action(action,null,null, integer);
+				chosenAction = new Action(action, integer);
 				break;
 			case CHOOSE_CLOUD:
 				integer = getNumber(" Insert the cloud ID: ",false);
-				chosenAction = new Action(action,null,null,integer);
+				chosenAction = new Action(action,integer);
 				break;
 			case CHOOSE_CHARACTER:
 				integer = getNumber(" Insert the character ID to activate: ",false);
-				chosenAction = new Action(action,null,null,integer);
+				chosenAction = new Action(action,integer);
 				break;
 			case DOUBLE_INFLUENCE:
 			case NO_INFLUENCE:
 				integer = getNumber(" Insert the island ID: ",false);
-				chosenAction = new Action(action,null,null,integer);
+				chosenAction = new Action(action,integer);
 				break;
 			case STUDENT_FROM_CARD_TO_ENTRANCE:
 				if(wantToContinue()) {
 					chosenPiece = getColorInput(" Insert the student's color to remove from card [red / blue / green / yellow / purple]: ");
 					secondPiece = getColorInput(" Insert the student's color to remove from entrance [red / blue / green / yellow / purple]: ");
-					chosenAction = new Action(action, chosenPiece, secondPiece, 0);
+					chosenAction = new Action(action, chosenPiece, secondPiece);
 				}else
-					chosenAction = new Action(action, null,null,-1);
+					chosenAction = new Action(action,-1);
 				break;
 			case STUDENT_FROM_ENTRANCE_TO_DINING:
 				if(wantToContinue()){
 					chosenPiece = getColorInput(" Insert the student's color to remove from entrance [red / blue / green / yellow / purple]: ");
 					secondPiece = getColorInput(" Insert the student's color to remove from dining [red / blue / green / yellow / purple]: ");
-					chosenAction = new Action(action, chosenPiece,secondPiece,0);
+					chosenAction = new Action(action, chosenPiece,secondPiece);
 				}else
-					chosenAction = new Action(action, null,null,-1);
+					chosenAction = new Action(action,-1);
 				break;
 		}
 		serverHandler.send(new SetAction(nickname, chosenAction));

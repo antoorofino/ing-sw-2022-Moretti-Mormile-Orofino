@@ -59,6 +59,6 @@ public class CLIIsland extends CLIMatrix {
 	 * @param owner the owner's name
 	 */
 	public void drawOwner(String owner){
-		this.drawText(owner.substring(0,4),1,height/2,2*width/3);
+		this.drawText(owner.substring(0,5),1,5,6);
 	}
 }
