@@ -7,7 +7,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Checks input string
+ */
 public class InputValidator {
+	/**
+	 * Checks if the entered string is an ip
+	 * @param serverIP input string
+	 * @return true if string is an ip, otherwise false
+	 */
 	public static boolean isIp(String serverIP) {
 		String zeroTo255
 				= "(\\d{1,2}|(0|1)\\"
@@ -32,12 +40,23 @@ public class InputValidator {
 		return string.equals("");
 	}
 
+	/**
+	 * Tests if the entered ip is a port
+	 * @param port  The entered server port
+	 * @return  True if the string is a port, otherwise false
+	 */
+
 	public static boolean isPortNumber(String port) {
 		if(!isNumber(port))
 			return false;
 		return InputValidator.isNumberBetween(Integer.parseInt(port), 0,65536);
 	}
 
+	/**
+	 * Tests if the entered string is a number
+	 * @param number The entered string
+	 * @return true if the string is a number, otherwise false
+	 */
 	public static boolean isNumber(String number) {
 		int Number;
 		try {
@@ -48,6 +67,12 @@ public class InputValidator {
 		}
 	}
 
+	/**
+	 * Checks if user chose an available color
+	 * @param choice color that user chose
+	 * @param availableColors list of available colors
+	 * @return true if chose an available color, otherwise false
+	 */
 	public static boolean isTowerColorBetween(TowerColor choice, List<TowerColor> availableColors) {
 		for (TowerColor color : availableColors) {
 			if (choice == color) {

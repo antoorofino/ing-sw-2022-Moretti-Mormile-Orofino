@@ -1,5 +1,8 @@
 package it.polimi.ingsw.util;
 
+/**
+ * Stores information about type of action
+ */
 public enum ActionType {
     MOVE_STUDENT_TO_ISLAND(GameMode.BASIC," Move student from entrance to island"),
     MOVE_STUDENT_TO_DININGROOM(GameMode.BASIC," Move student from entrance to dining room"),
@@ -24,14 +27,27 @@ public enum ActionType {
     private final GameMode mode;
     private final String description;
 
+    /**
+     * Constructor: Build an action
+     * @param mode mode of game
+     * @param description action description
+     */
     ActionType(GameMode mode,String description) {
         this.description = description;
         this.mode = mode;
     }
 
+    /**
+     * Get game mode
+     * @return game mode
+     */
     public GameMode getMode() {
         return this.mode;
     }
 
+    /**
+     * Get description of action
+     * @return description
+     */
     public String getDescription(){ return description;}
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 
+import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -34,7 +35,7 @@ public class MineBoardController extends SceneController{
         s = GUISwitcher.getInstance().getPrimaryStage().getScene();
         s.getRoot().applyCss();
         //buildArrayList();
-
+        System.out.println("id"+GUIView.getPlayerId());
 
     }
     public void moveToIsland(){

@@ -14,28 +14,52 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores information used to configure a game
+ */
 public class Configurator {
     private static final int socketTimeout = 2000;
     private static final int serverPort = 8090;
     private static final boolean debug = false;
     private static final String serverIp = "127.0.0.1";
 
+    /**
+     * Get the timeout of connection
+     * @return timeout of connection
+     */
     public static int getSocketTimeout() {
         return Configurator.socketTimeout;
     }
 
+    /**
+     * Get the frequency of ping's messages
+     * @return frequency of ping's messages
+     */
     public static int getHeartbeatInterval(){
         return Configurator.socketTimeout/4;
     }
 
+    /**
+     * get server port
+     * @return server port
+     */
     public static int getServerPort(){
         return Configurator.serverPort;
     }
 
+    /**
+     * Get server ip
+     * @return server ip
+     */
     public static String getServerIp(){
         return Configurator.serverIp;
     }
 
+    /**
+     * Get the list of characters from xml file
+     * @param game game
+     * @return list of characters
+     */
     public static List<Character> getAllCharactersCards(GameModel game) {
         String fileName = "/Characters.xml";
         List<Character> characters = new ArrayList<>();
