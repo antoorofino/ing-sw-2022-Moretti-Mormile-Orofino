@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-    <GridPane styleClass="island-1" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane fx:id="islandBackgroundPane" styleClass="island-1" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
         </columnConstraints>
         <rowConstraints>
@@ -23,7 +23,10 @@
             <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
         <HBox alignment="CENTER" spacing="2.0">
-            <Pane fx:id="greenImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Pane fx:id="greenImage" styleClass="student-blue-background" translateX="10.0" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets />
+            </HBox.margin></Pane>
             <Label fx:id="greenText" text="x2" textFill="WHITE">
                 <font>
                     <Font name="Arial Bold" size="10.0" />
@@ -31,7 +34,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.columnIndex="1">
-            <Pane fx:id="redImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Pane fx:id="redImage" styleClass="student-blue-background" translateX="-5.0" HBox.hgrow="ALWAYS" />
             <Label fx:id="redText" text="x2" textFill="WHITE">
                 <font>
                     <Font name="Arial Bold" size="10.0" />
@@ -39,7 +42,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="1">
-            <Pane fx:id="yellowImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Pane fx:id="yellowImage" styleClass="student-blue-background" translateX="5.0" HBox.hgrow="ALWAYS" />
             <Label fx:id="yellowText" text="x2" textFill="WHITE">
                 <font>
                     <Font name="Arial Bold" size="10.0" />
@@ -47,7 +50,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <Pane fx:id="purpleImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Pane fx:id="purpleImage" styleClass="student-blue-background" translateX="10.0" HBox.hgrow="ALWAYS" />
             <Label fx:id="purpleText" text="x2" textFill="WHITE">
                 <font>
                     <Font name="Arial Bold" size="10.0" />
@@ -55,17 +58,17 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="2">
-            <Pane fx:id="blueImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Pane fx:id="blueImage" styleClass="student-blue-background" translateX="10.0" HBox.hgrow="ALWAYS" />
             <Label fx:id="blueText" text="x2" textFill="WHITE">
                 <font>
                     <Font name="Arial Bold" size="10.0" />
                 </font>
             </Label>
         </HBox>
-        <Pane fx:id="motherNatureImage" prefHeight="10.0" prefWidth="10.0" styleClass="mother-nature-background" GridPane.rowIndex="3" />
-        <Pane fx:id="towerImage" styleClass="tower-black-background" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
+        <Pane fx:id="motherNatureImage" minHeight="12.0" styleClass="mother-nature-background" translateX="20.0" translateY="-5.0" GridPane.rowIndex="3" />
+        <Pane fx:id="towerImage" styleClass="tower-black-background" translateX="-5.0" translateY="-5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
           <GridPane.margin>
-              <Insets bottom="2.0" top="10.0" />
+              <Insets bottom="2.0" left="5.0" top="10.0" />
           </GridPane.margin>
         </Pane>
     </GridPane>

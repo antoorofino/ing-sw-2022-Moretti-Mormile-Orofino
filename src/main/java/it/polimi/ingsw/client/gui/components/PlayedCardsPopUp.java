@@ -35,7 +35,7 @@ public class PlayedCardsPopUp {
         ClientData data = ClientData.getInstance();
         for(Player player : data.getGame().getPlayerHandler().getPlayers()) {
             if (player.getLastCardUsed() != null)
-                cards.put(player.getNickname(), player.getLastCardUsed());
+                cards.put(player.getNickname().equals(data.getPlayer().getNickname()) ? "You" : player.getNickname(), player.getLastCardUsed());
         }
         if (cards.keySet().size() > 0) {
             cardsHBox.getChildren().clear();

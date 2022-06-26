@@ -7,13 +7,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class IslandGUI {
+    @FXML
+    private GridPane islandBackgroundPane;
     @FXML
     private Pane greenImage;
     @FXML
@@ -56,6 +62,9 @@ public class IslandGUI {
     @FXML
     private void initialize() {
         clear();
+        List<String> islandBackgrounds = Arrays.asList("island-1", "island-2", "island-3");
+        Random random = new Random();
+        islandBackgroundPane.getStyleClass().add(islandBackgrounds.get(random.nextInt(islandBackgrounds.size())));
         blueImage.heightProperty().addListener((observable, odlValue, newValue) -> {
             greenText.setFont(new Font("Arial Bold",((Double) newValue)/2));
             redText.setFont(new Font("Arial Bold",((Double) newValue)/2));
@@ -63,19 +72,15 @@ public class IslandGUI {
             purpleText.setFont(new Font("Arial Bold",((Double) newValue)/2));
             blueText.setFont(new Font("Arial Bold",((Double) newValue)/2));
         });
+        motherNatureImage.getStyleClass().add("student-hover");
     }
 
     private void clear() {
         greenImage.getStyleClass().clear();
-        greenText.setText("");
         redImage.getStyleClass().clear();
-        redText.setText("");
         yellowImage.getStyleClass().clear();
-        yellowText.setText("");
         purpleImage.getStyleClass().clear();
-        purpleText.setText("");
         blueImage.getStyleClass().clear();
-        blueText.setText("");
         motherNatureImage.getStyleClass().clear();
         towerImage.getStyleClass().clear();
     }
@@ -133,5 +138,8 @@ public class IslandGUI {
 
     public void setMotherNature() {
         motherNatureImage.getStyleClass().add("mother-nature-background");
+    }
+    public Pane getMotherNatureImage() {
+        return motherNatureImage;
     }
 }

@@ -152,9 +152,11 @@ public class GUIView extends Application implements View {
      */
     @Override
     public void askAction(RoundActions roundActions, boolean isInvalidAction) {
+        clientData.setPossibleActions(roundActions);
         Platform.runLater(() -> {
-            switcher.getGameMainSceneController().setMessage("It's your turn, do an  (TODO)");
-            //TODO: not yet implemented
+            switcher.getGameMainSceneController().setMessage("It's your turn, perform an action"); //TODO: customize message banner
+            if (isInvalidAction)
+                switcher.getGameMainSceneController().showError("Invalid action");
         });
     }
 

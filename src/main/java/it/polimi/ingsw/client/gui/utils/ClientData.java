@@ -4,11 +4,12 @@ import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.util.Configurator;
-import it.polimi.ingsw.util.GameListInfo;
+import it.polimi.ingsw.util.*;
 import it.polimi.ingsw.util.exception.PlayerException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientData {
     private static ClientData instance = null;
@@ -17,6 +18,7 @@ public class ClientData {
     private GameListInfo gameInfo;
     private GameModel game;
     private List<AssistantCard> possibleCards;
+    private List<ActionType> possibleActions = new ArrayList<>();
     private ClientData(){
         ipAddress = Configurator.getServerIp();
         portNumber = Configurator.getServerPort();
@@ -75,5 +77,13 @@ public class ClientData {
         } catch (PlayerException e) {
             throw new RuntimeException("Player not found");
         }
+    }
+
+    public List<ActionType> getPossibleActions() {
+        return new ArrayList<>(possibleActions);
+    }
+
+    public void setPossibleActions(RoundActions list) {
+        possibleActions = list.getActionsList().stream().map(Action::getActionType).collect(Collectors.toList());
     }
 }

@@ -326,10 +326,24 @@
     -fx-background-position: center;
 }
 
-.island-1:hover {
+.island-2 {
+    -fx-background-image: url("../images/island2.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.island-3 {
+    -fx-background-image: url("../images/island3.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+/*.island-1:hover {
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
-}
+}*/
 
 .islands-grid {
     -fx-grid-lines-visible: false;
@@ -431,6 +445,7 @@
     -fx-background-color: rgba(1, 43, 84, 0.6);
 }
 
+.island-hover,
 .assistant-1:hover,
 .assistant-2:hover,
 .assistant-3:hover,
@@ -444,4 +459,15 @@
 .assistant-selected {
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
+}
+
+.student-hover:hover {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgb(211, 237, 255), 15, 0.5, 0, 0);
+}
+
+.dining-room-hover {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: rgba(1, 43, 84, 0.4);
 }
