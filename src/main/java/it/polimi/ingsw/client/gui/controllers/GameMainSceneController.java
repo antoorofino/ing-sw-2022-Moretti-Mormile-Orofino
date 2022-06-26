@@ -38,6 +38,7 @@ public class GameMainSceneController extends SceneController {
    private PlayerBoard playerBoardController;
    private PlayerDashboard playerDashboardController;
    private final YourCardsPopUp yourCardsPopUp = new YourCardsPopUp();
+   private final List<BoardPopUp> boardPopUps = new ArrayList<>();
 
    private final GUISwitcher switcher = GUISwitcher.getInstance();
    private final ClientData clientData = ClientData.getInstance();
@@ -138,6 +139,8 @@ public class GameMainSceneController extends SceneController {
       boardsButton.setOnMouseClicked(e -> {
          popUpController.clear();
          boardPopUpInitialize();
+         for (BoardPopUp boardPopUp : boardPopUps)
+            popUpController.add(boardPopUp.getRoot());
          popUpController.display();
       });
 
@@ -154,11 +157,16 @@ public class GameMainSceneController extends SceneController {
    }
 
    private void boardPopUpInitialize() {
-      OtherPlayerDashboard otherPlayerDashboard = new OtherPlayerDashboard();
+      if (boardPopUps.size() == 0) {
+         for (int i = 1; i < clientData.getGame().getPlayerHandler().getNumPlayers(); i++) {
+            boardPopUps.add(new BoardPopUp());
+         }
+      }
+      int j = 0;
       for(Player player : clientData.getGame().getPlayerHandler().getPlayers()) {
          if (!player.getId().equals(GUIView.getPlayerId())) {
-            otherPlayerDashboard.setPlayerInfo(player, clientData.getGame().getGameMode(), clientData.getGame().getTeacherHandler());
-            popUpController.add(otherPlayerDashboard.getRoot());
+            boardPopUps.get(j).setPlayerInfo(player, clientData.getGame().getGameMode(), clientData.getGame().getTeacherHandler());
+            j++;
          }
       }
    }
@@ -251,7 +259,7 @@ public class GameMainSceneController extends SceneController {
               clientData.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
 
       //PopUps update
-      //boardPopUpInitialize();
+      boardPopUpInitialize();
       yourCardsPopUp.setCards();
 
       ensureActive();
