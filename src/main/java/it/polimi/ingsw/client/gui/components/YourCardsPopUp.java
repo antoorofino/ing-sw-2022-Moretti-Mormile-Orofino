@@ -36,13 +36,11 @@ public class YourCardsPopUp {
     @FXML
     private void initialize() {
         playCardButton.setOnMouseClicked(e -> {
-            if(selectedCard != 0) {
-                GUIView.getServerHandler().send(new SetAssistantCard(
-                        data.getPlayer().getNickname(),
-                        data.getPossibleCards().stream().filter(c -> c.getCardID() == selectedCard).findFirst().get()
-                ));
-                data.setPossibleCards(null);
-            }
+            GUIView.getServerHandler().send(new SetAssistantCard(
+                    data.getPlayer().getNickname(),
+                    data.getPossibleCards().stream().filter(c -> c.getCardID() == selectedCard).findFirst().get()
+            ));
+            data.setPossibleCards(null);
         });
 
         for (int i = 1; i <= 10; i++) {
@@ -72,7 +70,7 @@ public class YourCardsPopUp {
                         selectedCard = id;
                         assistantCardGUIS.get(id - 1).select();
                         playCardButton.setDisable(data.getPossibleCards() == null);
-                    } else if(selectedCard == id) { //Click on the same card
+                    } else if(selectedCard == id) { // Click on the same card
                         selectedCard = 0;
                         assistantCardGUIS.get(id - 1).deselect();
                         playCardButton.setDisable(true);

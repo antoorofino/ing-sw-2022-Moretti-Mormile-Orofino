@@ -4,72 +4,72 @@
         <name>AddStudentIsland</name>
         <description>EFFECT: Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card. </description>
         <rules>it.polimi.ingsw.server.rules.characters.FirstCardRules</rules>
-        <cost>1</cost>
+        <cost>0</cost>
     </character>
     <character id="2">
         <name>TeacherControl</name>
         <description>EFFECT: During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.</description>
         <rules>it.polimi.ingsw.server.rules.characters.SecondCardRules</rules>
-        <cost>2</cost>
+        <cost>0</cost>
     </character>
     <character id="3">
         <name>ExtraIsland</name>
         <description>EFFECT: Choose an Island and resolve the Island as if Mother Nature had end ed her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved. </description>
         <rules>it.polimi.ingsw.server.rules.characters.ThirdCardRules</rules>
-        <cost>3</cost>
+        <cost>0</cost>
     </character>
     <character id="4">
         <name>ExtraMovesMother</name>
         <description>EFFECT: You may move Mother Nature up to 2 additional Islands than is indicatecd by the Assistant card you've played. </description>
         <rules>it.polimi.ingsw.server.rules.characters.FourthCardRules</rules>
-        <cost>1</cost>
+        <cost>0</cost>
     </character>
     <character id="5">
         <name>NoEntryIsland</name>
         <description>EFFECT: Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that lsland, or place any Towers.</description>
         <rules>it.polimi.ingsw.server.rules.characters.FifthCardRules</rules>
-        <cost>2</cost>
+        <cost>0</cost>
     </character>
     <character id="6">
         <name>NoInfluenceTower</name>
         <description>EFFECT: When resolving a conquering on an lsland, Towers do not count towards influence. </description>
         <rules>it.polimi.ingsw.server.rules.characters.SixthCardRules</rules>
-        <cost>3</cost>
+        <cost>0</cost>
     </character>
     <character id="7">
         <name>ExchangeStudentsEntranceCard</name>
         <description>EFFECT: You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.</description>
         <rules>it.polimi.ingsw.server.rules.characters.SeventhCardRules</rules>
-        <cost>1</cost>
+        <cost>0</cost>
     </character>
     <character id="8">
         <name>MoreInfluence</name>
         <description>EFFECT: During the influence calculation this turn, you count as having 2 more influence. </description>
         <rules>it.polimi.ingsw.server.rules.characters.EighthCardRules</rules>
-        <cost>2</cost>
+        <cost>0</cost>
     </character>
     <character id="9">
         <name>NoInfluenceColor</name>
         <description>EFFECT: Choose a color of Student: during the influence calculation this turn, that color adds no influence.</description>
         <rules>it.polimi.ingsw.server.rules.characters.NinthCardRules</rules>
-        <cost>3</cost>
+        <cost>0</cost>
     </character>
     <character id="10">
         <name>ExchangeStudentsEntranceDiningRoom</name>
         <description>EFFECT: You may exchange up to 2 Students between your Entrance and your Dining Room.</description>
         <rules>it.polimi.ingsw.server.rules.characters.TenthCardRules</rules>
-        <cost>1</cost>
+        <cost>0</cost>
     </character>
     <character id="11">
         <name>AddStudentDiningRoom</name>
         <description>EFFECT: Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.</description>
         <rules>it.polimi.ingsw.server.rules.characters.EleventhCardRules</rules>
-        <cost>2</cost>
+        <cost>0</cost>
     </character>
     <character id="12">
         <name>ReturnStudentsDiningRoom</name>
         <description>EFFECT: Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.</description>
         <rules>it.polimi.ingsw.server.rules.characters.TwelfthCardRules</rules>
-        <cost>3</cost>
+        <cost>0</cost>
     </character>
 </characters>

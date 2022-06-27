@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.components.*;
 import it.polimi.ingsw.client.gui.utils.*;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.util.GameMode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,6 +20,8 @@ public class GameMainSceneController extends SceneController {
    public AnchorPane islandsAnchorPane;
    @FXML
    public Pane playerDashboardPane;
+   @FXML
+   public Pane activeCharacterPane;
    @FXML
    public Pane playerBoard;
    @FXML
@@ -36,12 +39,13 @@ public class GameMainSceneController extends SceneController {
    private IslandsGridGUI islandsGridGUI;
    private PlayerBoard playerBoardController;
    private PlayerDashboard playerDashboardController;
+   private CharactersPopUp charactersPopUp;
    private YourCardsPopUp yourCardsPopUp;
    private List<BoardPopUp> boardPopUps;
    private PlayedCardsPopUp playedCardsPopUp;
 
    private final GUISwitcher switcher = GUISwitcher.getInstance();
-   private final ClientData clientData = ClientData.getInstance();
+   private final ClientData data = ClientData.getInstance();
 
    @FXML
    public void initialize() {
@@ -60,13 +64,17 @@ public class GameMainSceneController extends SceneController {
       playerDashboardPane.getChildren().add(playerDashboardController.getRoot());
 
       //Create popUps
+      charactersPopUp = new CharactersPopUp();
       yourCardsPopUp = new YourCardsPopUp();
       boardPopUps = new ArrayList<>();
       playedCardsPopUp = new PlayedCardsPopUp();
 
       //Set onClicked listener for left buttons
       charactersButton.setOnMouseClicked(e -> {
-         alertPaneController.showError("NOT YET IMPLEMENTED");
+         popUpController.clear();
+         charactersPopUp.setCards();
+         popUpController.add(charactersPopUp.getRoot());
+         popUpController.display();
       });
 
       boardsButton.setOnMouseClicked(e -> {
@@ -94,39 +102,68 @@ public class GameMainSceneController extends SceneController {
 
    private void boardPopUpInitialize() {
       if (boardPopUps.size() == 0) {
-         for (int i = 1; i < clientData.getGame().getPlayerHandler().getNumPlayers(); i++) {
+         for (int i = 1; i < data.getGame().getPlayerHandler().getNumPlayers(); i++) {
             boardPopUps.add(new BoardPopUp());
          }
       }
       int j = 0;
-      for(Player player : clientData.getGame().getPlayerHandler().getPlayers()) {
+      for(Player player : data.getGame().getPlayerHandler().getPlayers()) {
          if (!player.getId().equals(GUIView.getPlayerId())) {
-            boardPopUps.get(j).setPlayerInfo(player, clientData.getGame().getGameMode(), clientData.getGame().getTeacherHandler());
+            boardPopUps.get(j).setPlayerInfo(player, data.getGame().getGameMode(), data.getGame().getTeacherHandler());
             j++;
+         }
+      }
+   }
+
+   private void setCharacterCard() {
+      Character activeCard = data.getGame().getPlayerHandler().getPlayers().stream()
+              .map(Player::getActiveCharacter)
+              .filter(Objects::nonNull)
+              .findFirst()
+              .orElse(null);
+      boolean isTheCurrentPlayer = data.getPlayer().getActiveCharacter() != null;
+      if (activeCard != null) {
+         CharacterCardGUI cardGUI = new CharacterCardGUI();
+         cardGUI.setCharacterCard(activeCard, isTheCurrentPlayer);
+         activeCharacterPane.getChildren().add(cardGUI.getRoot());
+         // Set interactions features if this player activated the card
+         if (isTheCurrentPlayer) {
+            switch (data.getPlayer().getActiveCharacter().getID()) {
+               case 3:
+                  //TODO: Activate chose island
+                  break;
+               case 7:
+               case 10:
+                  //TODO: Activate swap area
+                  break;
+            }
          }
       }
    }
 
    public void showGameHandler() {
       //FIXME: should be moved somewhere else ?
-      if(clientData.getGame().getGameMode() == GameMode.BASIC) {
+      if(data.getGame().getGameMode() == GameMode.BASIC) { // Basic mode
          buttonsVBox.getChildren().remove(charactersButton);
+      } else { // Expert mode
+         setCharacterCard();
       }
 
       //Islands grid update
       islandsGridGUI.setGrid();
 
       //Player dashboard update
-      playerDashboardController.setPlayerInfo(clientData.getPlayer(), clientData.getGame().getGameMode());
+      playerDashboardController.setPlayerInfo(data.getPlayer(), data.getGame().getGameMode());
 
       //Player board update
-      playerBoardController.setBoard(clientData.getPlayer().getPlayerBoard(),
-              clientData.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
+      playerBoardController.setBoard(data.getPlayer().getPlayerBoard(),
+              data.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
 
       //PopUps update
       boardPopUpInitialize();
       yourCardsPopUp.setCards();
       playedCardsButton.setDisable(playedCardsPopUp.setCards());
+      charactersPopUp.setCards();
    }
 
    public void setMessage(String message) {
@@ -135,5 +172,6 @@ public class GameMainSceneController extends SceneController {
 
    public void showError(String message) {
       alertPaneController.showError(message);
+      showGameHandler();
    }
 }
