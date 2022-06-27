@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -57,7 +58,6 @@ public class GUIView extends Application implements View {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Eriantys");
-        //TODO: add app icon
         stage.setMinHeight(750.0);
         stage.setMinWidth(900.0);
         stage.setHeight(750.0);
@@ -65,6 +65,7 @@ public class GUIView extends Application implements View {
         stage.setScene(new Scene(new Group()));
         switcher.initialise(stage);
         switcher.setDefaultController();
+        stage.getIcons().add(new Image("file:../../src/main/resources/gui/images/iconImage.jpg"));
         stage.show();
     }
 
