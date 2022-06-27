@@ -59,7 +59,6 @@ public class CharactersPopUp {
 
     public void setCards() {
         List<Character> cards = data.getGame().getCharacters();
-        System.out.println("Size: " + cards.size() + " - " + cards.get(0).getID() + " - " + cards.get(1).getID() + " - " + cards.get(2).getID());
         buyCardButton.setDisable(true);
         if (selectedCard != -1)
             cardGUIS.get(selectedCard).deselect();

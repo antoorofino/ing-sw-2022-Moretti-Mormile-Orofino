@@ -131,7 +131,6 @@ public class CharacterCardGUI {
         clear();
         // Set character image
         characterImagePane.getStyleClass().add("character-" + card.getID());
-        System.out.println("Set class name: " + characterImagePane.getStyleClass().get(0) + " - Size: " + characterImagePane.getStyleClass().size());
         // Set character price
         costLabel.setText(String.valueOf(card.getCost()));
         // Add pieces to card
