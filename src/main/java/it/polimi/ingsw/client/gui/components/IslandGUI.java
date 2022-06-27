@@ -62,9 +62,6 @@ public class IslandGUI {
     @FXML
     private void initialize() {
         clear();
-        List<String> islandBackgrounds = Arrays.asList("island-1", "island-2", "island-3");
-        Random random = new Random();
-        islandBackgroundPane.getStyleClass().add(islandBackgrounds.get(random.nextInt(islandBackgrounds.size())));
         blueImage.heightProperty().addListener((observable, odlValue, newValue) -> {
             greenText.setFont(new Font("Arial Bold",((Double) newValue)/2));
             redText.setFont(new Font("Arial Bold",((Double) newValue)/2));
@@ -76,13 +73,23 @@ public class IslandGUI {
     }
 
     private void clear() {
+        islandBackgroundPane.getStyleClass().clear();
         greenImage.getStyleClass().clear();
+        greenText.setText("");
         redImage.getStyleClass().clear();
+        redText.setText("");
         yellowImage.getStyleClass().clear();
+        yellowText.setText("");
         purpleImage.getStyleClass().clear();
+        purpleText.setText("");
         blueImage.getStyleClass().clear();
+        blueText.setText("");
         motherNatureImage.getStyleClass().clear();
         towerImage.getStyleClass().clear();
+    }
+
+    public void setIslandImage(String bg) {
+        islandBackgroundPane.getStyleClass().add(bg);
     }
 
     public void setStudents(Map<Piece, Integer> map) {

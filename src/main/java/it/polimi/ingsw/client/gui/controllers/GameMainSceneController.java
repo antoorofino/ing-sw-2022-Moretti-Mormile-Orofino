@@ -114,7 +114,7 @@ public class GameMainSceneController extends SceneController {
       }
 
       //Islands grid update
-      islandsGridGUI.setIslands();
+      islandsGridGUI.setGrid();
 
       //Player dashboard update
       playerDashboardController.setPlayerInfo(clientData.getPlayer(), clientData.getGame().getGameMode());

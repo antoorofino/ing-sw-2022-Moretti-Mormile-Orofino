@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.components;
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
+import it.polimi.ingsw.model.Cloud;
 import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.model.IslandsHandler;
 import it.polimi.ingsw.network.messages.SetAction;
@@ -20,10 +21,15 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class IslandsGridGUI {
     @FXML
     private GridPane islandsGridPane;
+    private final List<String> islandsBackground;
+    private final ClientData data = ClientData.getInstance();
     Parent root;
 
     public IslandsGridGUI() {
@@ -33,18 +39,52 @@ public class IslandsGridGUI {
             root = fxmlLoader.load();
         } catch (IOException ignored) {
         }
+
+        Random rand = new Random();
+        List<String> styleList = Arrays.asList("island-1", "island-2", "island-3");
+        islandsBackground = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            islandsBackground.add(styleList.get(rand.nextInt(styleList.size())));
+        }
     }
 
     public Parent getRoot() {
         return root;
     }
 
-    public void setIslands() {
-        IslandsHandler handler = ClientData.getInstance().getGame().getIslandHandler();
-        ArrayList<Island> islands = handler.getIslands();
-
+    public void setGrid() {
         //Clear grid
         islandsGridPane.getChildren().clear();
+
+        //Set clouds and islands
+        setClouds();
+        setIslands();
+    }
+
+    private void setClouds() {
+        CloudGUI cloudGUI;
+        int[][] cloudPositions = {{3,2}, {7,2}, {5,2}};
+        List<Cloud> clouds = data.getGame().getClouds();
+        for (int i = 0; i < clouds.size(); i++) {
+            cloudGUI = new CloudGUI();
+            cloudGUI.setStudents(clouds.get(i).getStudents());
+            int finalI = i;
+            cloudGUI.getRoot().setOnMouseClicked(e -> {
+                if (ClientData.getInstance().getPossibleActions().contains(ActionType.CHOOSE_CLOUD))
+                    GUIView.getServerHandler().send(new SetAction(
+                            data.getPlayer().getNickname(),
+                            new Action(ActionType.CHOOSE_CLOUD, clouds.get(finalI).getCloudID())
+                    ));
+                e.consume();
+            });
+            GridPane.setConstraints(cloudGUI.getRoot(), cloudPositions[i][0], cloudPositions[i][1]);
+            islandsGridPane.getChildren().add(cloudGUI.getRoot());
+        }
+    }
+
+    private void setIslands() {
+        IslandsHandler handler = data.getGame().getIslandHandler();
+        ArrayList<Island> islands = handler.getIslands();
 
         int index = (12 - handler.getCountsLastMerge())%12; // countsLastMerge
         final int[][] absolutePositions = { { 0, 1 }, { 0, 3 }, { 0, 5 }, { 0, 7 }, { 0, 9 }, { 2, 10 }, { 4, 9 }, { 4, 7 }, { 4, 5 }, { 4, 3 }, { 4, 1 }, { 2, 0 } };
@@ -57,6 +97,7 @@ public class IslandsGridGUI {
             mother = island.getID() == handler.getMotherNature();
             for(int i = 0; i < island.getSize(); i++){
                 islandGUI = new IslandGUI();
+                islandGUI.setIslandImage(islandsBackground.get(island.getID() + i));
                 if(island.getIslandOwner() != null)
                     islandGUI.setTower(island.getIslandOwner().getTowerColor());
                 if(island.getSize()==1 || i==1) {
@@ -118,7 +159,9 @@ public class IslandsGridGUI {
             if (ddi.getType() == DragType.PIECE) {
                 ddi.setIslandId(islandId);
             } else if(ddi.getType() == DragType.MOTHER) {
-                ddi.setSteps(islandId > ddi.getIslandId() ? islandId - ddi.getIslandId() : islandId - ddi.getIslandId() + 12);
+                ddi.setSteps(islandId > ddi.getIslandId() ?
+                        islandId - ddi.getIslandId() :
+                        islandId - ddi.getIslandId() + data.getGame().getIslandHandler().getIslands().size());
             }
             db.clear();
             ClipboardContent cc = new ClipboardContent();

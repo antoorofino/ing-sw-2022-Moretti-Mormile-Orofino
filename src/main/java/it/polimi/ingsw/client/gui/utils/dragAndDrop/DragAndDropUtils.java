@@ -70,7 +70,7 @@ public class DragAndDropUtils {
             return false;
         int maxSteps = data.getPlayer().getLastCardUsed().getMovements();
         int mother = data.getGame().getIslandHandler().getMotherNature();
-        int steps = islandId > mother ? islandId - mother : islandId - mother + 12;
+        int steps = islandId > mother ? islandId - mother : islandId - mother + data.getGame().getIslandHandler().getIslands().size();
         return data.getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE) && steps <= maxSteps && steps > 0;
     }
 }

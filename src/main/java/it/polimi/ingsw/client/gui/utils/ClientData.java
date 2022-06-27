@@ -18,11 +18,12 @@ public class ClientData {
     private GameListInfo gameInfo;
     private GameModel game;
     private List<AssistantCard> possibleCards;
-    private List<ActionType> possibleActions = new ArrayList<>();
+    private List<ActionType> possibleActions;
     private ClientData(){
         ipAddress = Configurator.getServerIp();
         portNumber = Configurator.getServerPort();
         possibleCards = null;
+        resetPossibleActions();
     }
 
     public static ClientData getInstance() {
@@ -85,5 +86,9 @@ public class ClientData {
 
     public void setPossibleActions(RoundActions list) {
         possibleActions = list.getActionsList().stream().map(Action::getActionType).collect(Collectors.toList());
+    }
+
+    public void resetPossibleActions() {
+        possibleActions = new ArrayList<>();
     }
 }

@@ -194,8 +194,10 @@ public class GUIView extends Application implements View {
         Platform.runLater(() -> {
             if (game.getPlayerHandler().getCurrentPlayer().getNickname().equals(clientData.getPlayer().getNickname()))
                 switcher.getGameMainSceneController().setMessage("It is your turn");
-            else
+            else {
+                clientData.resetPossibleActions();
                 switcher.getGameMainSceneController().setMessage("It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() + "'s turn");
+            }
             switcher.getGameMainSceneController().showGameHandler();
         });
     }

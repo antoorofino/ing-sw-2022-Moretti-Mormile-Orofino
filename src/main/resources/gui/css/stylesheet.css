@@ -340,13 +340,8 @@
     -fx-background-position: center;
 }
 
-/*.island-1:hover {
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(1, 43, 84, 0.6), 15, 0.5, 0, 0);
-}*/
-
 .islands-grid {
-    -fx-grid-lines-visible: false;
+    -fx-grid-lines-visible: true;
     -fx-padding: 10px;
 }
 
@@ -470,4 +465,11 @@
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-background-color: rgba(1, 43, 84, 0.4);
+}
+
+.cloud {
+    -fx-background-image: url("../images/cloud.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
