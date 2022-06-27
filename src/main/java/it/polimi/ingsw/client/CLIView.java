@@ -252,7 +252,7 @@ public class CLIView implements View{
 		boolean correct = false;
 
 		if(isInvalidAction){
-			clearAction();
+			clearAction(true);
 			showErrorMessage("Invalid action. Try again.",false,0);
 		}
 
@@ -275,10 +275,10 @@ public class CLIView implements View{
 					}
 					System.out.println(CLIFrmt.print('d','y'," Press ENTER to continue"));
 					scanner.nextLine();
-					clearAction();
+					clearAction(false);
 				}
 			}else{
-				clearAction();
+				clearAction(true);
 				showErrorMessage("Invalid action. Try again.",false,0);
 			}
 		}
@@ -502,11 +502,6 @@ public class CLIView implements View{
 		CLIGame cliGame = new CLIGame(game,possibleCards,playerId);
 		cliGame.display();
 
-		if (Objects.equals(game.getPlayerHandler().getCurrentPlayer().getId(), playerId))
-			System.out.println(" -> It is your turn");
-		else
-			System.out.println(" -> It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() +"'s turn");
-
 		try {
 			System.in.read(new byte[System.in.available()]);
 		} catch (IOException ignored) {
@@ -543,7 +538,8 @@ public class CLIView implements View{
 	 * Cleans the screen
 	 */
 	private void clearAll(){
-		System.out.print("\033[H\033[2J");
+		clearAction(false);
+		System.out.print("\033[H\033[3J"); // maybe 3J
 		System.out.flush();
 	}
 
@@ -557,9 +553,9 @@ public class CLIView implements View{
 	/**
 	 * Delete text under the game board
 	 */
-	private void clearAction(){
-		System.out.print("\u001b[36;0H"); // height table game = 36
+	private void clearAction(boolean isError){
+		System.out.print("\u001b[3" + ((isError) ? "6" : "5") + ";0H"); // 36 error, 35 otherwise
 		clearDown();
-		System.out.print("\u001b[36;0H");
+		System.out.print("\u001b[3" + ((isError) ? "6" : "5") + ";0H");
 	}
 }
