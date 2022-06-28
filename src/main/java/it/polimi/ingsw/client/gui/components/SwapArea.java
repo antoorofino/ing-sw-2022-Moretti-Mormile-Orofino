@@ -63,18 +63,12 @@ public class SwapArea {
             Dragboard db = e.getDragboard();
             DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
             if (ddi.getType() == DragType.PIECE) {
-                if (ddi.getOrigin() == DragOrigin.ENTRANCE && swapAcceptsEntranceStudent.get()) {
+                if (ddi.getOrigin() == DragOrigin.ENTRANCE && swapAcceptsEntranceStudent.get())
                     piece1BackgroundPane.getStyleClass().add("island-hover");
-                    System.out.println("entrance detected. Size: " + piece1.getStyleClass().size());
-                }
-                else if (ddi.getOrigin() == DragOrigin.DINING && swapAcceptsDiningStudent.get()) {
+                else if (ddi.getOrigin() == DragOrigin.DINING && swapAcceptsDiningStudent.get())
                     piece2BackgroundPane.getStyleClass().add("island-hover");
-                    System.out.println("dining detected. Size: " + piece1.getStyleClass().size());
-                }
-                else if (ddi.getOrigin() == DragOrigin.CHARACTER && swapAcceptsCharacterStudent.get()) {
+                else if (ddi.getOrigin() == DragOrigin.CHARACTER && swapAcceptsCharacterStudent.get())
                     piece2BackgroundPane.getStyleClass().add("island-hover");
-                    System.out.println("charac detected. Size: " + piece1.getStyleClass().size());
-                }
             }
             e.consume();
         });
@@ -153,31 +147,38 @@ public class SwapArea {
 
     public void setPiece1(Piece piece) {
         piece1.getStyleClass().add(Tmp.pieceToClassName(piece));
+        sendSwap();
     }
 
     public void setPiece2(Piece piece) {
         piece2.getStyleClass().add(Tmp.pieceToClassName(piece));
-        DelayAction.executeLater(() -> {
-            switch (data.getPlayer().getActiveCharacter().getID()) {
-                case 7:
-                    GUIView.getServerHandler().send(new SetAction(
-                            data.getPlayer().getNickname(),
-                            new Action(ActionType.STUDENT_FROM_CARD_TO_ENTRANCE,
-                                    Tmp.classNameToPiece(piece2.getStyleClass().get(0)),
-                                    Tmp.classNameToPiece(piece1.getStyleClass().get(0))
-                            )
-                    ));
-                    break;
-                case 10:
-                    GUIView.getServerHandler().send(new SetAction(
-                            data.getPlayer().getNickname(),
-                            new Action(ActionType.STUDENT_FROM_ENTRANCE_TO_DINING,
-                                    Tmp.classNameToPiece(piece1.getStyleClass().get(0)),
-                                    Tmp.classNameToPiece(piece2.getStyleClass().get(0))
-                            )
-                    ));
-                    break;
-            }
-        });
+        sendSwap();
+    }
+
+    private void sendSwap() {
+        if (piece1.getStyleClass().size() > 0 && piece2.getStyleClass().size() > 0) {
+            DelayAction.executeLater(() -> {
+                switch (data.getPlayer().getActiveCharacter().getID()) {
+                    case 7:
+                        GUIView.getServerHandler().send(new SetAction(
+                                data.getPlayer().getNickname(),
+                                new Action(ActionType.STUDENT_FROM_CARD_TO_ENTRANCE,
+                                        Tmp.classNameToPiece(piece2.getStyleClass().get(0)),
+                                        Tmp.classNameToPiece(piece1.getStyleClass().get(0))
+                                )
+                        ));
+                        break;
+                    case 10:
+                        GUIView.getServerHandler().send(new SetAction(
+                                data.getPlayer().getNickname(),
+                                new Action(ActionType.STUDENT_FROM_ENTRANCE_TO_DINING,
+                                        Tmp.classNameToPiece(piece1.getStyleClass().get(0)),
+                                        Tmp.classNameToPiece(piece2.getStyleClass().get(0))
+                                )
+                        ));
+                        break;
+                }
+            });
+        }
     }
 }

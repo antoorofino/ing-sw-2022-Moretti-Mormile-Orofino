@@ -158,7 +158,7 @@ public class CharacterCardGUI {
                     ));
                 } else {
                     tile.getStyleClass().clear();
-                    tile.getStyleClass().add(Tmp.pieceToClassName(ddi.getPiece()));
+                    tile.getStyleClass().add("no-tile");
                     tile.getStyleClass().add("student-hover");
                 }
                 e.consume();

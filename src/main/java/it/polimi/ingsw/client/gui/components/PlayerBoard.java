@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.network.messages.SetAction;
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -69,15 +70,13 @@ public class PlayerBoard {
         // Clear entrance
         for (Node piece : entrance.getChildren()) {
             piece.getStyleClass().clear();
+            piece.setOnDragDetected(Event::consume);
         }
         // Clear dining rooms
         for (Node room : diningRoom.getChildren()) {
             for (Node piece : ((Pane) room).getChildren()) {
                 piece.getStyleClass().clear();
-                if (isActive) {
-                    setOnDragDiningStudentsHandlers(piece, swapArea);
-                    setDiningRoomDropHandlers();
-                }
+                piece.setOnDragDetected(Event::consume);
             }
         }
         // Clear teachers
@@ -91,14 +90,18 @@ public class PlayerBoard {
             if (isActive)
                 setOnDragEntranceStudentHandlers(entrance.getChildren().get(i), swapArea);
         }
-
         // Set dining room students
         Map<Piece, Integer> studentsMap = board.getStudentsRoom();
         for(Piece piece : studentsMap.keySet()) {
             for (int i = 0; i < studentsMap.get(piece); i++) {
                 getDiningRoomByPiece(piece).getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(piece));
+                if (isActive) {
+                    setOnDragDiningStudentsHandlers(getDiningRoomByPiece(piece).getChildren().get(i), swapArea);
+                }
             }
         }
+        if (isActive)
+            setDiningRoomDropHandlers();
         // Set teachers
         for(Piece teacher : teachersList) {
             switch (teacher) {
@@ -123,7 +126,7 @@ public class PlayerBoard {
 
     private void setOnDragEntranceStudentHandlers(Node s, SwapArea swapArea) {
         Supplier<Boolean> entranceStudentsAreActive = () -> {
-            if (data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND) && data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM))
+            if (data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND) || data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM))
                 return true;
             if (data.getPlayer().getActiveCharacter() != null && data.getPlayer().getRoundActions().getActionsList().stream()
                     .map(Action::getActionType).filter(t -> t == ActionType.ACTIVATED_CHARACTER).findFirst().orElse(null) == null) {
