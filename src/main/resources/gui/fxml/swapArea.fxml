@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="swapPane" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox alignment="CENTER" prefHeight="71.0" prefWidth="200.0">
+        <Label text="Swap area" textFill="WHITE">
+            <font>
+                <Font name="Arial Bold" size="26.0" />
+            </font>
+        </Label>
+    </HBox>
+   <Pane fx:id="piece1BackgroundPane" layoutX="20.0" layoutY="87.0" prefHeight="60.0" prefWidth="60.0" styleClass="swap-area-piece-background" />
+   <Pane fx:id="piece2BackgroundPane" layoutX="120.0" layoutY="87.0" prefHeight="60.0" prefWidth="60.0" styleClass="swap-area-piece-background" />
+    <HBox alignment="CENTER" layoutY="80.0" prefHeight="70.0" prefWidth="200.0" spacing="20.0">
+        <Pane fx:id="piece1" prefWidth="40.0" styleClass="student-blue-background" />
+        <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/swap_icon.png" />
+        </ImageView>
+        <Pane fx:id="piece2" prefWidth="40.0" styleClass="student-green-background" />
+    </HBox>
+   <Label layoutX="23.0" layoutY="160.0" text="Entrance" textFill="WHITE">
+      <font>
+         <Font name="Arial Bold" size="13.0" />
+      </font>
+   </Label>
+    <HBox alignment="BOTTOM_CENTER" layoutX="120.0" layoutY="157.0" prefHeight="19.0" prefWidth="60.0">
+        <Label fx:id="piece2textLabel" prefHeight="16.0" text="Character" textFill="WHITE">
+           <font>
+               <Font name="Arial Bold" size="13.0" />
+           </font>
+        </Label>
+    </HBox>
+    <ImageView fx:id="closeButton" fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" styleClass="image-btn">
+        <Image url="@../images/close_icon.png" />
+    </ImageView>
+</Pane>

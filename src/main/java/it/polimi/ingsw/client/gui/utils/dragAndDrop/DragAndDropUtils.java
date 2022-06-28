@@ -4,22 +4,25 @@ import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.util.ActionType;
 import javafx.scene.image.Image;
+import javafx.scene.input.ClipboardContent;
 
 import java.io.*;
 import java.util.Base64;
 
 public class DragAndDropUtils {
     private static final ClientData data = ClientData.getInstance();
-    public static String toString(DragAndDropInfo info) {
+    public static ClipboardContent toClipboardContent(DragAndDropInfo ddi) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(info);
+            oos.writeObject(ddi);
             oos.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Base64.getEncoder().encodeToString(baos.toByteArray());
+        ClipboardContent cc = new ClipboardContent();
+        cc.putString(Base64.getEncoder().encodeToString(baos.toByteArray()));
+        return cc;
     }
 
     public static DragAndDropInfo fromString(String s) {
@@ -55,22 +58,5 @@ public class DragAndDropUtils {
                 break;
         }
         return new Image(String.valueOf(DragAndDropUtils.class.getResource("/gui/images/" + fileName + ".png")), 20.0, 20.0, true, true);
-    }
-
-    public static boolean diningRoomAcceptsStudents() {
-        return data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM);
-    }
-
-    public static boolean islandAcceptsStudents() {
-        return data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND);
-    }
-
-    public static boolean islandAcceptMotherNature(int islandId) {
-        if (data.getPlayer().getLastCardUsed() == null)
-            return false;
-        int maxSteps = data.getPlayer().getLastCardUsed().getMovements();
-        int mother = data.getGame().getIslandHandler().getMotherNature();
-        int steps = islandId > mother ? islandId - mother : islandId - mother + data.getGame().getIslandHandler().getIslands().size();
-        return data.getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE) && steps <= maxSteps && steps > 0;
     }
 }

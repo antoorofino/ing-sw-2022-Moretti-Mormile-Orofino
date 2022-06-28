@@ -19,6 +19,8 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class PlayerBoard {
     @FXML
@@ -48,6 +50,7 @@ public class PlayerBoard {
     @FXML
     private Pane teacherBlue;
     Parent root = null;
+    private final ClientData data = ClientData.getInstance();
 
     public Parent getRoot() {
         return root;
@@ -62,14 +65,7 @@ public class PlayerBoard {
         }
     }
 
-    @FXML
-    private void initialize() {
-        for (Node student : entrance.getChildren())
-            setOnDragStudentHandlers(student);
-        setDiningRoomDropListener();
-    }
-
-    public void setBoard(Board board, List<Piece> teachersList) {
+    public void setBoard(Board board, List<Piece> teachersList, boolean isActive, SwapArea swapArea) {
         // Clear entrance
         for (Node piece : entrance.getChildren()) {
             piece.getStyleClass().clear();
@@ -78,18 +74,22 @@ public class PlayerBoard {
         for (Node room : diningRoom.getChildren()) {
             for (Node piece : ((Pane) room).getChildren()) {
                 piece.getStyleClass().clear();
+                if (isActive) {
+                    setOnDragDiningStudentsHandlers(piece, swapArea);
+                    setDiningRoomDropHandlers();
+                }
             }
         }
         // Clear teachers
         for (Node piece : teachers.getChildren()) {
             piece.getStyleClass().clear();
         }
-
         // Set entrance students
         List<Piece> entranceArray = board.getStudentsEntrance();
         for (int i = 0; i < entranceArray.size(); i++) {
             entrance.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(entranceArray.get(i)));
-            entrance.getChildren().get(i).getStyleClass().add("student-hover");
+            if (isActive)
+                setOnDragEntranceStudentHandlers(entrance.getChildren().get(i), swapArea);
         }
 
         // Set dining room students
@@ -121,70 +121,134 @@ public class PlayerBoard {
         }
     }
 
-    private void setOnDragStudentHandlers(Node s) {
-        s.setOnDragDetected(e -> {
-            if (s.getStyleClass().size() > 0) { //Active drag only if there is  a student
-                Dragboard db = s.startDragAndDrop(TransferMode.ANY);
-                ClipboardContent cc = new ClipboardContent();
-                DragAndDropInfo ddi =  new DragAndDropInfo(DragOrigin.ENTRANCE,
-                        DragType.PIECE,
-                        Tmp.classNameToPiece(s.getStyleClass().get(0))
-                );
-                cc.putString(DragAndDropUtils.toString(ddi));
-                db.setContent(cc);
-                db.setDragView(DragAndDropUtils.getDragBoardStudentImage(Tmp.classNameToPiece(s.getStyleClass().get(0))));
-                s.getStyleClass().clear();
+    private void setOnDragEntranceStudentHandlers(Node s, SwapArea swapArea) {
+        Supplier<Boolean> entranceStudentsAreActive = () -> {
+            if (data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND) && data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM))
+                return true;
+            if (data.getPlayer().getActiveCharacter() != null && data.getPlayer().getRoundActions().getActionsList().stream()
+                    .map(Action::getActionType).filter(t -> t == ActionType.ACTIVATED_CHARACTER).findFirst().orElse(null) == null) {
+                switch (data.getPlayer().getActiveCharacter().getID()) {
+                    case 7:
+                    case 10:
+                        return true;
+                }
             }
-            e.consume();
-        });
-        s.setOnDragDone(e -> {
-            Dragboard db = e.getDragboard();
-            DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
-            switch (ddi.getDestination()) {
-                case DINING:
-                    GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
-                            new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, ddi.getPiece())
-                    ));
-                    break;
-                case ISLAND:
-                    GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
-                            new Action(ActionType.MOVE_STUDENT_TO_ISLAND, ddi.getPiece(), ddi.getIslandId())
-                    ));
-                    break;
-                default:
+            return false;
+        };
+        // Set interaction features if enabled
+        if (entranceStudentsAreActive.get()) {
+            s.setOnDragDetected(e -> {
+                if (s.getStyleClass().size() > 0) { // Active drag only if there is  a student
+                    Dragboard db = s.startDragAndDrop(TransferMode.ANY);
+                    DragAndDropInfo ddi =  new DragAndDropInfo(DragOrigin.ENTRANCE,
+                            DragType.PIECE,
+                            Tmp.classNameToPiece(s.getStyleClass().get(0))
+                    );
+                    db.setContent(DragAndDropUtils.toClipboardContent(ddi));
+                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(Tmp.classNameToPiece(s.getStyleClass().get(0))));
+                    s.getStyleClass().clear();
+                }
+                e.consume();
+            });
+            s.setOnDragDone(e -> {
+                Dragboard db = e.getDragboard();
+                DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
+                switch (ddi.getDestination()) {
+                    case DINING:
+                        GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                                new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, ddi.getPiece())
+                        ));
+                        break;
+                    case ISLAND:
+                        GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                                new Action(ActionType.MOVE_STUDENT_TO_ISLAND, ddi.getPiece(), ddi.getIslandId())
+                        ));
+                        break;
+                    case SWAP_AREA:
+                        swapArea.setPiece1(ddi.getPiece());
+                        break;
+                    case NONE:
+                        s.getStyleClass().clear();
+                        s.getStyleClass().add(Tmp.pieceToClassName(ddi.getPiece()));
+                        s.getStyleClass().add("student-hover");
+                }
+                e.consume();
+            });
+            s.getStyleClass().add("student-hover");
+        }
+    }
+
+    private void setOnDragDiningStudentsHandlers(Node s, SwapArea swapArea) {
+        Supplier<Boolean> diningStudentsAreActive = () -> data.getPlayer().getActiveCharacter() != null && data.getPlayer().getRoundActions().getActionsList().stream()
+                .map(Action::getActionType).filter(t -> t == ActionType.ACTIVATED_CHARACTER).findFirst().orElse(null) == null &&
+                data.getPlayer().getActiveCharacter().getID() == 10;
+        // Set interaction features if enabled
+        if (diningStudentsAreActive.get()) {
+            s.setOnDragDetected(e -> {
+                if (s.getStyleClass().size() > 0) { // Active drag only if there is  a student
+                    Dragboard db = s.startDragAndDrop(TransferMode.ANY);
+                    DragAndDropInfo ddi =  new DragAndDropInfo(DragOrigin.DINING,
+                            DragType.PIECE,
+                            Tmp.classNameToPiece(s.getStyleClass().get(0))
+                    );
+                    db.setContent(DragAndDropUtils.toClipboardContent(ddi));
+                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(Tmp.classNameToPiece(s.getStyleClass().get(0))));
+                    s.getStyleClass().clear();
+                }
+                e.consume();
+            });
+            s.setOnDragDone(e -> {
+                Dragboard db = e.getDragboard();
+                DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
+                if (ddi.getDestination() == DropDestination.SWAP_AREA) {
+                    swapArea.setPiece2(ddi.getPiece());
+                } else {
                     s.getStyleClass().clear();
                     s.getStyleClass().add(Tmp.pieceToClassName(ddi.getPiece()));
                     s.getStyleClass().add("student-hover");
-            }
-            e.consume();
-        });
+                }
+                e.consume();
+            });
+            s.getStyleClass().add("student-hover");
+        }
     }
 
-    private void setDiningRoomDropListener() {
+    private void setDiningRoomDropHandlers() {
+        // Single logic checks
+        Supplier<Boolean> diningAcceptsEntranceStudent = () -> data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM);
+        Supplier<Boolean> diningAcceptsCharacterStudent = () -> data.getPlayer().getActiveCharacter() != null && data.getPlayer().getActiveCharacter().getID() == 11;
+        // Full logic check
+        BiConsumer<DragAndDropInfo, Runnable> check = (ddi, run) -> {
+            if (ddi.getType() == DragType.PIECE) {
+                if (ddi.getOrigin() == DragOrigin.ENTRANCE && diningAcceptsEntranceStudent.get())
+                    run.run();
+                else if (ddi.getOrigin() == DragOrigin.CHARACTER && diningAcceptsCharacterStudent.get())
+                    run.run();
+            }
+        };
+
         diningRoom.setOnDragEntered(e -> {
             Dragboard db = e.getDragboard();
             DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
-            if (ddi.getType() == DragType.PIECE && DragAndDropUtils.diningRoomAcceptsStudents()) {
+            check.accept(ddi, () -> {
                 diningRoom.getStyleClass().add("dining-room-hover");
                 getDiningRoomByPiece(ddi.getPiece()).getStyleClass().add("dining-room-hover");
-            }
+            });
             e.consume();
         });
         diningRoom.setOnDragExited(e -> {
             Dragboard db = e.getDragboard();
             DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
-            if (ddi.getType() == DragType.PIECE && DragAndDropUtils.diningRoomAcceptsStudents()) {
+            check.accept(ddi, () -> {
                 diningRoom.getStyleClass().remove("dining-room-hover");
                 getDiningRoomByPiece(ddi.getPiece()).getStyleClass().remove("dining-room-hover");
-            }
+            });
             e.consume();
         });
         diningRoom.setOnDragOver(e -> {
             Dragboard db = e.getDragboard();
             DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
-            if (ddi.getType() == DragType.PIECE && DragAndDropUtils.diningRoomAcceptsStudents()) {
-                e.acceptTransferModes(TransferMode.MOVE);
-            }
+            check.accept(ddi, () -> e.acceptTransferModes(TransferMode.MOVE));
             e.consume();
         });
         diningRoom.setOnDragDropped(e -> {
@@ -192,9 +256,7 @@ public class PlayerBoard {
             DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
             ddi.setDestination(DropDestination.DINING);
             db.clear();
-            ClipboardContent cc = new ClipboardContent();
-            cc.putString(DragAndDropUtils.toString(ddi));
-            db.setContent(cc);
+            db.setContent(DragAndDropUtils.toClipboardContent(ddi));
             e.consume();
         });
     }

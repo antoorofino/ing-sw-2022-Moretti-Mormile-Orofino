@@ -34,7 +34,7 @@ public class BoardPopUp {
         dashboardPane.getChildren().add(dashboard.getRoot());
         // Set player board
         PlayerBoard board = new PlayerBoard();
-        board.setBoard(player.getPlayerBoard(), handler.getTeachersByPlayerId(player.getId()));
+        board.setBoard(player.getPlayerBoard(), handler.getTeachersByPlayerId(player.getId()), false, null);
         boardPane.getChildren().clear();
         boardPane.getChildren().add(board.getRoot());
     }

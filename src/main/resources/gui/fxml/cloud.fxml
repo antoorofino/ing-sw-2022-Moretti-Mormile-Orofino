@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -8,7 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-    <GridPane fx:id="cloudGrid" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane fx:id="cloudGrid" styleClass="cloud" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
@@ -22,9 +21,5 @@
         <Pane scaleX="0.8" scaleY="0.8" styleClass="student-blue-background" GridPane.rowIndex="1" />
         <Pane scaleX="0.8" scaleY="0.8" styleClass="student-blue-background" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Pane scaleX="0.8" scaleY="0.8" styleClass="student-blue-background" translateY="-10.0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-        <styleClass>
-            <String fx:value="cloud" />
-            <String fx:value="student-hover" />
-        </styleClass>
     </GridPane>
 </AnchorPane>

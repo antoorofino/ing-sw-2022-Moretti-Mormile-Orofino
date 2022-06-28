@@ -302,19 +302,35 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
+.message-text-background,
+.bottom-background,
+.dashboard-bottom-background,
+.buttons-bottom-background,
+.dashboard-other-players-background {
+    -fx-background-color: rgba(30, 90, 218, 0.4);
+}
 
 .message-text-background {
-    -fx-background-color: rgba(30, 90, 218, 0.4);
     -fx-background-radius: 0 0 15px 15px;
+    -fx-border-radius: 0 0 15px 15px;
+}
+
+.bottom-background {
+    -fx-background-radius: 15px 15px 0 0;
+    -fx-border-radius: 15px 15px 0 0;
+}
+
+.buttons-bottom-background {
+    -fx-background-radius: 0 15px 0 0;
+    -fx-border-radius: 0 15px 0 0;
 }
 
 .dashboard-bottom-background {
-    -fx-background-color: rgba(30, 90, 218, 0.4);
-    -fx-background-radius: 15px 15px 0 0;
+    -fx-background-radius: 15px 0 0 0;
+    -fx-border-radius: 15px 0 0 0;
 }
 
 .dashboard-other-players-background {
-    -fx-background-color: rgba(30, 90, 218, 0.4);
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
 }
@@ -441,6 +457,7 @@
 }
 
 .island-hover,
+.island-clickable-hover:hover,
 .character-card-hover:hover,
 .assistant-1:hover,
 .assistant-2:hover,
@@ -571,4 +588,10 @@
     -fx-background-size: contain;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+}
+
+.swap-area-piece-background {
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
 }

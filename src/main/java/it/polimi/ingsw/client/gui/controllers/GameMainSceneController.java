@@ -5,6 +5,8 @@ import it.polimi.ingsw.client.gui.components.*;
 import it.polimi.ingsw.client.gui.utils.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Character;
+import it.polimi.ingsw.util.Action;
+import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.GameMode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,6 +40,7 @@ public class GameMainSceneController extends SceneController {
    public PopUpContainerController popUpController;
    private IslandsGridGUI islandsGridGUI;
    private PlayerBoard playerBoardController;
+   private SwapArea swapArea;
    private PlayerDashboard playerDashboardController;
    private CharactersPopUp charactersPopUp;
    private YourCardsPopUp yourCardsPopUp;
@@ -59,6 +62,8 @@ public class GameMainSceneController extends SceneController {
 
       playerBoardController = new PlayerBoard();
       playerBoard.getChildren().add(playerBoardController.getRoot());
+
+      swapArea = new SwapArea();
 
       playerDashboardController = new PlayerDashboard();
       playerDashboardPane.getChildren().add(playerDashboardController.getRoot());
@@ -123,47 +128,52 @@ public class GameMainSceneController extends SceneController {
               .orElse(null);
       boolean isTheCurrentPlayer = data.getPlayer().getActiveCharacter() != null;
       if (activeCard != null) {
-         CharacterCardGUI cardGUI = new CharacterCardGUI();
-         cardGUI.setCharacterCard(activeCard, isTheCurrentPlayer);
-         activeCharacterPane.getChildren().add(cardGUI.getRoot());
-         // Set interactions features if this player activated the card
-         if (isTheCurrentPlayer) {
-            switch (data.getPlayer().getActiveCharacter().getID()) {
-               case 3:
-                  //TODO: Activate chose island
-                  break;
-               case 7:
-               case 10:
-                  //TODO: Activate swap area
-                  break;
-            }
+         boolean cardIsActive = isTheCurrentPlayer &&
+                 data.getPlayer().getRoundActions().getActionsList().stream()
+                         .map(Action::getActionType).filter(t -> t == ActionType.ACTIVATED_CHARACTER).findFirst().orElse(null) == null;
+         // Show swap area if enabled
+         if (cardIsActive && (data.getPlayer().getActiveCharacter().getID() == 7 || data.getPlayer().getActiveCharacter().getID() == 10 )) {
+            swapArea.init();
+            playerDashboardPane.getChildren().clear();
+            playerDashboardPane.getChildren().add(swapArea.getRoot());
          }
+         // Create the cart and set interactions features if this player has activated it
+         CharacterCardGUI cardGUI = new CharacterCardGUI();
+         cardGUI.setCharacterCard(activeCard, cardIsActive, swapArea);
+         activeCharacterPane.getChildren().add(cardGUI.getRoot());
       }
    }
 
    public void showGameHandler() {
-      //FIXME: should be moved somewhere else ?
+      // Islands grid update
+      islandsGridGUI.setGrid();
+
+      // Player dashboard update
+      playerDashboardPane.getChildren().clear();
+      playerDashboardPane.getChildren().add(playerDashboardController.getRoot());
+      playerDashboardController.setPlayerInfo(data.getPlayer(), data.getGame().getGameMode());
+
+      // Character cards
       if(data.getGame().getGameMode() == GameMode.BASIC) { // Basic mode
          buttonsVBox.getChildren().remove(charactersButton);
       } else { // Expert mode
+         activeCharacterPane.getChildren().clear();
          setCharacterCard();
       }
 
-      //Islands grid update
-      islandsGridGUI.setGrid();
-
-      //Player dashboard update
-      playerDashboardController.setPlayerInfo(data.getPlayer(), data.getGame().getGameMode());
-
-      //Player board update
+      // Player board update
       playerBoardController.setBoard(data.getPlayer().getPlayerBoard(),
-              data.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()));
+              data.getGame().getTeacherHandler().getTeachersByPlayerId(GUIView.getPlayerId()),
+              true,
+              swapArea
+      );
 
-      //PopUps update
+      // PopUps update
       boardPopUpInitialize();
       yourCardsPopUp.setCards();
       playedCardsButton.setDisable(playedCardsPopUp.setCards());
-      charactersPopUp.setCards();
+      if (data.getGame().getGameMode() == GameMode.EXPERT)
+         charactersPopUp.setCards();
    }
 
    public void setMessage(String message) {

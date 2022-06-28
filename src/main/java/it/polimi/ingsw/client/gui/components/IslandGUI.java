@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.gui.components;
 
+import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.Tmp;
 import it.polimi.ingsw.model.Piece;
+import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.TowerColor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,7 +71,6 @@ public class IslandGUI {
             purpleText.setFont(new Font("Arial Bold",((Double) newValue)/2));
             blueText.setFont(new Font("Arial Bold",((Double) newValue)/2));
         });
-        motherNatureImage.getStyleClass().add("student-hover");
     }
 
     private void clear() {
@@ -145,7 +146,10 @@ public class IslandGUI {
 
     public void setMotherNature() {
         motherNatureImage.getStyleClass().add("mother-nature-background");
+        if (ClientData.getInstance().getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE))
+            motherNatureImage.getStyleClass().add("student-hover");
     }
+
     public Pane getMotherNatureImage() {
         return motherNatureImage;
     }

@@ -17,7 +17,7 @@
         </Label>
     </HBox>
     <AnchorPane fx:id="islandsAnchorPane" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
-    <HBox layoutX="359.0" layoutY="482.0" prefHeight="200.0" styleClass="dashboard-bottom-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <HBox layoutX="359.0" layoutY="482.0" prefHeight="200.0" styleClass="bottom-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <Pane fx:id="playerDashboardPane" prefWidth="200.0" styleClass="dashboard-bottom-background" />
         <Pane HBox.hgrow="ALWAYS" />
       <Pane fx:id="activeCharacterPane" HBox.hgrow="SOMETIMES" />
@@ -25,7 +25,7 @@
         <Pane fx:id="playerBoard" prefWidth="370.0" />
       <Pane HBox.hgrow="ALWAYS" />
         <Pane HBox.hgrow="ALWAYS" />
-        <VBox fx:id="buttonsVBox" alignment="CENTER" prefWidth="200.0" spacing="10.0" styleClass="dashboard-bottom-background">
+        <VBox fx:id="buttonsVBox" alignment="CENTER" prefWidth="200.0" spacing="10.0" styleClass="buttons-bottom-background">
             <Button fx:id="charactersButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Characters">
                 <font>
                     <Font name="Helvetica" size="17.0" />

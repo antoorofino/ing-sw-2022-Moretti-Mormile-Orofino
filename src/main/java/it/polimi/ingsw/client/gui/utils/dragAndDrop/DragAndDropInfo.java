@@ -11,7 +11,6 @@ public class DragAndDropInfo implements Serializable {
     private Piece piece;
     private int islandId;
     private int steps;
-    private int characterId;
 
     public DragAndDropInfo(DragOrigin origin, DragType type, Piece piece) {
         this.origin = origin;
@@ -24,6 +23,12 @@ public class DragAndDropInfo implements Serializable {
         this.origin = origin;
         this.type = type;
         this.islandId = islandId;
+        this.destination = DropDestination.NONE;
+    }
+
+    public DragAndDropInfo(DragOrigin origin, DragType type) {
+        this.origin = origin;
+        this.type = type;
         this.destination = DropDestination.NONE;
     }
 
@@ -57,14 +62,6 @@ public class DragAndDropInfo implements Serializable {
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-    }
-
-    public int getCharacterId() {
-        return characterId;
-    }
-
-    public void setCharacterId(int characterId) {
-        this.characterId = characterId;
     }
 
     public int getSteps() {

@@ -64,7 +64,7 @@ public class CharactersPopUp {
             cardGUIS.get(selectedCard).deselect();
         selectedCard = -1;
         for (int i = 0; i < cardGUIS.size(); i++) {
-            cardGUIS.get(i).setCharacterCard(cards.get(i), false);
+            cardGUIS.get(i).setCharacterCard(cards.get(i), false, null);
             int finalI = i;
             cardGUIS.get(i).setOnClickedListener(e -> {
                 if (selectedCard == -1) { // No previous card selected
