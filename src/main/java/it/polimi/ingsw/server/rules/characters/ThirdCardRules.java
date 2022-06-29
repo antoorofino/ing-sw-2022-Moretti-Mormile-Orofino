@@ -8,10 +8,13 @@ import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
+/**
+ * Change the rules of the game when card number 3 is activated
+ */
 public class ThirdCardRules extends ExpertRules {
+
 	/**
 	 * Create the game rules
-	 *
 	 * @param game obj that contains the game status
 	 */
 	public ThirdCardRules(GameModel game) {

@@ -8,10 +8,13 @@ import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 
+/**
+ * Change the rules of the game when card number 12 is activated
+ */
 public class TwelfthCardRules extends ExpertRules {
+
 	/**
 	 * Create the game rules
-	 *
 	 * @param game obj that contains the game status
 	 */
 	public TwelfthCardRules(GameModel game) {
@@ -30,7 +33,7 @@ public class TwelfthCardRules extends ExpertRules {
 		if(action.getPrincipalPiece() == null)
 			return false;
 		for (Player p: game.getPlayerHandler().getPlayers()) {
-			for(int i=0;i<3;i++){
+			for(int i = 0;i < 3;i++){
 				try {
 					p.getPlayerBoard().removeFromRoom(action.getPrincipalPiece());
 					game.getStudentsBag().addStudent(action.getPrincipalPiece(),1); // restore in bag

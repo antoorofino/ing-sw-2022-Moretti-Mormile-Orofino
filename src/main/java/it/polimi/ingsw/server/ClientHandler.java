@@ -15,6 +15,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.UUID;
 
+/**
+ * Manages the connection with the client
+ */
 public class ClientHandler extends Thread implements NetworkHandler {
     private final String playerId;
     private final Socket socket;
@@ -26,6 +29,13 @@ public class ClientHandler extends Thread implements NetworkHandler {
     private boolean isConnected;
     private final Logger logger;
 
+    /**
+     * Constructor: build server handler
+     * @param serverMain the server main
+     * @param socket the client socket
+     * @param logger class to show formatted messages
+     * @throws IOException exception in case of network errors
+     */
     public ClientHandler(ServerMain serverMain, Socket socket, Logger logger) throws IOException {
         this.socket = socket;
         this.serverMain = serverMain;
@@ -46,13 +56,22 @@ public class ClientHandler extends Thread implements NetworkHandler {
         logger.log(3, 'i', "Start heartbeat thread for client " + playerId);
     }
 
+    /**
+     * Returns the player Id
+     * @return the player Id
+     */
     public String getPlayerId() {
         return playerId;
     }
 
+    /**
+     * Set the game controller
+     * @param controller the game controller
+     */
     public void setController(GameController controller) {
         this.controller = controller;
     }
+
     @Override
     public void run() {
         while(isConnected) {
@@ -92,6 +111,9 @@ public class ClientHandler extends Thread implements NetworkHandler {
         return isConnected;
     }
 
+    /**
+     * Sets connected to false
+     */
     public void setDisconnected() {
         isConnected = false;
     }
@@ -122,6 +144,9 @@ public class ClientHandler extends Thread implements NetworkHandler {
         }
     }
 
+    /**
+     * Closes the socket
+     */
     private void close(){
         try {
             socket.close();

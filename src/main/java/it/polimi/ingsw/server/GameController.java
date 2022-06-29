@@ -13,6 +13,9 @@ import it.polimi.ingsw.util.exception.PlayerException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Manages the interaction of the players with the game's rules
+ */
 public class GameController {
     private final GameModel game;
     private final VirtualView virtualView;
@@ -22,6 +25,11 @@ public class GameController {
     private final Rules rules;
     private final Logger logger;
 
+    /**
+     * Constructor: build game controller
+     * @param gameInfo the game info such as number of players, mode and name
+     * @param logger class to show formatted messages
+     */
     public GameController(GameListInfo gameInfo, Logger logger) {
         this.game = new GameModel(gameInfo);
         this.virtualView = new VirtualView();
@@ -36,14 +44,27 @@ public class GameController {
         this.logger = logger;
     }
 
+    /**
+     * Return the game model
+     * @return the game model
+     */
     public GameModel getGame(){
         return game;
     }
 
+    /**
+     * Adds a client network manager to the virtual view
+     * @param clientHandler the client handler
+     */
     public void addClientHandler(ClientHandler clientHandler) {
         virtualView.addClientHandler(clientHandler);
     }
 
+    /**
+     * Check that there is no player with the same nickname
+     * @param requestedUsername the chosen nickname
+     * @return true if it has not already been chosen
+     */
     private boolean checkNickname(String requestedUsername) {
         for (Player player : game.getPlayerHandler().getPlayers()) {
             if (player.getNickname() != null && player.getNickname().equalsIgnoreCase(requestedUsername)) {
@@ -53,6 +74,10 @@ public class GameController {
         return true;
     }
 
+    /**
+     * Adds a player to the game model
+     * @param playerId
+     */
     public void addPlayer(String playerId){
         PlayersHandler ph = game.getPlayerHandler();
         ph.addPlayer(new Player(playerId));
@@ -60,6 +85,11 @@ public class GameController {
             status = GameStatus.WAITING_ALL_PLAYERS_INFO;
     }
 
+    /**
+     * Sets the player's nickname
+     * @param playerId the id of the player who wants to set the nickname
+     * @param nickname the chosen nickname
+     */
     public void setPlayerNickname(String playerId, String nickname){
         logger.log(4, 'g', "Player " + playerId + " has requested to set his nickname to: " + nickname);
         if (checkNickname(nickname)) {
@@ -82,6 +112,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Returns the available colors of the towers
+     * @return the available towers' colors
+     */
     private List<TowerColor> getAvailableTowerColors(){
         ArrayList<TowerColor> possibleColors = new ArrayList<>();
         possibleColors.add(TowerColor.BLACK);
@@ -95,6 +129,11 @@ public class GameController {
         return possibleColors;
     }
 
+    /**
+     * Sets the color of the player's towers
+     * @param playerId the id of the player who wants to set the tower's color
+     * @param color the chosen color
+     */
     public void setPlayerTowerColor(String playerId, TowerColor color){
         logger.log(4, 'g', "Player " + playerId + " has requested to set his color to: " + color.toString());
         if (getAvailableTowerColors().contains(color)) {
@@ -121,6 +160,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Manages the alternation of planning and action phase from the beginning up to the victory
+     * @throws InterruptedException exception thrown by thread in case of abort
+     * @throws DisconnectionException exception thrown in case of disconnection
+     */
     public void gameRunner() throws InterruptedException, DisconnectionException {
         synchronized(this){
             while(status == GameStatus.ACCEPT_PLAYERS || status == GameStatus.WAITING_ALL_PLAYERS_INFO)
@@ -207,6 +251,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Send possible actions to the current player
+     * @param isInvalidAction true if he made a wrong action before
+     */
     private void sendPossibleActions(boolean isInvalidAction){
         Character activeCharacter = getCurrentPlayer().getActiveCharacter();
         if (activeCharacter == null) {
@@ -222,10 +270,18 @@ public class GameController {
         }
     }
 
+    /**
+     * Returns the current player
+     * @return the current player
+     */
     private Player getCurrentPlayer() {
         return game.getPlayerHandler().getCurrentPlayer();
     }
 
+    /**
+     * Manages the control and sending of victory messages
+     * @throws Exception throws exception in case of a tie
+     */
     private void manageWin() throws Exception {
         ArrayList<Player> orderedByTowers = new ArrayList<>(game.getPlayerHandler().getPlayers());
         Player winner;
@@ -266,6 +322,11 @@ public class GameController {
         logger.log(3, 'i', "Controller of game " + game.getGameName() + " terminated");
     }
 
+    /**
+     * Verify and perform action made by the player
+     * @param action the player's action
+     * @param nickname the nickname of the player who took the action
+     */
     public void setAction(Action action, String nickname) {
         if(!checkIfIsCurrentPlayer(nickname))
             sendPossibleActions(false);
@@ -300,6 +361,11 @@ public class GameController {
         wakeUpController();
     }
 
+    /**
+     * Sets the assistant card chosen by the player
+     * @param nickname the nickname of the player who played the card
+     * @param card the chosen card
+     */
     public void setAssistantCard(String nickname, AssistantCard card){
         if(checkIfIsCurrentPlayer(nickname) && checkAssistantCard(card)){
             try{
@@ -313,6 +379,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Checks if the player can play the chosen card
+     * @param card the chosen card
+     * @return true if he can play the chosen card
+     */
     private boolean checkAssistantCard(AssistantCard card){
         List<AssistantCard> alreadyPlayed = game.getPlayerHandler().cardsAlreadyPlayed();
         List<AssistantCard> playerDeck = game.getPlayerHandler().getCurrentPlayer().getDeck();
@@ -325,15 +396,28 @@ public class GameController {
         return true;
     }
 
+    /**
+     * Checks if the nickname is that of the current player
+     * @param nickname the player's nickname
+     * @return true if he is the current player
+     */
     private boolean checkIfIsCurrentPlayer(String nickname){
         return nickname.equalsIgnoreCase(game.getPlayerHandler().getCurrentPlayer().getNickname());
     }
 
+    /**
+     * Checks if the players have run out of cards or the bag is empty
+     * @return true if is te last round
+     */
     public boolean isLastRound(){
         //No more cards or no more students
         return game.getPlayerHandler().playerWithNoMoreCards() || game.getStudentsBag().isEmpty();
     }
 
+    /**
+     * Sends player disconnect message and closes sockets
+     * @param playerId id of the player who logged out
+     */
     public void setAsDisconnected(String playerId) {
         try {
             String nickname = game.getPlayerHandler().getPlayerById(playerId).getNickname();
@@ -345,10 +429,17 @@ public class GameController {
         }
     }
 
+    /**
+     * Returns the game state
+     * @return the game state
+     */
     public GameStatus getStatus() {
         return status;
     }
 
+    /**
+     * Wakes up the game controller thread
+     */
     public void wakeUpController() {
         synchronized (this) {
             this.notifyAll();

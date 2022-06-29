@@ -6,7 +6,6 @@ import it.polimi.ingsw.util.exception.StudentNotPresentException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Stores information about a character game's card

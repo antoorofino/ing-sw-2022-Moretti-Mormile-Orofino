@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Contains the rules of the game when choosing expert mode
+ */
 public class ExpertRules extends Rules {
 
 	/**
@@ -67,7 +70,7 @@ public class ExpertRules extends Rules {
 	 * @return true if is valid action
 	 */
 	protected boolean chosenCharacter(Action action) {
-		Character character = null;
+		Character character;
 		try {
 			character = game.getCharacterFromID(action.getInteger());
 			if(!getCurrentPlayer().coinsAreEnough(character.getCost()))
@@ -101,7 +104,7 @@ public class ExpertRules extends Rules {
 						}
 					}
 					if(!check)
-						return check;
+						return false;
 					break;
 				default:
 					break;
@@ -117,7 +120,7 @@ public class ExpertRules extends Rules {
 
 	@Override
 	protected void calculateInfluence() { // entry tiles should be restore to card 5
-		Island currentIsland = null;
+		Island currentIsland;
 		currentIsland = game.getIslandHandler().getCurrentIsland();
 		if (islandHaveNoEntry(currentIsland))
 			restoreNoEntry();
@@ -125,16 +128,16 @@ public class ExpertRules extends Rules {
 	}
 
 	/**
-	 *
-	 * @param island
-	 * @return
+	 * Returns true if the selected island contains no entry tiles
+	 * @param island the selected island
+	 * @return true if the selected island contains no entry tile
 	 */
 	protected boolean islandHaveNoEntry(Island island){
 		return !island.calculateInfluence(game.getTeacherHandler(), true, null, null);
 	}
 
 	/**
-	 *
+	 * Put the no entry tile back on card number 5
 	 */
 	protected void restoreNoEntry(){
 		try {
@@ -144,10 +147,10 @@ public class ExpertRules extends Rules {
 		}
 	}
 
-	/** if card needs an activation by player the following methods should be overrided
-	 *
-	 * @param previousAction
-	 * @return
+	/**
+	 * Asks the player to make further moves to use the chosen character card
+	 * @param previousAction the possible actions of the player
+	 * @return the new possible actions of the player
 	 */
 	protected RoundActions askToActivateCharacter(RoundActions previousAction) {
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
@@ -155,9 +158,9 @@ public class ExpertRules extends Rules {
 	}
 
 	/**
-	 *
-	 * @param action
-	 * @return
+	 * Called by the moves that activate character cards
+	 * @param action the player's action
+	 * @return true if the action is valid
 	 */
 	protected boolean activateCharacter(Action action) {
 		return false;

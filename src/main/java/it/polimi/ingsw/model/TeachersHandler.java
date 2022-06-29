@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages the teachers
+ */
 public class TeachersHandler implements Serializable {
-
     private Map<Piece,Player> teachers;
 
     /**

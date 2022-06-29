@@ -10,12 +10,14 @@ import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Change the rules of the game when card number 10 is activated
+ */
 public class TenthCardRules extends ExpertRules {
-
 	protected int movedPieces;
+
 	/**
 	 * Create the game rules
-	 *
 	 * @param game obj that contains the game status
 	 */
 	public TenthCardRules(GameModel game) {
@@ -48,6 +50,7 @@ public class TenthCardRules extends ExpertRules {
 		movedPieces++;
 		if(movedPieces==2)
 			getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
+		// calculate teacher control
 		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 		return true;
 	}

@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.cli.util.AnsiBackColor;
 import it.polimi.ingsw.client.cli.util.AnsiColor;
 import it.polimi.ingsw.model.Piece;
-import it.polimi.ingsw.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;

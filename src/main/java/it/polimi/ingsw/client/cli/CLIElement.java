@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.cli.util.AnsiBackColor;
 import it.polimi.ingsw.client.cli.util.AnsiColor;
 
 /**
- * Main element of the character array
+ * Main element of the character matrix
  */
 public class CLIElement {
 	char symbol;

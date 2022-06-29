@@ -19,12 +19,19 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Initializes the server and accepts client connections
+ */
 public class ServerMain {
     private final ServerSocket serverSocket;
     private final List<ClientHandler> clientHandlerList;
     private final List<GameController> gameControllerList;
     private final Logger logger;
 
+    /**
+     * Constructor: creates the server socket
+     * @throws IOException throws exception if there is a problem with socket creation
+     */
     public ServerMain() throws IOException {
         serverSocket = new ServerSocket(Configurator.getServerPort());
         clientHandlerList = new ArrayList<>();
@@ -32,6 +39,11 @@ public class ServerMain {
         logger = new Logger(4);
     }
 
+    /**
+     * Returns the list of available games model
+     * @param onlyAcceptPlayers true if he only wants games that accept players
+     * @return the list of available games
+     */
     private List<GameModel> gameModelList(Boolean onlyAcceptPlayers){
         Predicate<GameController> filter;
         if (onlyAcceptPlayers)
@@ -159,6 +171,11 @@ public class ServerMain {
         }
     }
 
+    /**
+     * Checks if there are no games with that name
+     * @param gameName the chosen game's name
+     * @return true if there are no games with that name
+     */
     private boolean checkName(String gameName){
         for (GameModel game : gameModelList(false)){
             if (game.getGameName().equalsIgnoreCase(gameName))

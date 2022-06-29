@@ -4,10 +4,13 @@ import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.server.rules.ExpertRules;
 import it.polimi.ingsw.util.Action;
 
+/**
+ * Change the rules of the game when card number 4 is activated
+ */
 public class FourthCardRules extends ExpertRules {
+
 	/**
 	 * Create the game rules
-	 *
 	 * @param game obj that contains the game status
 	 */
 	public FourthCardRules(GameModel game) {

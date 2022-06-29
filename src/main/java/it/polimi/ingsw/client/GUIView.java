@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+/**
+ * Implement the game interface view for the gui
+ */
 public class GUIView extends Application implements View {
     private static ServerHandler serverHandler;
     private static String playerId;
@@ -23,6 +26,7 @@ public class GUIView extends Application implements View {
     private final ClientData clientData = ClientData.getInstance();
 
     /**
+     * Sets the server handler
      * @param serverHandler The serverHandler
      */
     @Override
@@ -31,28 +35,25 @@ public class GUIView extends Application implements View {
     }
 
     /**
-     *
+     * Returns the server handler
      */
     public static ServerHandler getServerHandler() {
         return serverHandler;
     }
 
+    /**
+     * Returns the player id
+     * @return the player id
+     */
     public static String getPlayerId() {
         return GUIView.playerId;
     }
 
-    /**
-     *
-     */
     @Override
     public void run() {
         launch();
     }
 
-    /**
-     * @param stage
-     * @throws Exception
-     */
     @Override
     public void start(Stage stage) {
         stage.setTitle("Eriantys");
@@ -73,9 +74,6 @@ public class GUIView extends Application implements View {
         super.stop();
     }
 
-    /**
-     * @param playerId
-     */
     @Override
     public void setPlayerId(String playerId) {
         Platform.runLater(() -> {
@@ -87,9 +85,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     *
-     */
     @Override
     public void askNewGameName() {
         Platform.runLater(() -> {
@@ -97,9 +92,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     *
-     */
     @Override
     public void askNewGameChoice() {
         Platform.runLater(() -> {
@@ -108,9 +100,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param isFirstRequest
-     */
     @Override
     public void askNickname(boolean isFirstRequest) {
         Platform.runLater(() -> {
@@ -120,10 +109,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param possibleColors  All the possible Color
-     * @param isFirstRequest
-     */
     @Override
     public void askTowerColor(List<TowerColor> possibleColors, boolean isFirstRequest) {
         Platform.runLater(() -> {
@@ -131,10 +116,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param cards All the possible cards
-     * @param game
-     */
     @Override
     public void askAssistantCard(List<AssistantCard> cards, GameModel game) {
         clientData.setGame(game);
@@ -145,10 +126,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param roundActions    All the possible actions
-     * @param isInvalidAction
-     */
     @Override
     public void askAction(RoundActions roundActions, boolean isInvalidAction) {
         clientData.setPossibleActions(roundActions);
@@ -173,9 +150,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param gamesList
-     */
     @Override
     public void showGamesList(List<GameListInfo> gamesList) {
         Platform.runLater(() -> {
@@ -183,10 +157,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param game
-     * @param firstPlayerNickname
-     */
     @Override
     public void showGameStart(GameModel game, String firstPlayerNickname) {
         clientData.setGame(game);
@@ -198,9 +168,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param game
-     */
     @Override
     public void showGame(GameModel game) {
         clientData.setGame(game);
@@ -215,9 +182,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     *
-     */
     @Override
     public void showLastRound() {
         Platform.runLater(() -> {
@@ -225,9 +189,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     *
-     */
     @Override
     public void showQueuedMessage() {
         Platform.runLater(() -> {
@@ -235,9 +196,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param winnerNickname The nickname of the winner
-     */
     @Override
     public void showGameEndMessage(String winnerNickname) {
         Platform.runLater(() -> {
@@ -246,9 +204,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     *
-     */
     @Override
     public void showConnectionErrorMessage() {
         Platform.runLater(() -> {
@@ -257,9 +212,6 @@ public class GUIView extends Application implements View {
         });
     }
 
-    /**
-     * @param playerDisconnected
-     */
     @Override
     public void showDisconnection(String playerDisconnected) {
         Platform.runLater(() -> {

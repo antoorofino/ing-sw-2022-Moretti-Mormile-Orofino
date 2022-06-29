@@ -139,7 +139,7 @@ public class CLIGame extends CLIMatrix{
 		AnsiColor color = (!available) ? AnsiColor.ANSI_BRIGHT_BLACK : ((!playable) ? AnsiColor.ANSI_RED : AnsiColor.ANSI_YELLOW );
 		CLIMatrix cliAssistantCard = new CLIMatrix(11, 6,color,AnsiBackColor.ANSI_DEFAULT);
 		cliAssistantCard.drawBorder("╭╮─╰╯│");
-		assistanceIcon(cliAssistantCard,card.getCardID());
+		assistanceIcon(cliAssistantCard,card.getCardValue());
 		cliAssistantCard.drawText(String.valueOf(card.getCardValue()),1,1,1);
 		cliAssistantCard.drawText(String.valueOf(card.getMovements()),1,1,9);
 		return cliAssistantCard;

@@ -8,6 +8,9 @@ import it.polimi.ingsw.util.TowerColor;
 
 import java.util.List;
 
+/**
+ * View interface with methods invoked by messages
+ */
 public interface View {
 
 	/**

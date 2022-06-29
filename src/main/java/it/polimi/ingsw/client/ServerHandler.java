@@ -11,6 +11,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Manages the connection with the server
+ */
 public class ServerHandler implements NetworkHandler {
 	private ObjectInputStream input;
 	private ObjectOutputStream output;

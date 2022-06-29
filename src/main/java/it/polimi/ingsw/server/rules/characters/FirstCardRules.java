@@ -12,6 +12,9 @@ import it.polimi.ingsw.util.exception.StudentNotPresentException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Change the rules of the game when card number 1 is activated
+ */
 public class FirstCardRules extends ExpertRules
 {
 	/**

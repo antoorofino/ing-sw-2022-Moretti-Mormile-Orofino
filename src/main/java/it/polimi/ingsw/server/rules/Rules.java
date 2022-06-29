@@ -12,10 +12,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Contains the rules of the game when choosing expert mode
+ */
 public class Rules implements Serializable {
-
 	protected GameModel game;
 
+	/**
+	 * Create the game rules
+	 * @param game obj that contains the game status
+	 */
 	public Rules(GameModel game){
 		this.game = game;
 	}
@@ -41,9 +47,9 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
-	 * @param action
-	 * @return
+	 * Verify and perform action made by the player
+	 * @param action the player's action
+	 * @return true if the action is valid
 	 */
 	public boolean doAction(Action action){
 		// check if he can do the action
@@ -70,9 +76,9 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
-	 * @param action
-	 * @return
+	 * Moves the student from the entrance to the dining room
+	 * @param action the player's action
+	 * @return true if the action is valid
 	 */
 	protected boolean doMoveDiningRoom(Action action) {
 		try {
@@ -87,9 +93,9 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
-	 * @param action
-	 * @return
+	 * Moves the student from the entrance to chosen island
+	 * @param action the player's action
+	 * @return true if the action is valid
 	 */
 	protected boolean doMoveIsland(Action action) {
 		try {
@@ -110,9 +116,9 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
-	 * @param action
-	 * @return
+	 * Moves mother nature
+	 * @param action the player's action
+	 * @return true if the action is valid
 	 */
 	protected boolean doMoveMother(Action action){
 		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getInteger()){
@@ -124,12 +130,12 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
-	 * @param action
-	 * @return
+	 * Moves the student from the chosen cloud to the entrance
+	 * @param action the player's action
+	 * @return true if the action is valid
 	 */
 	protected boolean doChooseCloud(Action action) {
-		Cloud cloud = null;
+		Cloud cloud;
 		try {
 			cloud = game.getCloudByID(action.getInteger());
 		} catch (SpecificCloudNotFoundException e) {
@@ -144,7 +150,7 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
+	 * Calls the calculation of the influence on the island where mother nature is present
 	 */
 	protected void calculateInfluence() {
 		Island currentIsland = null;
@@ -154,15 +160,15 @@ public class Rules implements Serializable {
 	}
 
 	/**
-	 *
+	 * Calls the teacher control method
 	 */
 	protected void controlTeacher() {
 		game.getTeacherHandler().calculateTeacher(game.getPlayerHandler().getPlayers(), false);
 	}
 
 	/**
-	 *
-	 * @return
+	 * Returns the current player
+	 * @return the current player
 	 */
 	protected Player getCurrentPlayer() {
 		return game.getPlayerHandler().getCurrentPlayer();

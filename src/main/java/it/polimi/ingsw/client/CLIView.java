@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Implement the game interface view for the cli
+ */
 public class CLIView implements View{
 	private final Scanner scanner;
 	private ServerHandler serverHandler;
