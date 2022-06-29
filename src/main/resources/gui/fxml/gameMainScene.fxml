@@ -49,5 +49,6 @@
         </VBox>
     </HBox>
     <fx:include fx:id="popUp" source="popUpContainer.fxml" />
+    <fx:include fx:id="characterInfoPane" source="characterInfoPane.fxml" />
     <fx:include fx:id="alertPane" source="alertPane.fxml" />
 </AnchorPane>

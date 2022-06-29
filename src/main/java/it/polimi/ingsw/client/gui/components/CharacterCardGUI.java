@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
+import it.polimi.ingsw.client.gui.controllers.CharacterInfoPaneController;
 import it.polimi.ingsw.client.gui.utils.Tmp;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
 import it.polimi.ingsw.model.Character;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -31,6 +33,8 @@ public class CharacterCardGUI extends ComponentGUI {
     private VBox characterPiecesVBox;
     @FXML
     private Label costLabel;
+    @FXML
+    private ImageView infoButton;
 
     public CharacterCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/characterCard.fxml"));
@@ -161,8 +165,6 @@ public class CharacterCardGUI extends ComponentGUI {
         // Set student pieces
         for (int i = 0; i < students.size(); i++) {
             characterPiecesVBox.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(students.get(i)));
-            characterPiecesVBox.getChildren().get(i).setScaleX(1.3);
-            characterPiecesVBox.getChildren().get(i).setScaleY(1.3);
         }
         clearEmptyPanes();
         // Add interaction features if card is active
@@ -186,8 +188,6 @@ public class CharacterCardGUI extends ComponentGUI {
         // Set tile pieces
         for (int i = 0; i < num; i++) {
             characterPiecesVBox.getChildren().get(i).getStyleClass().add("no-tile");
-            characterPiecesVBox.getChildren().get(i).setScaleX(1);
-            characterPiecesVBox.getChildren().get(i).setScaleY(1);
         }
         clearEmptyPanes();
         // Add interaction features if card is active
@@ -195,12 +195,17 @@ public class CharacterCardGUI extends ComponentGUI {
             setTilesDraggable();
     }
 
-    public void setCharacterCard(Character card, boolean isActive, SwapArea swapArea) {
+    public void setCharacterCard(Character card, boolean isActive, SwapArea swapArea, CharacterInfoPaneController characterInfoPaneController) {
         clear();
         // Set character image
         characterImagePane.getStyleClass().add("character-" + card.getID());
         // Set character price
         costLabel.setText(String.valueOf(card.getCost()));
+        // Set info pane pane if provided
+        if (characterInfoPaneController != null)
+            infoButton.setOnMouseClicked(e-> characterInfoPaneController.setCharacterInfo(card));
+        else
+            infoButton.setVisible(false);
         // Add pieces to card
         switch (card.getID()) {
             case 9:

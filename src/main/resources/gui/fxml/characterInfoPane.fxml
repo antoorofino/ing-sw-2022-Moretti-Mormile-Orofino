@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootPane" minHeight="700.0" styleClass="blur" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.CharacterInfoPaneController">
+   <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="blur-2" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+      <Text fx:id="nameText" fill="#517dff" text="Character name" textAlignment="CENTER" wrappingWidth="900.0">
+         <font>
+            <Font name="Arial Bold" size="35.0" />
+         </font>
+      </Text>
+      <Pane fx:id="characterPane" prefHeight="200.0" prefWidth="150.0" />
+      <Text fx:id="descriptionText" fill="#517dff" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." textAlignment="CENTER" wrappingWidth="700">
+         <font>
+            <Font name="Arial" size="25.0" />
+         </font>
+      </Text>
+   </VBox>
+   <ImageView fitHeight="70.0" fitWidth="70.0" onMouseClicked="#onCloseInfoClicked" pickOnBounds="true" preserveRatio="true" styleClass="image-btn" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="120.0">
+      <Image url="@../images/close_icon.png" />
+   </ImageView>
+</AnchorPane>

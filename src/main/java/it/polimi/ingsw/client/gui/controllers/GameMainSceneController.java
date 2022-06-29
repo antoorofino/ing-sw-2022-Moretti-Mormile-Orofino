@@ -37,6 +37,8 @@ public class GameMainSceneController extends SceneController {
    public Button yourCardsButton;
    @FXML
    public PopUpContainerController popUpController;
+   @FXML
+   public CharacterInfoPaneController characterInfoPaneController;
    private IslandsGridGUI islandsGridGUI;
    private PlayerBoard playerBoardController;
    private SwapArea swapArea;
@@ -66,14 +68,16 @@ public class GameMainSceneController extends SceneController {
 
       //Create popUps
       charactersPopUp = new CharactersPopUp();
+      charactersPopUp.initialize(popUpController);
       yourCardsPopUp = new YourCardsPopUp();
+      yourCardsPopUp.initialize(popUpController);
       boardPopUps = new ArrayList<>();
       playedCardsPopUp = new PlayedCardsPopUp();
 
       //Set onClicked listener for left buttons
       charactersButton.setOnMouseClicked(e -> {
          popUpController.clear();
-         charactersPopUp.setCards();
+         charactersPopUp.setCards(characterInfoPaneController);
          popUpController.add(charactersPopUp.getRoot());
          popUpController.display();
       });
@@ -135,7 +139,7 @@ public class GameMainSceneController extends SceneController {
          }
          // Create the cart and set interactions features if this player has activated it
          CharacterCardGUI cardGUI = new CharacterCardGUI();
-         cardGUI.setCharacterCard(activeCard, cardIsActive, swapArea);
+         cardGUI.setCharacterCard(activeCard, cardIsActive, swapArea, characterInfoPaneController);
          activeCharacterPane.getChildren().add(cardGUI.getRoot());
       }
    }
@@ -169,7 +173,7 @@ public class GameMainSceneController extends SceneController {
       yourCardsPopUp.setCards();
       playedCardsButton.setDisable(playedCardsPopUp.setCards());
       if (data.getGame().getGameMode() == GameMode.EXPERT)
-         charactersPopUp.setCards();
+         charactersPopUp.setCards(characterInfoPaneController);
    }
 
    public void setMessage(String message) {

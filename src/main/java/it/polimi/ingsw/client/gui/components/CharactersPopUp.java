@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
+import it.polimi.ingsw.client.gui.controllers.CharacterInfoPaneController;
+import it.polimi.ingsw.client.gui.controllers.PopUpContainerController;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.SetAction;
 import it.polimi.ingsw.util.Action;
@@ -37,26 +39,26 @@ public class CharactersPopUp extends ComponentGUI {
         }
     }
 
-    @FXML
-    private void initialize() {
+    public void initialize(PopUpContainerController containerController) {
         buyCardButton.setDisable(true);
         buyCardButton.setOnMouseClicked(e -> {
             GUIView.getServerHandler().send(new SetAction(
                     data.getPlayer().getNickname(),
                     new Action(ActionType.CHOOSE_CHARACTER, data.getGame().getCharacters().get(selectedCard).getID())
             ));
+            containerController.popUpPane.setVisible(false);
             e.consume();
         });
     }
 
-    public void setCards() {
+    public void setCards(CharacterInfoPaneController characterInfoPaneController) {
         List<Character> cards = data.getGame().getCharacters();
         buyCardButton.setDisable(true);
         if (selectedCard != -1)
             cardGUIS.get(selectedCard).deselect();
         selectedCard = -1;
         for (int i = 0; i < cardGUIS.size(); i++) {
-            cardGUIS.get(i).setCharacterCard(cards.get(i), false, null);
+            cardGUIS.get(i).setCharacterCard(cards.get(i), false, null, characterInfoPaneController);
             int finalI = i;
             cardGUIS.get(i).setOnClickedListener(e -> {
                 if (selectedCard == -1) { // No previous card selected

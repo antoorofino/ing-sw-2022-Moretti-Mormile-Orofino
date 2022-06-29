@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
+import it.polimi.ingsw.client.gui.controllers.PopUpContainerController;
 import it.polimi.ingsw.network.messages.SetAssistantCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,13 +30,13 @@ public class YourCardsPopUp extends ComponentGUI {
         this.selectedCard = 0;
     }
 
-    @FXML
-    private void initialize() {
+    public void initialize(PopUpContainerController controller) {
         playCardButton.setOnMouseClicked(e -> {
             GUIView.getServerHandler().send(new SetAssistantCard(
                     data.getPlayer().getNickname(),
                     data.getPossibleCards().stream().filter(c -> c.getCardID() == selectedCard).findFirst().get()
             ));
+            controller.popUpPane.setVisible(false);
             data.setPossibleCards(null);
         });
 

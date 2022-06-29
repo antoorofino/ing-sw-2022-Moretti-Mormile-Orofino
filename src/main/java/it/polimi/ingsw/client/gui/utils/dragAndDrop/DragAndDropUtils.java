@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.gui.utils.dragAndDrop;
 
 import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.model.Piece;
-import it.polimi.ingsw.util.ActionType;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 
@@ -10,7 +9,6 @@ import java.io.*;
 import java.util.Base64;
 
 public class DragAndDropUtils {
-    private static final ClientData data = ClientData.getInstance();
     public static ClipboardContent toClipboardContent(DragAndDropInfo ddi) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
