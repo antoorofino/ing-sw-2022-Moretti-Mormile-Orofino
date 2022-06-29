@@ -5,16 +5,14 @@ import it.polimi.ingsw.model.Piece;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.List;
 
-public class CloudGUI {
+public class CloudGUI extends ComponentGUI {
     @FXML
     private GridPane cloudGrid;
-    private Parent root;
 
     public CloudGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/cloud.fxml"));
@@ -23,10 +21,6 @@ public class CloudGUI {
             root = fxmlLoader.load();
         } catch (IOException ignored) {
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     @FXML

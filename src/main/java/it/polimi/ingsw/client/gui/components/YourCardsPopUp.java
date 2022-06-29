@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.network.messages.SetAssistantCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
@@ -13,15 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YourCardsPopUp {
+public class YourCardsPopUp extends ComponentGUI {
     @FXML
     private GridPane cardsGrid;
     @FXML
     private Button playCardButton;
-    private Parent root;
     private final List<AssistantCardGUI> assistantCardGUIS =  new ArrayList<>();
     private int selectedCard;
-    private final ClientData data = ClientData.getInstance();
 
     public YourCardsPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/yourCardsPopUp.fxml"));
@@ -83,9 +79,5 @@ public class YourCardsPopUp {
                 });
             }
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 }

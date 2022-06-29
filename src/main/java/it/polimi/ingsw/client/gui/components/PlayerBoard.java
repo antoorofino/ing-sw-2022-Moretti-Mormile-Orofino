@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
 import it.polimi.ingsw.client.gui.utils.Tmp;
 import it.polimi.ingsw.model.Board;
@@ -13,7 +12,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 
@@ -23,7 +21,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class PlayerBoard {
+public class PlayerBoard extends ComponentGUI {
     @FXML
     private Pane entrance;
     @FXML
@@ -50,12 +48,6 @@ public class PlayerBoard {
     private Pane teacherPurple;
     @FXML
     private Pane teacherBlue;
-    Parent root = null;
-    private final ClientData data = ClientData.getInstance();
-
-    public Parent getRoot() {
-        return root;
-    }
 
     public PlayerBoard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerBoard.fxml"));
@@ -158,12 +150,12 @@ public class PlayerBoard {
                 DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
                 switch (ddi.getDestination()) {
                     case DINING:
-                        GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                        GUIView.getServerHandler().send(new SetAction(data.getPlayer().getNickname(),
                                 new Action(ActionType.MOVE_STUDENT_TO_DININGROOM, ddi.getPiece())
                         ));
                         break;
                     case ISLAND:
-                        GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                        GUIView.getServerHandler().send(new SetAction(data.getPlayer().getNickname(),
                                 new Action(ActionType.MOVE_STUDENT_TO_ISLAND, ddi.getPiece(), ddi.getIslandId())
                         ));
                         break;

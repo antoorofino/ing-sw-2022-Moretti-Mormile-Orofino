@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.util.GameMode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +11,7 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
-public class PlayerDashboard {
+public class PlayerDashboard extends ComponentGUI {
     @FXML
     private Label playerNameLabel;
     @FXML
@@ -23,7 +22,6 @@ public class PlayerDashboard {
     private HBox coinHBox;
     @FXML
     private Label coinLabel;
-    private Parent root;
 
     public PlayerDashboard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/PlayerDashboard.fxml"));
@@ -59,9 +57,5 @@ public class PlayerDashboard {
         towerLabel.setText(String.valueOf(player.getNumOfTowers()));
         coinHBox.setVisible(mode == GameMode.EXPERT);
         coinLabel.setText(String.valueOf(player.getCoin()));
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 }

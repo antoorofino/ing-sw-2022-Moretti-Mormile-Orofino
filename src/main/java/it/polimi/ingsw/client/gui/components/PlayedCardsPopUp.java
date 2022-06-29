@@ -1,10 +1,8 @@
 package it.polimi.ingsw.client.gui.components;
 
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -12,10 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlayedCardsPopUp {
+public class PlayedCardsPopUp extends ComponentGUI {
     @FXML
     private HBox cardsHBox;
-    Parent root;
 
     public PlayedCardsPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playedCardsPopUp.fxml"));
@@ -26,12 +23,7 @@ public class PlayedCardsPopUp {
         }
     }
 
-    public Parent getRoot() {
-        return root;
-    }
-
     public boolean setCards() {
-        ClientData data = ClientData.getInstance();
         List<Player> playersOrderedByCardNumber = data.getGame().getPlayerHandler().getPlayers().stream()
                 .filter(p -> p.getLastCardUsed() != null)
                 .sorted(Comparator.comparingInt(p -> p.getLastCardUsed().getCardID()))

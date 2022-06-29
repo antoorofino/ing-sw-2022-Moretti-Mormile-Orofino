@@ -1,14 +1,12 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.SetAction;
 import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -16,15 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharactersPopUp {
+public class CharactersPopUp extends ComponentGUI {
     @FXML
     private HBox cardsHBox;
     @FXML
     private Button buyCardButton;
     private final List<CharacterCardGUI> cardGUIS;
     private int selectedCard;
-    private final ClientData data = ClientData.getInstance();
-    Parent root;
 
     public CharactersPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/charactersPopUp.fxml"));
@@ -51,10 +47,6 @@ public class CharactersPopUp {
             ));
             e.consume();
         });
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     public void setCards() {

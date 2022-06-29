@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.Tmp;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
 import it.polimi.ingsw.model.Character;
@@ -13,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
@@ -23,19 +21,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
-public class CharacterCardGUI {
+public class CharacterCardGUI extends ComponentGUI {
     @FXML
     private Pane characterImagePane;
     @FXML
     private VBox characterPiecesVBox;
     @FXML
     private Label costLabel;
-    private final ClientData data = ClientData.getInstance();
-    private Parent root;
 
     public CharacterCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/characterCard.fxml"));
@@ -44,10 +39,6 @@ public class CharacterCardGUI {
             root = fxmlLoader.load();
         } catch (IOException ignored) {
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     @FXML
@@ -111,12 +102,12 @@ public class CharacterCardGUI {
                 DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
                 switch (ddi.getDestination()) {
                     case DINING:
-                        GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                        GUIView.getServerHandler().send(new SetAction(data.getPlayer().getNickname(),
                                 new Action(ActionType.STUDENT_FROM_CARD_TO_DINING, ddi.getPiece())
                         ));
                         break;
                     case ISLAND:
-                        GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                        GUIView.getServerHandler().send(new SetAction(data.getPlayer().getNickname(),
                                 new Action(ActionType.STUDENT_FROM_CARD_TO_ISLAND, ddi.getPiece(), ddi.getIslandId())
                         ));
                         break;
@@ -153,7 +144,7 @@ public class CharacterCardGUI {
                 DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
                 if (ddi.getDestination() == DropDestination.ISLAND) {
                     GUIView.getServerHandler().send(new SetAction(
-                            ClientData.getInstance().getPlayer().getNickname(),
+                            data.getPlayer().getNickname(),
                             new Action(ActionType.NO_INFLUENCE, ddi.getIslandId())
                     ));
                 } else {

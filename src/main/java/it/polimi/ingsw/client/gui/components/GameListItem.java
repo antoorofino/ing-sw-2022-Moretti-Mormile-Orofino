@@ -4,21 +4,19 @@ import it.polimi.ingsw.util.GameListInfo;
 import it.polimi.ingsw.util.GameMode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class GameListItem {
+public class GameListItem extends ComponentGUI {
     @FXML
     private Text name;
     @FXML
     private ImageView numPlayersImage;
     @FXML
     private Text mode;
-    Parent root = null;
 
     public GameListItem(GameListInfo info) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/gameListItem.fxml"));
@@ -37,9 +35,5 @@ public class GameListItem {
             mode.setText("BASIC");
         else
             mode.setText("EXPERT");
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 }

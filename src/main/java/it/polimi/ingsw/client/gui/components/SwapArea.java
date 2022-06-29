@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.DelayAction;
 import it.polimi.ingsw.client.gui.utils.Tmp;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
@@ -11,7 +10,6 @@ import it.polimi.ingsw.util.Action;
 import it.polimi.ingsw.util.ActionType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
@@ -21,7 +19,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.util.function.Supplier;
 
-public class SwapArea {
+public class SwapArea extends ComponentGUI {
     @FXML
     private Pane swapPane;
     @FXML
@@ -36,8 +34,6 @@ public class SwapArea {
     private Pane piece2BackgroundPane;
     @FXML
     private Label piece2textLabel;
-    private Parent root;
-    private final ClientData data = ClientData.getInstance();
 
     public SwapArea() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/swapArea.fxml"));
@@ -46,10 +42,6 @@ public class SwapArea {
             root = fxmlLoader.load();
         } catch (IOException ignored) {
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     public void init() {

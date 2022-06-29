@@ -5,17 +5,15 @@ import it.polimi.ingsw.model.TeachersHandler;
 import it.polimi.ingsw.util.GameMode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class BoardPopUp {
+public class BoardPopUp extends ComponentGUI {
     @FXML
     private Pane dashboardPane;
     @FXML
     private Pane boardPane;
-    private Parent root;
 
     public BoardPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/boardsPopUp.fxml"));
@@ -37,9 +35,5 @@ public class BoardPopUp {
         board.setBoard(player.getPlayerBoard(), handler.getTeachersByPlayerId(player.getId()), false, null);
         boardPane.getChildren().clear();
         boardPane.getChildren().add(board.getRoot());
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 }

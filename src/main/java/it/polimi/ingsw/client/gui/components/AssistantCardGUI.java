@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.gui.components;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -10,7 +9,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-public class AssistantCardGUI {
+public class AssistantCardGUI extends ComponentGUI {
     @FXML
     private Pane assistantImagePane;
     @FXML
@@ -25,7 +24,6 @@ public class AssistantCardGUI {
     private final static String alreadyPlayedClassName = "assistant-already-played";
     private final static String alreadyPlayedMessageText = "Not available";
     private Consumer<Integer> listener;
-    private Parent root;
 
     public AssistantCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/assistantCard.fxml"));
@@ -34,10 +32,6 @@ public class AssistantCardGUI {
             root = fxmlLoader.load();
         } catch (IOException ignored) {
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     @FXML

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
-import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cloud;
 import it.polimi.ingsw.model.Island;
 import it.polimi.ingsw.model.IslandsHandler;
@@ -17,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -28,12 +25,10 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class IslandsGridGUI {
+public class IslandsGridGUI extends ComponentGUI {
     @FXML
     private GridPane islandsGridPane;
     private final List<String> islandsBackground;
-    private final ClientData data = ClientData.getInstance();
-    Parent root;
 
     public IslandsGridGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/islandsGrid.fxml"));
@@ -49,10 +44,6 @@ public class IslandsGridGUI {
         for (int i = 0; i < 12; i++) {
             islandsBackground.add(styleList.get(rand.nextInt(styleList.size())));
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     public void setGrid() {
@@ -224,7 +215,7 @@ public class IslandsGridGUI {
             Dragboard db = e.getDragboard();
             DragAndDropInfo ddi = DragAndDropUtils.fromString(db.getString());
             if (ddi.getDestination() == DropDestination.ISLAND) {
-                GUIView.getServerHandler().send(new SetAction(ClientData.getInstance().getPlayer().getNickname(),
+                GUIView.getServerHandler().send(new SetAction(data.getPlayer().getNickname(),
                         new Action(ActionType.MOVE_MOTHER_NATURE, ddi.getSteps())
                 ));
             } else {

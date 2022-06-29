@@ -1,23 +1,19 @@
 package it.polimi.ingsw.client.gui.components;
 
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.Tmp;
 import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.TowerColor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class IslandGUI {
+public class IslandGUI extends ComponentGUI {
     @FXML
     private GridPane islandBackgroundPane;
     @FXML
@@ -48,7 +44,6 @@ public class IslandGUI {
     private Pane noTileImage;
     @FXML
     private Text noTileText;
-    private Parent root;
 
     public IslandGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/island.fxml"));
@@ -57,10 +52,6 @@ public class IslandGUI {
             root = fxmlLoader.load();
         } catch (IOException ignored) {
         }
-    }
-
-    public Parent getRoot() {
-        return root;
     }
 
     @FXML
@@ -143,7 +134,7 @@ public class IslandGUI {
 
     public void setMotherNature() {
         motherNatureImage.getStyleClass().add("mother-nature-background");
-        if (ClientData.getInstance().getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE))
+        if (data.getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE))
             motherNatureImage.getStyleClass().add("student-hover");
     }
 
