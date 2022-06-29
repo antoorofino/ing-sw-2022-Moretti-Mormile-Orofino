@@ -25,10 +25,16 @@ public class GameStartPaneController {
     public void showGameStart() {
         containerHBox.getChildren().clear();
         gameNameLabel.setText("Game " + ClientData.getInstance().getGame().getGameName() + " is ready to start");
+        Player currentPlayer = ClientData.getInstance().getPlayer();
+        PlayerStartPane p = new PlayerStartPane();
+        p.setPlayerInfo(currentPlayer, currentPlayer.getId().equals(GUIView.getPlayerId()));
+        containerHBox.getChildren().add(p.getRoot());
         for (Player player : ClientData.getInstance().getGame().getPlayerHandler().getPlayers()) {
-            PlayerStartPane p = new PlayerStartPane();
-            p.setPlayerInfo(player, player.getId().equals(GUIView.getPlayerId()));
-            containerHBox.getChildren().add(p.getRoot());
+            if (!player.getId().equals(currentPlayer.getId())) {
+                p = new PlayerStartPane();
+                p.setPlayerInfo(player, player.getId().equals(GUIView.getPlayerId()));
+                containerHBox.getChildren().add(p.getRoot());
+            }
         }
         alertPane.setVisible(true);
     }

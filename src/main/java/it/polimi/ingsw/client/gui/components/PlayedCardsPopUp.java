@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.gui.utils.ClientData;
-import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayedCardsPopUp {
     @FXML
@@ -31,18 +31,17 @@ public class PlayedCardsPopUp {
     }
 
     public boolean setCards() {
-        Map<String, AssistantCard> cards = new HashMap<>();
         ClientData data = ClientData.getInstance();
-        for(Player player : data.getGame().getPlayerHandler().getPlayers()) {
-            if (player.getLastCardUsed() != null)
-                cards.put(player.getNickname().equals(data.getPlayer().getNickname()) ? "You" : player.getNickname(), player.getLastCardUsed());
-        }
-        if (cards.keySet().size() > 0) {
+        List<Player> playersOrderedByCardNumber = data.getGame().getPlayerHandler().getPlayers().stream()
+                .filter(p -> p.getLastCardUsed() != null)
+                .sorted(Comparator.comparingInt(p -> p.getLastCardUsed().getCardID()))
+                .collect(Collectors.toList());
+        if (playersOrderedByCardNumber.size() > 0) {
             cardsHBox.getChildren().clear();
-            for (String nickname : cards.keySet()) {
+            for (Player player : playersOrderedByCardNumber) {
                 AssistantCardGUI cardGUI = new AssistantCardGUI();
-                cardGUI.initialize(cards.get(nickname).getCardID());
-                cardGUI.setPlayedByNickname(nickname);
+                cardGUI.initialize(player.getLastCardUsed().getCardID());
+                cardGUI.setPlayedByNickname(player.getNickname().equals(data.getPlayer().getNickname()) ? "You" : player.getNickname());
                 cardsHBox.getChildren().add(cardGUI.getRoot());
             }
             return false;

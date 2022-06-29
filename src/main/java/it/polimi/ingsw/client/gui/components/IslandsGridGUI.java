@@ -17,8 +17,8 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -108,6 +108,7 @@ public class IslandsGridGUI {
                     islandGUI.setTower(island.getIslandOwner().getTowerColor());
                 if (island.getSize() == 1 || i == 1) {
                     islandGUI.setStudents(island.getStudentsOnIsland());
+                    islandGUI.setNoTile(island.getFlagNoInfluence());
                     if(mother)
                         islandGUI.setMotherNature();
                 }

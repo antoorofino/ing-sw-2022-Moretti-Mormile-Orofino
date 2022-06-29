@@ -12,12 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class IslandGUI {
     @FXML
@@ -25,27 +23,31 @@ public class IslandGUI {
     @FXML
     private Pane greenImage;
     @FXML
-    private Label greenText;
+    private Text greenText;
     @FXML
     private Pane redImage;
     @FXML
-    private Label redText;
+    private Text redText;
     @FXML
     private Pane yellowImage;
     @FXML
-    private Label yellowText;
+    private Text yellowText;
     @FXML
     private Pane purpleImage;
     @FXML
-    private Label purpleText;
+    private Text purpleText;
     @FXML
     private Pane blueImage;
     @FXML
-    private Label blueText;
+    private Text blueText;
     @FXML
     private Pane motherNatureImage;
     @FXML
     private Pane towerImage;
+    @FXML
+    private Pane noTileImage;
+    @FXML
+    private Text noTileText;
     private Parent root;
 
     public IslandGUI() {
@@ -64,13 +66,6 @@ public class IslandGUI {
     @FXML
     private void initialize() {
         clear();
-        blueImage.heightProperty().addListener((observable, odlValue, newValue) -> {
-            greenText.setFont(new Font("Arial Bold",((Double) newValue)/2));
-            redText.setFont(new Font("Arial Bold",((Double) newValue)/2));
-            yellowText.setFont(new Font("Arial Bold",((Double) newValue)/2));
-            purpleText.setFont(new Font("Arial Bold",((Double) newValue)/2));
-            blueText.setFont(new Font("Arial Bold",((Double) newValue)/2));
-        });
     }
 
     private void clear() {
@@ -87,6 +82,8 @@ public class IslandGUI {
         blueText.setText("");
         motherNatureImage.getStyleClass().clear();
         towerImage.getStyleClass().clear();
+        noTileImage.getStyleClass().clear();
+        noTileText.setText("");
     }
 
     public void setIslandImage(String bg) {
@@ -152,5 +149,12 @@ public class IslandGUI {
 
     public Pane getMotherNatureImage() {
         return motherNatureImage;
+    }
+
+    public void setNoTile(int n) {
+        if(n > 0)
+            noTileImage.getStyleClass().add("no-tile");
+        noTileText.setText("x" + n);
+        noTileText.setVisible(n > 1);
     }
 }

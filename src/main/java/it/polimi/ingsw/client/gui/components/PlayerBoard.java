@@ -106,19 +106,19 @@ public class PlayerBoard {
         for(Piece teacher : teachersList) {
             switch (teacher) {
                 case FROG:
-                    teacherGreen.getStyleClass().add(Tmp.pieceToClassName(teacher));
+                    teacherGreen.getStyleClass().add(Tmp.teacherToClassName(teacher));
                     break;
                 case DRAGON:
-                    teacherRed.getStyleClass().add(Tmp.pieceToClassName(teacher));
+                    teacherRed.getStyleClass().add(Tmp.teacherToClassName(teacher));
                     break;
                 case GNOME:
-                    teacherYellow.getStyleClass().add(Tmp.pieceToClassName(teacher));
+                    teacherYellow.getStyleClass().add(Tmp.teacherToClassName(teacher));
                     break;
                 case FAIRY:
-                    teacherPurple.getStyleClass().add(Tmp.pieceToClassName(teacher));
+                    teacherPurple.getStyleClass().add(Tmp.teacherToClassName(teacher));
                     break;
                 case UNICORN:
-                    teacherBlue.getStyleClass().add(Tmp.pieceToClassName(teacher));
+                    teacherBlue.getStyleClass().add(Tmp.teacherToClassName(teacher));
                     break;
             }
         }

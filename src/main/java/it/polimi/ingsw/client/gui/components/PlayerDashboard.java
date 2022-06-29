@@ -44,13 +44,13 @@ public class PlayerDashboard {
         Image image;
         switch (player.getTowerColor()) {
             case GRAY:
-                image = new Image(String.valueOf(getClass().getResource("/gui/images/tower_grey.png")));
+                image = new Image(String.valueOf(getClass().getResource("/gui/images/tower_grey_no_stroke.png")));
                 break;
             case BLACK:
-                image = new Image(String.valueOf(getClass().getResource("/gui/images/tower_black.png")));
+                image = new Image(String.valueOf(getClass().getResource("/gui/images/tower_black_no_stroke.png")));
                 break;
             case WHITE:
-                image = new Image(String.valueOf(getClass().getResource("/gui/images/tower_white.png")));
+                image = new Image(String.valueOf(getClass().getResource("/gui/images/tower_white_no_stroke.png")));
                 break;
             default:
                 throw new RuntimeException("Invalid tower color");

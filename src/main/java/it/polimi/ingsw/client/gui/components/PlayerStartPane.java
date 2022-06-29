@@ -37,13 +37,13 @@ public class PlayerStartPane {
         towerImagePane.getStyleClass().clear();
         switch (player.getTowerColor()) {
             case BLACK:
-                towerImagePane.getStyleClass().add("tower-black-background");
+                towerImagePane.getStyleClass().add("tower-black-background-no-stroke");
                 break;
             case WHITE:
-                towerImagePane.getStyleClass().add("tower-white-background");
+                towerImagePane.getStyleClass().add("tower-white-background-no-stroke");
                 break;
             case GRAY:
-                towerImagePane.getStyleClass().add("tower-grey-background");
+                towerImagePane.getStyleClass().add("tower-grey-background-no-stroke");
                 break;
         }
     }

@@ -6,9 +6,7 @@ import it.polimi.ingsw.client.gui.utils.DelayAction;
 import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.GameModel;
 import it.polimi.ingsw.network.messages.AskGameListMessage;
-import it.polimi.ingsw.util.GameListInfo;
-import it.polimi.ingsw.util.RoundActions;
-import it.polimi.ingsw.util.TowerColor;
+import it.polimi.ingsw.util.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -59,9 +57,9 @@ public class GUIView extends Application implements View {
     public void start(Stage stage) {
         stage.setTitle("Eriantys");
         stage.setMinHeight(750.0);
-        stage.setMinWidth(900.0);
+        stage.setMinWidth(1000.0);
         stage.setHeight(750.0);
-        stage.setWidth(900.0);
+        stage.setWidth(1000.0);
         stage.setScene(new Scene(new Group()));
         switcher.initialise(stage);
         switcher.setDefaultController();
@@ -142,7 +140,7 @@ public class GUIView extends Application implements View {
         clientData.setGame(game);
         clientData.setPossibleCards(cards);
         Platform.runLater(() -> {
-            switcher.getGameMainSceneController().setMessage("It's your turn, play an assistant card");
+            switcher.getGameMainSceneController().setMessage("It's your turn, choose an assistant card to play");
             switcher.getGameMainSceneController().showGameHandler();
         });
     }
@@ -155,7 +153,21 @@ public class GUIView extends Application implements View {
     public void askAction(RoundActions roundActions, boolean isInvalidAction) {
         clientData.setPossibleActions(roundActions);
         Platform.runLater(() -> {
-            switcher.getGameMainSceneController().setMessage("It's your turn, perform an action"); //TODO: customize message banner
+            String message;
+            if (clientData.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND) || clientData.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM))
+                message = "It's your turn, move your students on the entrance";
+            else if (clientData.getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE))
+                message = "It's your turn, move mother nature";
+            else if (clientData.getPossibleActions().contains(ActionType.CHOOSE_CLOUD))
+                message = "It's your turn, select a cloud";
+            else if (clientData.getPlayer().getRoundActions().getActionsList().stream()
+                            .map(Action::getActionType).filter(t -> t == ActionType.CHOOSE_CHARACTER).findFirst().orElse(null) != null &&
+                    clientData.getPlayer().getRoundActions().getActionsList().stream()
+                            .map(Action::getActionType).filter(t -> t == ActionType.ACTIVATED_CHARACTER).findFirst().orElse(null) == null)
+                message = "It's your turn, use the character's effect";
+            else
+                message = "It's your turn, perform an action";
+            switcher.getGameMainSceneController().setMessage(message);
             if (isInvalidAction)
                 switcher.getGameMainSceneController().showError("Invalid action");
         });
@@ -197,7 +209,7 @@ public class GUIView extends Application implements View {
                 switcher.getGameMainSceneController().setMessage("It is your turn");
             else {
                 clientData.resetPossibleActions();
-                switcher.getGameMainSceneController().setMessage("It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() + "'s turn");
+                switcher.getGameMainSceneController().setMessage("Waiting for " + game.getPlayerHandler().getCurrentPlayer().getNickname() + " to play");
             }
             switcher.getGameMainSceneController().showGameHandler();
         });
@@ -209,7 +221,7 @@ public class GUIView extends Application implements View {
     @Override
     public void showLastRound() {
         Platform.runLater(() -> {
-            //TODO: not yet implemented
+           switcher.getGameMainSceneController().showError("This is going to be the last round!");
         });
     }
 
@@ -229,7 +241,8 @@ public class GUIView extends Application implements View {
     @Override
     public void showGameEndMessage(String winnerNickname) {
         Platform.runLater(() -> {
-            //TODO: not yet implemented
+            switcher.getWinningSceneController().endMatchHandler(winnerNickname);
+            serverHandler.close();
         });
     }
 

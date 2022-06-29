@@ -90,11 +90,11 @@ public class PlayerInfoSceneController extends SceneController {
                     setGraphic(null);
                 } else if (possibleColors.contains(color)) {
                     if(color == TowerColor.BLACK)
-                        imageView.setImage(new Image(String.valueOf(getClass().getResource("/gui/images/tower_black.png"))));
+                        imageView.setImage(new Image(String.valueOf(getClass().getResource("/gui/images/tower_black_no_stroke.png"))));
                     else if (color == TowerColor.WHITE)
-                        imageView.setImage(new Image(String.valueOf(getClass().getResource("/gui/images/tower_white.png"))));
+                        imageView.setImage(new Image(String.valueOf(getClass().getResource("/gui/images/tower_white_no_stroke.png"))));
                     else
-                        imageView.setImage(new Image(String.valueOf(getClass().getResource("/gui/images/tower_grey.png"))));
+                        imageView.setImage(new Image(String.valueOf(getClass().getResource("/gui/images/tower_grey_no_stroke.png"))));
                     imageView.setFitWidth(60.0);
                     imageView.setFitHeight(90.0);
                     setGraphic(imageView);

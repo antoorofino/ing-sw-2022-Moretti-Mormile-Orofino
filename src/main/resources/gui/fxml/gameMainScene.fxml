@@ -12,7 +12,7 @@
     <HBox alignment="CENTER" layoutX="352.0" layoutY="52.0" prefHeight="60.0" styleClass="message-text-background" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
         <Label fx:id="messageTextLabel" text="message text ....." textFill="WHITE" wrapText="true">
             <font>
-                <Font name="Helvetica" size="25.0" />
+                <Font name="Arial" size="25.0" />
             </font>
         </Label>
     </HBox>
@@ -25,25 +25,25 @@
         <Pane fx:id="playerBoard" prefWidth="370.0" />
       <Pane HBox.hgrow="ALWAYS" />
         <Pane HBox.hgrow="ALWAYS" />
-        <VBox fx:id="buttonsVBox" alignment="CENTER" prefWidth="200.0" spacing="10.0" styleClass="buttons-bottom-background">
+        <VBox fx:id="buttonsVBox" alignment="CENTER" prefWidth="200.0" spacing="10.0">
             <Button fx:id="charactersButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Characters">
                 <font>
-                    <Font name="Helvetica" size="17.0" />
+                    <Font name="Arial" size="17.0" />
                 </font>
             </Button>
             <Button fx:id="boardsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Boards">
                 <font>
-                    <Font name="Helvetica" size="17.0" />
+                    <Font name="Arial" size="17.0" />
                 </font>
             </Button>
             <Button fx:id="playedCardsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Played cards">
                 <font>
-                    <Font name="Helvetica" size="17.0" />
+                    <Font name="Arial" size="17.0" />
                 </font>
             </Button>
             <Button fx:id="yourCardsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" styleClass="btn-orange" text="Your cards">
                 <font>
-                    <Font name="Helvetica" size="17.0" />
+                    <Font name="Arial" size="17.0" />
                 </font>
             </Button>
         </VBox>

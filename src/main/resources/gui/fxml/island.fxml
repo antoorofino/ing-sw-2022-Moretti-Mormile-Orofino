@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,8 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="40.0" minWidth="40.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane fx:id="islandBackgroundPane" styleClass="island-1" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
@@ -23,53 +22,55 @@
             <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
         <HBox alignment="CENTER" spacing="2.0">
-            <Pane fx:id="greenImage" styleClass="student-blue-background" translateX="10.0" HBox.hgrow="ALWAYS">
-            <HBox.margin>
-               <Insets />
-            </HBox.margin></Pane>
-            <Label fx:id="greenText" text="x2" textFill="WHITE">
+            <Pane fx:id="greenImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Text fx:id="greenText" fill="WHITE" stroke="#4a80d0" strokeType="OUTSIDE" strokeWidth="2.0" text="x2">
                 <font>
-                    <Font name="Arial Bold" size="10.0" />
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
-            </Label>
+            </Text>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.columnIndex="1">
-            <Pane fx:id="redImage" styleClass="student-blue-background" translateX="-5.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="redText" text="x2" textFill="WHITE">
+            <Pane fx:id="redImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Text fx:id="redText" fill="WHITE" stroke="#4a80d0" strokeType="OUTSIDE" strokeWidth="2.0" text="x2">
                 <font>
-                    <Font name="Arial Bold" size="10.0" />
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
-            </Label>
+            </Text>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="1">
-            <Pane fx:id="yellowImage" styleClass="student-blue-background" translateX="5.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="yellowText" text="x2" textFill="WHITE">
+            <Pane fx:id="yellowImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Text fx:id="yellowText" fill="WHITE" stroke="#4a80d0" strokeType="OUTSIDE" strokeWidth="2.0" text="x2">
                 <font>
-                    <Font name="Arial Bold" size="10.0" />
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
-            </Label>
+            </Text>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <Pane fx:id="purpleImage" styleClass="student-blue-background" translateX="10.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="purpleText" text="x2" textFill="WHITE">
+            <Pane fx:id="purpleImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Text fx:id="purpleText" fill="WHITE" stroke="#4a80d0" strokeType="OUTSIDE" strokeWidth="2.0" text="x2">
                 <font>
-                    <Font name="Arial Bold" size="10.0" />
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
-            </Label>
+            </Text>
         </HBox>
         <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="2">
-            <Pane fx:id="blueImage" styleClass="student-blue-background" translateX="10.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="blueText" text="x2" textFill="WHITE">
+            <Pane fx:id="blueImage" styleClass="student-blue-background" HBox.hgrow="ALWAYS" />
+            <Text fx:id="blueText" fill="WHITE" stroke="#4a80d0" strokeType="OUTSIDE" strokeWidth="2.0" text="x2">
                 <font>
-                    <Font name="Arial Bold" size="10.0" />
+                    <Font name="Arial Bold" size="12.0" />
                 </font>
-            </Label>
+            </Text>
         </HBox>
-        <Pane fx:id="motherNatureImage" minHeight="12.0" styleClass="mother-nature-background" translateX="20.0" translateY="-5.0" GridPane.rowIndex="3" />
-        <Pane fx:id="towerImage" styleClass="tower-black-background" translateX="-5.0" translateY="-5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
-          <GridPane.margin>
-              <Insets bottom="2.0" left="5.0" top="10.0" />
-          </GridPane.margin>
+        <Pane fx:id="motherNatureImage" minHeight="12.0" styleClass="mother-nature-background" translateX="5.0" translateY="-2.0" GridPane.rowIndex="3" />
+        <Pane fx:id="towerImage" styleClass="tower-black-background" GridPane.columnIndex="1" GridPane.rowIndex="2">
         </Pane>
+        <HBox alignment="CENTER" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Pane fx:id="noTileImage" styleClass="no-tile" HBox.hgrow="ALWAYS" />
+            <Text fx:id="noTileText" fill="WHITE" stroke="#4a80d0" strokeType="OUTSIDE" strokeWidth="2.0" text="x2">
+                <font>
+                    <Font name="Arial Bold" size="12.0" />
+                </font>
+            </Text>
+        </HBox>
     </GridPane>
 </AnchorPane>

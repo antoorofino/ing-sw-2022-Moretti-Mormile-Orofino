@@ -17,6 +17,7 @@ public class GUISwitcher {
     private LobbySceneController lobbySceneController;
     private PlayerInfoSceneController playerInfoSceneController;
     private GameMainSceneController gameMainSceneController;
+    private WinningSceneController winningSceneController;
     private SceneController lastController;
 
     private GUISwitcher(){
@@ -56,6 +57,10 @@ public class GUISwitcher {
         return gameMainSceneController;
     }
 
+    public WinningSceneController getWinningSceneController() {
+        return winningSceneController;
+    }
+
     public void initialise(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
@@ -65,10 +70,11 @@ public class GUISwitcher {
         this.lobbySceneController = (LobbySceneController) loadController("lobbyScene");
         this.playerInfoSceneController = (PlayerInfoSceneController) loadController("playerInfoScene");
         this.gameMainSceneController = (GameMainSceneController) loadController("gameMainScene");
+        this.winningSceneController = (WinningSceneController) loadController("winningScene");
     }
 
     private SceneController loadController(String fxmlFileName) {
-        FXMLLoader loader = new FXMLLoader(GUIView.class.getResource("/gui/fxml/" + fxmlFileName + ".fxml"));
+        FXMLLoader loader = new FXMLLoader(GUISwitcher.class.getResource("/gui/fxml/" + fxmlFileName + ".fxml"));
         Parent root;
         try {
             root = loader.load();
