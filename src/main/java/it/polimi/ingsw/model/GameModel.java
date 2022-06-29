@@ -8,7 +8,6 @@ import it.polimi.ingsw.util.GameMode;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Stores information of Game model
@@ -76,7 +75,7 @@ public class GameModel implements Serializable {
                 list.get(randInt).init(studentsBag);
                 list.remove(randInt);
             }
-            characters.sort(new CompareByID());
+            characters.sort(Comparator.comparingInt(Character::getID));
         }
     }
 

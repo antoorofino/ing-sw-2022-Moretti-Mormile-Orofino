@@ -164,12 +164,3 @@ public class Character implements Serializable {
     public int getCost(){return this.cost;}
 
 }
-
-class CompareByID implements Comparator<Character> {
-    public int compare(Character one, Character two) {
-        return one.getID() - two.getID();
-    }
-}
-
-
-
