@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.components.*;
-import it.polimi.ingsw.client.gui.utils.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.util.Action;
@@ -46,9 +45,6 @@ public class GameMainSceneController extends SceneController {
    private YourCardsPopUp yourCardsPopUp;
    private List<BoardPopUp> boardPopUps;
    private PlayedCardsPopUp playedCardsPopUp;
-
-   private final GUISwitcher switcher = GUISwitcher.getInstance();
-   private final ClientData data = ClientData.getInstance();
 
    @FXML
    public void initialize() {

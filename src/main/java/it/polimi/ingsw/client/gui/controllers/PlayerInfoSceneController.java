@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
-import it.polimi.ingsw.client.gui.utils.GUISwitcher;
 import it.polimi.ingsw.network.messages.SetNickname;
 import it.polimi.ingsw.network.messages.SetTowerColor;
 import it.polimi.ingsw.util.InputValidator;
@@ -31,7 +29,6 @@ public class PlayerInfoSceneController extends SceneController {
     public ListView<TowerColor> towerListView;
     @FXML
     public GameStartPaneController gameStartPaneController;
-    private final ClientData clientData = ClientData.getInstance();
     private boolean nicknameIsSet;
 
     @FXML
@@ -76,7 +73,7 @@ public class PlayerInfoSceneController extends SceneController {
         }
         ObservableList<TowerColor> colors = FXCollections.observableArrayList();
         colors.addAll(TowerColor.BLACK, TowerColor.WHITE);
-        if (clientData.getGameInfo().getNumPlayers() == 3) {
+        if (data.getGameInfo().getNumPlayers() == 3) {
             colors.add(TowerColor.GRAY);
             towerListView.setPrefWidth(275.0);
         }

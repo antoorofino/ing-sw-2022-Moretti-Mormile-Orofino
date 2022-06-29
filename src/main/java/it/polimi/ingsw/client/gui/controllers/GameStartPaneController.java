@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.components.PlayerDashboard;
 import it.polimi.ingsw.client.gui.components.PlayerStartPane;
 import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
@@ -21,15 +20,16 @@ public class GameStartPaneController {
     public HBox containerHBox;
     @FXML
     public Button goToMatchButton;
+    private final ClientData data = ClientData.getInstance();
 
     public void showGameStart() {
         containerHBox.getChildren().clear();
-        gameNameLabel.setText("Game " + ClientData.getInstance().getGame().getGameName() + " is ready to start");
-        Player currentPlayer = ClientData.getInstance().getPlayer();
+        gameNameLabel.setText("Game " + data.getGame().getGameName() + " is ready to start");
+        Player currentPlayer = data.getPlayer();
         PlayerStartPane p = new PlayerStartPane();
         p.setPlayerInfo(currentPlayer, currentPlayer.getId().equals(GUIView.getPlayerId()));
         containerHBox.getChildren().add(p.getRoot());
-        for (Player player : ClientData.getInstance().getGame().getPlayerHandler().getPlayers()) {
+        for (Player player : data.getGame().getPlayerHandler().getPlayers()) {
             if (!player.getId().equals(currentPlayer.getId())) {
                 p = new PlayerStartPane();
                 p.setPlayerInfo(player, player.getId().equals(GUIView.getPlayerId()));

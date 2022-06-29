@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.components.GameListItem;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.network.messages.AskGameListMessage;
 import it.polimi.ingsw.network.messages.NewGameMessage;
 import it.polimi.ingsw.network.messages.SelectGameMessage;
@@ -136,7 +135,7 @@ public class LobbySceneController extends SceneController {
                     gameModeListView.getSelectionModel().getSelectedItem(),
                     numPlayersListView.getSelectionModel().getSelectedItem()
             );
-            ClientData.getInstance().setGameInfo(gameInfo);
+            data.setGameInfo(gameInfo);
             GUIView.getServerHandler().send(new NewGameMessage(GUIView.getPlayerId(), gameInfo));
             alertPaneController.showLoading("Creating game " + gameInfo.getGameName());
         } else {
@@ -153,7 +152,7 @@ public class LobbySceneController extends SceneController {
     public void onEnterClicked() {
         GameListInfo gameInfo = gameListView.getSelectionModel().getSelectedItem();
         if (gameInfo != null){
-            ClientData.getInstance().setGameInfo(gameInfo);
+            data.setGameInfo(gameInfo);
             GUIView.getServerHandler().send(new SelectGameMessage(GUIView.getPlayerId(),gameInfo.getGameName()));
             alertPaneController.showLoading("Joining match " + gameInfo.getGameName());
         } else {

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.GUIView;
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
 import javafx.animation.Animation;
 import javafx.animation.ScaleTransition;
@@ -33,7 +32,6 @@ public class HomeSceneController extends SceneController{
     }
 
     public void onPlayClicked() {
-        ClientData data = ClientData.getInstance();
         (new Thread(() -> {
             GUIView.getServerHandler().setConnection(data.getIpAddress(), data.getPortNumber());
         })).start();

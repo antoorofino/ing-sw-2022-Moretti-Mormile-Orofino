@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.client.gui.utils.GUISwitcher;
 import it.polimi.ingsw.util.Configurator;
 import it.polimi.ingsw.util.InputValidator;
@@ -11,7 +10,6 @@ import javafx.scene.control.TextField;
 import java.util.Objects;
 
 public class SettingsSceneController extends SceneController {
-    private final ClientData data = ClientData.getInstance();
     @FXML
     public Button applyButton;
     @FXML

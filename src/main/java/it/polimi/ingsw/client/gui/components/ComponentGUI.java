@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 
 public abstract class ComponentGUI {
     protected Parent root;
-    protected ClientData data = ClientData.getInstance();
+    protected final ClientData data = ClientData.getInstance();
 
     public Parent getRoot() {
         return root;
