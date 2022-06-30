@@ -35,9 +35,9 @@ public class SettingsSceneController extends SceneController {
     @Override
     public void activate() {
         applyButton.setDisable(true);
-        if (!Objects.equals(data.getIpAddress(), Configurator.getServerIp()))
+        if (!Objects.equals(data.getIpAddress(), Configurator.getDefaultServerIp()))
             ipText.setText(data.getIpAddress());
-        if (data.getPortNumber() != Configurator.getServerPort())
+        if (data.getPortNumber() != Configurator.getDefaultServerPort())
             portText.setText(String.valueOf(data.getPortNumber()));
         super.activate(); //Then continue with default behaviour
     }
@@ -48,7 +48,7 @@ public class SettingsSceneController extends SceneController {
         int serverPort = 0;
 
         if (ipText.getText().isEmpty()){
-            serverIp = Configurator.getServerIp();
+            serverIp = Configurator.getDefaultServerIp();
         } else if (InputValidator.isIp(ipText.getText())) {
             serverIp = ipText.getText();
         } else {
@@ -56,7 +56,7 @@ public class SettingsSceneController extends SceneController {
         }
 
         if (portText.getText().isEmpty()){
-            serverPort = Configurator.getServerPort();
+            serverPort = Configurator.getDefaultServerPort();
         } else if (InputValidator.isPortNumber(portText.getText())) {
             serverPort = Integer.parseInt(portText.getText());
         } else {

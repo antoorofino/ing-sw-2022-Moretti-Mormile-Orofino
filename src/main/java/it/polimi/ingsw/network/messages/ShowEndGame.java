@@ -6,14 +6,14 @@ import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.util.MessageType;
 
 /**
- * CVMessage sent to each client to report the end of the game and the nickname of the winner
+ * CVMessage sent to each client to report the end of the game
  */
 public class ShowEndGame extends Message implements CVMessage {
 	private final String winnerNickname;
 
 	/**
 	 * Constructor: build the message
-	 * @param winnerNickname nickname of the winner
+	 * @param winnerNickname nickname of the winner or null if no winner could be determined
 	 */
 	public ShowEndGame(String winnerNickname){
 		super(MessageType.CV);

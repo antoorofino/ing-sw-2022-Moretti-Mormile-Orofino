@@ -18,17 +18,17 @@ import java.util.List;
  * Stores information used to configure a game
  */
 public class Configurator {
-    private static final int socketTimeout = 2000;
-    private static final int serverPort = 8090;
-    private static final boolean debug = false;
-    private static final String serverIp = "127.0.0.1";
+    private static final int SOCKET_TIMEOUT = 2000;
+    private static final int DEFAULT_SERVER_PORT = 8090;
+    private static final int DEFAULT_VERBOSE_LEVEL = 1;
+    private static final String DEFAULT_SERVER_IP = "127.0.0.1";
 
     /**
      * Get the timeout of connection
      * @return timeout of connection
      */
     public static int getSocketTimeout() {
-        return Configurator.socketTimeout;
+        return Configurator.SOCKET_TIMEOUT;
     }
 
     /**
@@ -36,23 +36,31 @@ public class Configurator {
      * @return frequency of ping's messages
      */
     public static int getHeartbeatInterval(){
-        return Configurator.socketTimeout/4;
+        return Configurator.SOCKET_TIMEOUT /4;
     }
 
     /**
-     * Get server port
-     * @return server port
+     * Get default server port
+     * @return default server port
      */
-    public static int getServerPort(){
-        return Configurator.serverPort;
+    public static int getDefaultServerPort(){
+        return Configurator.DEFAULT_SERVER_PORT;
     }
 
     /**
-     * Get server ip
-     * @return server ip
+     * Get default verbose log level
+     * @return default verbose level
      */
-    public static String getServerIp(){
-        return Configurator.serverIp;
+    public static int getDefaultVerboseLevel(){
+        return Configurator.DEFAULT_VERBOSE_LEVEL;
+    }
+
+    /**
+     * Get default server ip
+     * @return default server ip
+     */
+    public static String getDefaultServerIp(){
+        return Configurator.DEFAULT_SERVER_IP;
     }
 
     /**
@@ -79,8 +87,6 @@ public class Configurator {
                     String description = element.getElementsByTagName("description").item(0).getTextContent();
                     String rules = element.getElementsByTagName("rules").item(0).getTextContent();
                     int cost = Integer.parseInt(element.getElementsByTagName("cost").item(0).getTextContent());
-                    if (Configurator.debug)
-                        cost = 1;
                     characters.add(new Character(
                             name,
                             description,

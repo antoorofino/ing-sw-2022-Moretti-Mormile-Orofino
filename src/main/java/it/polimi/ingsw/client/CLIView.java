@@ -53,7 +53,7 @@ public class CLIView implements View{
 			serverIP = scanner.nextLine();
 			if (serverIP.isEmpty()) {
 				correct = true;
-				serverIP = Configurator.getServerIp();
+				serverIP = Configurator.getDefaultServerIp();
 			}else{
 				if (!InputValidator.isIp(serverIP)){
 					showErrorMessage("Invalid IP. Try again.",true,1);
@@ -69,7 +69,7 @@ public class CLIView implements View{
 			serverPort = scanner.nextLine();
 			if (serverPort.isEmpty()) {
 				correct = true;
-				portNumber = Configurator.getServerPort();
+				portNumber = Configurator.getDefaultServerPort();
 			} else {
 				if (InputValidator.isPortNumber(serverPort)) {
 					correct = true;

@@ -20,8 +20,8 @@ public class ClientData {
     private List<AssistantCard> possibleCards;
     private List<ActionType> possibleActions;
     private ClientData(){
-        ipAddress = Configurator.getServerIp();
-        portNumber = Configurator.getServerPort();
+        ipAddress = Configurator.getDefaultServerIp();
+        portNumber = Configurator.getDefaultServerPort();
         possibleCards = null;
         resetPossibleActions();
     }

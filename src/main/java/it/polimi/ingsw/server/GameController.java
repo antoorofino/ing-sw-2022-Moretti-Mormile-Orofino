@@ -280,45 +280,35 @@ public class GameController {
 
     /**
      * Manages the control and sending of victory messages
-     * @throws Exception throws exception in case of a tie
      */
-    private void manageWin() throws Exception {
+    private void manageWin() {
         ArrayList<Player> orderedByTowers = new ArrayList<>(game.getPlayerHandler().getPlayers());
         Player winner;
-        orderedByTowers.sort((p1, p2) -> {
-            if(p1.getNumOfTowers() > p2.getNumOfTowers())
-                return 1;
-            else if(p1.getNumOfTowers() < p2.getNumOfTowers())
-                return -1;
-            return 0;
-        });
+        orderedByTowers.sort(Comparator.comparingInt(Player::getNumOfTowers));
         Player first = orderedByTowers.get(0);
         Player second = orderedByTowers.get(1);
-        if(first.getNumOfTowers() != second.getNumOfTowers()){
+        if(first.getNumOfTowers() != second.getNumOfTowers()){ // Winner found by numbers of towers
             winner = first;
-        } else {
+            logger.log(4, 'g', "Player " + winner.getNickname() + " won");
+            virtualView.sendToEveryone(new ShowEndGame(winner.getNickname()));
+        } else { // Tie in numbers of towers found. Check teacher control
             Player finalFirst = first;
             List<Player> orderedByTeacherControl = orderedByTowers
                     .stream()
                     .filter(p -> p.getNumOfTowers() == finalFirst.getNumOfTowers())
-                    .sorted((p1, p2) -> {
-                        if(game.getTeacherHandler().teachersControlled(p1) > game.getTeacherHandler().teachersControlled(p2))
-                            return -1;
-                        else if(game.getTeacherHandler().teachersControlled(p1) < game.getTeacherHandler().teachersControlled(p2))
-                            return 1;
-                        return 0;
-                    })
+                    .sorted((p1, p2) -> game.getTeacherHandler().teachersControlled(p2) - game.getTeacherHandler().teachersControlled(p1))
                     .collect(Collectors.toList());
-            winner = orderedByTeacherControl.get(0);
-
             first = orderedByTeacherControl.get(0);
             second = orderedByTeacherControl.get(1);
-            if(game.getTeacherHandler().teachersControlled(first) == game.getTeacherHandler().teachersControlled(second))
-                //FIXME: double tie!
-                throw new Exception("Double tie");
+            if (game.getTeacherHandler().teachersControlled(first) != game.getTeacherHandler().teachersControlled(second)) {
+                winner = first;
+                logger.log(4, 'g', "Player " + winner.getNickname() + " won");
+                virtualView.sendToEveryone(new ShowEndGame(winner.getNickname()));
+            } else {
+                logger.log(4, 'g', "The winner could not be determined");
+                virtualView.sendToEveryone(new ShowEndGame(null));
+            }
         }
-        logger.log(4, 'g', "Player " + winner.getNickname() + " won");
-        virtualView.sendToEveryone(new ShowEndGame(winner.getNickname()));
         logger.log(3, 'i', "Controller of game " + game.getGameName() + " terminated");
     }
 
