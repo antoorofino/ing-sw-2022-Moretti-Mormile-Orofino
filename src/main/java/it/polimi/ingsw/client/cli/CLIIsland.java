@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.cli.util.AnsiBackColor;
 import it.polimi.ingsw.client.cli.util.AnsiColor;
 import it.polimi.ingsw.model.Piece;
+import it.polimi.ingsw.util.CLIFrmt;
 
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class CLIIsland extends CLIMatrix {
 	 * @param students array of students
 	 */
 	public void addStudents(Map<Piece, Integer> students) {
-		final int[][] studentsPositions = { { 2, 4 }, { 2, 9 }, { 3, 3 }, { 3, 10 }, { 4, 6 }};
+		final int[][] studentsPositions = { { 2, 4 }, { 2, 9 }, { 3, 3 }, { 3, 10 }, { 4, 4 }};
 		int i = 0;
 		int row;
 		int column;
@@ -60,5 +61,10 @@ public class CLIIsland extends CLIMatrix {
 	 */
 	public void drawOwner(String owner){
 		this.drawText((owner.length() > 5)? owner.substring(0,5) : owner,1,5,6);
+	}
+
+	public void drawNoEntry(int number){
+		this.drawText("!x" + number,1,4,10);
+		this.elements[4][10].color = AnsiColor.ANSI_RED;
 	}
 }

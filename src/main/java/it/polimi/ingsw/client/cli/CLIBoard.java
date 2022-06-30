@@ -70,7 +70,7 @@ public class CLIBoard extends CLIMatrix {
 	 */
 	public void drawTeachers(List<Piece> teachers){
 		for(Piece p: teachers){
-			elements[getPiecePosition(p)][width - teacherSize + 2].symbol = '◍';
+			elements[getPiecePosition(p)][width - teacherSize + 2].symbol = '◉';
 			elements[getPiecePosition(p)][width - teacherSize + 2].color = AnsiColor.getAnsiByPiece(p);
 		}
 	}

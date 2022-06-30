@@ -462,7 +462,10 @@ public class CLIView implements View{
 
 	@Override
 	public void showGameEndMessage(String winnerNickname) {
-		System.out.println(" Match finished. The winner is: " + winnerNickname);
+		if(winnerNickname!= null)
+			System.out.println(CLIFrmt.print('r'," Match finished. The winner is: " + winnerNickname));
+		else
+			System.out.println(CLIFrmt.print('y',"Unfortunately a winner could not be decided"));
 	}
 
 	@Override

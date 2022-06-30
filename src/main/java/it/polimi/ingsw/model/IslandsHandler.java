@@ -152,8 +152,11 @@ public class IslandsHandler implements Serializable {
 	protected void moveValue(int from,int to){
 		islands.get(to).increaseSize(islands.get(from).getSize());
 		for (Piece p: Piece.values()) {
-			for(int n=0;n<islands.get(from).getNumStudents(p);n++)
+			for(int n = 0; n < islands.get(from).getNumStudents(p); n++)
 				islands.get(to).addStudent(p);
+		}
+		for (int i = 0; i < islands.get(from).getFlagNoInfluence(); i++) {
+			islands.get(to).addFlagNoInfluence();
 		}
 		islands.remove(from);
 	}

@@ -191,10 +191,13 @@ public class CLIGame extends CLIMatrix{
 	private CLIMatrix CLICharacterCard(Character character) {
 		CLIMatrix cliCharacterCard = new CLIMatrix(10, 6, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		cliCharacterCard.drawBorder("╭╮─╰╯│");
-		if(character.getID() == 5)
-			cliCharacterCard.drawText("⛔ x" + character.getIslandFlag(),1,3,3);
+		if(character.getID() == 5) {
+			cliCharacterCard.drawText("❗ x" + character.getIslandFlag(), 1, 3, 3);
+			cliCharacterCard.elements[3][3].color = AnsiColor.ANSI_RED;
+		}
 		cliCharacterCard.drawText(String.valueOf(character.getID()),1,1,1);
 		cliCharacterCard.drawText("©:" + character.getCost(),1,1,6);
+		cliCharacterCard.elements[1][6].color = AnsiColor.ANSI_YELLOW;
 		// draw students
 		int column = 3;
 		int row = 2;
@@ -232,6 +235,8 @@ public class CLIGame extends CLIMatrix{
 				cliIsland = new CLIIsland(mother, island.getID());
 				if(island.getIslandOwner()!=null)
 					cliIsland.drawOwner(island.getIslandOwner().getNickname());
+				if(island.getFlagNoInfluence()!=0)
+					cliIsland.drawNoEntry(island.getFlagNoInfluence());
 				if(island.getSize()==1 || i==1)
 					cliIsland.addStudents(island.getStudentsOnIsland());
 				if(i!=0){
