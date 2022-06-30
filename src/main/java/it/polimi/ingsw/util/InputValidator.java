@@ -8,9 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Checks input string
+ * Checks input values
  */
 public class InputValidator {
+	private final static int MAX_CHARS = 12;
 
 	/**
 	 * Checks if the entered string is an ip
@@ -46,7 +47,6 @@ public class InputValidator {
 	 * @param port  The entered server port
 	 * @return  True if the string is a port, otherwise false
 	 */
-
 	public static boolean isPortNumber(String port) {
 		if(!isNumber(port))
 			return false;
@@ -90,6 +90,23 @@ public class InputValidator {
 	 */
 	public static boolean isWordNotEmpty(String word) {
 		return !(word.equals("") || word.contains(" "));
+	}
+
+	/**
+	 * Gets the maximum number of chars allowed
+	 * @return maximum number of chars allowed
+	 */
+	public static int getMaxChars() {
+		return MAX_CHARS;
+	}
+
+	/**
+	 * Checks that a word contain no more than MAX_CHARS chars
+	 * @param word the word to check
+	 * @return true if its length is smalled or equal to MAX_CHARS
+	 */
+	public static boolean isWordNotBig(String word) {
+		return word.length() <= MAX_CHARS;
 	}
 
 	/**

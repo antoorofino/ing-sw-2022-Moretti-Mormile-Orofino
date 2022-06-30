@@ -129,7 +129,7 @@ public class LobbySceneController extends SceneController {
     }
 
     public void onNewMatchClicked() {
-        if (!enterIsDisable()) {
+        if (!enterIsDisable() && InputValidator.isWordNotBig(newGameNameText.getText())) {
             GameListInfo gameInfo = new GameListInfo(
                     newGameNameText.getText(),
                     gameModeListView.getSelectionModel().getSelectedItem(),
@@ -138,6 +138,8 @@ public class LobbySceneController extends SceneController {
             data.setGameInfo(gameInfo);
             GUIView.getServerHandler().send(new NewGameMessage(GUIView.getPlayerId(), gameInfo));
             alertPaneController.showLoading("Creating game " + gameInfo.getGameName());
+        } else if(!enterIsDisable()) {
+            alertPaneController.showError("The game name should contain max " + InputValidator.getMaxChars() + " chars");
         } else {
             alertPaneController.showError("Invalid new game values");
         }

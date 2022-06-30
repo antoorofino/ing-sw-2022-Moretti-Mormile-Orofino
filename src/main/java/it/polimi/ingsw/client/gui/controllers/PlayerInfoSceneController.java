@@ -126,9 +126,11 @@ public class PlayerInfoSceneController extends SceneController {
         if (!applyIsDisable()) {
             String nickname = nicknameText.getText();
             TowerColor color = towerListView.getSelectionModel().getSelectedItem();
-            if (!nicknameIsSet) {
+            if (!nicknameIsSet && InputValidator.isWordNotBig(nickname)) {
                 GUIView.getServerHandler().send(new SetNickname(GUIView.getPlayerId(), nickname));
                 alertPaneController.showLoading("Setting nickname");
+            } else if (!nicknameIsSet) {
+                alertPaneController.showError("The nickname should contain max " + InputValidator.getMaxChars() + " chars");
             } else {
                 GUIView.getServerHandler().send(new SetTowerColor(GUIView.getPlayerId(), color));
                 alertPaneController.showLoading("Setting tower color");
