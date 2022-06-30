@@ -64,5 +64,5 @@
    </VBox>
    <fx:include fx:id="gameStartPane" source="gameStartPane.fxml" />
    <fx:include fx:id="alertPane" source="alertPane.fxml" />
-   <fx:include source="fullscreenButton.fxml" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+   <fx:include source="fullscreenButton.fxml" />
 </AnchorPane>
