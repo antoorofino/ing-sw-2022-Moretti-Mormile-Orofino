@@ -24,7 +24,7 @@ public class PlayerDashboard extends ComponentGUI {
     private Label coinLabel;
 
     public PlayerDashboard() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/PlayerDashboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerDashboard.fxml"));
         fxmlLoader.setController(this);
         try {
             root = fxmlLoader.load();

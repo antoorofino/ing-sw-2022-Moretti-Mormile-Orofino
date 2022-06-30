@@ -74,7 +74,7 @@ public class GUISwitcher {
     }
 
     private SceneController loadController(String fxmlFileName) {
-        FXMLLoader loader = new FXMLLoader(GUISwitcher.class.getResource("/gui/fxml/" + fxmlFileName + ".fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + fxmlFileName + ".fxml"));
         Parent root;
         try {
             root = loader.load();

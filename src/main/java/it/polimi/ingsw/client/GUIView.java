@@ -64,7 +64,7 @@ public class GUIView extends Application implements View {
         stage.setScene(new Scene(new Group()));
         switcher.initialise(stage);
         switcher.setDefaultController();
-        stage.getIcons().add(new Image("file:../../src/main/resources/gui/images/iconImage.jpg"));
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/gui/images/app_icon.jpg"))));
         stage.show();
     }
 
