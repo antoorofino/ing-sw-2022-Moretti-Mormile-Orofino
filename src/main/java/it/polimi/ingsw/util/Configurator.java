@@ -40,7 +40,7 @@ public class Configurator {
     }
 
     /**
-     * get server port
+     * Get server port
      * @return server port
      */
     public static int getServerPort(){

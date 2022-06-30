@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  * Checks input string
  */
 public class InputValidator {
+
 	/**
 	 * Checks if the entered string is an ip
 	 * @param serverIP input string
@@ -82,12 +83,30 @@ public class InputValidator {
 		return false;
 	}
 
-	public static boolean isWordNotEmpty(String nickname) {
-		return !(nickname.equals("") || nickname.contains(" "));
+	/**
+	 * Checks that a word is not empty
+	 * @param word the word to check
+	 * @return true if it is not empty
+	 */
+	public static boolean isWordNotEmpty(String word) {
+		return !(word.equals("") || word.contains(" "));
 	}
 
-	public static boolean isNumberBetween(int num, int a, int b){ return ( a <= num ) && ( num <= b );}
+	/**
+	 * Checks if a number is within a range
+	 * @param num the number to check
+	 * @param min the lower number
+	 * @param max the greater number
+	 * @return
+	 */
+	public static boolean isNumberBetween(int num, int min, int max){ return ( min <= num ) && ( num <= max );}
 
+	/**
+	 * Checks if the id is of a card in the deck
+	 * @param id the selected id
+	 * @param cards the possible cards
+	 * @return true if the choice is valid
+	 */
 	public static AssistantCard isIDBetween(int id, List<AssistantCard> cards){
 		for (AssistantCard card:cards) {
 			if(card.getCardID() == id)
@@ -96,6 +115,12 @@ public class InputValidator {
 		return null;
 	}
 
+	/**
+	 * Checks if the selected name is in the list of game names
+	 * @param gameName the selected game
+	 * @param gamesList the list of possible games
+	 * @return true if the chosen name is in the list
+	 */
 	public static boolean isGameName(String gameName, List<GameListInfo> gamesList){
 		for (GameListInfo game:gamesList) {
 			if(game.getGameName().equalsIgnoreCase(gameName))
@@ -104,6 +129,12 @@ public class InputValidator {
 		return false;
 	}
 
+	/**
+	 * Checks if the number of the chosen action is in the list of possible actions
+	 * @param numAction the chosen number's action
+	 * @param roundActions the possible actions
+	 * @return true if it is in the list
+	 */
 	public static boolean isValidAction(int numAction,RoundActions roundActions){
 		return numAction >= 0 && numAction < roundActions.getActionsList().size();
 	}

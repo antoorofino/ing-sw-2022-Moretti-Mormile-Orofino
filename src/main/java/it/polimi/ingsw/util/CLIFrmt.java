@@ -3,9 +3,10 @@ package it.polimi.ingsw.util;
 import it.polimi.ingsw.client.cli.util.AnsiColor;
 
 public class CLIFrmt {
+
 	/**
-	 *
-	 * @param color
+	 * Returns ansi code based on the specified color char
+	 * @param color the color char
 	 * @return ansicolor code
 	 */
 	private static AnsiColor getColor(char color) {
@@ -27,9 +28,9 @@ public class CLIFrmt {
 	}
 
 	/**
-	 *
-	 * @param style
-	 * @return clifrmt code
+	 * Returns ansi code based on the specified style char
+	 * @param style the style char
+	 * @return ansi style code
 	 */
 	private static String getStyle(char style) {
 		style = Character.toLowerCase(style);
@@ -47,10 +48,23 @@ public class CLIFrmt {
 		}
 	}
 
+	/**
+	 * Returns a string containing the ansi code of the requested style and color
+	 * @param style the selected style
+	 * @param color the selected color
+	 * @param text the message
+	 * @return the formatted string
+	 */
 	public static String print(char style, char color, String text) {
 		return getStyle(style) + getColor(color).getCode() + text + getColor('d').getCode();
 	}
 
+	/**
+	 * Returns a string containing the ansi code of the requested style and color
+	 * @param color the selected color
+	 * @param text the message
+	 * @return the formatted string
+	 */
 	public static String print(char color, String text) {
 		return getColor(color).getCode() + text;
 	}

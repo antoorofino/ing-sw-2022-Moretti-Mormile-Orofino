@@ -92,14 +92,21 @@ public class RoundActions  implements Serializable {
         return false;
     }
 
+    /**
+     * Checks if the action list is empty
+     * @return true if it is empty
+     */
     public boolean isEmpty() {
         return actionList.size() == 0;
     }
 
+    /**
+     * Adds an action to the list
+     * @param action the action to add
+     */
     public void add(Action action) {
         actionList.add(action);
     }
-
 }
 
 
