@@ -2,6 +2,8 @@ package it.polimi.ingsw.util;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TowerColorTest {
@@ -12,6 +14,6 @@ public class TowerColorTest {
 
     @Test
     public void toStringTest(){
-        assertEquals("Black", TowerColor.getPlayerColorByName("black").toString());
+        assertEquals("Black", Objects.requireNonNull(TowerColor.getPlayerColorByName("black")).toString());
     }
 }
