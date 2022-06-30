@@ -14,6 +14,11 @@ public class Tmp {
     private static final String TEACHER_PURPLE_BACKGROUND = "teacher-purple-background";
     private static final String TEACHER_BLUE_BACKGROUND = "teacher-blue-background";
 
+    /**
+     * Get the type of student piece from class of css
+     * @param className class name of css
+     * @return type of piece
+     */
     public static Piece classNameToPiece(String className) {
         switch (className) {
             case STUDENT_GREEN_BACKGROUND:
@@ -30,6 +35,11 @@ public class Tmp {
         throw new RuntimeException("Invalid class name");
     }
 
+    /**
+     * Get the name of class in css from a type of student piece
+     * @param piece type of student piece
+     * @return class name of css
+     */
     public static String pieceToClassName(Piece piece) {
         switch (piece) {
             case FROG:
@@ -46,6 +56,11 @@ public class Tmp {
         throw new RuntimeException("Invalid piece");
     }
 
+    /**
+     * Get the name of class in css from a type of teacher piece
+     * @param piece type of teacher piece
+     * @return class name of css
+     */
     public static String teacherToClassName(Piece piece) {
         switch (piece) {
             case FROG:
