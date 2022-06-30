@@ -50,7 +50,7 @@ public class InputValidator {
 	public static boolean isPortNumber(String port) {
 		if(!isNumber(port))
 			return false;
-		return InputValidator.isNumberBetween(Integer.parseInt(port), 0,65536);
+		return InputValidator.isNumberBetween(Integer.parseInt(port), 1024,65536);
 	}
 
 	/**
