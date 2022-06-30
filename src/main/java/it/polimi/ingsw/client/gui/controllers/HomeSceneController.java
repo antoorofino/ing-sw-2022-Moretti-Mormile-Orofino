@@ -14,6 +14,8 @@ public class HomeSceneController extends SceneController{
     public Button playButton;
     @FXML
     public AnchorPane alertPane;
+    @FXML
+    public CreditsPaneController creditsPaneController;
 
     @FXML
     public void initialize() {
@@ -43,8 +45,7 @@ public class HomeSceneController extends SceneController{
     }
 
     public void onCreditsClicked() {
-        //TODO: not yet implemented
-        alertPaneController.showError("NOT YET IMPLEMENTED");
+        creditsPaneController.showCredits();
     }
 
     public void onSettingsClicked() {

@@ -28,6 +28,7 @@
             <Font name="Arial Bold" size="25.0" />
          </font></Button>
    </HBox>
+   <fx:include fx:id="creditsPane" source="creditsPane.fxml" />
    <fx:include fx:id="alertPane" source="alertPane.fxml" />
    <fx:include source="fullscreenButton.fxml" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
 </AnchorPane>
