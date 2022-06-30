@@ -20,6 +20,9 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
+/**
+ * Controller of lobby scene
+ */
 public class LobbySceneController extends SceneController {
     @FXML
     public ListView<GameListInfo> gameListView;
@@ -37,6 +40,9 @@ public class LobbySceneController extends SceneController {
     ListView<GameMode> gameModeListView;
     private boolean isWaitingForMatches;
 
+    /**
+     * Method used by the fxml loader to initialise lobby scene
+     */
     @FXML
     public void initialize() {
         gameListView.setCellFactory(param -> new ListCell<GameListInfo>() {
@@ -95,6 +101,10 @@ public class LobbySceneController extends SceneController {
         );
     }
 
+    /**
+     * Checks if is necessary to disable enter button
+     * @return true if not necessary to disable enter button, otherwise false
+     */
     private boolean enterIsDisable() {
         Boolean nameIsOk = InputValidator.isWordNotEmpty(newGameNameText.getText());
         Boolean numPlayersIsSelected = numPlayersListView.getSelectionModel().getSelectedItem() != null;
@@ -102,6 +112,10 @@ public class LobbySceneController extends SceneController {
         return !(nameIsOk && numPlayersIsSelected && gameModeIsSelected);
     }
 
+    /**
+     * Forcing the alert pane to close and shows loading messages for matches
+     * Activate lobby scene
+     */
     @Override
     public void activate(){
         alertPaneController.closeAlertPane(true);
@@ -111,10 +125,17 @@ public class LobbySceneController extends SceneController {
         super.activate();
     }
 
+    /**
+     * Shows messages to notify that is impossible to join the game
+     */
     public void gameAlreadyFullHandler() {
         alertPaneController.showError("The game is already full");
     }
 
+    /**
+     * Shows the list of matches already created
+     * @param list list of matches already created
+     */
     public void gameListHandler(List<GameListInfo> list) {
         if (isWaitingForMatches) {
             alertPaneController.closeAlertPane(false);
@@ -124,10 +145,17 @@ public class LobbySceneController extends SceneController {
         noMatchesText.setVisible(list.isEmpty());
     }
 
+    /**
+     * Shows error messages in case the chosen name it's not available
+     */
     public void newGameNameHandler() {
         alertPaneController.showError("The name was already chosen");
     }
 
+    /**
+     * When player clicks on create button to create new game, the information about the game are send to the server
+     * In case all the info are correct shows loading message, otherwise shows error message
+     */
     public void onNewMatchClicked() {
         if (!enterIsDisable() && InputValidator.isWordNotBig(newGameNameText.getText())) {
             GameListInfo gameInfo = new GameListInfo(
@@ -145,12 +173,20 @@ public class LobbySceneController extends SceneController {
         }
     }
 
+    /**
+     * When player clicks on update button, client asks the list of matches to the server
+     */
     public void onUpdateClicked() {
         alertPaneController.showLoading("Loading matches");
         isWaitingForMatches = true;
         GUIView.getServerHandler().send(new AskGameListMessage(GUIView.getPlayerId()));
     }
 
+    /**
+     * When players click on enter button the client send player's info and game's name to the server
+     * If everything is ok shows loading message to notify that player will join the game
+     * otherwise shows error message
+     */
     public void onEnterClicked() {
         GameListInfo gameInfo = gameListView.getSelectionModel().getSelectedItem();
         if (gameInfo != null){

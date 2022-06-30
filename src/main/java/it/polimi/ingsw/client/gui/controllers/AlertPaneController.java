@@ -6,6 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+/**
+ * Controller of alert pane
+ */
 public class AlertPaneController {
     @FXML
     public AnchorPane alertPane;
@@ -19,7 +22,7 @@ public class AlertPaneController {
     public ImageView alertClose;
 
     /**
-     * Close  alert pane
+     * Closes  alert pane
      * @param force explain if is necessary to close alert pane
      */
     public void closeAlertPane(Boolean force) {
@@ -33,8 +36,8 @@ public class AlertPaneController {
     }
 
     /**
-     * show panel for error
-     * @param errorMessage message of error
+     * Shows panel for error
+     * @param errorMessage error message
      */
     public void showError(String errorMessage) {
         alertPane.setVisible(false);
@@ -46,8 +49,8 @@ public class AlertPaneController {
     }
 
     /**
-     * Show loading pane
-     * @param loadingMessage message of loading
+     * Shows loading pane
+     * @param loadingMessage loading message
      */
     public void showLoading(String loadingMessage) {
         alertPane.setVisible(false);
@@ -59,7 +62,7 @@ public class AlertPaneController {
     }
 
     /**
-     * forcing close alert pane, the method is called when click on the icon that close alert pane
+     * Forcing close alert pane, the method is called when click on the icon that close alert pane
      */
     public void onCloseAlertClicked() {
         closeAlertPane(true);

@@ -7,6 +7,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller for button used for full screen mode
+ */
 public class FullscreenButtonController {
     @FXML
     StackPane pane;
@@ -16,7 +19,7 @@ public class FullscreenButtonController {
     public ImageView buttonExit;
 
     /**
-     * initialize button that it will be used to set full screen or exit from full screen
+     * Initializes button that it will be used to set full screen mode or exit from full screen mode
      *
      */
     @FXML

@@ -13,6 +13,9 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Manages graphical assets for island
+ */
 public class IslandGUI extends ComponentGUI {
     @FXML
     private GridPane islandBackgroundPane;
@@ -45,6 +48,9 @@ public class IslandGUI extends ComponentGUI {
     @FXML
     private Text noTileText;
 
+    /**
+     * Constructor: load the fxml for the island
+     */
     public IslandGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/island.fxml"));
         fxmlLoader.setController(this);
@@ -59,6 +65,9 @@ public class IslandGUI extends ComponentGUI {
         clear();
     }
 
+    /**
+     * Resets all graphical assets for the island
+     */
     private void clear() {
         islandBackgroundPane.getStyleClass().clear();
         greenImage.getStyleClass().clear();
@@ -77,10 +86,18 @@ public class IslandGUI extends ComponentGUI {
         noTileText.setText("");
     }
 
+    /**
+     * Sets image for island
+     * @param bg string that identify the css class to add image
+     */
     public void setIslandImage(String bg) {
         islandBackgroundPane.getStyleClass().add(bg);
     }
 
+    /**
+     * Puts students on island modifying class style in css
+     * @param map map that contains how many students for each type
+     */
     public void setStudents(Map<Piece, Integer> map) {
         for(Piece piece : map.keySet()) {
             switch (piece) {
@@ -118,6 +135,10 @@ public class IslandGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Puts towers on island
+     * @param color color of tower
+     */
     public void setTower(TowerColor color) {
         switch (color) {
             case BLACK:

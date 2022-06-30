@@ -21,9 +21,10 @@ public class WinningSceneController extends SceneController {
         switcher.setDefaultController();
     }
 
+    //TODO: check java doc
     /**
-     *
-     * @param nickname
+     * Shows winning or loosing message based on player
+     * @param nickname player's nickname
      */
     public void endMatchHandler(String nickname) {
         if (nickname != null && nickname.equals(data.getPlayer().getNickname())) {

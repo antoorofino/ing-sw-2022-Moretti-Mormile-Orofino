@@ -11,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
+/**
+ * Controller for pane that explain all players are ready to play
+ */
 public class GameStartPaneController {
     @FXML
     public AnchorPane alertPane;
@@ -22,6 +25,9 @@ public class GameStartPaneController {
     public Button goToMatchButton;
     private final ClientData data = ClientData.getInstance();
 
+    /**
+     * Shows pane that explain all players are ready to play
+     */
     public void showGameStart() {
         containerHBox.getChildren().clear();
         gameNameLabel.setText("Game " + data.getGame().getGameName() + " is ready to start");
@@ -39,6 +45,9 @@ public class GameStartPaneController {
         alertPane.setVisible(true);
     }
 
+    /**
+     * Method used by the fxml loader to initialise Game main scene
+     */
     @FXML
     public void initialize() {
         goToMatchButton.setOnMouseClicked(e -> {
@@ -46,6 +55,9 @@ public class GameStartPaneController {
         });
     }
 
+    /**
+     * Closes pane
+     */
     public void close() {
         alertPane.setVisible(false);
     }

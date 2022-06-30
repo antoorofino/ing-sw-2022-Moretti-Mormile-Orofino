@@ -18,6 +18,9 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+/**
+ * Controller for player info scene
+ */
 public class PlayerInfoSceneController extends SceneController {
     @FXML
     public TextField nicknameText;
@@ -31,6 +34,9 @@ public class PlayerInfoSceneController extends SceneController {
     public GameStartPaneController gameStartPaneController;
     private boolean nicknameIsSet;
 
+    /**
+     * Method used by the fxml loader to initialise player info scene
+     */
     @FXML
     public void initialize() {
         alertPaneController.closeAlertPane(true);
@@ -46,6 +52,10 @@ public class PlayerInfoSceneController extends SceneController {
         );
     }
 
+    /**
+     * Checks if is necessary to disable apply button or not
+     * @return true if is necessary disable apply button, otherwise false
+     */
     private boolean applyIsDisable() {
         Boolean nicknameIsOk = InputValidator.isWordNotEmpty(nicknameText.getText());
         Boolean colorSelected = towerListView.getSelectionModel().getSelectedItem() != null;
@@ -54,6 +64,11 @@ public class PlayerInfoSceneController extends SceneController {
         return !(nicknameIsOk && colorSelected);
     }
 
+    //TODO complete javadoc
+    /**
+     *
+     * @param isFirstRequest
+     */
     public void askNicknameHandler(Boolean isFirstRequest) {
         if(!isFirstRequest)
             alertPaneController.showError("Nickname already chosen");
@@ -113,15 +128,26 @@ public class PlayerInfoSceneController extends SceneController {
         askColorPane.setVisible(true);
     }
 
+    /**
+     * Shows loading messages if player have to wait other player
+     */
     public void showQueuing() {
         alertPaneController.showLoading("Waiting for other players to connect");
     }
 
+    /**
+     * Shows game start pane to notify that all the players are ready to start the match
+     */
     public void showGameStart() {
         alertPaneController.closeAlertPane(true);
         gameStartPaneController.showGameStart();
     }
 
+    /**
+     * When player clicks on apply button if there aren't error send all the info about the player to the server
+     * Shows message to notify that client is sending info to the server
+     * If there are any error shows error message
+     */
     public void onApplyClick() {
         if (!applyIsDisable()) {
             String nickname = nicknameText.getText();

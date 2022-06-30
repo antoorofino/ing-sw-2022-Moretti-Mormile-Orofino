@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+//todo: complete javadoc
+/**
+ * Manages graphical assets for Character card
+ */
 public class CharacterCardGUI extends ComponentGUI {
     @FXML
     private Pane characterImagePane;
@@ -36,6 +40,9 @@ public class CharacterCardGUI extends ComponentGUI {
     @FXML
     private ImageView infoButton;
 
+    /**
+     * Constructor: load the fxml for the character card
+     */
     public CharacterCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/characterCard.fxml"));
         fxmlLoader.setController(this);
@@ -45,11 +52,15 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
+    //TODO: check if useless
     @FXML
     private void initialize() {
         clear();
     }
 
+    /**
+     * Removes css style from all the characters
+     */
     private void clear() {
         characterImagePane.getStyleClass().clear();
         for (Node piece : characterPiecesVBox.getChildren())
@@ -61,6 +72,9 @@ public class CharacterCardGUI extends ComponentGUI {
         characterPiecesVBox.getChildren().removeIf(node -> node.getStyleClass().size() == 0);
     }
 
+    /**
+     * Adds event on click of student if character's ability required it
+     */
     private void setStudentsClickable() {
         for (Node student : characterPiecesVBox.getChildren()) {
             student.getStyleClass().add("student-hover");
@@ -85,6 +99,11 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
+    //TODO: complete java doc
+    /**
+     *
+     * @param swapArea
+     */
     private void setStudentsDraggable(SwapArea swapArea) {
         for (Node s : characterPiecesVBox.getChildren()) {
             s.getStyleClass().add("student-hover");

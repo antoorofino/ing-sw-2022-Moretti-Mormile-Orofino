@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
+/**
+ * Manges graphical assets and event in dash board
+ */
 public class PlayerDashboard extends ComponentGUI {
     @FXML
     private Label playerNameLabel;
@@ -23,6 +26,9 @@ public class PlayerDashboard extends ComponentGUI {
     @FXML
     private Label coinLabel;
 
+    /**
+     * Constructor: load the fxml for the player's dashboard
+     */
     public PlayerDashboard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerDashboard.fxml"));
         fxmlLoader.setController(this);
@@ -37,6 +43,11 @@ public class PlayerDashboard extends ComponentGUI {
         coinHBox.setVisible(false);
     }
 
+    /**
+     * Sets graphical assets to show player's info
+     * @param player player
+     * @param mode game mode
+     */
     public void setPlayerInfo(Player player, GameMode mode) {
         playerNameLabel.setText(player.getNickname());
         Image image;

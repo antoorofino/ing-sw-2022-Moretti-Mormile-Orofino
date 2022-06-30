@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo javadoc
 public class CharactersPopUp extends ComponentGUI {
     @FXML
     private HBox cardsHBox;
@@ -24,6 +25,9 @@ public class CharactersPopUp extends ComponentGUI {
     private final List<CharacterCardGUI> cardGUIS;
     private int selectedCard;
 
+    /**
+     * Constructor: load the fxml for the character pop up
+     */
     public CharactersPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/charactersPopUp.fxml"));
         fxmlLoader.setController(this);
@@ -38,7 +42,9 @@ public class CharactersPopUp extends ComponentGUI {
             cardsHBox.getChildren().add(card.getRoot());
         }
     }
-
+    /**
+     * Initializes pop up
+     */
     public void initialize(PopUpContainerController containerController) {
         buyCardButton.setDisable(true);
         buyCardButton.setOnMouseClicked(e -> {
@@ -51,6 +57,7 @@ public class CharactersPopUp extends ComponentGUI {
         });
     }
 
+    //TODO: complete java doc
     public void setCards(CharacterInfoPaneController characterInfoPaneController) {
         List<Character> cards = data.getGame().getCharacters();
         buyCardButton.setDisable(true);

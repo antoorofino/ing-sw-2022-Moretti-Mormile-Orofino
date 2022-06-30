@@ -10,6 +10,9 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
+/**
+ * Manges graphical assets for Game list items
+ */
 public class GameListItem extends ComponentGUI {
     @FXML
     private Text name;
@@ -18,6 +21,10 @@ public class GameListItem extends ComponentGUI {
     @FXML
     private Text mode;
 
+    /**
+     * Constructor: load the fxml for game list item
+     * @param info info of all the games created
+     */
     public GameListItem(GameListInfo info) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/gameListItem.fxml"));
         fxmlLoader.setController(this);

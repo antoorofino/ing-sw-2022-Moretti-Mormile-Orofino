@@ -25,11 +25,17 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+/**
+ * Grid to manage island on the scene
+ */
 public class IslandsGridGUI extends ComponentGUI {
     @FXML
     private GridPane islandsGridPane;
     private final List<String> islandsBackground;
 
+    /**
+     * load the fxml for island grid
+     */
     public IslandsGridGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/islandsGrid.fxml"));
         fxmlLoader.setController(this);
@@ -46,6 +52,9 @@ public class IslandsGridGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Puts components in the grid
+     */
     public void setGrid() {
         //Clear grid
         islandsGridPane.getChildren().clear();
@@ -55,6 +64,9 @@ public class IslandsGridGUI extends ComponentGUI {
         setIslands();
     }
 
+    /**
+     * Puts clouds in the correct position in the window
+     */
     private void setClouds() {
         CloudGUI cloudGUI;
         int[][] cloudPositions = {{3,2}, {7,2}, {5,2}};
@@ -79,6 +91,9 @@ public class IslandsGridGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Puts islands in the correct position in the window
+     */
     private void setIslands() {
         IslandsHandler handler = data.getGame().getIslandHandler();
         ArrayList<Island> islands = handler.getIslands();
@@ -123,6 +138,12 @@ public class IslandsGridGUI extends ComponentGUI {
         }
     }
 
+    //todo check it and explain it
+    /**
+     * Adds event to make possible drop element inside island
+     * @param islandPane island pane
+     * @param islandId island id
+     */
     private void setIslandDropHandler(Parent islandPane, int islandId) { //WIP
         // Single logic checks
         Supplier<Boolean> islandAcceptsEntranceStudent = () -> data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND);
@@ -197,6 +218,11 @@ public class IslandsGridGUI extends ComponentGUI {
         });
     }
 
+    /**
+     * Adds event to make possible drag and drop of mother nature
+     * @param motherPane mother nature
+     * @param islandId origin island id
+     */
     private void setMotherNatureDragHandlers(Parent motherPane, int islandId) {
         motherPane.setOnDragDetected(e -> {
             if (motherPane.getStyleClass().size() > 0) {
@@ -227,6 +253,12 @@ public class IslandsGridGUI extends ComponentGUI {
         });
     }
 
+    //todo complete javadoc
+    /**
+     *
+     * @param islandPane
+     * @param islandId
+     */
     private void setIslandClickable(Parent islandPane, int islandId) {
         boolean playerChoseCharacter = data.getPlayer().getActiveCharacter() != null;
         boolean playerActiveCharacter = data.getPlayer().getRoundActions().getActionsList().stream()

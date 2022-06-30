@@ -9,6 +9,9 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+/**
+ * Manages graphical assets for assistant card
+ */
 public class AssistantCardGUI extends ComponentGUI {
     @FXML
     private Pane assistantImagePane;
@@ -25,6 +28,9 @@ public class AssistantCardGUI extends ComponentGUI {
     private final static String alreadyPlayedMessageText = "Not available";
     private Consumer<Integer> listener;
 
+    /**
+     * Constructor: load the fxml for the assistant card
+     */
     public AssistantCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/assistantCard.fxml"));
         fxmlLoader.setController(this);
@@ -34,6 +40,9 @@ public class AssistantCardGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Method used by the fxml loader to initialise assistant card 
+     */
     @FXML
     public void initialize() {
         // Set default values
@@ -44,24 +53,38 @@ public class AssistantCardGUI extends ComponentGUI {
         messageLabel.setVisible(false);
     }
 
+    /**
+     * Method used by the fxml loader to initialise assistant card 
+     * @param id assistant id
+     */
     public void initialize(int id) {
         initialize();
         assistantImagePane.getStyleClass().add("assistant-" + id);
         assistantImagePane.setOnMouseClicked(e -> listener.accept(id));
     }
 
+    /**
+     * Adds css class when player selects an assistant card
+     */
     public void select() {
         assistantImagePane.getStyleClass().add(selectedClassName);
     }
 
+    /**
+     * Removes css class when player selects an assistant card
+     */
     public void deselect() {
         assistantImagePane.getStyleClass().remove(selectedClassName);
     }
 
+    //TODO: complete java doc
     public void setOnClickedListener(Consumer<Integer> listener) {
         this.listener = listener;
     }
 
+    /**
+     * Modifies view of assistant card with css and propriety to specify that the card is already played
+     */
     public void setAlreadyPlayed() {
         assistantBlurPane.setVisible(true);
         assistantBlurPane.getStyleClass().add(alreadyPlayedClassName);
@@ -70,6 +93,9 @@ public class AssistantCardGUI extends ComponentGUI {
         messageHBox.setVisible(true);
     }
 
+    /**
+     * Modifies view of assistant card with css and propriety to specify that player cannot play a specific assistant card
+     */
     public void setNotAvailable() {
         assistantBlurPane.setVisible(true);
         assistantBlurPane.getStyleClass().add(notAvailableClassName);
@@ -78,6 +104,10 @@ public class AssistantCardGUI extends ComponentGUI {
         messageHBox.setVisible(true);
     }
 
+    /**
+     * Specifies who played the assistant card
+     * @param nickname player's nickname who played the card
+     */
     public void setPlayedByNickname(String nickname) {
         assistantBlurPane.setVisible(true);
         messageLabel.setText(nickname);

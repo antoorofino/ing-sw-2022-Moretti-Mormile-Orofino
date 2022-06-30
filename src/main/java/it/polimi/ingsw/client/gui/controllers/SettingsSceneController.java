@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 
 import java.util.Objects;
 
+/**
+ * Controller for settings scene
+ */
 public class SettingsSceneController extends SceneController {
     @FXML
     public Button applyButton;
@@ -17,6 +20,9 @@ public class SettingsSceneController extends SceneController {
     @FXML
     private TextField portText;
 
+    /**
+     * Method used by the fxml loader to initialise Game main scene
+     */
     @FXML
     public void initialize() {
         ipText.setFocusTraversable(false);
@@ -42,6 +48,9 @@ public class SettingsSceneController extends SceneController {
         super.activate(); //Then continue with default behaviour
     }
 
+    /**
+     * When player clicks apply button, saves modify about parameters for communication between server and client
+     */
     public void onApplyClick() {
         boolean incorrect = false;
         String serverIp = null;
@@ -73,6 +82,9 @@ public class SettingsSceneController extends SceneController {
         }
     }
 
+    /**
+     * When player clicks back button, alert pane will be closed and player goes back to home page
+     */
     public void onBackClick() {
         ipText.setText("");
         portText.setText("");

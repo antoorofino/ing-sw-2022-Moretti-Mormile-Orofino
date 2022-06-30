@@ -9,11 +9,17 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
+//todo: javadoc
+/**
+ *
+ */
 public class PlayedCardsPopUp extends ComponentGUI {
     @FXML
     private HBox cardsHBox;
 
+    /**
+     * Constructor: load the fxml for the played card pop up
+     */
     public PlayedCardsPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playedCardsPopUp.fxml"));
         fxmlLoader.setController(this);
@@ -23,6 +29,11 @@ public class PlayedCardsPopUp extends ComponentGUI {
         }
     }
 
+    //todo check and complete
+    /**
+     * Adds last card used for each player
+     * @return
+     */
     public boolean setCards() {
         List<Player> playersOrderedByCardNumber = data.getGame().getPlayerHandler().getPlayers().stream()
                 .filter(p -> p.getLastCardUsed() != null)

@@ -14,6 +14,9 @@ import javafx.scene.layout.*;
 
 import java.util.*;
 
+/**
+ * Controller for Game scene
+ */
 public class GameMainSceneController extends SceneController {
    @FXML
    public Label messageTextLabel;
@@ -48,6 +51,11 @@ public class GameMainSceneController extends SceneController {
    private List<BoardPopUp> boardPopUps;
    private PlayedCardsPopUp playedCardsPopUp;
 
+   //TODO: Check java doc
+
+   /**
+    * Method used by the fxml loader to initialise Game main scene
+    */
    @FXML
    public void initialize() {
       //Creat GUI components and bind their roots to the layout
@@ -105,6 +113,9 @@ public class GameMainSceneController extends SceneController {
       });
    }
 
+   /**
+    * Initializes pop up that shows all the players in the game
+    */
    private void boardPopUpInitialize() {
       if (boardPopUps.size() == 0) {
          for (int i = 1; i < data.getGame().getPlayerHandler().getNumPlayers(); i++) {
@@ -120,6 +131,11 @@ public class GameMainSceneController extends SceneController {
       }
    }
 
+   //TODO: check javadoc
+
+   /**
+    * Sets character card of player and if necessary activate swap area
+    */
    private void setCharacterCard() {
       Character activeCard = data.getGame().getPlayerHandler().getPlayers().stream()
               .map(Player::getActiveCharacter)
@@ -144,6 +160,9 @@ public class GameMainSceneController extends SceneController {
       }
    }
 
+   /**
+    * Shows the components in the game scene
+    */
    public void showGameHandler() {
       // Islands grid update
       islandsGridGUI.setGrid();
@@ -176,10 +195,19 @@ public class GameMainSceneController extends SceneController {
          charactersPopUp.setCards(characterInfoPaneController);
    }
 
+   /**
+    * Sets message that specify what have to do the player
+    * @param message message
+    */
+
    public void setMessage(String message) {
       messageTextLabel.setText(message);
    }
 
+   /**
+    * Shows error message
+    * @param message error message
+    */
    public void showError(String message) {
       alertPaneController.showError(message);
       showGameHandler();

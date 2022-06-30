@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+/**
+ * Manages graphical assets and event for player board
+ */
 public class PlayerBoard extends ComponentGUI {
     @FXML
     private Pane entrance;
@@ -49,6 +52,9 @@ public class PlayerBoard extends ComponentGUI {
     @FXML
     private Pane teacherBlue;
 
+    /**
+     * Constructor: load the fxml for player board
+     */
     public PlayerBoard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerBoard.fxml"));
         fxmlLoader.setController(this);
@@ -58,6 +64,14 @@ public class PlayerBoard extends ComponentGUI {
         }
     }
 
+    //todo check
+    /**
+     * Sets graphical assets for the board
+     * @param board player's board
+     * @param teachersList teacher list
+     * @param isActive true if player can drop element
+     * @param swapArea swap area
+     */
     public void setBoard(Board board, List<Piece> teachersList, boolean isActive, SwapArea swapArea) {
         // Clear entrance
         for (Node piece : entrance.getChildren()) {
@@ -116,6 +130,11 @@ public class PlayerBoard extends ComponentGUI {
         }
     }
 
+    /**
+     * Adds event to make possible drag student from entrance
+     * @param s student
+     * @param swapArea swap area to make a swap
+     */
     private void setOnDragEntranceStudentHandlers(Node s, SwapArea swapArea) {
         Supplier<Boolean> entranceStudentsAreActive = () -> {
             if (data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_ISLAND) || data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM))
@@ -173,6 +192,11 @@ public class PlayerBoard extends ComponentGUI {
         }
     }
 
+    /**
+     * Adds event to make possible drag student from dining room
+     * @param s student
+     * @param swapArea swap area to make a swap
+     */
     private void setOnDragDiningStudentsHandlers(Node s, SwapArea swapArea) {
         Supplier<Boolean> diningStudentsAreActive = () -> data.getPlayer().getActiveCharacter() != null && data.getPlayer().getRoundActions().getActionsList().stream()
                 .map(Action::getActionType).filter(t -> t == ActionType.ACTIVATED_CHARACTER).findFirst().orElse(null) == null &&
@@ -208,6 +232,9 @@ public class PlayerBoard extends ComponentGUI {
         }
     }
 
+    /**
+     * Manage drop event in dining room
+     */
     private void setDiningRoomDropHandlers() {
         // Single logic checks
         Supplier<Boolean> diningAcceptsEntranceStudent = () -> data.getPossibleActions().contains(ActionType.MOVE_STUDENT_TO_DININGROOM);
@@ -256,6 +283,11 @@ public class PlayerBoard extends ComponentGUI {
         });
     }
 
+    /**
+     * Gets the pane where player can drop student in dining room
+     * @param piece type student
+     * @return corresponding pane
+     */
     private Pane getDiningRoomByPiece(Piece piece) {
         switch (piece) {
             case FROG:

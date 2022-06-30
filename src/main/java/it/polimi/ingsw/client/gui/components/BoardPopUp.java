@@ -9,12 +9,17 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
+//TODO: java doc
+
 public class BoardPopUp extends ComponentGUI {
     @FXML
     private Pane dashboardPane;
     @FXML
     private Pane boardPane;
 
+    /**
+     * Constructor: load the fxml for the Board pop up
+     */
     public BoardPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/boardsPopUp.fxml"));
         fxmlLoader.setController(this);
@@ -24,6 +29,12 @@ public class BoardPopUp extends ComponentGUI {
         }
     }
 
+    /**
+     * Sets graphical components specific for a player
+     * @param player player
+     * @param mode game mode
+     * @param handler teacher handler
+     */
     public void setPlayerInfo(Player player, GameMode mode, TeachersHandler handler) {
         // Set player dashboard
         PlayerDashboard dashboard = new PlayerDashboard();

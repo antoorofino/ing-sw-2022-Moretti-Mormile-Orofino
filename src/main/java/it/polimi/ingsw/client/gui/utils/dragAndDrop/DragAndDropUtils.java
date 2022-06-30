@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.gui.utils.dragAndDrop;
 
-import it.polimi.ingsw.client.gui.utils.ClientData;
 import it.polimi.ingsw.model.Piece;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;

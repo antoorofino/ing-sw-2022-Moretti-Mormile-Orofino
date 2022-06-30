@@ -3,13 +3,16 @@ package it.polimi.ingsw.client.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for scene that will be visible in case of disconnections
+ */
 public class DisconnectedSceneController extends SceneController{
     @FXML
     public Text alertText;
 
     /**
-     * action called when click on icon close
-     * reset data and switch to home scene
+     * Action called when player clicks on icon close
+     * Reset data and switch to home scene
      */
     public void onCloseAlertClicked() {
         switcher.initialise(switcher.getPrimaryStage());
@@ -17,8 +20,8 @@ public class DisconnectedSceneController extends SceneController{
     }
 
     /**
-     * show error message and set
-     * @param errorMessage
+     * Shows error message
+     * @param errorMessage error message
      */
     public void disconnectedHandler(String errorMessage) {
         alertText.setText(errorMessage);
