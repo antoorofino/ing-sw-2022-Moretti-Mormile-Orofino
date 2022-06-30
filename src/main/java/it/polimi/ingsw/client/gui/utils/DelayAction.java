@@ -5,6 +5,11 @@ import javafx.util.Duration;
 
 public class DelayAction {
     private static final int DELAY_TIME = 1; // in seconds
+
+    /**
+     * Add delay before do an action
+     * @param action runnable function executed after delay
+     */
     public static void executeLater(Runnable action) {
         PauseTransition pause = new PauseTransition(Duration.seconds(DELAY_TIME));
         pause.setOnFinished(e -> {
