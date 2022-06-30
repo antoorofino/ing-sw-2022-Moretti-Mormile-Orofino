@@ -13,7 +13,7 @@ public class Logger {
 	 */
 	public Logger(int level){
 		this.level = level;
-		if (level <= 0 )
+		if (level < 0 )
 			throw new RuntimeException("Logger level must be positive");
 	}
 
