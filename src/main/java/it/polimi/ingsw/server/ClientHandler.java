@@ -93,6 +93,7 @@ public class ClientHandler extends Thread implements NetworkHandler {
                     if (isConnected) {
                         // This player has disconnected
                         logger.log(1, 'w', "Player " + playerId + " has disconnected during message receiving");
+                        isConnected = false;
                         controller.setAsDisconnected(playerId);
                     } else {
                         // Another player has disconnected

@@ -135,28 +135,30 @@ public class GameController {
      * @param color the chosen color
      */
     public void setPlayerTowerColor(String playerId, TowerColor color){
-        logger.log(4, 'g', "Player " + playerId + " has requested to set his color to: " + color.toString());
-        if (getAvailableTowerColors().contains(color)) {
-            try {
-                game.getPlayerHandler().getPlayerById(playerId).setTowerColor(color);
-                if (game.getPlayerHandler().everyPlayerIsReadyToPlay()) {
-                    status = GameStatus.READY_TO_START;
-                    wakeUpController();
+        synchronized (this) {
+            logger.log(4, 'g', "Player " + playerId + " has requested to set his color to: " + color.toString());
+            if (getAvailableTowerColors().contains(color)) {
+                try {
+                    game.getPlayerHandler().getPlayerById(playerId).setTowerColor(color);
+                    if (game.getPlayerHandler().everyPlayerIsReadyToPlay()) {
+                        status = GameStatus.READY_TO_START;
+                        notifyAll();
+                    }
+                    virtualView.sendToPlayerId(
+                            playerId,
+                            new AckTowerColor()
+                    );
+                } catch (PlayerException e) {
+                    logger.log(0, 'f', "Player " + playerId + " not found in PlayersHandler");
+                    throw new RuntimeException(e);
                 }
+            } else {
+                logger.log(4, 'w', "Color " + color + " has been already chosen");
                 virtualView.sendToPlayerId(
                         playerId,
-                        new AckTowerColor()
+                        new AskTowerColor(getAvailableTowerColors(), false)
                 );
-            } catch (PlayerException e) {
-                logger.log(0, 'f', "Player " + playerId + " not found in PlayersHandler");
-                throw new RuntimeException(e);
             }
-        } else {
-            logger.log(4, 'w', "Color " + color + " has been already chosen");
-            virtualView.sendToPlayerId(
-                    playerId,
-                    new AskTowerColor(getAvailableTowerColors(), false)
-            );
         }
     }
 
@@ -241,14 +243,7 @@ public class GameController {
                 virtualView.sendToEveryone(new UpdateGameBoard(game));
             }
         }
-        try {
-            manageWin();
-        } catch (Exception ignored) {
-            // FIXME: what to do with double tie ?
-            System.out.println("ERROR: double tie!!");
-            logger.log(4, 'w', "Double time for match " + game.getGameName());
-            virtualView.sendToEveryone(new ShowEndGame(""));
-        }
+        manageWin();
     }
 
     /**
@@ -318,37 +313,39 @@ public class GameController {
      * @param nickname the nickname of the player who took the action
      */
     public void setAction(Action action, String nickname) {
-        if(!checkIfIsCurrentPlayer(nickname))
-            sendPossibleActions(false);
-        Player thePlayer;
-        try {
-            thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
-        } catch (PlayerException e) {
-            logger.log(0, 'f', "Player " + nickname + " not found in PlayersHandler");
-            throw new RuntimeException(e);
-        }
-        boolean legalAction;
-        if(thePlayer.getActiveCharacter() == null){
-            legalAction = rules.doAction(action);
-        } else {
-            legalAction = thePlayer.getActiveCharacter().getRules().doAction(action);
-        }
-        if(!legalAction)
-            sendPossibleActions(true);
-        else{
-            // register action
-            game.getPlayerHandler().getCurrentPlayer().registerAction(action);
-            if(action.getActionType() == ActionType.CHOOSE_CLOUD)
-                game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.END));
-        }
-        for (Player player : game.getPlayerHandler().getPlayers())
-            if (player.getNumOfTowers() == 0) {
-                endImmediately = true;
-                break;
+        synchronized (this) {
+            if (!checkIfIsCurrentPlayer(nickname))
+                sendPossibleActions(false);
+            Player thePlayer;
+            try {
+                thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
+            } catch (PlayerException e) {
+                logger.log(0, 'f', "Player " + nickname + " not found in PlayersHandler");
+                throw new RuntimeException(e);
             }
-        if(game.getIslandHandler().getIslands().size() <= 3)
-            endImmediately = true;
-        wakeUpController();
+            boolean legalAction;
+            if (thePlayer.getActiveCharacter() == null) {
+                legalAction = rules.doAction(action);
+            } else {
+                legalAction = thePlayer.getActiveCharacter().getRules().doAction(action);
+            }
+            if (!legalAction)
+                sendPossibleActions(true);
+            else {
+                // register action
+                game.getPlayerHandler().getCurrentPlayer().registerAction(action);
+                if (action.getActionType() == ActionType.CHOOSE_CLOUD)
+                    game.getPlayerHandler().getCurrentPlayer().registerAction(new Action(ActionType.END));
+            }
+            for (Player player : game.getPlayerHandler().getPlayers())
+                if (player.getNumOfTowers() == 0) {
+                    endImmediately = true;
+                    break;
+                }
+            if (game.getIslandHandler().getIslands().size() <= 3)
+                endImmediately = true;
+            notifyAll();
+        }
     }
 
     /**
@@ -357,14 +354,16 @@ public class GameController {
      * @param card the chosen card
      */
     public void setAssistantCard(String nickname, AssistantCard card){
-        if(checkIfIsCurrentPlayer(nickname) && checkAssistantCard(card)){
-            try{
-                game.getPlayerHandler().getCurrentPlayer().setLastCardUsed(card);
-                isCardChosen = true;
-                wakeUpController();
-                logger.log(4, 'g', "Set assistant card with id " + card.getCardID() + " to " + nickname);
-            } catch (CardException e){
-                System.out.println(e.getMessage());
+        synchronized (this) {
+            if (checkIfIsCurrentPlayer(nickname) && checkAssistantCard(card)) {
+                try {
+                    game.getPlayerHandler().getCurrentPlayer().setLastCardUsed(card);
+                    isCardChosen = true;
+                    logger.log(4, 'g', "Set assistant card with id " + card.getCardID() + " to " + nickname);
+                    notifyAll();
+                } catch (CardException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
@@ -409,13 +408,15 @@ public class GameController {
      * @param playerId id of the player who logged out
      */
     public void setAsDisconnected(String playerId) {
-        try {
-            String nickname = game.getPlayerHandler().getPlayerById(playerId).getNickname();
-            virtualView.sendToEveryone(new ShowDisconnection(nickname));
-            virtualView.closeAll();
-            this.status = GameStatus.INACTIVE;
-            wakeUpController();
-        } catch (PlayerException ignored) {
+        synchronized (this) {
+            try {
+                String nickname = game.getPlayerHandler().getPlayerById(playerId).getNickname();
+                virtualView.sendToEveryone(new ShowDisconnection(nickname));
+                virtualView.closeAll();
+                this.status = GameStatus.INACTIVE;
+                notifyAll();
+            } catch (PlayerException ignored) {
+            }
         }
     }
 
@@ -425,14 +426,5 @@ public class GameController {
      */
     public GameStatus getStatus() {
         return status;
-    }
-
-    /**
-     * Wakes up the game controller thread
-     */
-    public void wakeUpController() {
-        synchronized (this) {
-            this.notifyAll();
-        }
     }
 }
