@@ -17,6 +17,7 @@ public class DisconnectedSceneController extends SceneController{
     public void onCloseAlertClicked() {
         switcher.initialise(switcher.getPrimaryStage());
         switcher.setDefaultController();
+        data.resetPossibleActions();
     }
 
     /**

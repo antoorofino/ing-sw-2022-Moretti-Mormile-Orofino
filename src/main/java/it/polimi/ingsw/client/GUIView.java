@@ -207,17 +207,17 @@ public class GUIView extends Application implements View {
 
     @Override
     public void showConnectionErrorMessage() {
+        serverHandler.close();
         Platform.runLater(() -> {
             switcher.getDisconnectedSceneController().disconnectedHandler("Server unreachable");
-            serverHandler.close();
         });
     }
 
     @Override
     public void showDisconnection(String playerDisconnected) {
+        serverHandler.close();
         Platform.runLater(() -> {
             switcher.getDisconnectedSceneController().disconnectedHandler(playerDisconnected + " disconnected");
-            serverHandler.close();
         });
     }
 

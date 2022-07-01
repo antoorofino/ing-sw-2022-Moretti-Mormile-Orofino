@@ -19,6 +19,7 @@ public class WinningSceneController extends SceneController {
     public void onCloseAlertClicked() {
         switcher.initialise(switcher.getPrimaryStage());
         switcher.setDefaultController();
+        data.resetPossibleActions();
     }
 
     //TODO: check java doc
