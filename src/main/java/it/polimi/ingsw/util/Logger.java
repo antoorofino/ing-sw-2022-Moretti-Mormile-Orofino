@@ -41,6 +41,10 @@ public class Logger {
 				typePrefix = "[FATAL ERROR] ";
 				color = 'r';
 				break;
+			case 'e':
+				typePrefix = "[ERROR] ";
+				color = 'r';
+				break;
 			case 'w':
 				typePrefix = "[WARNING] ";
 				color = 'y';
