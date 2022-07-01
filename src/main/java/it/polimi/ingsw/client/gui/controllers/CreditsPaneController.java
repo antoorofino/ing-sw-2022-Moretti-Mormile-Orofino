@@ -9,9 +9,9 @@ import javafx.scene.layout.AnchorPane;
 public class CreditsPaneController {
     @FXML
     AnchorPane rootPane;
-    //TODO: check javadoc
+
     /**
-     * Method used by the fxml loader to initialise the pane where player can see credits about developer
+     * Method used by the fxml loader to initialise the credits pane
      */
     @FXML
     public void initialize() {
@@ -26,7 +26,7 @@ public class CreditsPaneController {
     }
 
     /**
-     * When players clicks on close icon credits pane will be not visible
+     * When players clicks on close icon credits pane will be hided
      */
     @FXML
     public void onCloseInfoClicked() {

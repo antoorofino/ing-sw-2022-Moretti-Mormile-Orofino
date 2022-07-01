@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-//todo: complete javadoc
 /**
  * Manages graphical assets for Character card
  */
@@ -52,7 +51,9 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
-    //TODO: check if useless
+    /**
+     * Initialization done by fxml loader
+     */
     @FXML
     private void initialize() {
         clear();
@@ -95,10 +96,9 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
-    //TODO: complete java doc
     /**
-     *
-     * @param swapArea
+     * Adds the drag feature to students piece
+     * @param swapArea swapArea controller
      */
     private void setStudentsDraggable(SwapArea swapArea) {
         for (Node s : characterPiecesVBox.getChildren()) {
@@ -143,6 +143,9 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Adds the drag feature to no-tile pieces
+     */
     private void setTilesDraggable() {
         for (Node tile : characterPiecesVBox.getChildren()) {
             tile.getStyleClass().add("student-hover");
@@ -176,6 +179,13 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Initializes the character graphic component. If the card is active then activates interaction features
+     * @param students student pieces to show on the card side
+     * @param characterId the id of the card
+     * @param isActive true if the card is active, false otherwise
+     * @param swapArea swapArea controller
+     */
     private void setStudents(List<Piece> students, int characterId, boolean isActive, SwapArea swapArea) {
         // Set student pieces
         for (int i = 0; i < students.size(); i++) {
@@ -198,6 +208,11 @@ public class CharacterCardGUI extends ComponentGUI {
         }
     }
 
+    /**
+     * Initializes the character graphic component. If the card is active then activates interaction features
+     * @param num number of no-tile pieces
+     * @param isActive true if the card is active, false otherwise
+     */
     private void setTiles(int num, boolean isActive) {
         // Set tile pieces
         for (int i = 0; i < num; i++) {
@@ -208,6 +223,13 @@ public class CharacterCardGUI extends ComponentGUI {
             setTilesDraggable();
     }
 
+    /**
+     *
+     * @param card
+     * @param isActive true if the card is active, false otherwise
+     * @param swapArea swap area controller
+     * @param characterInfoPaneController info pane controller
+     */
     public void setCharacterCard(Character card, boolean isActive, SwapArea swapArea, CharacterInfoPaneController characterInfoPaneController) {
         clear();
         // Set character image

@@ -64,10 +64,9 @@ public class PlayerInfoSceneController extends SceneController {
         return !(nicknameIsOk && colorSelected);
     }
 
-    //TODO complete javadoc
     /**
-     *
-     * @param isFirstRequest
+     * Handles the AskNickname message
+     * @param isFirstRequest if false shows error on nickname already chosen
      */
     public void askNicknameHandler(Boolean isFirstRequest) {
         if(!isFirstRequest)
@@ -75,6 +74,11 @@ public class PlayerInfoSceneController extends SceneController {
         ensureActive();
     }
 
+    /**
+     * Handles the AskTowerColor message
+     * @param possibleColors colors available
+     * @param isFirstRequest if false shows error on tower color already chosen
+     */
     public void askTowerColor(List<TowerColor> possibleColors, Boolean isFirstRequest) {
         nicknameIsSet = true;
         nicknameText.setDisable(true);

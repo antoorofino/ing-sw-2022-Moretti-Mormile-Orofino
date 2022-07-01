@@ -138,9 +138,8 @@ public class IslandsGridGUI extends ComponentGUI {
         }
     }
 
-    //todo check it and explain it
     /**
-     * Adds event to make possible drop element inside island
+     * Adds event to make possible dropping elements on the island
      * @param islandPane island pane
      * @param islandId island id
      */
@@ -253,11 +252,10 @@ public class IslandsGridGUI extends ComponentGUI {
         });
     }
 
-    //todo complete javadoc
     /**
-     *
-     * @param islandPane
-     * @param islandId
+     * Make it possible to click an island for character number 3 effect
+     * @param islandPane pane of the island
+     * @param islandId id of the island
      */
     private void setIslandClickable(Parent islandPane, int islandId) {
         boolean playerChoseCharacter = data.getPlayer().getActiveCharacter() != null;

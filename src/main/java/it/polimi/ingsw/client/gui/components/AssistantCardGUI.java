@@ -77,7 +77,10 @@ public class AssistantCardGUI extends ComponentGUI {
         assistantImagePane.getStyleClass().remove(selectedClassName);
     }
 
-    //TODO: complete java doc
+    /**
+     * Add listener for onClicked event
+     * @param listener function execute on even trigger
+     */
     public void setOnClickedListener(Consumer<Integer> listener) {
         this.listener = listener;
     }

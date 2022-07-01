@@ -41,9 +41,8 @@ public class PopUpContainerController {
         popUpPane.setVisible(false);
     }
 
-    //TODO: complete javadoc
     /**
-     *
+     * Add the popUp content to the root node
      * @param root
      */
     public void add(Parent root) {

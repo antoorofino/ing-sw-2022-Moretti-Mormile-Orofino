@@ -9,8 +9,9 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-//TODO: java doc
-
+/**
+ * Controller of popUp that shows the players' boards
+ */
 public class BoardPopUp extends ComponentGUI {
     @FXML
     private Pane dashboardPane;

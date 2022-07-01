@@ -13,10 +13,10 @@ public abstract class SceneController {
     public AlertPaneController alertPaneController;
     protected final ClientData data = ClientData.getInstance();
     protected final GUISwitcher switcher = GUISwitcher.getInstance();
-    //TODO: check javadoc
+
     /**
-     * Saves the root
-     * @param root root
+     * Saves the root node
+     * @param root root node
      */
     public void init(Parent root) {
         this.root = root;

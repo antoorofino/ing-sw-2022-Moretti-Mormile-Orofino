@@ -51,8 +51,6 @@ public class GameMainSceneController extends SceneController {
    private List<BoardPopUp> boardPopUps;
    private PlayedCardsPopUp playedCardsPopUp;
 
-   //TODO: Check java doc
-
    /**
     * Method used by the fxml loader to initialise Game main scene
     */
@@ -114,7 +112,7 @@ public class GameMainSceneController extends SceneController {
    }
 
    /**
-    * Initializes pop up that shows all the players in the game
+    * Initializes pop up that shows the boards of all the players in the game
     */
    private void boardPopUpInitialize() {
       if (boardPopUps.size() == 0) {
@@ -131,10 +129,8 @@ public class GameMainSceneController extends SceneController {
       }
    }
 
-   //TODO: check javadoc
-
    /**
-    * Sets character card of player and if necessary activate swap area
+    * Sets character card activated and if necessary activate swap area
     */
    private void setCharacterCard() {
       Character activeCard = data.getGame().getPlayerHandler().getPlayers().stream()
@@ -196,7 +192,7 @@ public class GameMainSceneController extends SceneController {
    }
 
    /**
-    * Sets message that specify what have to do the player
+    * Sets the header banner message
     * @param message message
     */
    public void setMessage(String message) {

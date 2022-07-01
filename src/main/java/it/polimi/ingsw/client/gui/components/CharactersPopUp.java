@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//todo javadoc
+/**
+ * Controller of popUp that shows the character cards
+ */
 public class CharactersPopUp extends ComponentGUI {
     @FXML
     private HBox cardsHBox;
@@ -57,7 +59,10 @@ public class CharactersPopUp extends ComponentGUI {
         });
     }
 
-    //TODO: complete java doc
+    /**
+     * Initializes the popUp with three cards
+     * @param characterInfoPaneController info pane controller
+     */
     public void setCards(CharacterInfoPaneController characterInfoPaneController) {
         List<Character> cards = data.getGame().getCharacters();
         buyCardButton.setDisable(true);

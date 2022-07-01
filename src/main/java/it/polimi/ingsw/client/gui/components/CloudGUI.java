@@ -29,7 +29,9 @@ public class CloudGUI extends ComponentGUI {
         }
     }
 
-    //TODO: check if useless
+    /**
+     * Method used by the fxml loader to initialise the component
+     */
     @FXML
     private void initialize() {
         clear();

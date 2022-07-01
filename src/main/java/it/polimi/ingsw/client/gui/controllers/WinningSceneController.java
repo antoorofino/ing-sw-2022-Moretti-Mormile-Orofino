@@ -25,10 +25,9 @@ public class WinningSceneController extends SceneController {
         data.resetPossibleActions();
     }
 
-    //TODO: check java doc
     /**
      * Shows winning or loosing message based on player
-     * @param nickname player's nickname
+     * @param nickname winner nickname. If null shows no winner determined info
      */
     public void endMatchHandler(String nickname) {
         if (nickname != null && nickname.equals(data.getPlayer().getNickname())) {

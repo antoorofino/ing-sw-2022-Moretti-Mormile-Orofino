@@ -132,9 +132,9 @@ public class SwapArea extends ComponentGUI {
             }
         });
     }
-    //TODO: check
+
     /**
-     * Manages graphical assets to reset the view
+     * Manages graphical assets to reset the component
      */
     private void clear() {
         piece1.getStyleClass().clear();

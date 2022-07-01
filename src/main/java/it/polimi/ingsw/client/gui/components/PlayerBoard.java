@@ -64,7 +64,6 @@ public class PlayerBoard extends ComponentGUI {
         }
     }
 
-    //todo check
     /**
      * Sets graphical assets for the board
      * @param board player's board

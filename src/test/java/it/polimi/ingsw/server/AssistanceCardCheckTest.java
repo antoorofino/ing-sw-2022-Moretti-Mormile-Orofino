@@ -72,8 +72,14 @@ public class AssistanceCardCheckTest {
         AssistantCard c1 = new AssistantCard(1,1,1);
         AssistantCard c2 = new AssistantCard(2,2,2);
 
-        p1.addCards(Arrays.asList(c1, c2));
-        p2.addCards(Collections.singletonList(c1));
+        Player current = game.getPlayerHandler().getCurrentPlayer();
+        Player other;
+        if (current.getId().equals(game.getPlayerHandler().getPlayers().get(0).getId()))
+            other = game.getPlayerHandler().getPlayers().get(1);
+        else
+            other = game.getPlayerHandler().getPlayers().get(0);
+        current.addCards(Arrays.asList(c1, c2));
+        other.addCards(Collections.singletonList(c1));
 
         Assertions.assertTrue(controller.checkAssistantCard(c1));
         Assertions.assertTrue(controller.checkAssistantCard(c2));

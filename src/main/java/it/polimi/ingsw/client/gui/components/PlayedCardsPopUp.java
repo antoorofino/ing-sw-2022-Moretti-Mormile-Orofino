@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-//todo: javadoc
+
 /**
- *
+ * Controller of popUp that shows the played cards
  */
 public class PlayedCardsPopUp extends ComponentGUI {
     @FXML
@@ -29,10 +29,9 @@ public class PlayedCardsPopUp extends ComponentGUI {
         }
     }
 
-    //todo check and complete
     /**
-     * Adds last card used for each player
-     * @return
+     * Initializes the popUp content with the card already played
+     * @return true if there is at least a card, false otherwise
      */
     public boolean setCards() {
         List<Player> playersOrderedByCardNumber = data.getGame().getPlayerHandler().getPlayers().stream()

@@ -152,17 +152,28 @@ public class IslandGUI extends ComponentGUI {
                 break;
         }
     }
-    //TODO: complete
+
+    /**
+     * Set the mother nature background visible
+     */
     public void setMotherNature() {
         motherNatureImage.getStyleClass().add("mother-nature-background");
         if (data.getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE))
             motherNatureImage.getStyleClass().add("student-hover");
     }
 
+    /**
+     * Returns mother nature pane
+     * @return
+     */
     public Pane getMotherNatureImage() {
         return motherNatureImage;
     }
 
+    /**
+     * Set the no-tile icon
+     * @param n number of no-tile pieces
+     */
     public void setNoTile(int n) {
         if(n > 0)
             noTileImage.getStyleClass().add("no-tile");
