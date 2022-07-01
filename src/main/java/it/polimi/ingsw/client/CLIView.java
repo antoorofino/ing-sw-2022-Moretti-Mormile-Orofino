@@ -25,6 +25,7 @@ public class CLIView implements View{
 	private GameListInfo gameInfo;
 	private ArrayList<Character> gameCharacters;
 	private final int center = 64;
+	private boolean lastRound = false;
 
 	/**
 	 * Constructor: build CLIView
@@ -452,7 +453,7 @@ public class CLIView implements View{
 
 	@Override
 	public void showLastRound() {
-		System.out.println("Last round");
+		lastRound = true;
 	}
 
 	@Override
@@ -466,6 +467,7 @@ public class CLIView implements View{
 			System.out.println(CLIFrmt.print('r'," Match finished. The winner is: " + winnerNickname));
 		else
 			System.out.println(CLIFrmt.print('y',"Unfortunately a winner could not be decided"));
+		serverHandler.close();
 	}
 
 	@Override
@@ -505,7 +507,7 @@ public class CLIView implements View{
 	 */
 	private void printGame(GameModel game, List<AssistantCard> possibleCards){
 		clearAll();
-		CLIGame cliGame = new CLIGame(game,possibleCards,playerId);
+		CLIGame cliGame = new CLIGame(game,possibleCards,playerId,lastRound);
 		cliGame.display();
 
 		try {
@@ -545,7 +547,8 @@ public class CLIView implements View{
 	 */
 	private void clearAll(){
 		clearAction(false);
-		System.out.print("\033[H\033[3J"); // maybe 3J
+		System.out.print("\033[H\033[2J");
+		System.out.print("\033[H\033[3J");
 		System.out.flush();
 	}
 

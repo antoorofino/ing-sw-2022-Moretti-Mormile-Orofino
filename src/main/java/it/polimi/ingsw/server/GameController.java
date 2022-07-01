@@ -315,7 +315,7 @@ public class GameController {
     public void setAction(Action action, String nickname) {
         synchronized (this) {
             if (!checkIfIsCurrentPlayer(nickname))
-                sendPossibleActions(false);
+                return;
             Player thePlayer;
             try {
                 thePlayer = game.getPlayerHandler().getPlayersByNickName(nickname);
