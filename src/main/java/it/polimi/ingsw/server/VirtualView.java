@@ -4,7 +4,7 @@ import it.polimi.ingsw.network.Message;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO Javadoc
 public class VirtualView {
     private final List<ClientHandler> clientHandlers;
 

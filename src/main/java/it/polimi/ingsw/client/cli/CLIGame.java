@@ -20,7 +20,7 @@ public class CLIGame extends CLIMatrix{
 	 * @param possibleCards the assistant cards that can be played by the player
 	 * @param playerId the player id
 	 */
-	public CLIGame(GameModel game, List<AssistantCard> possibleCards,String playerId) {
+	public CLIGame(GameModel game, List<AssistantCard> possibleCards,String playerId,boolean lastRound) {
 		super(195,34, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 
 		boolean first = true;
@@ -85,7 +85,9 @@ public class CLIGame extends CLIMatrix{
 			drawText(" -> It is your turn",1,33,0);
 		else
 			drawText(" -> It is " + game.getPlayerHandler().getCurrentPlayer().getNickname() +"'s turn",1,33,0);
-
+		// draw last round
+		if(lastRound)
+			drawText(" -> Last round! <-",1,25,115);
 	}
 
 	/**

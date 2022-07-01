@@ -37,6 +37,7 @@ public class EleventhCardRules extends ExpertRules {
 		}
 
 		getCurrentPlayer().getPlayerBoard().addStudentToRoom(action.getPrincipalPiece());
+		calculateInfluence();
 		// refill the card
 		getCurrentPlayer().getActiveCharacter().addStudents(game.getStudentsBag().popStudents(1));
 		getCurrentPlayer().registerAction(new Action(ActionType.ACTIVATED_CHARACTER));
