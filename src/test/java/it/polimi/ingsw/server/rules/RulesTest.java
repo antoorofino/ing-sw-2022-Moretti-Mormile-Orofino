@@ -24,7 +24,7 @@ public class RulesTest {
 		// setup player
 		PlayersHandler ph = game.getPlayerHandler();
 		Player p1 = new Player("id_p1");
-		Player p2 = new Player("is_p2");
+		Player p2 = new Player("id_p2");
 		ph.addPlayer(p1);
 		ph.addPlayer(p2);
 

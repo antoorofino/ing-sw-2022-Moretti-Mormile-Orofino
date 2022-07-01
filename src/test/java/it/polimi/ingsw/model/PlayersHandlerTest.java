@@ -22,7 +22,7 @@ public class PlayersHandlerTest {
         playersHandler = new PlayersHandler(3);
         assertEquals(3, playersHandler.getNumPlayers());
         p1 = new Player("id_p1");
-        p2 = new Player("is_p2");
+        p2 = new Player("id_p2");
         p3 = new Player("id_p3");
         playersHandler.addPlayer(p1);
         playersHandler.addPlayer(p2);
