@@ -12,9 +12,7 @@ public class DelayAction {
      */
     public static void executeLater(Runnable action) {
         PauseTransition pause = new PauseTransition(Duration.seconds(DELAY_TIME));
-        pause.setOnFinished(e -> {
-            action.run();
-        });
+        pause.setOnFinished(e -> action.run());
         pause.setCycleCount(1);
         pause.play();
     }

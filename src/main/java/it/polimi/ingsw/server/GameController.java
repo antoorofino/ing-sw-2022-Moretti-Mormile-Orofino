@@ -182,6 +182,7 @@ public class GameController {
         game.setupGame();
 
         boolean firstMessage = true;
+        boolean lastRoundMessageSent = false;
 
         //Round handler
         while(!isLastRound() && !endImmediately){
@@ -212,14 +213,15 @@ public class GameController {
                 game.getPlayerHandler().nextPlayerByOrder();
             }
 
-            if (isLastRound())
-                virtualView.sendToEveryone(new ShowLastRound());
-
             //Action phase
             game.getPlayerHandler().initialiseCurrentPlayerActionPhase();
             virtualView.sendToEveryone(new UpdateGameBoard(game));
             int i = 0;
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
+                if (isLastRound() && !lastRoundMessageSent) {
+                    virtualView.sendToEveryone(new ShowLastRound());
+                    lastRoundMessageSent = true;
+                }
                 if(getCurrentPlayer().getRoundActions().hasEnded()){
                     logger.log(4, 'g', "Player " + getCurrentPlayer().getNickname() + " ended his round");
                     getCurrentPlayer().resetRoundAction();
@@ -373,7 +375,7 @@ public class GameController {
      * @param card the chosen card
      * @return true if he can play the chosen card
      */
-    private boolean checkAssistantCard(AssistantCard card){
+    public boolean checkAssistantCard(AssistantCard card){
         List<AssistantCard> alreadyPlayed = game.getPlayerHandler().cardsAlreadyPlayed();
         List<AssistantCard> playerDeck = game.getPlayerHandler().getCurrentPlayer().getDeck();
         if(alreadyPlayed.size() >= playerDeck.size() && alreadyPlayed.containsAll(playerDeck))

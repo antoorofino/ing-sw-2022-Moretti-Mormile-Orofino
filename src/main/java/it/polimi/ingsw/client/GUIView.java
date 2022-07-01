@@ -147,6 +147,7 @@ public class GUIView extends Application implements View {
             switcher.getGameMainSceneController().setMessage(message);
             if (isInvalidAction)
                 switcher.getGameMainSceneController().showError("Invalid action");
+            switcher.getGameMainSceneController().showGameHandler();
         });
     }
 

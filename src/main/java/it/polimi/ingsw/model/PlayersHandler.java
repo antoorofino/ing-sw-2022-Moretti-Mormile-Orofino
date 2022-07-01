@@ -165,7 +165,7 @@ public class PlayersHandler implements Serializable {
      * @return the list of cards that player has already played
      */
     public List<AssistantCard> cardsAlreadyPlayed(){
-        return alreadyPlayed.stream().map(Player::getLastCardUsed).collect(Collectors.toList());
+        return alreadyPlayed.stream().map(Player::getLastCardUsed).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**

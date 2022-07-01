@@ -2,7 +2,10 @@ package it.polimi.ingsw.client.gui.utils;
 
 import it.polimi.ingsw.model.Piece;
 
-public class Tmp {
+/**
+ * Helper classes used to apply the correct css background class from piece type
+ */
+public class Tmp {//TODO: rename class to PieceCssStyleHelper
     private static final String STUDENT_GREEN_BACKGROUND = "student-green-background";
     private static final String STUDENT_RED_BACKGROUND = "student-red-background";
     private static final String STUDENT_YELLOW_BACKGROUND = "student-yellow-background";
@@ -15,8 +18,8 @@ public class Tmp {
     private static final String TEACHER_BLUE_BACKGROUND = "teacher-blue-background";
 
     /**
-     * Get the type of student piece from class of css
-     * @param className class name of css
+     * Returns the type of student piece from css class
+     * @param className css class name
      * @return type of piece
      */
     public static Piece classNameToPiece(String className) {
@@ -36,9 +39,9 @@ public class Tmp {
     }
 
     /**
-     * Get the name of class in css from a type of student piece
+     * Returns css class name from a type of student piece
      * @param piece type of student piece
-     * @return class name of css
+     * @return css class name
      */
     public static String pieceToClassName(Piece piece) {
         switch (piece) {
@@ -57,9 +60,9 @@ public class Tmp {
     }
 
     /**
-     * Get the name of class in css from a type of teacher piece
+     * Returns the css class name from a type of teacher piece
      * @param piece type of teacher piece
-     * @return class name of css
+     * @return css class name
      */
     public static String teacherToClassName(Piece piece) {
         switch (piece) {
