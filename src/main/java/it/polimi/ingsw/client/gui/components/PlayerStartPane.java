@@ -8,12 +8,18 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
+/**
+ * Manages graphical assets and event in player start pane
+ */
 public class PlayerStartPane extends ComponentGUI {
     @FXML
     private Label playerNameLabel;
     @FXML
     private Pane towerImagePane;
 
+    /**
+     * Constructor: load the fxml for the player start pane
+     */
     public PlayerStartPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerStartPane.fxml"));
         fxmlLoader.setController(this);
@@ -23,6 +29,11 @@ public class PlayerStartPane extends ComponentGUI {
         }
     }
 
+    /**
+     * Associates each player to the selected tower's color
+     * @param player player
+     * @param isCurrentPlayer if it's true it's necessary to print 'you' otherwise player's nickname
+     */
     public void setPlayerInfo(Player player, boolean isCurrentPlayer) {
         if (isCurrentPlayer)
             playerNameLabel.setText("You");

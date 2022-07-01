@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages graphical assets and event in the pop up that shows player's card
+ */
 public class YourCardsPopUp extends ComponentGUI {
     @FXML
     private GridPane cardsGrid;
@@ -20,6 +23,9 @@ public class YourCardsPopUp extends ComponentGUI {
     private final List<AssistantCardGUI> assistantCardGUIS =  new ArrayList<>();
     private int selectedCard;
 
+    /**
+     * Constructor: load the fxml for pop up that shows player's card
+     */
     public YourCardsPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/yourCardsPopUp.fxml"));
         fxmlLoader.setController(this);
@@ -30,6 +36,10 @@ public class YourCardsPopUp extends ComponentGUI {
         this.selectedCard = 0;
     }
 
+    /**
+     * Initializes the pop up setting graphical assets and declaring event management
+     * @param controller
+     */
     public void initialize(PopUpContainerController controller) {
         playCardButton.setOnMouseClicked(e -> {
             GUIView.getServerHandler().send(new SetAssistantCard(
@@ -48,6 +58,9 @@ public class YourCardsPopUp extends ComponentGUI {
         }
     }
 
+    /**
+     * Manages graphical assets for each player's card
+     */
     public void setCards() {
         playCardButton.setDisable(true);
         if (selectedCard != 0)

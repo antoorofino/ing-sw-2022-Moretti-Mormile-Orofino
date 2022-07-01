@@ -19,6 +19,9 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+/**
+ * Manages graphical assets and event in swap area, used in expert mode
+ */
 public class SwapArea extends ComponentGUI {
     @FXML
     private Pane swapPane;
@@ -35,6 +38,9 @@ public class SwapArea extends ComponentGUI {
     @FXML
     private Label piece2textLabel;
 
+    /**
+     * Constructor: load the fxml for the swap area
+     */
     public SwapArea() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/swapArea.fxml"));
         fxmlLoader.setController(this);
@@ -44,6 +50,9 @@ public class SwapArea extends ComponentGUI {
         }
     }
 
+    /**
+     * Initialises swap area adding event listener to make possible drag and drop
+     */
     public void init() {
         clear();
         // Single logic checks
@@ -123,7 +132,10 @@ public class SwapArea extends ComponentGUI {
             }
         });
     }
-
+    //TODO: check
+    /**
+     * Manages graphical assets to reset the view
+     */
     private void clear() {
         piece1.getStyleClass().clear();
         piece2.getStyleClass().clear();
