@@ -13,7 +13,7 @@ public class AskGameListMessage extends Message implements SYSMessage {
     private final String playerId;
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      * @param playerId the ID of the message’s sender
      */
     public AskGameListMessage(String playerId){

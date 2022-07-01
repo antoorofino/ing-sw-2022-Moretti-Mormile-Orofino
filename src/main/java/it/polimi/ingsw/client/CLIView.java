@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
- * Implement the game interface view for the cli
+ * Implements the game interface view for the cli
  */
 public class CLIView implements View{
 	private final Scanner scanner;
@@ -29,8 +29,8 @@ public class CLIView implements View{
 	private boolean lastRound = false;
 
 	/**
-	 * Constructor: build CLIView
-	 * create new Scanner from standard input
+	 * Constructor: builds CLIView
+	 * creates new Scanner from standard input
 	 */
 	public CLIView() {
 		this.scanner = new Scanner(System.in);
@@ -436,7 +436,7 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Print possible actions
+	 * Prints possible actions
 	 * @param roundActions contains the list of possible actions
 	 */
 	private void showPossibleActions(RoundActions roundActions) {
@@ -489,7 +489,7 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Show an error message
+	 * Shows an error message
 	 * @param errorMessage the message to show
 	 */
 	private void showErrorMessage(String errorMessage, boolean centered,int top) {
@@ -519,7 +519,7 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Print center-aligned text
+	 * Prints center-aligned text
 	 * @param text the text to be printed
 	 */
 	private void centeredPrint(String text){
@@ -528,7 +528,7 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Print center-aligned text and go to the next line
+	 * Prints center-aligned text and go to the next line
 	 * @param text the text to be printed
 	 */
 	private void centeredInput(String text){
@@ -555,14 +555,14 @@ public class CLIView implements View{
 	}
 
 	/**
-	 * Erase from cursor to end display
+	 * Erases from cursor to end display
 	 */
 	private void clearDown(){
 		System.out.println("\033[0J");
 	}
 
 	/**
-	 * Delete text under the game board
+	 * Deletes text under the game board
 	 */
 	private void clearAction(boolean isError){
 		System.out.print("\033[3" + ((isError) ? "6" : "5") + ";0H"); // 36 error, 35 otherwise

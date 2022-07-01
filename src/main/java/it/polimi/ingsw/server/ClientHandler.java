@@ -30,7 +30,7 @@ public class ClientHandler extends Thread implements NetworkHandler {
     private final Logger logger;
 
     /**
-     * Constructor: build server handler
+     * Constructor: builds server handler
      * @param serverMain the server main
      * @param socket the client socket
      * @param logger class to show formatted messages
@@ -65,7 +65,7 @@ public class ClientHandler extends Thread implements NetworkHandler {
     }
 
     /**
-     * Set the game controller
+     * Sets the game controller
      * @param controller the game controller
      */
     public void setController(GameController controller) {

@@ -22,7 +22,7 @@ public class GameListItem extends ComponentGUI {
     private Text mode;
 
     /**
-     * Constructor: load the fxml for game list item
+     * Constructor: loads the fxml for game list item
      * @param info info of all the games created
      */
     public GameListItem(GameListInfo info) {

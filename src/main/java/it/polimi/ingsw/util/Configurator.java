@@ -24,7 +24,7 @@ public class Configurator {
     private static final String DEFAULT_SERVER_IP = "127.0.0.1";
 
     /**
-     * Get the timeout of connection
+     * Gets the timeout of connection
      * @return timeout of connection
      */
     public static int getSocketTimeout() {
@@ -32,7 +32,7 @@ public class Configurator {
     }
 
     /**
-     * Get the frequency of ping's messages
+     * Gets the frequency of ping's messages
      * @return frequency of ping's messages
      */
     public static int getHeartbeatInterval(){
@@ -40,7 +40,7 @@ public class Configurator {
     }
 
     /**
-     * Get default server port
+     * Gets default server port
      * @return default server port
      */
     public static int getDefaultServerPort(){
@@ -48,7 +48,7 @@ public class Configurator {
     }
 
     /**
-     * Get default verbose log level
+     * Gets default verbose log level
      * @return default verbose level
      */
     public static int getDefaultVerboseLevel(){
@@ -56,7 +56,7 @@ public class Configurator {
     }
 
     /**
-     * Get default server ip
+     * Gets default server ip
      * @return default server ip
      */
     public static String getDefaultServerIp(){
@@ -64,7 +64,7 @@ public class Configurator {
     }
 
     /**
-     * Get the list of characters from xml file
+     * Gets the list of characters from xml file
      * @param game game
      * @return list of characters
      */

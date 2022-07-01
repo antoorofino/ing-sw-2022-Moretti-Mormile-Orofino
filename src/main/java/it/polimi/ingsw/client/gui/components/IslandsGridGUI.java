@@ -34,7 +34,7 @@ public class IslandsGridGUI extends ComponentGUI {
     private final List<String> islandsBackground;
 
     /**
-     * load the fxml for island grid
+     * Constructor: loads the fxml for island grid
      */
     public IslandsGridGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/islandsGrid.fxml"));

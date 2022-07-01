@@ -12,7 +12,7 @@ public class Bag implements Serializable {
     private final Map<Piece, Integer> students;
 
     /**
-     * Constructor: Build the bag
+     * Constructor: Builds the bag
      */
     public Bag() {
         students = new HashMap<Piece, Integer>();
@@ -22,7 +22,7 @@ public class Bag implements Serializable {
     }
 
     /**
-     * Put student in the bag
+     * Puts student in the bag
      */
     public void addStudent(Piece student, int num) {
         int oldValue;
@@ -43,7 +43,7 @@ public class Bag implements Serializable {
     }
 
     /**
-     * Remove students randomly
+     * Removes students randomly
      * @param size number of students to remove
      * @return an arrayList that contains drawed student
      */

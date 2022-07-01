@@ -13,7 +13,7 @@ public enum DragType {
      */
     MOTHER,
     /**
-     * Not specified
+     * No influence tile
      */
     NO_TILE
 }

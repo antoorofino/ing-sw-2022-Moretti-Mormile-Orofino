@@ -25,7 +25,7 @@ public enum AnsiBackColor {
 	private final String code;
 
 	/**
-	 * Constructor: build ansi code
+	 * Constructor: builds ansi code
 	 * @param code ansi code
 	 */
 	AnsiBackColor(String code){
@@ -33,7 +33,7 @@ public enum AnsiBackColor {
 	}
 
 	/**
-	 * Get ansi code from enum
+	 * Gets ansi code from enum
 	 * @return the ansi code
 	 */
 	public String getCode(){

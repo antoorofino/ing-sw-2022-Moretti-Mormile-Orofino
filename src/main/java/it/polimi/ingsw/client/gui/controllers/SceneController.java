@@ -31,7 +31,7 @@ public abstract class SceneController {
     }
 
     /**
-     * Deactivate a scene
+     * Deactivates a scene
      */
     public void deactivate(){
         isActive = false;

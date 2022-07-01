@@ -15,7 +15,7 @@ public class GameListInfo implements Serializable {
 	private final int numPlayers;
 
 	/**
-	 * Constructor: build the information game store
+	 * Constructor: builds the information game store
 	 * @param gameName name of the game
 	 * @param gameMode game mode
 	 * @param numPlayers number of players
@@ -27,7 +27,7 @@ public class GameListInfo implements Serializable {
 	}
 
 	/**
-	 * Get the game's name
+	 * Gets the game's name
 	 * @return game's name
 	 */
 	public String getGameName(){
@@ -35,7 +35,7 @@ public class GameListInfo implements Serializable {
 	}
 
 	/**
-	 * Get game's mode
+	 * Gets game's mode
 	 * @return games's mode
 	 */
 	public GameMode getGameMode(){
@@ -43,7 +43,7 @@ public class GameListInfo implements Serializable {
 	}
 
 	/**
-	 * Get number of player in the match
+	 * Gets number of player in the match
 	 * @return number of player in the match
 	 */
 	public int getNumPlayers(){
@@ -51,7 +51,7 @@ public class GameListInfo implements Serializable {
 	}
 
 	/**
-	 * Get the information of all the matches created
+	 * Gets the information of all the matches created
 	 * @param gameModel game model
 	 * @return list of all matches created
 	 */
@@ -63,7 +63,7 @@ public class GameListInfo implements Serializable {
 	}
 
 	/**
-	 * Create a list of information for all matches created
+	 * Creates a list of information for all matches created
 	 * @param gameList list of game created
 	 * @return the information about a game for all matches created
 	 */

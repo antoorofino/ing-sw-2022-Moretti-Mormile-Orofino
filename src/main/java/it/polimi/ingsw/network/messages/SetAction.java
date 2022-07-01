@@ -15,7 +15,7 @@ public class SetAction extends Message implements VCMessage {
 	private final Action action;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param nickname the nickname of the message’s sender
 	 * @param action move of the player
 	 */

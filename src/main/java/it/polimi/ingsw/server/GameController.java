@@ -26,7 +26,7 @@ public class GameController {
     private final Logger logger;
 
     /**
-     * Constructor: build game controller
+     * Constructor: builds game controller
      * @param gameInfo the game info such as number of players, mode and name
      * @param logger class to show formatted messages
      */
@@ -45,7 +45,7 @@ public class GameController {
     }
 
     /**
-     * Return the game model
+     * Returns the game model
      * @return the game model
      */
     public GameModel getGame(){
@@ -61,7 +61,7 @@ public class GameController {
     }
 
     /**
-     * Check that there is no player with the same nickname
+     * Checks that there is no player with the same nickname
      * @param requestedUsername the chosen nickname
      * @return true if it has not already been chosen
      */
@@ -250,7 +250,7 @@ public class GameController {
     }
 
     /**
-     * Send possible actions to the current player
+     * Sends possible actions to the current player
      * @param isInvalidAction true if he made a wrong action before
      */
     private void sendPossibleActions(boolean isInvalidAction){
@@ -311,7 +311,7 @@ public class GameController {
     }
 
     /**
-     * Verify and perform action made by the player
+     * Verifies and performs action made by the player
      * @param action the player's action
      * @param nickname the nickname of the player who took the action
      */

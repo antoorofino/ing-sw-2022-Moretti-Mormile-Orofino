@@ -15,7 +15,7 @@ import java.util.*;
 public class CLIGame extends CLIMatrix{
 
 	/**
-	 * Constructor: build game's board
+	 * Constructor: builds game's board
 	 * @param game the game model received from the server
 	 * @param possibleCards the assistant cards that can be played by the player
 	 * @param playerId the player id
@@ -91,7 +91,7 @@ public class CLIGame extends CLIMatrix{
 	}
 
 	/**
-	 * Draw the main title
+	 * Draws the main title
 	 * @param color color of the title
 	 * @param backColor backcolor of the title
 	 */
@@ -111,7 +111,7 @@ public class CLIGame extends CLIMatrix{
 	}
 
 	/**
-	 * Draw info about the player
+	 * Draws info about the player
 	 * @param player the player
 	 * @param teachersHandler the teachers' owner
 	 * @param mainPlayer true if is the main player
@@ -148,7 +148,7 @@ public class CLIGame extends CLIMatrix{
 	}
 
 	/**
-	 * Create a random icon for assistant card
+	 * Creates a random icon for assistant card
 	 * @param assistance the card to draw
 	 */
 	private void assistanceIcon(CLIMatrix assistance,int index){

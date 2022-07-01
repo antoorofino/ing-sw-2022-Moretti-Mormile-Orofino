@@ -12,7 +12,7 @@ public class CLIElement {
 	AnsiBackColor backColor;
 
 	/**
-	 * Constructor: build a single empty cell
+	 * Constructor: builds a single empty cell
 	 */
 	CLIElement(){
 		this.symbol = ' ';

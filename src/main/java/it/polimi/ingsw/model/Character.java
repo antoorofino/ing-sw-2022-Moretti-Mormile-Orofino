@@ -21,7 +21,7 @@ public class Character implements Serializable {
     private boolean first;
 
     /**
-     * Constructor: build the Character Card
+     * Constructor: builds the Character Card
      * @param name          Name of character
      * @param description   Character's description
      * @param cost          Cost of the card
@@ -39,7 +39,7 @@ public class Character implements Serializable {
     }
 
     /**
-     * Set up of Character card in case of EXPERT mode
+     * Initializes of Character card in case of EXPERT mode
      * @param bag bag
      */
     public void init(Bag bag){
@@ -107,14 +107,14 @@ public class Character implements Serializable {
     }
 
     /**
-     * Increase number of island flag
+     * Increases number of island flag
      */
     public void addIslandFlag(){
         this.islandFlag++;
     }
 
     /**
-     * Remove one island flag
+     * Removes one island flag
      */
     public void removeIslandFlag() {
         this.islandFlag--;

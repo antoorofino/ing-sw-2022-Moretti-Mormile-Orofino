@@ -18,7 +18,7 @@ public class AskAssistantCard extends Message implements CVMessage {
 	private final GameModel game;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param possibleCards list of possible cards that can be chosen by the play
 	 * @param game the current state of the game board
 	 */

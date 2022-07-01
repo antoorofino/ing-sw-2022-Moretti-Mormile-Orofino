@@ -24,7 +24,7 @@ public class ClientData {
     private List<ActionType> possibleActions;
 
     /**
-     * Constructor: Build an instance of client data
+     * Constructor: Builds an instance of client data
      */
     private ClientData(){
         ipAddress = Configurator.getDefaultServerIp();
@@ -34,8 +34,8 @@ public class ClientData {
     }
 
     /**
-     * Create a new instance of client data if not exist, return the existing one
-     * @return
+     * Creates a new instance of client data if not exist, returns the existing one
+     * @return ClientData instance
      */
     public static ClientData getInstance() {
         if (instance == null)
@@ -44,7 +44,7 @@ public class ClientData {
     }
 
     /**
-     * Get the ip of server
+     * Gets the ip of server
      * @return the ip of server
      */
     public String getIpAddress() {
@@ -52,7 +52,7 @@ public class ClientData {
     }
 
     /**
-     * Get port number of server
+     * Gets port number of server
      * @return port number of server
      */
     public int getPortNumber() {
@@ -60,7 +60,7 @@ public class ClientData {
     }
 
     /**
-     * Set ip address of server
+     * Sets ip address of server
      * @param ipAddress ip address of server
      */
     public void setIpAddress(String ipAddress) {
@@ -68,7 +68,7 @@ public class ClientData {
     }
 
     /**
-     * Set port number of server
+     * Sets port number of server
      * @param portNumber port number of server
      */
     public void setPortNumber(int portNumber) {
@@ -76,7 +76,7 @@ public class ClientData {
     }
 
     /**
-     * Get the info about the game
+     * Gets the info about the game
      * @return info about the game
      */
     public GameListInfo getGameInfo() {
@@ -84,7 +84,7 @@ public class ClientData {
     }
 
     /**
-     * Set info about the game
+     * Sets info about the game
      * @param gameInfo info about the game
      */
     public void setGameInfo(GameListInfo gameInfo) {
@@ -92,25 +92,23 @@ public class ClientData {
     }
 
     /**
-     * Get current game
+     * Gets current game
      * @return current game
      */
-
     public GameModel getGame() {
         return game;
     }
 
     /**
-     * Store current game
+     * Stores current game
      * @param game current game
      */
-
     public void setGame(GameModel game) {
         this.game = game;
     }
 
     /**
-     * Get assistant cards that user can play
+     * Gets assistant cards that user can play
      * @return assistant cards that user can play
      */
     public List<AssistantCard> getPossibleCards() {
@@ -118,7 +116,7 @@ public class ClientData {
     }
 
     /**
-     * Store assistant cards that user can play
+     * Stores assistant cards that user can play
      * @param possibleCards assistant cards that user can play
      */
     public void setPossibleCards(List<AssistantCard> possibleCards) {
@@ -126,7 +124,7 @@ public class ClientData {
     }
 
     /**
-     * Get player who is logged in
+     * Gets player who is logged in
      * @return player who is logged in
      */
     public Player getPlayer() {
@@ -138,7 +136,7 @@ public class ClientData {
     }
 
     /**
-     * Get the list of actions that player can do during the turn
+     * Gets the list of actions that player can do during the turn
      * @return list of possible action that player can du during the turn
      */
     public List<ActionType> getPossibleActions() {
@@ -146,7 +144,7 @@ public class ClientData {
     }
 
     /**
-     * Store all the actions that player can do during the turn
+     * Stores all the actions that player can do during the turn
      * @param list of all the actions that player can do during the turn
      */
     public void setPossibleActions(RoundActions list) {
@@ -154,7 +152,7 @@ public class ClientData {
     }
 
     /**
-     * reset the list of actions that player can do during the turn
+     * Resets the list of actions that player can do during the turn
      */
     public void resetPossibleActions() {
         possibleActions = new ArrayList<>();

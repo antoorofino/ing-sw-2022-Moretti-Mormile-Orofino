@@ -12,7 +12,7 @@ import it.polimi.ingsw.util.MessageType;
 public class AckTowerColor extends Message implements CVMessage {
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      */
     public AckTowerColor(){
         super(MessageType.CV);

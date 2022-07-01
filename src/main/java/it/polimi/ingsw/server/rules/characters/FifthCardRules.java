@@ -8,12 +8,12 @@ import it.polimi.ingsw.util.RoundActions;
 import it.polimi.ingsw.util.exception.SpecificIslandNotFoundException;
 
 /**
- * Change the rules of the game when card number 5 is activated
+ * Changes the rules of the game when card number 5 is activated
  */
 public class FifthCardRules extends ExpertRules {
 
 	/**
-	 * Create the game rules
+	 * Constructor: Creates the game rules
 	 * @param game obj that contains the game status
 	 */
 	public FifthCardRules(GameModel game) {

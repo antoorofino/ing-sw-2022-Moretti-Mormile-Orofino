@@ -8,7 +8,7 @@ import it.polimi.ingsw.client.View;
 public interface CVMessage {
 
     /**
-     * Execute the request client-side
+     * Executes the request client-side
      * @param view The recipient component
      */
     void execute(View view);

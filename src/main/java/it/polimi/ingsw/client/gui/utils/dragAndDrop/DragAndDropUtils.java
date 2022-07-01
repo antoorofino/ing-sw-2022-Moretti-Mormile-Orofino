@@ -7,6 +7,7 @@ import javafx.scene.input.ClipboardContent;
 import java.io.*;
 import java.util.Base64;
 
+//TODO: complete java doc
 public class DragAndDropUtils {
     public static ClipboardContent toClipboardContent(DragAndDropInfo ddi) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

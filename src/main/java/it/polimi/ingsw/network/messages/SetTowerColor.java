@@ -14,7 +14,7 @@ public class SetTowerColor extends Message implements VCMessage {
 	private final TowerColor color;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param playerId the ID of the message’s sender
 	 * @param color the color chosen by the player
 	 */

@@ -12,7 +12,7 @@ public class ShowEndGame extends Message implements CVMessage {
 	private final String winnerNickname;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param winnerNickname nickname of the winner or null if no winner could be determined
 	 */
 	public ShowEndGame(String winnerNickname){

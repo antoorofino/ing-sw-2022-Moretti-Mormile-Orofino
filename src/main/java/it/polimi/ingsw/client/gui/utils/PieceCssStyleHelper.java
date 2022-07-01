@@ -3,9 +3,9 @@ package it.polimi.ingsw.client.gui.utils;
 import it.polimi.ingsw.model.Piece;
 
 /**
- * Helper classes used to apply the correct css background class from piece type
+ * Helper class used to apply the correct css background class from piece type
  */
-public class Tmp {//TODO: rename class to PieceCssStyleHelper
+public class PieceCssStyleHelper {
     private static final String STUDENT_GREEN_BACKGROUND = "student-green-background";
     private static final String STUDENT_RED_BACKGROUND = "student-red-background";
     private static final String STUDENT_YELLOW_BACKGROUND = "student-yellow-background";

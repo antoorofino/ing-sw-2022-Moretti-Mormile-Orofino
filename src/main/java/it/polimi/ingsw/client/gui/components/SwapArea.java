@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.utils.DelayAction;
-import it.polimi.ingsw.client.gui.utils.Tmp;
+import it.polimi.ingsw.client.gui.utils.PieceCssStyleHelper;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
 import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.network.messages.SetAction;
@@ -39,7 +39,7 @@ public class SwapArea extends ComponentGUI {
     private Label piece2textLabel;
 
     /**
-     * Constructor: load the fxml for the swap area
+     * Constructor: loads the fxml for the swap area
      */
     public SwapArea() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/swapArea.fxml"));
@@ -150,12 +150,12 @@ public class SwapArea extends ComponentGUI {
     }
 
     public void setPiece1(Piece piece) {
-        piece1.getStyleClass().add(Tmp.pieceToClassName(piece));
+        piece1.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
         sendSwap();
     }
 
     public void setPiece2(Piece piece) {
-        piece2.getStyleClass().add(Tmp.pieceToClassName(piece));
+        piece2.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
         sendSwap();
     }
 
@@ -167,8 +167,8 @@ public class SwapArea extends ComponentGUI {
                         GUIView.getServerHandler().send(new SetAction(
                                 data.getPlayer().getNickname(),
                                 new Action(ActionType.STUDENT_FROM_CARD_TO_ENTRANCE,
-                                        Tmp.classNameToPiece(piece2.getStyleClass().get(0)),
-                                        Tmp.classNameToPiece(piece1.getStyleClass().get(0))
+                                        PieceCssStyleHelper.classNameToPiece(piece2.getStyleClass().get(0)),
+                                        PieceCssStyleHelper.classNameToPiece(piece1.getStyleClass().get(0))
                                 )
                         ));
                         break;
@@ -176,8 +176,8 @@ public class SwapArea extends ComponentGUI {
                         GUIView.getServerHandler().send(new SetAction(
                                 data.getPlayer().getNickname(),
                                 new Action(ActionType.STUDENT_FROM_ENTRANCE_TO_DINING,
-                                        Tmp.classNameToPiece(piece1.getStyleClass().get(0)),
-                                        Tmp.classNameToPiece(piece2.getStyleClass().get(0))
+                                        PieceCssStyleHelper.classNameToPiece(piece1.getStyleClass().get(0)),
+                                        PieceCssStyleHelper.classNameToPiece(piece2.getStyleClass().get(0))
                                 )
                         ));
                         break;

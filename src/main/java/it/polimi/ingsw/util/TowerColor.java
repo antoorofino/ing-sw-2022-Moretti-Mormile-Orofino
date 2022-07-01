@@ -3,7 +3,7 @@ package it.polimi.ingsw.util;
 import java.awt.*;
 
 /**
- * Possible color for the towr
+ * Possible colors for the towers
  */
 public enum TowerColor {
     BLACK("Black", new Color(75, 75, 75)),
@@ -14,7 +14,7 @@ public enum TowerColor {
     private final Color color;
 
     /**
-     * Constructor: create a new possible color for the tower
+     * Constructor: creates a new possible color for the tower
      * @param name name of color
      * @param color color
      */
@@ -24,7 +24,7 @@ public enum TowerColor {
     }
 
     /**
-     * Return tower color by name of color
+     * Returns tower's color by name of color
      * @param color color
      * @return tower color
      */

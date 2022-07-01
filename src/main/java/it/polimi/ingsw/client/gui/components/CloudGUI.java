@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.gui.components;
 
-import it.polimi.ingsw.client.gui.utils.Tmp;
+import it.polimi.ingsw.client.gui.utils.PieceCssStyleHelper;
 import it.polimi.ingsw.model.Piece;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +18,7 @@ public class CloudGUI extends ComponentGUI {
     private GridPane cloudGrid;
 
     /**
-     * Constructor: load the fxml for cloud
+     * Constructor: loads the fxml for cloud
      */
     public CloudGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/cloud.fxml"));
@@ -50,7 +50,7 @@ public class CloudGUI extends ComponentGUI {
     public void setStudents(List<Piece> students) {
         clear();
         for (int i = 0; i < students.size(); i++) {
-            cloudGrid.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(students.get(i)));
+            cloudGrid.getChildren().get(i).getStyleClass().add(PieceCssStyleHelper.pieceToClassName(students.get(i)));
         }
     }
 }

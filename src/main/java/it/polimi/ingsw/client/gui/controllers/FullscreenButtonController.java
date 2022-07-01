@@ -20,7 +20,6 @@ public class FullscreenButtonController {
 
     /**
      * Initializes button that it will be used to set full screen mode or exit from full screen mode
-     *
      */
     @FXML
     public void initialize(){

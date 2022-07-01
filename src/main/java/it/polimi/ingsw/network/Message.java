@@ -11,7 +11,7 @@ public abstract class Message implements Serializable {
     private final MessageType messageType;
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      * @param messageType identifies the direction of the message
      */
     public Message(MessageType messageType) {

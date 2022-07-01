@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Change the rules of the game when card number 7 is activated
+ * Changes the rules of the game when card number 7 is activated
  */
 public class SeventhCardRules extends ExpertRules {
 	protected int movedPieces;
 
 	/**
-	 * Create the game rules
+	 * Constructor: Creates the game rules
 	 * @param game obj that contains the game status
 	 */
 	public SeventhCardRules(GameModel game) {

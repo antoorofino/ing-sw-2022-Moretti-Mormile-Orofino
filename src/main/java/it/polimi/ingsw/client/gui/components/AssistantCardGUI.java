@@ -29,7 +29,7 @@ public class AssistantCardGUI extends ComponentGUI {
     private Consumer<Integer> listener;
 
     /**
-     * Constructor: load the fxml for the assistant card
+     * Constructor: loads the fxml for the assistant card
      */
     public AssistantCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/assistantCard.fxml"));

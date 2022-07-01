@@ -23,7 +23,7 @@ public class ServerHandler implements NetworkHandler {
 	private boolean isConnected;
 
 	/**
-	 * Constructor: build server handler
+	 * Constructor: builds server handler
 	 * @param view the linked view
 	 */
 	public ServerHandler(View view){

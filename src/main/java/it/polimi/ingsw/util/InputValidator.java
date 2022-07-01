@@ -114,7 +114,7 @@ public class InputValidator {
 	 * @param num the number to check
 	 * @param min the lower number
 	 * @param max the greater number
-	 * @return
+	 * @return true if the number is in the range, otherwise false
 	 */
 	public static boolean isNumberBetween(int num, int min, int max){ return ( min <= num ) && ( num <= max );}
 

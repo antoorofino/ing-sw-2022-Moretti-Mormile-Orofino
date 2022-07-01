@@ -15,7 +15,7 @@ public class IslandsHandler implements Serializable {
 	private int countsLastMerge;
 
 	/**
-	 * Constructor: build IslandHandler
+	 * Constructor: builds IslandHandler
 	 */
 	public IslandsHandler(){
 		this.islands = new ArrayList<>();
@@ -24,7 +24,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Set up the islands when create game
+	 * Initializes the islands when create game
 	 */
 	public void setupIslands(){
 		ArrayList<Piece> studentsArray = new ArrayList<>();
@@ -50,7 +50,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Set up the islands for testing
+	 * Initializes the islands for testing
 	 */
 	public void setupIslandsTest(){
 		ArrayList<Piece> studentsArray = new ArrayList<>();
@@ -68,7 +68,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Get list of islands
+	 * Gets list of islands
 	 * @return list of islands
 	 */
 	public ArrayList<Island> getIslands() {
@@ -76,7 +76,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Get specific island by ID
+	 * Gets specific island by ID
 	 * @param ID id of island
 	 * @return island that has the specific ID
 	 * @throws SpecificIslandNotFoundException invalid island id
@@ -90,7 +90,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Get the island with mother nature
+	 * Gets the island with mother nature
 	 * @return the island
 	 */
 	public Island getCurrentIsland(){
@@ -98,7 +98,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Get the position of mother nature
+	 * Gets the position of mother nature
 	 * @return position of mother nature
 	 */
 	public int getMotherNature() {
@@ -106,7 +106,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Move motherNature
+	 * Moves motherNature
 	 * @param steps specify how much steps mother nature has to do
 	 */
 	public void moveMotherNature(int steps) {
@@ -115,7 +115,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Do merge of island
+	 * Does the merge of island
 	 */
 	public void mergeIslands(){
 		int i = 0;
@@ -145,7 +145,7 @@ public class IslandsHandler implements Serializable {
 	}
 
 	/**
-	 * Move points on Island to another when we do merge
+	 * Moves points on Island to another when we do merge
 	 * @param from departure island
 	 * @param to arrival island
 	 */

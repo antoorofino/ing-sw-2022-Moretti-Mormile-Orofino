@@ -12,7 +12,7 @@ public class AskNickname extends Message implements CVMessage {
 	private final boolean isFirstRequest;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param isFirstRequest true if it is the first request.
 	 */
 	public AskNickname(boolean isFirstRequest){

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.gui.utils.dragAndDrop;
 
 /**
- * type of drag origin
+ * Type of drag origin
  */
 public enum DragOrigin {
     /**

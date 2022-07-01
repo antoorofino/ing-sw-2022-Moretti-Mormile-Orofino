@@ -17,7 +17,7 @@ public class AskTowerColor extends Message implements CVMessage {
 	private final boolean isFirstRequest;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param possibleColors the available colors
 	 * @param isFirstRequest true if it is the first request
 	 */

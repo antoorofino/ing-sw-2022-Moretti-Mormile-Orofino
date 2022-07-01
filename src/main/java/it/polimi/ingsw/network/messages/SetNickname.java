@@ -13,7 +13,7 @@ public class SetNickname extends Message implements VCMessage {
 	private final String nickname;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param playerId the ID of the message’s sender
 	 * @param nickname the nickname chosen by the player
 	 */

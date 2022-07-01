@@ -15,7 +15,7 @@ public class GameStart extends Message implements CVMessage {
 	private final GameModel game;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param game the current state of the game board
 	 * @param firstPlayerNickname the nickname of the first player
 	 */

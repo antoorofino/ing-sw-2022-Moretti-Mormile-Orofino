@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Helper class, manage player
+ * Helper class, manages player
  */
 public class PlayersHandler implements Serializable {
     private final int numPlayers;
@@ -17,7 +17,7 @@ public class PlayersHandler implements Serializable {
     private ArrayList<Player> alreadyPlayed;
 
     /**
-     * Constructor: build players handler
+     * Constructor: builds players handler
      * @param numPlayers how many players will be in the game
      */
     public PlayersHandler(int numPlayers){
@@ -29,7 +29,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Add player in the list of player
+     * Adds player in the list of player
      * @param player that will be added in the list
      */
     public void addPlayer(Player player){
@@ -39,7 +39,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get number of player
+     * Gets number of player
      * @return how many players will play in the game
      */
     public int getNumPlayers(){
@@ -47,7 +47,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get list of players
+     * Gets list of players
      * @return list of players
      */
     public ArrayList<Player> getPlayers() {
@@ -55,7 +55,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get list of players' nicknames
+     * Gets list of players' nicknames
      * @return list of players' nicknames
      */
     public ArrayList<String> getPlayersNickName(){
@@ -63,7 +63,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get player with a specifc nickname
+     * Gets player with a specifc nickname
      * @param nickname of specific player
      * @return player with specific nickname
      * @throws PlayerException invalid nickname for player
@@ -77,7 +77,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get player by ID
+     * Gets player by ID
      * @param id specific ID of player
      * @return player with specif ID
      * @throws PlayerException invalid id for player
@@ -91,7 +91,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get player whose turn it's
+     * Gets player whose turn it's
      * @return player whose turn it's
      */
     public Player getCurrentPlayer() {
@@ -99,7 +99,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Initialise the player will play at first during the turn
+     * Initialises the player will play at first during the turn
      */
     public void initialiseCurrentPlayerPlanningPhase(){
         if(currentPlayer == null) {
@@ -111,7 +111,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * initialise current player order by assistance
+     * Initialises current player order by assistance
      */
     public void initialiseCurrentPlayerActionPhase(){
         alreadyPlayed = sortByAssistance(firstPlayer, players);
@@ -120,7 +120,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * set current player as the first player from ordered list
+     * Sets current player as the first player from ordered list
      */
     public void nextPlayerByOrder(){
         alreadyPlayed.add(currentPlayer);
@@ -128,7 +128,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * set current player as the first player from ordered list by assistance
+     * Sets current player as the first player from ordered list by assistance
      */
     public void nextPlayerByAssistance(){
         alreadyPlayed.remove(0);
@@ -139,7 +139,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Return player in order to play ordered by assistance that every player has chosen
+     * Returns player in order to play ordered by assistance that every player has chosen
      * @param first first player
      * @param toSort list of player
      * @return sorted list of player
@@ -161,7 +161,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Get the list of cards that player has already played
+     * Gets the list of cards that player has already played
      * @return the list of cards that player has already played
      */
     public List<AssistantCard> cardsAlreadyPlayed(){
@@ -169,7 +169,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * Check if there are any player without cards
+     * Checks if there are any player without cards
      * @return true if a player hasn't cards enough
      */
     public boolean playerWithNoMoreCards(){
@@ -181,7 +181,7 @@ public class PlayersHandler implements Serializable {
     }
 
     /**
-     * check if all players in the game are ready to play
+     * Checks if all players in the game are ready to play
      * @return true if all players are ready to play
      */
     public boolean everyPlayerIsReadyToPlay(){

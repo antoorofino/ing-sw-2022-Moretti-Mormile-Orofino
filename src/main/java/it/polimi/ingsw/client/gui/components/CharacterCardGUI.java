@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.controllers.CharacterInfoPaneController;
-import it.polimi.ingsw.client.gui.utils.Tmp;
+import it.polimi.ingsw.client.gui.utils.PieceCssStyleHelper;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.model.Piece;
@@ -41,7 +41,7 @@ public class CharacterCardGUI extends ComponentGUI {
     private ImageView infoButton;
 
     /**
-     * Constructor: load the fxml for the character card
+     * Constructor: loads the fxml for the character card
      */
     public CharacterCardGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/characterCard.fxml"));
@@ -80,14 +80,14 @@ public class CharacterCardGUI extends ComponentGUI {
                         GUIView.getServerHandler().send(new SetAction(
                                 data.getPlayer().getNickname(),
                                 new Action(ActionType.COLOR_NO_INFLUENCE,
-                                        Tmp.classNameToPiece(student.getStyleClass().get(0)))
+                                        PieceCssStyleHelper.classNameToPiece(student.getStyleClass().get(0)))
                         ));
                         break;
                     case 12:
                         GUIView.getServerHandler().send(new SetAction(
                                 data.getPlayer().getNickname(),
                                 new Action(ActionType.STUDENT_FROM_DINING_TO_BAG,
-                                        Tmp.classNameToPiece(student.getStyleClass().get(0)))
+                                        PieceCssStyleHelper.classNameToPiece(student.getStyleClass().get(0)))
                         ));
                         break;
                 }
@@ -108,10 +108,10 @@ public class CharacterCardGUI extends ComponentGUI {
                     Dragboard db = s.startDragAndDrop(TransferMode.ANY);
                     DragAndDropInfo ddi =  new DragAndDropInfo(DragOrigin.CHARACTER,
                             DragType.PIECE,
-                            Tmp.classNameToPiece(s.getStyleClass().get(0))
+                            PieceCssStyleHelper.classNameToPiece(s.getStyleClass().get(0))
                     );
                     db.setContent(DragAndDropUtils.toClipboardContent(ddi));
-                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(Tmp.classNameToPiece(s.getStyleClass().get(0))));
+                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(PieceCssStyleHelper.classNameToPiece(s.getStyleClass().get(0))));
                     s.getStyleClass().clear();
                 }
                 e.consume();
@@ -135,7 +135,7 @@ public class CharacterCardGUI extends ComponentGUI {
                         break;
                     case NONE:
                         s.getStyleClass().clear();
-                        s.getStyleClass().add(Tmp.pieceToClassName(ddi.getPiece()));
+                        s.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(ddi.getPiece()));
                         s.getStyleClass().add("student-hover");
                 }
                 e.consume();
@@ -179,7 +179,7 @@ public class CharacterCardGUI extends ComponentGUI {
     private void setStudents(List<Piece> students, int characterId, boolean isActive, SwapArea swapArea) {
         // Set student pieces
         for (int i = 0; i < students.size(); i++) {
-            characterPiecesVBox.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(students.get(i)));
+            characterPiecesVBox.getChildren().get(i).getStyleClass().add(PieceCssStyleHelper.pieceToClassName(students.get(i)));
         }
         // Add interaction features if card is active
         if (isActive) {

@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 
 /**
- * Manges graphical assets and event in dash board
+ * Manges graphical assets and event in dashboard
  */
 public class PlayerDashboard extends ComponentGUI {
     @FXML
@@ -27,7 +27,7 @@ public class PlayerDashboard extends ComponentGUI {
     private Label coinLabel;
 
     /**
-     * Constructor: load the fxml for the player's dashboard
+     * Constructor: loads the fxml for the player's dashboard
      */
     public PlayerDashboard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerDashboard.fxml"));
