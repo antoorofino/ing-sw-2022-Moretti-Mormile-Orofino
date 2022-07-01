@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.messages.AskNewGameName;
 import it.polimi.ingsw.network.messages.AskNickname;
 import it.polimi.ingsw.network.messages.GameListMessage;
 import it.polimi.ingsw.util.*;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -47,6 +48,7 @@ public class ServerMain {
      * @param args arguments options to customize server behaviour
      */
     public static void main(String[] args) {
+        AnsiConsole.systemInstall();
         List<String> arguments = new ArrayList<>(Arrays.asList(args));
         if (arguments.size() == 1 && arguments.contains(HELP_ARGUMENT)) {
             String helpMessage = "\nThis is the server for Eriantys game, with no arguments provided the server will start " +
