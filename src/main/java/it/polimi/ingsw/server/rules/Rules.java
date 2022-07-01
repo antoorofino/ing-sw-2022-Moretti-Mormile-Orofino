@@ -101,14 +101,12 @@ public class Rules implements Serializable {
 		try {
 			getCurrentPlayer().getPlayerBoard().removeFromEntrance(action.getPrincipalPiece());
 		} catch (SpecificStudentNotFoundException e) {
-			System.out.println(e.getMessage());
 			return false;
 		}
 
 		try {
 			game.getIslandHandler().getIslandByID(action.getInteger()).addStudent(action.getPrincipalPiece());
 		} catch (SpecificIslandNotFoundException e) {
-			System.out.println(e.getMessage());
 			getCurrentPlayer().getPlayerBoard().addToEntrance(new ArrayList<>(Arrays.asList(action.getPrincipalPiece())));
 			return false;
 		}
@@ -139,7 +137,6 @@ public class Rules implements Serializable {
 		try {
 			cloud = game.getCloudByID(action.getInteger());
 		} catch (SpecificCloudNotFoundException e) {
-			System.out.println(e.getMessage());
 			return false;
 		}
 		if(cloud.getStudents().isEmpty() && game.getClouds().stream().anyMatch(c -> c.getStudents().size() != 0))

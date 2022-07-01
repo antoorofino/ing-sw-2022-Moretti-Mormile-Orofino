@@ -142,8 +142,7 @@ public class ExpertRules extends Rules {
 	protected void restoreNoEntry(){
 		try {
 			game.getCharacterFromID(5).addIslandFlag();
-		} catch (SpecificCharacterNotFoundException e) {
-			System.out.println(e.getMessage());
+		} catch (SpecificCharacterNotFoundException ignored) {
 		}
 	}
 

@@ -219,6 +219,7 @@ public class GameController {
             int i = 0;
             while(i < game.getPlayerHandler().getNumPlayers() && !endImmediately){
                 if (isLastRound() && !lastRoundMessageSent) {
+                    logger.log(4, 'g', "Game "+ game.getGameName() + " ends in this round");
                     virtualView.sendToEveryone(new ShowLastRound());
                     lastRoundMessageSent = true;
                 }
@@ -331,8 +332,10 @@ public class GameController {
             } else {
                 legalAction = thePlayer.getActiveCharacter().getRules().doAction(action);
             }
-            if (!legalAction)
+            if (!legalAction){
                 sendPossibleActions(true);
+                logger.log(4,'e',"Invalid action by player " + nickname);
+            }
             else {
                 // register action
                 game.getPlayerHandler().getCurrentPlayer().registerAction(action);
@@ -364,7 +367,7 @@ public class GameController {
                     logger.log(4, 'g', "Set assistant card with id " + card.getCardID() + " to " + nickname);
                     notifyAll();
                 } catch (CardException e) {
-                    System.out.println(e.getMessage());
+                    logger.log(4,'e',"Invalid assistant card by player " + nickname);
                 }
             }
         }
