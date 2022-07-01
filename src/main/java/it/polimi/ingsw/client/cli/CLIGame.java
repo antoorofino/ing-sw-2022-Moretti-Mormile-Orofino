@@ -194,7 +194,7 @@ public class CLIGame extends CLIMatrix{
 		CLIMatrix cliCharacterCard = new CLIMatrix(10, 6, AnsiColor.ANSI_DEFAULT, AnsiBackColor.ANSI_DEFAULT);
 		cliCharacterCard.drawBorder("╭╮─╰╯│");
 		if(character.getID() == 5) {
-			cliCharacterCard.drawText("❗ x" + character.getIslandFlag(), 1, 3, 3);
+			cliCharacterCard.drawText("! x" + character.getIslandFlag(), 1, 3, 3);
 			cliCharacterCard.elements[3][3].color = AnsiColor.ANSI_RED;
 		}
 		cliCharacterCard.drawText(String.valueOf(character.getID()),1,1,1);

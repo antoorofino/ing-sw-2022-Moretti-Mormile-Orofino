@@ -76,7 +76,7 @@ public class IslandsGridGUI extends ComponentGUI {
             cloudGUI.setStudents(clouds.get(i).getStudents());
             int finalI = i;
             // Set interaction features if enabled
-            if (data.getPossibleActions().contains(ActionType.CHOOSE_CLOUD) && clouds.get(i).getStudents().size() > 0) {
+            if (data.getPossibleActions().contains(ActionType.CHOOSE_CLOUD) && (clouds.get(i).getStudents().size() > 0 || clouds.stream().noneMatch(c -> c.getStudents().size() != 0))) {
                 cloudGUI.getRoot().getStyleClass().add("student-hover");
                 cloudGUI.getRoot().setOnMouseClicked(e -> {
                     GUIView.getServerHandler().send(new SetAction(

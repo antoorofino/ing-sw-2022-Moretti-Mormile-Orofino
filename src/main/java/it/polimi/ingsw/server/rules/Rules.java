@@ -142,7 +142,7 @@ public class Rules implements Serializable {
 			System.out.println(e.getMessage());
 			return false;
 		}
-		if(cloud.getStudents().isEmpty())
+		if(cloud.getStudents().isEmpty() && game.getClouds().stream().anyMatch(c -> c.getStudents().size() != 0))
 			return false;
 		getCurrentPlayer().getPlayerBoard().addToEntrance(cloud.getStudents());
 		cloud.addStudents(new ArrayList<Piece>());
