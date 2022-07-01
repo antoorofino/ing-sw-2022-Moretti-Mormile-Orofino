@@ -68,10 +68,6 @@ public class CharacterCardGUI extends ComponentGUI {
         costLabel.setText("");
     }
 
-    private void clearEmptyPanes() {
-        characterPiecesVBox.getChildren().removeIf(node -> node.getStyleClass().size() == 0);
-    }
-
     /**
      * Adds event on click of student if character's ability required it
      */
@@ -185,7 +181,6 @@ public class CharacterCardGUI extends ComponentGUI {
         for (int i = 0; i < students.size(); i++) {
             characterPiecesVBox.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(students.get(i)));
         }
-        clearEmptyPanes();
         // Add interaction features if card is active
         if (isActive) {
             switch (characterId) {
@@ -208,7 +203,6 @@ public class CharacterCardGUI extends ComponentGUI {
         for (int i = 0; i < num; i++) {
             characterPiecesVBox.getChildren().get(i).getStyleClass().add("no-tile");
         }
-        clearEmptyPanes();
         // Add interaction features if card is active
         if (isActive)
             setTilesDraggable();
