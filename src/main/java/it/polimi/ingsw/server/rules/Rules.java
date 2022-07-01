@@ -121,7 +121,7 @@ public class Rules implements Serializable {
 	 * @return true if the action is valid
 	 */
 	protected boolean doMoveMother(Action action){
-		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getInteger()){
+		if (getCurrentPlayer().getLastCardUsed().getMovements() >= action.getInteger() && action.getInteger() > 0){
 			game.getIslandHandler().moveMotherNature(action.getInteger());
 			calculateInfluence();
 			return true;

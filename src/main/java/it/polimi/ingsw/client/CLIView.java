@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Character;
 import it.polimi.ingsw.network.messages.*;
 import it.polimi.ingsw.util.*;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class CLIView implements View{
 
 	@Override
 	public void run() {
+		AnsiConsole.systemInstall();
 		clearAll();
 		String serverIP;
 		String serverPort;
@@ -120,7 +122,7 @@ public class CLIView implements View{
 		do {
 			centeredInput(CLIFrmt.print('d','g'," Please insert the game name: "));
 			gameName = scanner.nextLine();
-			if (InputValidator.isWordNotEmpty(gameName)) {
+			if (InputValidator.isWordNotEmpty(gameName) && InputValidator.isWordNotBig(gameName)) {
 				correct = true;
 			} else {
 				showErrorMessage("Please insert a correct value",true,1);
@@ -161,7 +163,7 @@ public class CLIView implements View{
 		do {
 			showErrorMessage(" The game name is already chosen. Please insert a new one: ",true,5);
 			String gameName = scanner.nextLine();
-			if (InputValidator.isWordNotEmpty(gameName)) {
+			if (InputValidator.isWordNotEmpty(gameName) && InputValidator.isWordNotBig(gameName)) {
 				correct = true;
 				serverHandler.send(new NewGameMessage(playerId, new GameListInfo(gameName,gameInfo.getGameMode(),gameInfo.getNumPlayers())));
 			} else {
@@ -180,7 +182,7 @@ public class CLIView implements View{
 		do {
 			centeredInput(" Enter your nickname: ");
 			nickname = scanner.nextLine();
-			if (InputValidator.isWordNotEmpty(nickname)) {
+			if (InputValidator.isWordNotEmpty(nickname) && InputValidator.isWordNotBig(nickname)) {
 				correct = true;
 			} else {
 				showErrorMessage("Invalid nickname. Try again.",true,1);
@@ -521,7 +523,7 @@ public class CLIView implements View{
 	 * @param text the text to be printed
 	 */
 	private void centeredPrint(String text){
-		System.out.print("\u001b["+ center +"G"); // column = 64
+		System.out.print("\u001B[64G"); // column = 64
 		System.out.println(text);
 	}
 
@@ -530,7 +532,7 @@ public class CLIView implements View{
 	 * @param text the text to be printed
 	 */
 	private void centeredInput(String text){
-		System.out.print("\u001b["+ center +"G");
+		System.out.print("\033["+ center +"G");
 		System.out.print(text);
 	}
 
@@ -539,7 +541,7 @@ public class CLIView implements View{
 	 * @param n number of lines to move
 	 */
 	private void cursorUp(int n){
-		System.out.print("\u001b[" + n + "A");
+		System.out.print("\033[" + n + "A");
 	}
 
 	/**
@@ -563,8 +565,8 @@ public class CLIView implements View{
 	 * Delete text under the game board
 	 */
 	private void clearAction(boolean isError){
-		System.out.print("\u001b[3" + ((isError) ? "6" : "5") + ";0H"); // 36 error, 35 otherwise
+		System.out.print("\033[3" + ((isError) ? "6" : "5") + ";0H"); // 36 error, 35 otherwise
 		clearDown();
-		System.out.print("\u001b[3" + ((isError) ? "6" : "5") + ";0H");
+		System.out.print("\033[3" + ((isError) ? "6" : "5") + ";0H");
 	}
 }
