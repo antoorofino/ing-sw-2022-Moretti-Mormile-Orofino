@@ -6,7 +6,7 @@ This repository contains the implementation of the multi-player board game Erian
 and run matches through the network. Maven was used to manage dependencies and to facilitate the development process as a whole.
 
 <p align="center">
-	<img src="https://github.com/antoorofino/ing-sw-2022-Moretti-Mormile-Orofino/main/eriantys.png" alt="ERIANTYS"/>
+	<img src="https://raw.githubusercontent.com/antoorofino/ing-sw-2022-Moretti-Mormile-Orofino/main/eriantys.png" alt="ERIANTYS"/>
 </p>
 
 ---
