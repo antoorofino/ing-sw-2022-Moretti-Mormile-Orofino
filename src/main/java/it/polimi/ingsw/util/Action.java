@@ -15,7 +15,7 @@ public class Action implements Serializable {
 	private int integer;
 
 	/**
-	 * Constructor: Create an action
+	 * Constructor: Creates an action
 	 * @param actionType     type of action
 	 * @param principalPiece piece that I move
 	 */
@@ -25,7 +25,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Constructor: Create an action
+	 * Constructor: Creates an action
 	 * @param actionType     type of action
 	 * @param principalPiece piece that I move
 	 * @param optionalPiece  secondary piece that will be moved
@@ -37,7 +37,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Constructor: Create an action
+	 * Constructor: Creates an action
 	 * @param actionType     type of action
 	 * @param principalPiece piece that I move
 	 * @param integer        how many steps the piece is moved
@@ -49,7 +49,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Constructor: Create an action
+	 * Constructor: Creates an action
 	 * @param actionType type of action
 	 * @param integer    how many steps the piece is moved
 	 */
@@ -59,7 +59,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Constructor: Create an action
+	 * Constructor: Creates an action
 	 * @param actionType type of action
 	 */
 	public Action(ActionType actionType) {
@@ -67,7 +67,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Get type of action
+	 * Gets type of action
 	 * @return type of action
 	 */
 	public ActionType getActionType() {
@@ -75,7 +75,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Get the piece that will be moved
+	 * Gets the piece that will be moved
 	 * @return the piece that will be moved
 	 */
 	public Piece getPrincipalPiece() {
@@ -83,7 +83,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Get the secondary piece that will be moved
+	 * Gets the secondary piece that will be moved
 	 * @return the secondary piece that will be moved
 	 */
 	public Piece getOptionalPiece() {
@@ -91,7 +91,7 @@ public class Action implements Serializable {
 	}
 
 	/**
-	 * Get how many steps the piece is moved
+	 * Gets how many steps the piece is moved
 	 * @return how many steps the piece is moved
 	 */
 	public int getInteger() {

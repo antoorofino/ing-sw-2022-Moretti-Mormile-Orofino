@@ -17,7 +17,7 @@ public class CLIBoard extends CLIMatrix {
 	private String uuid;
 
 	/**
-	 * Constructor: build player's board
+	 * Constructor: builds player's board
 	 * @param uuid the player id
 	 * @param width the board width
 	 */
@@ -32,7 +32,7 @@ public class CLIBoard extends CLIMatrix {
 	}
 
 	/**
-	 * Draw the students at the entrance on the board
+	 * Draws the students at the entrance on the board
 	 * @param students the student array
 	 */
 	public void addPieceEntrance(ArrayList<Piece> students){
@@ -52,7 +52,7 @@ public class CLIBoard extends CLIMatrix {
 	}
 
 	/**
-	 * Draw the students in the dining room on the board
+	 * Draws the students in the dining room on the board
 	 * @param students the student map
 	 */
 	public void drawDiningRoom(Map<Piece,Integer> students){

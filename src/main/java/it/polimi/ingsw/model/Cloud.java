@@ -12,7 +12,7 @@ public class Cloud implements Serializable {
     private int cloudID;
 
     /**
-     * Constructor: build cloud
+     * Constructor: builds cloud
      * @param ID identifier of cloud
      */
     public Cloud(int ID){
@@ -29,7 +29,7 @@ public class Cloud implements Serializable {
     }
 
     /**
-     * Get students on cloud
+     * Gets students on cloud
      * @return list of students on cloud
      */
     public ArrayList<Piece> getStudents() {

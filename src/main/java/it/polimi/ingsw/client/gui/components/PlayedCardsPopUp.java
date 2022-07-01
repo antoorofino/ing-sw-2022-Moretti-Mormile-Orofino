@@ -18,7 +18,7 @@ public class PlayedCardsPopUp extends ComponentGUI {
     private HBox cardsHBox;
 
     /**
-     * Constructor: load the fxml for the played card pop up
+     * Constructor: loads the fxml for the played card pop up
      */
     public PlayedCardsPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playedCardsPopUp.fxml"));

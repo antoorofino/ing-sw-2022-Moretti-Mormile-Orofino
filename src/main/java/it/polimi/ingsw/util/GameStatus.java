@@ -22,7 +22,7 @@ public enum GameStatus {
      */
     ACTIVE,
     /**
-     * Macth is not already active
+     * Match is not already active
      */
     INACTIVE
 }

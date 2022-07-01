@@ -12,7 +12,7 @@ public class CLIMatrix {
 	CLIElement[][] elements;
 
 	/**
-	 * Constructor: build empty matrix
+	 * Constructor: builds empty matrix
 	 * @param width matrix width
 	 * @param height matrix height
 	 * @param color matrix character color
@@ -26,7 +26,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Draw matrix on system out
+	 * Draws matrix on system out
 	 */
 	public void display(){
 		for(int i = 0; i < height; i++){
@@ -38,7 +38,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Initialize the empty matrix
+	 * Initializes the empty matrix
 	 * @param color the matrix's character color
 	 * @param backColor the matrix backcolor
 	 */
@@ -53,7 +53,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Write some text inside the character matrix
+	 * Writes some text inside the character matrix
 	 * @param text the text to be written
 	 * @param line number of lines of text to do
 	 * @param row row of the matrix where to write the text
@@ -71,7 +71,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Copy character matrix within the current
+	 * Copies character matrix within the current
 	 * @param y_anchor x coordinate where to start
 	 * @param x_anchor y coordinate where to start
 	 * @param copy item to copy
@@ -88,7 +88,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Draw border to the matrix
+	 * Draws border to the matrix
 	 * @param charSet character set to use
 	 */
 	protected void drawBorder(String charSet){
@@ -118,7 +118,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Draw horizontal line in the matrix
+	 * Draws horizontal line in the matrix
 	 * @param row row of the matrix where to write the text
 	 * @param leftborder column to start the row from
 	 * @param rightborder column in which to end the row
@@ -137,7 +137,7 @@ public class CLIMatrix {
 	}
 
 	/**
-	 * Draw vertical line in the matrix
+	 * Draws vertical line in the matrix
 	 * @param column column in which to draw the row
 	 * @param charSet character set to use
 	 */

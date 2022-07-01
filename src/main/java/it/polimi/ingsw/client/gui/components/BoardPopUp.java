@@ -18,7 +18,7 @@ public class BoardPopUp extends ComponentGUI {
     private Pane boardPane;
 
     /**
-     * Constructor: load the fxml for the Board pop up
+     * Constructor: loads the fxml for the Board pop up
      */
     public BoardPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/boardsPopUp.fxml"));

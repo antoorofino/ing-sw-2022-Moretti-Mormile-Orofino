@@ -16,7 +16,7 @@ public class Board implements Serializable {
     Map<Piece,Integer> studentsRoom;
 
     /**
-     * Constructor: Build the player's board
+     * Constructor: Builds the player's board
      */
     public Board(){
         this.studentsEntrance = new ArrayList<Piece>();
@@ -42,7 +42,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Remove a students from the entrance
+     * Removes a students from the entrance
      * @param student student to remove
      * @throws SpecificStudentNotFoundException student not found at the entrance
      */
@@ -69,7 +69,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * remove student from dining room
+     * Removes student from dining room
      * @param student student to remove
      * @throws SpecificStudentNotFoundException student not found in the dining room
      */

@@ -12,7 +12,7 @@ public class AssistantCard implements Serializable {
     private final int cardID;
 
     /**
-     * Create a new assistant card deck
+     * Creates a new assistant card deck
      * @return the new deck
      */
     public static ArrayList<AssistantCard> createDeck(){
@@ -24,7 +24,7 @@ public class AssistantCard implements Serializable {
     }
 
     /**
-     * Constructor: build the Card
+     * Constructor: builds the Card
      * @param cardValue Value of card
      * @param movements Value of steps that mother nature does
      * @param id        Identifier of the card
@@ -60,7 +60,7 @@ public class AssistantCard implements Serializable {
     }
 
     /**
-     * Check if two assistant card has the same value
+     * Checks if two assistant card has the same value
      * @param card assistant card
      * @return true if has the same value otherwise false
      */

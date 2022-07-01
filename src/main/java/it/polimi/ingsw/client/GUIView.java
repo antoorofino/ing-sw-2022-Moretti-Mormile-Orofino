@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.util.List;
 
 /**
- * Implement the game interface view for the gui
+ * Implements the game interface view for the gui
  */
 public class GUIView extends Application implements View {
     private static ServerHandler serverHandler;

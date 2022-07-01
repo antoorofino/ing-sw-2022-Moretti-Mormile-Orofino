@@ -19,7 +19,7 @@ public enum Piece implements Serializable {
     private final String name;
 
     /**
-     * Constructor: build piece
+     * Constructor: builds piece
      * @param colorString string of piece's color
      * @param color piece's color
      * @param name name of piece
@@ -31,9 +31,9 @@ public enum Piece implements Serializable {
     }
 
     /**
-     * Get piece by color
+     * Gets piece by color
      * @param color specific color
-     * @return pice that has the specific color
+     * @return piece that has the specific color
      */
     public static Piece getPieceByColor(String color) {
         for (Piece p : Piece.values()) {
@@ -45,7 +45,7 @@ public enum Piece implements Serializable {
     }
 
     /**
-     * Extract a random piece
+     * Extracts a random piece
      * @return random piece
      */
     public static Piece randomPiece(){

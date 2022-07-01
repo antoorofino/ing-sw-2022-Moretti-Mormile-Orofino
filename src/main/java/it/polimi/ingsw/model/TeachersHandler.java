@@ -13,14 +13,14 @@ public class TeachersHandler implements Serializable {
     private Map<Piece,Player> teachers;
 
     /**
-     * Constructor: build teacher handler
+     * Constructor: builds teacher handler
      */
     public TeachersHandler(){
         teachers = new HashMap<>();
     }
 
     /**
-     * Calculate teacher's owner
+     * Calculates teacher's owner
      * @param players list of players
      * @param geq specify if calculate the owner with > if geq is false or >= if geq is true
      */
@@ -48,7 +48,7 @@ public class TeachersHandler implements Serializable {
     }
 
     /**
-     * Check if teacher has an owner
+     * Checks if teacher has an owner
      * @param teacher teacher
      * @return true if teacher has owner, otherwise false
      */
@@ -59,7 +59,7 @@ public class TeachersHandler implements Serializable {
     }
 
     /**
-     * Count how many teacher player control
+     * Counts how many teacher player control
      * @param player player
      * @return number of teacher that player control
      */
@@ -68,7 +68,7 @@ public class TeachersHandler implements Serializable {
     }
 
     /**
-     * Get teacher's owner
+     * Gets teacher's owner
      * @param teacher teacher
      * @return teacher's owner
      */
@@ -77,7 +77,7 @@ public class TeachersHandler implements Serializable {
     }
 
     /**
-     * Get teachers list of the player by player id
+     * Gets teachers list of the player by player id
      * @param playerId id of the player
      * @return list of teachers owned
      */

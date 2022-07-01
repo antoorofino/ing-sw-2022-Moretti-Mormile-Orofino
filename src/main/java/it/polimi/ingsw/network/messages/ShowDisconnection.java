@@ -13,7 +13,7 @@ public class ShowDisconnection extends Message implements CVMessage {
     private final String disconnectedNickname;
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      * @param playerNickname nickname of the player who disconnected from the match
      */
     public ShowDisconnection(String playerNickname){

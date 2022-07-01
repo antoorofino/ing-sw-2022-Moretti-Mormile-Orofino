@@ -15,7 +15,7 @@ public class NewGameMessage extends Message implements SYSMessage {
     private final GameListInfo gameInfo;
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      * @param playerId the ID of the message’s sender
      * @param gameInfo contains the new game name, the number of players (2..3) and the game mode
      * (Basic, Expert)

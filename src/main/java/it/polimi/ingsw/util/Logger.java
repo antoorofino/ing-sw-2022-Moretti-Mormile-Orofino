@@ -8,7 +8,7 @@ public class Logger {
 	private final int level;
 
 	/**
-	 * Constructor: build a new log with level of priority
+	 * Constructor: builds a new log with level of priority
 	 * @param level level of priority for the message
 	 */
 	public Logger(int level){
@@ -18,7 +18,7 @@ public class Logger {
 	}
 
 	/**
-	 * If lev < level print type before message
+	 * If lev < level prints type before message
 	 * @param lev level of priority for the message
 	 * @param type type of message
 	 * @param message message
@@ -29,7 +29,7 @@ public class Logger {
 	}
 
 	/**
-	 * Print the type before the message
+	 * Prints the type before the message
 	 * @param type type of message
 	 * @param message message
 	 */

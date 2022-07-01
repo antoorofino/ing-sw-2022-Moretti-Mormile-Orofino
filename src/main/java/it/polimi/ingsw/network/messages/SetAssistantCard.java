@@ -14,7 +14,7 @@ public class SetAssistantCard extends Message implements VCMessage {
 	private final AssistantCard assistantCard;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param nickname the nickname of the message’s sender
 	 * @param assistantCard the card chosen by the player
 	 */

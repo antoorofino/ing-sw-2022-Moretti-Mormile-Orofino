@@ -12,7 +12,7 @@ import it.polimi.ingsw.util.MessageType;
 public class AskNewGameName extends Message implements CVMessage {
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      */
     public AskNewGameName(){
         super(MessageType.CV);

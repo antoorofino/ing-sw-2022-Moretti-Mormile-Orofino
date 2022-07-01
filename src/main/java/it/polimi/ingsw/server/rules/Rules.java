@@ -19,7 +19,7 @@ public class Rules implements Serializable {
 	protected GameModel game;
 
 	/**
-	 * Create the game rules
+	 * Constructor: Creates the game rules
 	 * @param game obj that contains the game status
 	 */
 	public Rules(GameModel game){

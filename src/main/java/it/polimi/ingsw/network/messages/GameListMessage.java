@@ -15,7 +15,7 @@ public class GameListMessage extends Message implements CVMessage {
     private final List<GameListInfo> gameList;
 
     /**
-     * Constructor: build the message
+     * Constructor: builds the message
      * @param gameList the list of available games
      */
     public GameListMessage(List<GameListInfo> gameList){

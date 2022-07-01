@@ -26,7 +26,7 @@ public class CharactersPopUp extends ComponentGUI {
     private int selectedCard;
 
     /**
-     * Constructor: load the fxml for the character pop up
+     * Constructor: loads the fxml for the character pop up
      */
     public CharactersPopUp() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/charactersPopUp.fxml"));

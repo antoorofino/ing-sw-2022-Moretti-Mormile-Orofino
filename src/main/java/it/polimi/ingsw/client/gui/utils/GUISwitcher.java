@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Manage the switching of stage
+ * Manages the switching of stage
  */
 public class GUISwitcher {
     private static GUISwitcher instance = null;

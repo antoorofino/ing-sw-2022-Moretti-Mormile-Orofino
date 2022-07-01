@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.GameController;
 public interface VCMessage {
 
     /**
-     * Execute the request server-side
+     * Executes the request server-side
      * @param controller The recipient component
      */
     void execute(GameController controller);

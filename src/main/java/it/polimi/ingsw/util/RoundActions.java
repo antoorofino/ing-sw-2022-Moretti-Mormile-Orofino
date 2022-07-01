@@ -14,14 +14,14 @@ public class RoundActions  implements Serializable {
     private final ArrayList<Action> actionList;
 
     /**
-     * Constructor: build the list that contains all the actions done
+     * Constructor: builds the list that contains all the actions done
      */
     public RoundActions() {
         actionList = new ArrayList<>();
     }
 
     /**
-     * Get all the actions already done
+     * Gets all the actions already done
      * @return list of actions already done during this turn
      */
     public List<Action> getActionsList() {
@@ -29,7 +29,7 @@ public class RoundActions  implements Serializable {
     }
 
     /**
-     * Get number of student that player has moved
+     * Gets number of student that player has moved
      * @return how many students the player has already moved
      */
     public int hasMovedStudents() {
@@ -41,7 +41,7 @@ public class RoundActions  implements Serializable {
     }
 
     /**
-     * Check if player has already moved mother nature
+     * Checks if player has already moved mother nature
      * @return true if player has already moved mother nature, otherwise false
      */
     public boolean hasMovedMother() {
@@ -49,7 +49,7 @@ public class RoundActions  implements Serializable {
     }
 
     /**
-     * Check if player has chosen the cloud from where pick students
+     * Checks if player has chosen the cloud from where pick students
      * @return true if player has chosen the cloud, otherwise false
      */
     public boolean hasChooseCloud() {
@@ -57,7 +57,7 @@ public class RoundActions  implements Serializable {
     }
 
     /**
-     * Check if player has chosen a character
+     * Checks if player has chosen a character
      * @return true if player has chosen a character, otherwise false
      */
     public boolean hasChooseCharacter(){
@@ -65,15 +65,15 @@ public class RoundActions  implements Serializable {
     }
 
     /**
-     * Check if player has chosen a character
-     * @return true if player has chosen a character, otherwise false
+     * Checks if player has activated a character
+     * @return true if player has activated a character, otherwise false
      */
     public boolean hasActivatedCharacter(){
         return containsAction(ActionType.ACTIVATED_CHARACTER);
     }
 
     /**
-     * Check if player has finished his turn
+     * Checks if player has finished his turn
      * @return true if player has finished his turn, false otherwise
      */
     public boolean hasEnded() {
@@ -81,7 +81,7 @@ public class RoundActions  implements Serializable {
     }
 
     /**
-     * Check if player has already done a specific action
+     * Checks if player has already done a specific action
      * @param actionType specific action
      * @return true if the action is done, otherwise false
      */

@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.ServerMain;
 public interface SYSMessage {
 
     /**
-     * Execute the request server-side
+     * Executes the request server-side
      * @param serverMain The recipient component
      */
     void execute(ServerMain serverMain);

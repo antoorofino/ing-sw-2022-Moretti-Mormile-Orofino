@@ -11,7 +11,7 @@ public class HeartbeatSender extends Thread{
     private final boolean isServer;
 
     /**
-     * Constructor: build the sender
+     * Constructor: builds the sender
      * @param networkHandler clientHandler or serverHandler
      * @param isServer true if is server side
      */

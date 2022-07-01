@@ -13,7 +13,7 @@ import java.util.Map;
 public class CLIIsland extends CLIMatrix {
 
 	/**
-	 * Constructor: build island
+	 * Constructor: builds island
 	 * @param mother true if mother is on the island
 	 * @param id the island id
 	 */
@@ -34,7 +34,7 @@ public class CLIIsland extends CLIMatrix {
 	}
 
 	/**
-	 * Draw students on the island
+	 * Draws students on the island
 	 * @param students array of students
 	 */
 	public void addStudents(Map<Piece, Integer> students) {
@@ -56,13 +56,17 @@ public class CLIIsland extends CLIMatrix {
 	}
 
 	/**
-	 * Draw name of the island owner
+	 * Draws name of the island owner
 	 * @param owner the owner's name
 	 */
 	public void drawOwner(String owner){
 		this.drawText((owner.length() > 5)? owner.substring(0,5) : owner,1,5,6);
 	}
 
+	/**
+	 * Draws no entry on island
+	 * @param number number of no entry tiles
+	 */
 	public void drawNoEntry(int number){
 		this.drawText("!x" + number,1,4,10);
 		this.elements[4][10].color = AnsiColor.ANSI_RED;

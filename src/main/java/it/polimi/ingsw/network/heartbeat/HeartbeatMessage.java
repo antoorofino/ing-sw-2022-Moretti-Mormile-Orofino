@@ -13,7 +13,7 @@ import it.polimi.ingsw.util.MessageType;
 public class HeartbeatMessage extends Message implements CVMessage, SYSMessage {
 
     /**
-     * Constructor: build the Heartbeat message
+     * Constructor: builds the Heartbeat message
      * @param isServer true if it is sent by the server
      */
     public HeartbeatMessage(boolean isServer) {

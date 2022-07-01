@@ -14,7 +14,7 @@ public class UpdateGameBoard extends Message implements CVMessage {
 	private final GameModel game;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param game current state of the game board
 	 */
 	public UpdateGameBoard(GameModel game){

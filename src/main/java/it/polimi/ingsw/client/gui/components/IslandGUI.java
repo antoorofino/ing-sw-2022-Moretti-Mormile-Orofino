@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.gui.components;
 
-import it.polimi.ingsw.client.gui.utils.Tmp;
+import it.polimi.ingsw.client.gui.utils.PieceCssStyleHelper;
 import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.TowerColor;
@@ -49,7 +49,7 @@ public class IslandGUI extends ComponentGUI {
     private Text noTileText;
 
     /**
-     * Constructor: load the fxml for the island
+     * Constructor: loads the fxml for the island
      */
     public IslandGUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/island.fxml"));
@@ -103,31 +103,31 @@ public class IslandGUI extends ComponentGUI {
             switch (piece) {
                 case FROG:
                     if(map.get(piece) > 0)
-                        greenImage.getStyleClass().add(Tmp.pieceToClassName(piece));
+                        greenImage.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
                     greenText.setText("x" + map.get(piece));
                     greenText.setVisible(map.get(piece) > 1);
                     break;
                 case DRAGON:
                     if(map.get(piece) > 0)
-                        redImage.getStyleClass().add(Tmp.pieceToClassName(piece));
+                        redImage.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
                     redText.setText("x" + map.get(piece));
                     redText.setVisible(map.get(piece) > 1);
                     break;
                 case GNOME:
                     if(map.get(piece) > 0)
-                        yellowImage.getStyleClass().add(Tmp.pieceToClassName(piece));
+                        yellowImage.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
                     yellowText.setText("x" + map.get(piece));
                     yellowText.setVisible(map.get(piece) > 1);
                     break;
                 case FAIRY:
                     if(map.get(piece) > 0)
-                        purpleImage.getStyleClass().add(Tmp.pieceToClassName(piece));
+                        purpleImage.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
                     purpleText.setText("x" + map.get(piece));
                     purpleText.setVisible(map.get(piece) > 1);
                     break;
                 case UNICORN:
                     if(map.get(piece) > 0)
-                        blueImage.getStyleClass().add(Tmp.pieceToClassName(piece));
+                        blueImage.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
                     blueText.setText("x" + map.get(piece));
                     blueText.setVisible(map.get(piece) > 1);
                     break;
@@ -152,7 +152,7 @@ public class IslandGUI extends ComponentGUI {
                 break;
         }
     }
-
+    //TODO: complete
     public void setMotherNature() {
         motherNatureImage.getStyleClass().add("mother-nature-background");
         if (data.getPossibleActions().contains(ActionType.MOVE_MOTHER_NATURE))

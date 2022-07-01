@@ -26,7 +26,7 @@ public class CreditsPaneController {
     }
 
     /**
-     * When players click on close icon credits pane will be not visible
+     * When players clicks on close icon credits pane will be not visible
      */
     @FXML
     public void onCloseInfoClicked() {

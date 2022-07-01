@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.gui.components;
 
 import it.polimi.ingsw.client.GUIView;
 import it.polimi.ingsw.client.gui.utils.dragAndDrop.*;
-import it.polimi.ingsw.client.gui.utils.Tmp;
+import it.polimi.ingsw.client.gui.utils.PieceCssStyleHelper;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Piece;
 import it.polimi.ingsw.network.messages.SetAction;
@@ -53,7 +53,7 @@ public class PlayerBoard extends ComponentGUI {
     private Pane teacherBlue;
 
     /**
-     * Constructor: load the fxml for player board
+     * Constructor: loads the fxml for player board
      */
     public PlayerBoard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerBoard.fxml"));
@@ -92,7 +92,7 @@ public class PlayerBoard extends ComponentGUI {
         // Set entrance students
         List<Piece> entranceArray = board.getStudentsEntrance();
         for (int i = 0; i < entranceArray.size(); i++) {
-            entrance.getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(entranceArray.get(i)));
+            entrance.getChildren().get(i).getStyleClass().add(PieceCssStyleHelper.pieceToClassName(entranceArray.get(i)));
             if (isActive)
                 setOnDragEntranceStudentHandlers(entrance.getChildren().get(i), swapArea);
         }
@@ -100,7 +100,7 @@ public class PlayerBoard extends ComponentGUI {
         Map<Piece, Integer> studentsMap = board.getStudentsRoom();
         for(Piece piece : studentsMap.keySet()) {
             for (int i = 0; i < studentsMap.get(piece); i++) {
-                getDiningRoomByPiece(piece).getChildren().get(i).getStyleClass().add(Tmp.pieceToClassName(piece));
+                getDiningRoomByPiece(piece).getChildren().get(i).getStyleClass().add(PieceCssStyleHelper.pieceToClassName(piece));
                 if (isActive) {
                     setOnDragDiningStudentsHandlers(getDiningRoomByPiece(piece).getChildren().get(i), swapArea);
                 }
@@ -112,19 +112,19 @@ public class PlayerBoard extends ComponentGUI {
         for(Piece teacher : teachersList) {
             switch (teacher) {
                 case FROG:
-                    teacherGreen.getStyleClass().add(Tmp.teacherToClassName(teacher));
+                    teacherGreen.getStyleClass().add(PieceCssStyleHelper.teacherToClassName(teacher));
                     break;
                 case DRAGON:
-                    teacherRed.getStyleClass().add(Tmp.teacherToClassName(teacher));
+                    teacherRed.getStyleClass().add(PieceCssStyleHelper.teacherToClassName(teacher));
                     break;
                 case GNOME:
-                    teacherYellow.getStyleClass().add(Tmp.teacherToClassName(teacher));
+                    teacherYellow.getStyleClass().add(PieceCssStyleHelper.teacherToClassName(teacher));
                     break;
                 case FAIRY:
-                    teacherPurple.getStyleClass().add(Tmp.teacherToClassName(teacher));
+                    teacherPurple.getStyleClass().add(PieceCssStyleHelper.teacherToClassName(teacher));
                     break;
                 case UNICORN:
-                    teacherBlue.getStyleClass().add(Tmp.teacherToClassName(teacher));
+                    teacherBlue.getStyleClass().add(PieceCssStyleHelper.teacherToClassName(teacher));
                     break;
             }
         }
@@ -156,10 +156,10 @@ public class PlayerBoard extends ComponentGUI {
                     Dragboard db = s.startDragAndDrop(TransferMode.ANY);
                     DragAndDropInfo ddi =  new DragAndDropInfo(DragOrigin.ENTRANCE,
                             DragType.PIECE,
-                            Tmp.classNameToPiece(s.getStyleClass().get(0))
+                            PieceCssStyleHelper.classNameToPiece(s.getStyleClass().get(0))
                     );
                     db.setContent(DragAndDropUtils.toClipboardContent(ddi));
-                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(Tmp.classNameToPiece(s.getStyleClass().get(0))));
+                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(PieceCssStyleHelper.classNameToPiece(s.getStyleClass().get(0))));
                     s.getStyleClass().clear();
                 }
                 e.consume();
@@ -183,7 +183,7 @@ public class PlayerBoard extends ComponentGUI {
                         break;
                     case NONE:
                         s.getStyleClass().clear();
-                        s.getStyleClass().add(Tmp.pieceToClassName(ddi.getPiece()));
+                        s.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(ddi.getPiece()));
                         s.getStyleClass().add("student-hover");
                 }
                 e.consume();
@@ -208,10 +208,10 @@ public class PlayerBoard extends ComponentGUI {
                     Dragboard db = s.startDragAndDrop(TransferMode.ANY);
                     DragAndDropInfo ddi =  new DragAndDropInfo(DragOrigin.DINING,
                             DragType.PIECE,
-                            Tmp.classNameToPiece(s.getStyleClass().get(0))
+                            PieceCssStyleHelper.classNameToPiece(s.getStyleClass().get(0))
                     );
                     db.setContent(DragAndDropUtils.toClipboardContent(ddi));
-                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(Tmp.classNameToPiece(s.getStyleClass().get(0))));
+                    db.setDragView(DragAndDropUtils.getDragBoardStudentImage(PieceCssStyleHelper.classNameToPiece(s.getStyleClass().get(0))));
                     s.getStyleClass().clear();
                 }
                 e.consume();
@@ -223,7 +223,7 @@ public class PlayerBoard extends ComponentGUI {
                     swapArea.setPiece2(ddi.getPiece());
                 } else {
                     s.getStyleClass().clear();
-                    s.getStyleClass().add(Tmp.pieceToClassName(ddi.getPiece()));
+                    s.getStyleClass().add(PieceCssStyleHelper.pieceToClassName(ddi.getPiece()));
                     s.getStyleClass().add("student-hover");
                 }
                 e.consume();
@@ -233,7 +233,7 @@ public class PlayerBoard extends ComponentGUI {
     }
 
     /**
-     * Manage drop event in dining room
+     * Manages drop event in dining room
      */
     private void setDiningRoomDropHandlers() {
         // Single logic checks

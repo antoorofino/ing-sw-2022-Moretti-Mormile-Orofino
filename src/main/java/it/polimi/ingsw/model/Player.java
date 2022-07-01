@@ -26,7 +26,7 @@ public class Player implements Serializable {
 	private RoundActions roundActions;
 
 	/**
-	 * Constructor: build player
+	 * Constructor: builds player
 	 * @param id player's id
 	 */
 	public Player(String id){
@@ -43,7 +43,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Set nickname to player
+	 * Sets nickname to player
 	 * @param nickname the chosen nickname
 	 */
 	public void setNickname(String nickname) {
@@ -51,7 +51,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get player's nickname
+	 * Gets player's nickname
 	 * @return player's nickname
 	 */
 	public String getNickname() {
@@ -59,7 +59,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get player's ID
+	 * Gets player's ID
 	 * @return player's ID
 	 */
 	public String getId() {
@@ -67,7 +67,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Set color of tower that player will use
+	 * Sets color of tower that player will use
 	 * @param color the color to be set
 	 */
 	public void setTowerColor(TowerColor color) {
@@ -75,7 +75,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get tower's color that player uses
+	 * Gets tower's color that player uses
 	 * @return the tower color
 	 */
 	public TowerColor getTowerColor() {
@@ -83,7 +83,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get player's board
+	 * Gets player's board
 	 * @return player's board
 	 */
 	public Board getPlayerBoard() {
@@ -91,7 +91,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get player's deck of assistant card
+	 * Gets player's deck of assistant card
 	 * @return player's deck of assistant card
 	 */
 	public ArrayList<AssistantCard> getDeck(){
@@ -107,7 +107,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Set last card that player used
+	 * Sets last card that player used
 	 * @param lastCardUsed last card that player used
 	 * @throws CardException assistant card not found in deck
 	 */
@@ -123,7 +123,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Check if there are any card in the deck
+	 * Checks if there are any card in the deck
 	 * @return true if there aren't any cards, otherwise return true
 	 */
 	public boolean noMoreCards() {
@@ -131,7 +131,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get last card that player used
+	 * Gets last card that player used
 	 * @return the last Assistant card used
 	 */
 	public AssistantCard getLastCardUsed() {
@@ -139,7 +139,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Set number of towers that player has got
+	 * Sets number of towers that player has got
 	 * @param num number of tower
 	 */
 	public void setNumOfTowers(int num) {
@@ -147,7 +147,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get number of towers that
+	 * Gets number of towers that
 	 * @return the number of tower owned by player
 	 */
 	public int getNumOfTowers(){
@@ -155,7 +155,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Add towers to player
+	 * Adds towers to player
 	 * @param numTower specify how many tower will be added to player
 	 */
 	public void addTower(int numTower) {
@@ -163,7 +163,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Remove towers from player
+	 * Removes towers from player
 	 * @param towerToRemove specify how many towers will be removed from player
 	 */
 	public void removeTower(int towerToRemove) {
@@ -171,7 +171,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Check if player hasn't any towers
+	 * Checks if player hasn't any towers
 	 * @return true if player hasn't any towers otherwise return false
 	 */
 	public boolean TowerIsEmpty(){
@@ -179,7 +179,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Give coins to player
+	 * Gives coins to player
 	 * @param numCoins how many coins player receives
 	 */
 	public void setCoin(int numCoins) {
@@ -187,7 +187,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Check if player has enough coin to do the action
+	 * Checks if player has enough coin to do the action
 	 * @param necessaryCoins how many coins are necessary
 	 * @return true if player has enough coins, otherwise false
 	 */
@@ -196,7 +196,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * player use coins to activate action
+	 * Player uses coins to activate action
 	 * @param numCoinsToRemove how many coins player uses to do action
 	 */
 	public void removeCoin(int numCoinsToRemove){
@@ -212,13 +212,13 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get how many coins player has
+	 * Gets how many coins player has
 	 * @return the coins owned by player
 	 */
 	public int getCoin(){ return this.playerCoin;}
 
 	/**
-	 * Get character that player has activated
+	 * Gets character that player has activated
 	 * @return character activated from player
 	 */
 	public Character getActiveCharacter() {
@@ -226,7 +226,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Set character activated by player
+	 * Sets character activated by player
 	 * @param activeCharacter charcter activated by player
 	 */
 	public void setActiveCharacter(Character activeCharacter) {
@@ -234,7 +234,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get action that player did during his turn
+	 * Gets action that player did during his turn
 	 * @return round action
 	 */
 	public RoundActions getRoundActions() {
@@ -242,7 +242,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Register an action that player did
+	 * Registers an action that player did
 	 * @param action that player did
 	 */
 	public void registerAction(Action action) {
@@ -250,14 +250,14 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Reset round action at the end of turn
+	 * Resets round action at the end of turn
 	 */
 	public void resetRoundAction() {
 		this.roundActions = new RoundActions();
 	}
 
 	/**
-	 * Check if player is ready to play
+	 * Checks if player is ready to play
 	 * @return true if player is ready otherwise false
 	 */
 	public boolean isReadyToPlay(){
@@ -265,7 +265,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Reset lastCardUsed
+	 * Resets lastCardUsed
 	 */
 	public void resetLastCard(){this.lastCardUsed = null;}
 }

@@ -9,13 +9,13 @@ import it.polimi.ingsw.util.ActionType;
 import it.polimi.ingsw.util.RoundActions;
 
 /**
- * Change the rules of the game when card number 9 is activated
+ * Changes the rules of the game when card number 9 is activated
  */
 public class NinthCardRules extends ExpertRules {
 	protected Piece invalidColor;
 
 	/**
-	 * Create the game rules
+	 * Constructor: Creates the game rules
 	 * @param game obj that contains the game status
 	 */
 	public NinthCardRules(GameModel game) {

@@ -28,7 +28,7 @@ public enum ActionType {
     private final String description;
 
     /**
-     * Constructor: Build an action
+     * Constructor: Builds an action
      * @param mode mode of game
      * @param description action description
      */
@@ -38,7 +38,7 @@ public enum ActionType {
     }
 
     /**
-     * Get game mode
+     * Gets game mode
      * @return game mode
      */
     public GameMode getMode() {
@@ -46,7 +46,7 @@ public enum ActionType {
     }
 
     /**
-     * Get description of action
+     * Gets description of action
      * @return description
      */
     public String getDescription(){ return description;}

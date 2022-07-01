@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ExpertRules extends Rules {
 
 	/**
-	 * Create the game rules
+	 * Constructor: Creates the game rules
 	 * @param game obj that contains the game status
 	 */
 	public ExpertRules(GameModel game) {
@@ -65,7 +65,7 @@ public class ExpertRules extends Rules {
 	}
 
 	/**
-	 * Check if player can use the chosen character
+	 * Checks if player can use the chosen character
 	 * @param action contains the id of chosen character
 	 * @return true if is valid action
 	 */
@@ -137,7 +137,7 @@ public class ExpertRules extends Rules {
 	}
 
 	/**
-	 * Put the no entry tile back on card number 5
+	 * Puts the no entry tile back on card number 5
 	 */
 	protected void restoreNoEntry(){
 		try {

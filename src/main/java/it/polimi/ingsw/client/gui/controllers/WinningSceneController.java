@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for winning scene
+ */
 public class WinningSceneController extends SceneController {
     @FXML
     public ImageView loseImage;
@@ -13,7 +16,7 @@ public class WinningSceneController extends SceneController {
     public Text messageText;
 
     /**
-     * action called when click on icon close
+     * Action called when click on icon close
      * reset data and switch to home scene
      */
     public void onCloseAlertClicked() {

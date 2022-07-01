@@ -14,7 +14,7 @@ public class AskAction extends Message implements CVMessage {
 	private final boolean isInvalidAction;
 
 	/**
-	 * Constructor: build the message
+	 * Constructor: builds the message
 	 * @param roundActions list of possible cards that can be chosen by the player
 	 * @param isInvalidAction  true if it is the first request
 	 */

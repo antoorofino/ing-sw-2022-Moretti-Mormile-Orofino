@@ -9,12 +9,12 @@ import it.polimi.ingsw.util.exception.SpecificStudentNotFoundException;
 import it.polimi.ingsw.util.exception.StudentNotPresentException;
 
 /**
- * Change the rules of the game when card number 11 is activated
+ * Changes the rules of the game when card number 11 is activated
  */
 public class EleventhCardRules extends ExpertRules {
 
 	/**
-	 * Create the game rules
+	 * Constructor: Creates the game rules
 	 * @param game obj that contains the game status
 	 */
 	public EleventhCardRules(GameModel game) {

@@ -199,7 +199,6 @@ public class GameMainSceneController extends SceneController {
     * Sets message that specify what have to do the player
     * @param message message
     */
-
    public void setMessage(String message) {
       messageTextLabel.setText(message);
    }

@@ -114,7 +114,7 @@ public class LobbySceneController extends SceneController {
 
     /**
      * Forcing the alert pane to close and shows loading messages for matches
-     * Activate lobby scene
+     * Activates lobby scene
      */
     @Override
     public void activate(){

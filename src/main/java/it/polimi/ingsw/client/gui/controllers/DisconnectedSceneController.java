@@ -12,7 +12,7 @@ public class DisconnectedSceneController extends SceneController{
 
     /**
      * Action called when player clicks on icon close
-     * Reset data and switch to home scene
+     * Resets data and switch to home scene
      */
     public void onCloseAlertClicked() {
         switcher.initialise(switcher.getPrimaryStage());

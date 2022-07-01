@@ -18,7 +18,7 @@ public class PlayerStartPane extends ComponentGUI {
     private Pane towerImagePane;
 
     /**
-     * Constructor: load the fxml for the player start pane
+     * Constructor: loads the fxml for the player start pane
      */
     public PlayerStartPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/playerStartPane.fxml"));

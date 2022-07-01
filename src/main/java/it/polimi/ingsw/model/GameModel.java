@@ -24,7 +24,7 @@ public class GameModel implements Serializable {
     private final GameMode gameMode;
 
     /**
-     * Constructor : build game model
+     * Constructor : builds game model
      */
     public GameModel(GameListInfo gameInfo) {
         this.name = gameInfo.getGameName();
@@ -39,7 +39,7 @@ public class GameModel implements Serializable {
     }
 
     /**
-     * Sets up the game
+     * Initializes the game
      */
     public void setupGame(){
         int numPlayers = this.playerHandler.getNumPlayers();
@@ -80,7 +80,7 @@ public class GameModel implements Serializable {
     }
 
     /**
-     * Sets up the game for the tests
+     * Initializes the game for the tests
      */
     public void setupGameTest(){
         ArrayList<Piece> students = new ArrayList<>();
@@ -185,7 +185,7 @@ public class GameModel implements Serializable {
     }
 
     /**
-     * Remove a coin if are enough
+     * Removes a coin if are enough
      */
     public void getCoin(){
         if(coinsAreEnough())
@@ -231,7 +231,7 @@ public class GameModel implements Serializable {
     }
 
     /**
-     * Make refill of clouds when start a new turn
+     * Makes refill of clouds when start a new turn
      */
     public void cloudsRefill() {
         for (Cloud cloud : clouds) {
