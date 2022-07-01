@@ -5,10 +5,6 @@
 This repository contains the implementation of the multi-player board game Eriantys. The project follows the MVC pattern and enables the player to create
 and run matches through the network. Maven was used to manage dependencies and to facilitate the development process as a whole.
 
-<p align="center">
-	<img src="https://raw.githubusercontent.com/antoorofino/ing-sw-2022-Moretti-Mormile-Orofino/main/eriantys.png" alt="ERIANTYS"/>
-</p>
-
 ---
 
 ## Functionalities and features
@@ -59,8 +55,7 @@ Both the game server and the client interface are generated as jar files. They c
 
 ### Code coverage
 
-The following figure shows the coverage of the unit tests.
-
+[deliverables/code_coverage](deliverables/code_coverage) contains the report that shows the coverage of all test cases.
 
 
 ### UML diagrams
